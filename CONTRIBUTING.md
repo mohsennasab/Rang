@@ -22,15 +22,20 @@ goes into picking the artwork and curating the colors.
 - Persian art in a broad sense. Carpets, miniatures, tilework, manuscripts,
   ceramics, metalwork, architecture. Works from the wider Persianate world
   fit when the visual tradition is Persian.
-- A museum object with an open access, public domain photograph. The Met,
-  the Cleveland Museum of Art, the Smithsonian and the David Collection all
-  release suitable images. Keep the object page URL and the direct image URL,
-  both go in the palette file.
+- A photograph you have the rights to share. Two paths work. Museum open
+  access images, The Met, the Cleveland Museum of Art, the Smithsonian and
+  the David Collection all release suitable ones. Or your own photograph of
+  tilework, a building or an object, committed under `sources/<name>/` with
+  your credit line, the way the Golestan palette does it. Either way keep a
+  reference URL, an object page or something like the UNESCO listing for a
+  site.
 - Strong, varied color. A good source usually offers a warm side and a cool
   side so the ramp can carry both discrete classes and continuous data.
 
 Name the palette after the place, the art form or the work itself. One word,
-capitalized, no spaces. Kashan, Isfahan, Tabriz, Shiraz, Mina, Zarrin.
+capitalized, no spaces. Kashan, Isfahan, Tabriz, Shiraz, Mina, Zarrin. Add a
+pronunciation so readers can say it, stress goes on the last syllable in
+Persian.
 
 ## Setup
 
@@ -100,10 +105,12 @@ the numbers and your eyes agree.
 ## Step 5, write the palette file
 
 Create `palettes/<name>.json`, all lowercase filename. Copy
-`palettes/kashan.json` as a template. Fill in every source field, including
-accession number and both URLs. Write one short note per color saying where in
-the artwork it comes from. Leave out `order` and `colorblind` if you want the
-build to compute them.
+`palettes/kashan.json` as a template for a museum source, or
+`palettes/golestan.json` for your own photograph. Fill in every source field.
+Write one short note per color saying where in the artwork it comes from, and
+add the pronunciation. A second photo showing the work in its setting can go
+in `source.context_image` with a caption, it appears on the palette page.
+Leave out `order` and `colorblind` if you want the build to compute them.
 
 ## Step 6, build
 
@@ -111,12 +118,14 @@ build to compute them.
 python tools/build.py <name>
 ```
 
-This regenerates the Python, R and ArcGIS files for the whole collection,
-renders your swatch, preview and sample plots, writes `docs/<name>/README.md`
-and adds your palette to the gallery in the main README. Look at the sample
-page it produced. If a plot reads badly, go back to step 4.
+This regenerates the Python, R, ArcGIS and QGIS files for the whole
+collection, renders your swatch, gallery card, preview and sample plots,
+writes `docs/<name>/README.md` and adds your palette to the gallery in the
+main README. Look at the sample page it produced. If a plot reads badly, go
+back to step 4.
 
-The elevation panel uses the CONUS grid in `data/`. Pass your own raster with
+The rainfall and elevation panels use the real grids in `data/`, one day of
+NOAA AORC precipitation and a CONUS DEM. Pass your own raster with
 `python tools/make_samples.py <name> --dem your_dem.tif` if you want to see
 the palette on different terrain.
 
@@ -136,19 +145,24 @@ small requests about ramp order or a color that reads poorly in a plot.
 | key | required | meaning |
 |---|---|---|
 | `name` | yes | one word, capitalized, matches the filename |
+| `pronunciation` | yes | how to say it, like "kah-SHAHN", add the meaning if you like |
 | `colors` | yes | 5 to 12 hex codes in ramp order |
 | `notes` | yes | one short phrase per color, where in the artwork it lives |
 | `order` | no | pick order for discrete use, computed by the build if absent |
 | `colorblind` | no | set by the build from the worst case separation if absent |
-| `source.title` | yes | object title as the museum gives it |
+| `source.title` | yes | object or work title |
 | `source.artist` | no | empty string when unknown |
-| `source.date` | yes | as the museum gives it |
+| `source.date` | yes | as the museum or reference gives it |
 | `source.geography` | yes | for example "Iran, probably Kashan" |
-| `source.medium` | yes | as the museum gives it |
-| `source.museum` | yes | full museum name |
+| `source.medium` | yes | for example "Glazed polychrome tilework" |
+| `source.museum` | museum sources | full museum name |
+| `source.site` | own photos | the place, for example "Golestan Palace, UNESCO World Heritage Site" |
 | `source.department` | no | museum department |
-| `source.accession` | yes | accession number |
-| `source.credit` | no | museum credit line |
-| `source.url` | yes | object page |
-| `source.image` | yes | direct link to the open access photo |
-| `source.public_domain` | yes | must be true to be accepted |
+| `source.accession` | museum sources | accession number |
+| `source.credit` | own photos | your credit line, "Photo by Your Name, year" |
+| `source.url` | yes | object page or reference page for the site |
+| `source.image` | yes | image URL, or repo path under `sources/` for your own photo |
+| `source.context_image` | no | second photo showing the work in its setting |
+| `source.context_caption` | no | one line under the context photo |
+| `source.public_domain` | yes | true for open access images, false for your own photo |
+| `source.rights` | own photos | for example "photographer's own work, contributed to the project" |

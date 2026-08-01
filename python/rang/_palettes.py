@@ -1,17 +1,6 @@
 """Palette data. Built with tools/build.py, edit palettes/*.json instead."""
 
 PALETTES = {
-    "Kashan": {
-        "colors": ('#7f3020', '#ab4a47', '#c07049', '#c59b46', '#ccac7e', '#e2cfb1', '#8a9463', '#345f72', '#1a3b45'),
-        "order": (3, 6, 4, 8, 7, 1, 9, 5, 2),
-        "colorblind": False,
-        "source": {
-            "title": 'Silk Kashan Carpet',
-            "date": '16th century',
-            "geography": 'Iran, probably Kashan',
-            "museum": 'The Metropolitan Museum of Art, New York',
-            "accession": '58.46',
-            "url": 'https://www.metmuseum.org/art/collection/search/451470',
-        },
-    },
+    "Golestan": {'colors': ('#432f2c', '#ae6259', '#b57f86', '#b5b5ac', '#cbb11c', '#9a9a68', '#45939c', '#577ab1', '#333a80'), 'order': (4, 5, 8, 6, 1, 7, 3, 9, 2), 'colorblind': True, 'pronunciation': 'goh-leh-STAHN, Persian for rose garden', 'source': {'title': 'Tile panel with a hunting scene, Golestan Palace', 'artist': '', 'date': 'Qajar period', 'geography': 'Tehran, Iran', 'medium': 'Glazed polychrome tilework', 'site': 'Golestan Palace, UNESCO World Heritage Site', 'url': 'https://whc.unesco.org/en/list/1422/', 'image': 'sources/golestan/tilework.jpg', 'context_image': 'sources/golestan/palace.jpg', 'context_caption': 'The panel in place at the palace, with a resident cat', 'credit': 'Photo by Mohsen Tahmasebi Nasab, 2018', 'public_domain': False, 'rights': "photographer's own work, contributed to the project"}},
+    "Kashan": {'colors': ('#7f3020', '#ab4a47', '#c07049', '#c59b46', '#ccac7e', '#e2cfb1', '#8a9463', '#345f72', '#1a3b45'), 'order': (3, 6, 4, 8, 7, 1, 9, 5, 2), 'colorblind': False, 'pronunciation': 'kah-SHAHN', 'source': {'title': 'Silk Kashan Carpet', 'artist': '', 'date': '16th century', 'geography': 'Iran, probably Kashan', 'medium': 'Silk (warp, weft and pile), asymmetrically knotted pile', 'museum': 'The Metropolitan Museum of Art, New York', 'department': 'Islamic Art', 'accession': '58.46', 'credit': 'Gift of Mrs. Douglas M. Moffat, 1958', 'url': 'https://www.metmuseum.org/art/collection/search/451470', 'image': 'https://images.metmuseum.org/CRDImages/is/original/DT5450.jpg', 'public_domain': True}},
 }

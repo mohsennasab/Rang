@@ -258,10 +258,17 @@ def all_palettes():
 
 
 def fetch_image(url_or_path):
-    """Return a local path for an image, downloading into cache/ when needed."""
+    """Return a local path for an image, downloading into cache/ when needed.
+
+    Accepts a URL, an absolute path, or a path relative to the repo root, which
+    is how palette files reference photos committed under sources/.
+    """
     p = pathlib.Path(url_or_path)
     if p.exists():
         return p
+    rel = REPO_ROOT / str(url_or_path)
+    if rel.exists():
+        return rel
     CACHE_DIR.mkdir(exist_ok=True)
     local = CACHE_DIR / pathlib.Path(str(url_or_path).split("?")[0]).name
     if not local.exists():

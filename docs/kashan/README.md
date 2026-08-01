@@ -1,15 +1,15 @@
-# Kashan
+# Kashan (say it kah-SHAHN)
 
 ![Kashan swatch](swatch.png)
 
 ## Source
 
-Silk Kashan Carpet, 16th century. Iran, probably Kashan. Silk (warp, weft and pile), asymmetrically knotted pile.
+Silk Kashan Carpet, 16th century. Iran, probably Kashan.
+Silk (warp, weft and pile), asymmetrically knotted pile.
 The Metropolitan Museum of Art, New York, Islamic Art, accession 58.46.
 Gift of Mrs. Douglas M. Moffat, 1958.
 
-[Object page](https://www.metmuseum.org/art/collection/search/451470) and [full resolution photo](https://images.metmuseum.org/CRDImages/is/original/DT5450.jpg), released
-by the museum under open access.
+[Object page](https://www.metmuseum.org/art/collection/search/451470) and [full resolution photo](https://images.metmuseum.org/CRDImages/is/original/DT5450.jpg), released by the museum under open access.
 
 ## Colors
 
@@ -26,7 +26,7 @@ by the museum under open access.
 | 9 | `#1a3b45` | indigo, medallion ground | 0.2 |
 
 The nearest pixel column is the CIEDE2000 distance from each palette color to
-the closest pixel in the museum photo. Small numbers mean the color is really
+the closest pixel in the source photo. Small numbers mean the color is really
 in the artwork.
 
 ## The palette beside the artwork
@@ -37,8 +37,9 @@ in the artwork.
 
 ![Kashan samples](samples.png)
 
-Regenerate this page with `python tools/make_samples.py kashan`. Pass
-`--dem your_dem.tif` to draw the elevation panel from your own raster.
+The rainfall panel is real data, one day of NOAA AORC 1 km precipitation.
+Regenerate this page with `python tools/make_samples.py kashan`, and
+pass `--dem your_dem.tif` to draw the elevation panel from your own raster.
 
 ## Separation and color vision
 
@@ -71,6 +72,9 @@ library(Rang)
 rang("Kashan", 5)
 ```
 
-ArcGIS Pro files are in [arcgis/Kashan.clr](../../arcgis/Kashan.clr) and
+ArcGIS Pro colormaps are in [arcgis/Kashan.clr](../../arcgis/Kashan.clr) and
 [arcgis/Kashan_continuous.clr](../../arcgis/Kashan_continuous.clr), with steps
-in the [ArcGIS guide](../../arcgis/README.md).
+in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
+[qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
+[qgis/Kashan.gpl](../../qgis/Kashan.gpl) for swatches, see the
+[QGIS guide](../../qgis/README.md).

@@ -6,7 +6,11 @@ Reads palettes/*.json, the single source of truth, and regenerates
   r/R/palettes_data.R            the R package data
   arcgis/<Name>.clr              discrete Esri colormap file
   arcgis/<Name>_continuous.clr   256 step ramp as an Esri colormap file
-  docs/<name>/swatch.png         color strip for the gallery
+  qgis/Rang.xml                  QGIS style file with every ramp, smooth and
+                                 discrete, for the Style Manager
+  qgis/<Name>.gpl                GIMP palette file QGIS imports as swatches
+  docs/<name>/swatch.png         color strip
+  docs/<name>/card.png           artwork beside the strip, for the gallery
   docs/<name>/preview.png        artwork plus vision simulations
   docs/<name>/samples.png        the six standard sample plots
   docs/<name>/README.md          the palette page
@@ -36,28 +40,29 @@ GALLERY_START = "<!-- gallery:start -->"
 GALLERY_END = "<!-- gallery:end -->"
 
 
+def rgb_ints(hexcode):
+    return tuple(int(v) for v in hex_to_rgb(hexcode))
+
+
+def held_by(src):
+    """Museum or site line, whichever the source has."""
+    return src.get("museum") or src.get("site") or ""
+
+
 # ------------------------------------------------------------ generated code
 
 def write_python(pals):
     lines = ['"""Palette data. Built with tools/build.py, edit palettes/*.json instead."""',
              "", "PALETTES = {"]
     for p in pals:
-        src = p["source"]
-        lines += [
-            f'    "{p["name"]}": {{',
-            f'        "colors": {tuple(p["colors"])},',
-            f'        "order": {tuple(p["order"])},',
-            f'        "colorblind": {p["colorblind"]},',
-            f'        "source": {{',
-            f'            "title": {src["title"]!r},',
-            f'            "date": {src["date"]!r},',
-            f'            "geography": {src["geography"]!r},',
-            f'            "museum": {src["museum"]!r},',
-            f'            "accession": {src["accession"]!r},',
-            f'            "url": {src["url"]!r},',
-            f'        }},',
-            f'    }},',
-        ]
+        entry = {
+            "colors": tuple(p["colors"]),
+            "order": tuple(p["order"]),
+            "colorblind": p["colorblind"],
+            "pronunciation": p.get("pronunciation", ""),
+            "source": p["source"],
+        }
+        lines.append(f'    "{p["name"]}": {entry!r},')
     lines += ["}", ""]
     out = REPO_ROOT / "python" / "rang" / "_palettes.py"
     out.write_text("\n".join(lines), encoding="utf-8")
@@ -80,7 +85,7 @@ def write_r(pals):
         order = ", ".join(str(v) for v in p["order"])
         flag = "TRUE" if p["colorblind"] else "FALSE"
         src = p["source"]
-        cite = f'{src["title"]}, {src["date"]}, {src["museum"]}, {src["url"]}'
+        cite = f'{src["title"]}, {src["date"]}, {held_by(src)}, {src["url"]}'
         lines.append(f'  {p["name"]} = list(')
         lines.append(f'    colors = c({cols}),')
         lines.append(f'    order = c({order}),')
@@ -100,14 +105,63 @@ def write_clr(pal):
     disc = arc / f'{pal["name"]}.clr'
     with open(disc, "w", encoding="utf-8") as f:
         for i, c in enumerate(pal["colors"], start=1):
-            r, g, b = (int(v) for v in hex_to_rgb(c))
-            f.write(f"{i} {r} {g} {b}\n")
+            f.write("{} {} {} {}\n".format(i, *rgb_ints(c)))
     cont = arc / f'{pal["name"]}_continuous.clr'
     with open(cont, "w", encoding="utf-8") as f:
         for i, c in enumerate(interpolate(pal["colors"], 256)):
-            r, g, b = (int(v) for v in hex_to_rgb(c))
-            f.write(f"{i} {r} {g} {b}\n")
+            f.write("{} {} {} {}\n".format(i, *rgb_ints(c)))
     print(f"wrote {disc} and {cont}")
+
+
+def qgis_ramp(name, colors, discrete):
+    """One gradient colorramp element in QGIS style XML."""
+    n = len(colors)
+    if discrete:
+        positions = [(i / n, colors[i]) for i in range(1, n)]
+    else:
+        positions = [(i / (n - 1), colors[i]) for i in range(1, n - 1)]
+    stops = ":".join("{};{},{},{},255".format(round(pos, 6), *rgb_ints(c))
+                     for pos, c in positions)
+    first = "{},{},{},255".format(*rgb_ints(colors[0]))
+    last = "{},{},{},255".format(*rgb_ints(colors[-1]))
+    return "\n".join([
+        f'    <colorramp type="gradient" name="{name}" tags="Rang">',
+        f'      <prop k="color1" v="{first}"/>',
+        f'      <prop k="color2" v="{last}"/>',
+        f'      <prop k="discrete" v="{1 if discrete else 0}"/>',
+        f'      <prop k="rampType" v="gradient"/>',
+        f'      <prop k="stops" v="{stops}"/>',
+        "    </colorramp>",
+    ])
+
+
+def write_qgis(pals):
+    qdir = REPO_ROOT / "qgis"
+    qdir.mkdir(exist_ok=True)
+
+    ramps = []
+    for p in pals:
+        ramps.append(qgis_ramp(p["name"], p["colors"], discrete=False))
+        ramps.append(qgis_ramp(f'{p["name"]} discrete', p["colors"], discrete=True))
+    xml = "\n".join(['<!DOCTYPE qgis_style>',
+                     '<qgis_style version="2">',
+                     "  <symbols/>",
+                     "  <colorramps>",
+                     *ramps,
+                     "  </colorramps>",
+                     "</qgis_style>",
+                     ""])
+    (qdir / "Rang.xml").write_text(xml, encoding="utf-8")
+    print(f"wrote {qdir / 'Rang.xml'}")
+
+    for p in pals:
+        lines = ["GIMP Palette", f'Name: Rang {p["name"]}', "Columns: 0", "#"]
+        for i, c in enumerate(p["colors"], start=1):
+            r, g, b = rgb_ints(c)
+            lines.append(f'{r:3d} {g:3d} {b:3d} {p["name"]} {i}')
+        (qdir / f'{p["name"]}.gpl').write_text("\n".join(lines) + "\n",
+                                               encoding="utf-8")
+        print(f'wrote {qdir / (p["name"] + ".gpl")}')
 
 
 # ------------------------------------------------------------- palette page
@@ -118,6 +172,43 @@ def cvd_table(colors):
         mn, mean = pairwise_min_mean(colors, kind)
         rows.append(f"| {VISION_LABELS[kind]} | {mn:.1f} | {mean:.1f} |")
     return "\n".join(rows)
+
+
+def source_section(src):
+    parts = [f'{src["title"]}, {src["date"]}. {src.get("geography", "")}.']
+    if src.get("medium"):
+        parts.append(f'{src["medium"]}.')
+    line2 = held_by(src)
+    if src.get("department"):
+        line2 += f', {src["department"]}'
+    if src.get("accession"):
+        line2 += f', accession {src["accession"]}'
+    if line2:
+        parts.append(line2 + ".")
+    if src.get("credit"):
+        parts.append(src["credit"] + ".")
+    text = "\n".join(parts)
+
+    if src.get("public_domain"):
+        photo_note = (f'[Object page]({src["url"]}) and '
+                      f'[full resolution photo]({src["image"]}), released by '
+                      "the museum under open access.")
+    else:
+        photo_note = (f'[Reference page]({src["url"]}). '
+                      f'{src.get("rights", "Photo used with permission.")}'.strip())
+        if not photo_note.endswith("."):
+            photo_note += "."
+        photo_note = photo_note[0].upper() + photo_note[1:]
+    return text + "\n\n" + photo_note
+
+
+def context_block(pal):
+    src = pal["source"]
+    if not src.get("context_image"):
+        return ""
+    rel = "../../" + src["context_image"].replace("\\", "/")
+    caption = src.get("context_caption", "The work in its setting")
+    return f"\n## The setting\n\n![{caption}]({rel})\n\n{caption}.\n"
 
 
 def write_docs_page(pal):
@@ -142,26 +233,22 @@ def write_docs_page(pal):
 
     wc = worst_case(colors)
     verdict = ("passes" if pal["colorblind"] else "does not pass")
+    say = f' (say it {pal["pronunciation"]})' if pal.get("pronunciation") else ""
 
-    body = f"""# {name}
+    body = f"""# {name}{say}
 
 ![{name} swatch](swatch.png)
 
 ## Source
 
-{src["title"]}, {src["date"]}. {src["geography"]}. {src["medium"]}.
-{src["museum"]}, {src["department"]}, accession {src["accession"]}.
-{src["credit"]}.
-
-[Object page]({src["url"]}) and [full resolution photo]({src["image"]}), released
-by the museum under open access.
-
+{source_section(src)}
+{context_block(pal)}
 ## Colors
 
 {chr(10).join(hex_rows)}
 
 The nearest pixel column is the CIEDE2000 distance from each palette color to
-the closest pixel in the museum photo. Small numbers mean the color is really
+the closest pixel in the source photo. Small numbers mean the color is really
 in the artwork.
 
 ## The palette beside the artwork
@@ -172,8 +259,9 @@ in the artwork.
 
 ![{name} samples](samples.png)
 
-Regenerate this page with `python tools/make_samples.py {name.lower()}`. Pass
-`--dem your_dem.tif` to draw the elevation panel from your own raster.
+The rainfall panel is real data, one day of NOAA AORC 1 km precipitation.
+Regenerate this page with `python tools/make_samples.py {name.lower()}`, and
+pass `--dem your_dem.tif` to draw the elevation panel from your own raster.
 
 ## Separation and color vision
 
@@ -201,9 +289,12 @@ library(Rang)
 rang("{name}", 5)
 ```
 
-ArcGIS Pro files are in [arcgis/{name}.clr](../../arcgis/{name}.clr) and
+ArcGIS Pro colormaps are in [arcgis/{name}.clr](../../arcgis/{name}.clr) and
 [arcgis/{name}_continuous.clr](../../arcgis/{name}_continuous.clr), with steps
-in the [ArcGIS guide](../../arcgis/README.md).
+in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
+[qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
+[qgis/{name}.gpl](../../qgis/{name}.gpl) for swatches, see the
+[QGIS guide](../../qgis/README.md).
 """
     out = REPO_ROOT / "docs" / name.lower() / "README.md"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -216,13 +307,16 @@ in the [ArcGIS guide](../../arcgis/README.md).
 def gallery_entry(pal):
     src = pal["source"]
     name = pal["name"]
+    say = f' Say it {pal["pronunciation"]}.' if pal.get("pronunciation") else ""
     friendly = " Colorblind friendly." if pal["colorblind"] else ""
+    line = f'{src["title"]}, {src["date"]}. {held_by(src)}.'
+    if src.get("credit") and not src.get("museum"):
+        line += f' {src["credit"]}.'
     return f"""### {name}
 
-![{name}](docs/{name.lower()}/swatch.png)
+![{name}, the artwork and its palette](docs/{name.lower()}/card.png)
 
-{src["title"]}, {src["date"]}. {src["geography"]}.
-{src["museum"]}, accession {src["accession"]}. [Object page]({src["url"]}){friendly}
+{line} [Reference]({src["url"]}){friendly}{say}
 
 `{" ".join(pal["colors"])}`
 
@@ -282,6 +376,7 @@ def main():
     pals = all_palettes()
     write_python(pals)
     write_r(pals)
+    write_qgis(pals)
     for p in pals:
         write_clr(p)
 

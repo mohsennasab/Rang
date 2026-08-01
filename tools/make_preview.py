@@ -1,7 +1,9 @@
-"""Render the two standard images every palette ships with.
+"""Render the standard images every palette ships with.
 
-  docs/<name>/swatch.png    the color strip with the palette name, used in the
-                            main README gallery
+  docs/<name>/swatch.png    the color strip with the palette name
+  docs/<name>/card.png      the artwork beside the strip, used in the main
+                            README gallery so the art and the palette read
+                            together
   docs/<name>/preview.png   the artwork beside the palette under normal vision
                             and simulated protanopia, deuteranopia and
                             tritanopia
@@ -11,7 +13,6 @@ Run directly or let tools/build.py call it.
   python tools/make_preview.py kashan
 """
 import argparse
-import sys
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
@@ -38,21 +39,50 @@ def strip(colors, w, h, kind=None):
     return img
 
 
-def make_swatch(pal, out):
-    W, H = 1400, 420
-    img = strip(pal["colors"], W, H)
+def name_band(img, name, font_size):
+    W, H = img.size
     d = ImageDraw.Draw(img)
     d.rectangle([0, H * 0.42, W, H * 0.58], fill=(255, 255, 255))
-    font = get_font(78)
-    box = d.textbbox((0, 0), pal["name"], font=font)
-    d.text(((W - box[2]) / 2, (H - box[3]) / 2 - 8), pal["name"],
+    font = get_font(font_size)
+    box = d.textbbox((0, 0), name, font=font)
+    d.text(((W - box[2]) / 2, (H - box[3]) / 2 - box[1]), name,
            fill="black", font=font)
+
+
+def caption_lines(pal):
+    src = pal["source"]
+    line2 = src.get("geography", "")
+    if src.get("accession"):
+        line2 += f', accession {src["accession"]}'
+    line3 = src.get("museum") or src.get("site") or ""
+    lines = [f'{pal["name"]}, {src["title"]}, {src["date"]}', line2, line3]
+    if src.get("credit") and not src.get("museum"):
+        lines.append(src["credit"])
+    return [ln for ln in lines if ln]
+
+
+def make_swatch(pal, out):
+    img = strip(pal["colors"], 1400, 420)
+    name_band(img, pal["name"], 78)
     img.save(out)
 
 
+def make_card(pal, out):
+    H = 380
+    art = Image.open(fetch_image(pal["source"]["image"])).convert("RGB")
+    art.thumbnail((520, H))
+    gap = 24
+    W = art.width + gap + 1500 - 520
+    card = Image.new("RGB", (W, H), "white")
+    card.paste(art, (0, (H - art.height) // 2))
+    sw = strip(pal["colors"], W - art.width - gap, H)
+    name_band(sw, pal["name"], 64)
+    card.paste(sw, (art.width + gap, 0))
+    card.save(out)
+
+
 def make_preview(pal, out):
-    src = pal["source"]
-    art = Image.open(fetch_image(src["image"])).convert("RGB")
+    art = Image.open(fetch_image(pal["source"]["image"])).convert("RGB")
     art.thumbnail((520, 780))
     canvas = Image.new("RGB", (1180, max(art.height + 40, 700)), "white")
     canvas.paste(art, (20, 20))
@@ -63,11 +93,7 @@ def make_preview(pal, out):
         d.text((x0, y), VISION_LABELS[kind], fill=(60, 60, 60), font=label_font)
         canvas.paste(strip(pal["colors"], 560, 70, kind), (x0, y + 30))
         y += 130
-    line2 = src["geography"]
-    if src.get("accession"):
-        line2 += f', accession {src["accession"]}'
-    lines = [f'{pal["name"]}, {src["title"]}, {src["date"]}', line2, src["museum"]]
-    for i, line in enumerate(lines):
+    for i, line in enumerate(caption_lines(pal)):
         d.text((x0, y + 10 + 30 * i), line, fill=(60, 60, 60), font=label_font)
     canvas.save(out)
 
@@ -77,8 +103,9 @@ def main(name):
     out_dir = REPO_ROOT / "docs" / pal["name"].lower()
     out_dir.mkdir(parents=True, exist_ok=True)
     make_swatch(pal, out_dir / "swatch.png")
+    make_card(pal, out_dir / "card.png")
     make_preview(pal, out_dir / "preview.png")
-    print(f"wrote {out_dir / 'swatch.png'} and {out_dir / 'preview.png'}")
+    print(f"wrote swatch.png, card.png and preview.png in {out_dir}")
 
 
 if __name__ == "__main__":

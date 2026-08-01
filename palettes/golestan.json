@@ -1,0 +1,43 @@
+{
+  "name": "Golestan",
+  "pronunciation": "goh-leh-STAHN, Persian for rose garden",
+  "colors": [
+    "#432f2c",
+    "#ae6259",
+    "#b57f86",
+    "#b5b5ac",
+    "#cbb11c",
+    "#9a9a68",
+    "#45939c",
+    "#577ab1",
+    "#333a80"
+  ],
+  "notes": [
+    "dark umber, outlines and the hunter's horse",
+    "coral red, blossoms and the rider's coat",
+    "rose pink, flowers among the scrollwork",
+    "ivory, tile ground of the medallion",
+    "golden yellow, the field",
+    "pale olive, the hunting ground",
+    "turquoise, the medallion ring",
+    "azure, lit edges of the scrollwork",
+    "cobalt, the arabesque scrolls"
+  ],
+  "order": [4, 5, 8, 6, 1, 7, 3, 9, 2],
+  "colorblind": true,
+  "source": {
+    "title": "Tile panel with a hunting scene, Golestan Palace",
+    "artist": "",
+    "date": "Qajar period",
+    "geography": "Tehran, Iran",
+    "medium": "Glazed polychrome tilework",
+    "site": "Golestan Palace, UNESCO World Heritage Site",
+    "url": "https://whc.unesco.org/en/list/1422/",
+    "image": "sources/golestan/tilework.jpg",
+    "context_image": "sources/golestan/palace.jpg",
+    "context_caption": "The panel in place at the palace, with a resident cat",
+    "credit": "Photo by Mohsen Tahmasebi Nasab, 2018",
+    "public_domain": false,
+    "rights": "photographer's own work, contributed to the project"
+  }
+}

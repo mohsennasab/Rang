@@ -1,0 +1,14 @@
+{
+  "date": "2017-08-27",
+  "scale": 10,
+  "encoding": "value = mm x scale + 1, 0 marks missing cells",
+  "bbox": {
+    "lon_min": -100.5,
+    "lat_min": 25.5,
+    "lon_max": -88.5,
+    "lat_max": 33.5
+  },
+  "event": "Hurricane Harvey daily rainfall over Texas and Louisiana",
+  "source": "NOAA Analysis of Record for Calibration (AORC) v1.1, 1 km, hourly, via AWS Open Data",
+  "url": "https://registry.opendata.aws/noaa-nws-aorc/"
+}

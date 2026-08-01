@@ -1,14 +1,14 @@
 """Render the sample plot page for a palette.
 
 Draws the same six panels for every palette so readers can compare them on a
-level field: violin plot, grouped bars, labeled scatter, stacked area, a
-gridded field with the continuous ramp, and a CONUS elevation map. Writes
-docs/<name>/samples.png.
+level field: violin plot, grouped bars, labeled scatter, stacked area, a real
+daily rainfall field from NOAA AORC on the continuous ramp, and a CONUS
+elevation map. Writes docs/<name>/samples.png.
 
-The elevation panel uses the small real DEM in data/conus_dem.png that ships
-with the repo. Pass --dem to swap in your own single band GeoTIFF instead
-(needs rasterio). If neither is available the panel falls back to synthetic
-terrain so the script always runs.
+The rainfall and elevation panels use the small real grids committed in
+data/, built by fetch_aorc_precip.py and fetch_conus_dem.py. Pass --dem to
+swap your own single band GeoTIFF into the elevation panel (needs rasterio).
+Missing grids fall back to synthetic fields so the script always runs.
 
   python tools/make_samples.py kashan
   python tools/make_samples.py kashan --dem C:/data/my_dem.tif
@@ -86,15 +86,39 @@ def panel_area(ax, pal, rng):
     ax.set_title("Stacked area")
 
 
-def panel_field(ax, fig, pal, rng):
+def load_aorc_precip():
+    png = REPO_ROOT / "data" / "aorc_precip.png"
+    meta = REPO_ROOT / "data" / "aorc_precip.json"
+    if not (png.exists() and meta.exists()):
+        return None, None
+    info = json.loads(meta.read_text(encoding="utf-8"))
+    raw = np.asarray(Image.open(png), float)
+    precip = np.where(raw > 0, (raw - 1) / info["scale"], np.nan)
+    return precip, info
+
+
+def panel_precip(ax, fig, pal, rng):
+    """Daily rainfall on the continuous ramp, real AORC data when available."""
     cmap = palette_cmap(pal)
-    x, y = np.meshgrid(np.linspace(-3, 3, 240), np.linspace(-3, 3, 240))
-    z = (np.exp(-((x - 1) ** 2 + (y - 1) ** 2)) * 2
-         - np.exp(-((x + 1.5) ** 2 + (y + 0.8) ** 2) / 2)
-         + 0.3 * np.sin(2 * x) * np.cos(2 * y))
-    im = ax.imshow(z, cmap=cmap, extent=(-3, 3, -3, 3), origin="lower")
-    fig.colorbar(im, ax=ax, shrink=0.85)
-    ax.set_title("Gridded field, continuous ramp")
+    precip, info = load_aorc_precip()
+    if precip is None:
+        x, y = np.meshgrid(np.linspace(-3, 3, 240), np.linspace(-3, 3, 240))
+        z = np.exp(-((x - 1) ** 2 + (y - 1) ** 2)) * 60 + \
+            np.exp(-((x + 1.5) ** 2 + (y + 0.8) ** 2) / 2) * 25
+        im = ax.imshow(z, cmap=cmap, extent=(-3, 3, -3, 3), origin="lower")
+        fig.colorbar(im, ax=ax, shrink=0.85, label="mm")
+        ax.set_title("Precipitation, synthetic")
+        return
+    step = max(1, precip.shape[1] // 900)
+    z = precip[::step, ::step]
+    hi = np.nanpercentile(z, 99.5)
+    cmap = cmap.copy()
+    cmap.set_bad("#ebebeb")
+    im = ax.imshow(np.ma.masked_invalid(z), cmap=cmap, vmin=0, vmax=hi)
+    fig.colorbar(im, ax=ax, shrink=0.85, label="mm per day")
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_title(f'Precipitation, AORC 1 km, {info["date"]}')
 
 
 # ----------------------------------------------------------------- elevation
@@ -181,7 +205,7 @@ def main(name, dem_path=None):
     panel_bars(axes[0, 1], pal, rng)
     panel_scatter(axes[0, 2], pal, rng)
     panel_area(axes[1, 0], pal, rng)
-    panel_field(axes[1, 1], fig, pal, rng)
+    panel_precip(axes[1, 1], fig, pal, rng)
     panel_dem(axes[1, 2], pal, dem_path)
 
     for ax in axes.flat:

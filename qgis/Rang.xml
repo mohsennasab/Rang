@@ -1,0 +1,34 @@
+<!DOCTYPE qgis_style>
+<qgis_style version="2">
+  <symbols/>
+  <colorramps>
+    <colorramp type="gradient" name="Golestan" tags="Rang">
+      <prop k="color1" v="67,47,44,255"/>
+      <prop k="color2" v="51,58,128,255"/>
+      <prop k="discrete" v="0"/>
+      <prop k="rampType" v="gradient"/>
+      <prop k="stops" v="0.125;174,98,89,255:0.25;181,127,134,255:0.375;181,181,172,255:0.5;203,177,28,255:0.625;154,154,104,255:0.75;69,147,156,255:0.875;87,122,177,255"/>
+    </colorramp>
+    <colorramp type="gradient" name="Golestan discrete" tags="Rang">
+      <prop k="color1" v="67,47,44,255"/>
+      <prop k="color2" v="51,58,128,255"/>
+      <prop k="discrete" v="1"/>
+      <prop k="rampType" v="gradient"/>
+      <prop k="stops" v="0.111111;174,98,89,255:0.222222;181,127,134,255:0.333333;181,181,172,255:0.444444;203,177,28,255:0.555556;154,154,104,255:0.666667;69,147,156,255:0.777778;87,122,177,255:0.888889;51,58,128,255"/>
+    </colorramp>
+    <colorramp type="gradient" name="Kashan" tags="Rang">
+      <prop k="color1" v="127,48,32,255"/>
+      <prop k="color2" v="26,59,69,255"/>
+      <prop k="discrete" v="0"/>
+      <prop k="rampType" v="gradient"/>
+      <prop k="stops" v="0.125;171,74,71,255:0.25;192,112,73,255:0.375;197,155,70,255:0.5;204,172,126,255:0.625;226,207,177,255:0.75;138,148,99,255:0.875;52,95,114,255"/>
+    </colorramp>
+    <colorramp type="gradient" name="Kashan discrete" tags="Rang">
+      <prop k="color1" v="127,48,32,255"/>
+      <prop k="color2" v="26,59,69,255"/>
+      <prop k="discrete" v="1"/>
+      <prop k="rampType" v="gradient"/>
+      <prop k="stops" v="0.111111;171,74,71,255:0.222222;192,112,73,255:0.333333;197,155,70,255:0.444444;204,172,126,255:0.555556;226,207,177,255:0.666667;138,148,99,255:0.777778;52,95,114,255:0.888889;26,59,69,255"/>
+    </colorramp>
+  </colorramps>
+</qgis_style>
