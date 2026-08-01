@@ -1,4 +1,4 @@
-# Golestan (say it goh-leh-STAHN, Persian for rose garden)
+# Golestan (Persian: گلستان, say it goh-leh-STAHN, Persian for rose garden)
 
 ![Golestan swatch](swatch.png)
 

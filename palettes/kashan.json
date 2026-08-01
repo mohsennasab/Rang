@@ -1,6 +1,8 @@
 {
   "name": "Kashan",
+  "persian": "کاشان",
   "pronunciation": "kah-SHAHN",
+  "position": 1,
   "colors": [
     "#7f3020",
     "#ab4a47",

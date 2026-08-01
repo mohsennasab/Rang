@@ -145,7 +145,9 @@ small requests about ramp order or a color that reads poorly in a plot.
 | key | required | meaning |
 |---|---|---|
 | `name` | yes | one word, capitalized, matches the filename |
+| `persian` | yes | the name in Persian script, like کاشان |
 | `pronunciation` | yes | how to say it, like "kah-SHAHN", add the meaning if you like |
+| `position` | no | gallery order, the build assigns the next slot when absent |
 | `colors` | yes | 5 to 12 hex codes in ramp order |
 | `notes` | yes | one short phrase per color, where in the artwork it lives |
 | `order` | no | pick order for discrete use, computed by the build if absent |

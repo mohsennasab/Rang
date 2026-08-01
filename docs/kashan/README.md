@@ -1,4 +1,4 @@
-# Kashan (say it kah-SHAHN)
+# Kashan (Persian: کاشان, say it kah-SHAHN)
 
 ![Kashan swatch](swatch.png)
 

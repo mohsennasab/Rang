@@ -254,7 +254,14 @@ def load_palette(name):
 
 
 def all_palettes():
-    return [load_palette(f.stem) for f in sorted(PALETTE_DIR.glob("*.json"))]
+    """Every palette, in gallery order.
+
+    Palettes carry a position number assigned in order of addition, so the
+    gallery keeps the collection's history instead of shuffling alphabetically
+    whenever a new name lands.
+    """
+    pals = [load_palette(f.stem) for f in sorted(PALETTE_DIR.glob("*.json"))]
+    return sorted(pals, key=lambda p: (p.get("position", 10 ** 9), p["name"]))
 
 
 def fetch_image(url_or_path):

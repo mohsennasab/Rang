@@ -59,6 +59,7 @@ def write_python(pals):
             "colors": tuple(p["colors"]),
             "order": tuple(p["order"]),
             "colorblind": p["colorblind"],
+            "persian": p.get("persian", ""),
             "pronunciation": p.get("pronunciation", ""),
             "source": p["source"],
         }
@@ -233,7 +234,12 @@ def write_docs_page(pal):
 
     wc = worst_case(colors)
     verdict = ("passes" if pal["colorblind"] else "does not pass")
-    say = f' (say it {pal["pronunciation"]})' if pal.get("pronunciation") else ""
+    bits = []
+    if pal.get("persian"):
+        bits.append(f'Persian: {pal["persian"]}')
+    if pal.get("pronunciation"):
+        bits.append(f'say it {pal["pronunciation"]}')
+    say = f' ({", ".join(bits)})' if bits else ""
 
     body = f"""# {name}{say}
 
@@ -307,7 +313,11 @@ in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
 def gallery_entry(pal):
     src = pal["source"]
     name = pal["name"]
-    say = f' Say it {pal["pronunciation"]}.' if pal.get("pronunciation") else ""
+    say = ""
+    if pal.get("persian"):
+        say += f' Persian: {pal["persian"]}.'
+    if pal.get("pronunciation"):
+        say += f' Say it {pal["pronunciation"]}.'
     friendly = " Colorblind friendly." if pal["colorblind"] else ""
     line = f'{src["title"]}, {src["date"]}. {held_by(src)}.'
     if src.get("credit") and not src.get("museum"):
@@ -351,6 +361,12 @@ def ensure_order(name):
         pal["colorblind"] = worst_case(pal["colors"]) >= COLORBLIND_THRESHOLD
         changed = True
         print(f"computed colorblind flag for {pal['name']}: {pal['colorblind']}")
+    if "position" not in pal:
+        taken = [q.get("position", 0) for q in all_palettes()
+                 if q["name"] != pal["name"]]
+        pal["position"] = max(taken, default=0) + 1
+        changed = True
+        print(f"assigned gallery position {pal['position']} to {pal['name']}")
     if changed:
         path.write_text(json.dumps(pal, indent=2) + "\n", encoding="utf-8")
     return pal

@@ -6,9 +6,9 @@ paintings, tilework, manuscripts, ceramics and architecture, each palette
 translates historic colors into clear, expressive and accessible schemes for
 Python, R, ArcGIS Pro and QGIS.
 
-The name Rang means "color" in Persian. The goal is to preserve the character
-of these works while adapting them for data visualization, cartography and
-creative coding.
+The name Rang (Persian: رنگ) means "color" in Persian. The goal is to
+preserve the character of these works while adapting them for data
+visualization, cartography and creative coding.
 
 Every palette here traces back to a specific artwork with a documented
 photograph. Each one records where its colors came from, how far each color
@@ -38,27 +38,27 @@ sample plots, per color provenance and color vision numbers.
 
 <!-- gallery:start -->
 
-### Golestan
-
-![Golestan, the artwork and its palette](docs/golestan/card.png)
-
-Tile panel with a hunting scene, Qajar period. Golestan Palace, UNESCO World Heritage Site. Photo by Mohsen Tahmasebi Nasab, 2018. [Reference](https://whc.unesco.org/en/list/1422/) Colorblind friendly. Say it goh-leh-STAHN, Persian for rose garden.
-
-`#432f2c #ae6259 #b57f86 #b5b5ac #cbb11c #9a9a68 #45939c #577ab1 #333a80`
-
-[Sample plots and full details](docs/golestan/README.md)
-
-***
-
 ### Kashan
 
 ![Kashan, the artwork and its palette](docs/kashan/card.png)
 
-Silk Kashan Carpet, 16th century. The Metropolitan Museum of Art, New York. [Reference](https://www.metmuseum.org/art/collection/search/451470) Say it kah-SHAHN.
+Silk Kashan Carpet, 16th century. The Metropolitan Museum of Art, New York. [Reference](https://www.metmuseum.org/art/collection/search/451470) Persian: کاشان. Say it kah-SHAHN.
 
 `#7f3020 #ab4a47 #c07049 #c59b46 #ccac7e #e2cfb1 #8a9463 #345f72 #1a3b45`
 
 [Sample plots and full details](docs/kashan/README.md)
+
+***
+
+### Golestan
+
+![Golestan, the artwork and its palette](docs/golestan/card.png)
+
+Tile panel with a hunting scene, Qajar period. Golestan Palace, UNESCO World Heritage Site. Photo by Mohsen Tahmasebi Nasab, 2018. [Reference](https://whc.unesco.org/en/list/1422/) Colorblind friendly. Persian: گلستان. Say it goh-leh-STAHN, Persian for rose garden.
+
+`#432f2c #ae6259 #b57f86 #b5b5ac #cbb11c #9a9a68 #45939c #577ab1 #333a80`
+
+[Sample plots and full details](docs/golestan/README.md)
 
 <!-- gallery:end -->
 
@@ -67,11 +67,11 @@ Silk Kashan Carpet, 16th century. The Metropolitan Museum of Art, New York. [Ref
 The names are Persian, and they are easy once you see them spelled out. The
 stress lands on the last syllable.
 
-| name | say it | meaning |
-|---|---|---|
-| Rang | rahng, close to the English word rung | color |
-| Kashan | kah-SHAHN | a city famous for its carpets and silks |
-| Golestan | goh-leh-STAHN | rose garden, the Qajar palace in Tehran |
+| name | Persian | say it | meaning |
+|---|---|---|---|
+| Rang | رنگ | rahng, close to the English word rung | color |
+| Kashan | کاشان | kah-SHAHN | a city famous for its carpets and silks |
+| Golestan | گلستان | goh-leh-STAHN | rose garden, the Qajar palace in Tehran |
 
 Every palette page repeats its own pronunciation, and new palettes add
 themselves to this pattern through their json file.

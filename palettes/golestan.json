@@ -1,6 +1,8 @@
 {
   "name": "Golestan",
+  "persian": "گلستان",
   "pronunciation": "goh-leh-STAHN, Persian for rose garden",
+  "position": 2,
   "colors": [
     "#432f2c",
     "#ae6259",
