@@ -1,0 +1,6 @@
+export(rang)
+export(rang_palettes)
+export(colorblind_friendly)
+S3method(print, palette)
+importFrom(grDevices, colorRampPalette, rgb)
+importFrom(graphics, image, par, rect, text)

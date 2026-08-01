@@ -1,0 +1,25 @@
+# python
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+
+# downloaded source images and other scratch files
+cache/
+
+# local working files
+
+
+
+
+
+
+notes/
+*.local.md
+.DS_Store

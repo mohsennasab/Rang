@@ -1,0 +1,16 @@
+Package: Rang
+Type: Package
+Title: Color Palettes from Persian Art
+Version: 0.1.0
+Authors@R: person("Mohsen", "Tahmasebi Nasab",
+    email = "mohsen.tahmasebi.n@gmail.com", role = c("aut", "cre"))
+Description: Color palettes drawn from Persian carpets, miniature paintings,
+    tilework, manuscripts, ceramics and architecture. Each palette traces back
+    to a specific museum object with an open access photograph. Discrete and
+    continuous palettes for plots and maps.
+License: MIT + file LICENSE
+URL: https://github.com/mohsennasab/Rang
+BugReports: https://github.com/mohsennasab/Rang/issues
+Encoding: UTF-8
+Imports: grDevices, graphics
+RoxygenNote: 7.3.0

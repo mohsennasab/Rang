@@ -1,0 +1,12 @@
+{
+  "offset_m": 1000,
+  "bbox": {
+    "lon_min": -125.0,
+    "lat_min": 24.0,
+    "lon_max": -66.5,
+    "lat_max": 50.0
+  },
+  "projection": "web mercator, cropped at zoom 5",
+  "source": "AWS Open Data terrain tiles (terrarium), elevation from SRTM, GMTED2010, ETOPO1 and other public datasets",
+  "url": "https://registry.opendata.aws/terrain-tiles/"
+}
