@@ -39,6 +39,17 @@ def rgb_to_hex(rgb):
     return f"#{r:02x}{g:02x}{b:02x}"
 
 
+def hex_to_argb_int(hexcode, alpha=255):
+    """The signed 32 bit ARGB integer .NET uses, as found in .rasmap files.
+
+    White with full alpha is -1, pure yellow is -256, which matches the
+    Colors attribute RAS Mapper writes in SurfaceFill elements.
+    """
+    r, g, b = (int(v) for v in hex_to_rgb(hexcode))
+    value = (alpha << 24) | (r << 16) | (g << 8) | b
+    return value - 2 ** 32 if value >= 2 ** 31 else value
+
+
 def srgb_to_linear(c):
     c = np.asarray(c, float) / 255.0
     return np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)

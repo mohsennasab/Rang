@@ -1,0 +1,14 @@
+<!-- Rang Golestan for HEC-RAS RAS Mapper. Built with tools/build.py. -->
+<!-- Close HEC-RAS, open the project's .rasmap file in a text editor, and -->
+<!-- replace the target layer's Symbology block with one of these. For a -->
+<!-- fixed value range use tools/make_hecras_ramp.py instead. -->
+
+<!-- Golestan, first to last, stretched over the layer's range -->
+<Symbology>
+  <SurfaceFill Colors="-12374228,-5348775,-4882554,-4868692,-3428068,-6645144,-12217444,-11044175,-13419904" Values="0,0.125,0.25,0.375,0.5,0.625,0.75,0.875,1" Stretched="True" AlphaTag="255" UseDatasetMinMax="True" RegenerateForScreen="True" />
+</Symbology>
+
+<!-- Golestan reversed, for when the ramp should run the other way -->
+<Symbology>
+  <SurfaceFill Colors="-13419904,-11044175,-12217444,-6645144,-3428068,-4868692,-4882554,-5348775,-12374228" Values="0,0.125,0.25,0.375,0.5,0.625,0.75,0.875,1" Stretched="True" AlphaTag="255" UseDatasetMinMax="True" RegenerateForScreen="True" />
+</Symbology>

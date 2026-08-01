@@ -77,4 +77,6 @@ ArcGIS Pro colormaps are in [arcgis/Kashan.clr](../../arcgis/Kashan.clr) and
 in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
 [qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
 [qgis/Kashan.gpl](../../qgis/Kashan.gpl) for swatches, see the
-[QGIS guide](../../qgis/README.md).
+[QGIS guide](../../qgis/README.md). HEC-RAS surface fills are in
+[hecras/Kashan.rasmap.xml](../../hecras/Kashan.rasmap.xml), see the
+[HEC-RAS guide](../../hecras/README.md).

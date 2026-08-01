@@ -9,6 +9,8 @@ Reads palettes/*.json, the single source of truth, and regenerates
   qgis/Rang.xml                  QGIS style file with every ramp, smooth and
                                  discrete, for the Style Manager
   qgis/<Name>.gpl                GIMP palette file QGIS imports as swatches
+  hecras/<Name>.rasmap.xml       RAS Mapper surface fill blocks to paste into
+                                 a project's .rasmap file
   docs/<name>/swatch.png         color strip
   docs/<name>/card.png           artwork beside the strip, for the gallery
   docs/<name>/preview.png        artwork plus vision simulations
@@ -29,6 +31,7 @@ import argparse
 import json
 import re
 
+import make_hecras_ramp
 import make_preview
 import make_samples
 from colorlib import (COLORBLIND_THRESHOLD, PALETTE_DIR, REPO_ROOT,
@@ -163,6 +166,34 @@ def write_qgis(pals):
         (qdir / f'{p["name"]}.gpl').write_text("\n".join(lines) + "\n",
                                                encoding="utf-8")
         print(f'wrote {qdir / (p["name"] + ".gpl")}')
+
+
+def write_hecras(pal):
+    """Paste ready RAS Mapper surface fill blocks for one palette.
+
+    The format matches what RAS Mapper itself writes into a project's .rasmap
+    file. Shipped blocks let RAS Mapper stretch the ramp over the layer's own
+    range, and tools/make_hecras_ramp.py generates blocks with fixed values.
+    """
+    hdir = REPO_ROOT / "hecras"
+    hdir.mkdir(exist_ok=True)
+    name = pal["name"]
+    colors = pal["colors"]
+    blocks = [
+        f"<!-- Rang {name} for HEC-RAS RAS Mapper. Built with tools/build.py. -->",
+        "<!-- Close HEC-RAS, open the project's .rasmap file in a text editor, and -->",
+        "<!-- replace the target layer's Symbology block with one of these. For a -->",
+        "<!-- fixed value range use tools/make_hecras_ramp.py instead. -->",
+        "",
+        f"<!-- {name}, first to last, stretched over the layer's range -->",
+        make_hecras_ramp.surface_fill(colors, 0, 1, use_dataset_minmax=True),
+        "",
+        f"<!-- {name} reversed, for when the ramp should run the other way -->",
+        make_hecras_ramp.surface_fill(colors[::-1], 0, 1, use_dataset_minmax=True),
+    ]
+    out = hdir / f"{name}.rasmap.xml"
+    out.write_text("\n".join(blocks) + "\n", encoding="utf-8")
+    print(f"wrote {out}")
 
 
 # ------------------------------------------------------------- palette page
@@ -300,7 +331,9 @@ ArcGIS Pro colormaps are in [arcgis/{name}.clr](../../arcgis/{name}.clr) and
 in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
 [qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
 [qgis/{name}.gpl](../../qgis/{name}.gpl) for swatches, see the
-[QGIS guide](../../qgis/README.md).
+[QGIS guide](../../qgis/README.md). HEC-RAS surface fills are in
+[hecras/{name}.rasmap.xml](../../hecras/{name}.rasmap.xml), see the
+[HEC-RAS guide](../../hecras/README.md).
 """
     out = REPO_ROOT / "docs" / name.lower() / "README.md"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -395,6 +428,7 @@ def main():
     write_qgis(pals)
     for p in pals:
         write_clr(p)
+        write_hecras(p)
 
     for name in targets:
         if not args.skip_images:

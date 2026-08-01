@@ -118,7 +118,7 @@ Leave out `order` and `colorblind` if you want the build to compute them.
 python tools/build.py <name>
 ```
 
-This regenerates the Python, R, ArcGIS and QGIS files for the whole
+This regenerates the Python, R, ArcGIS, QGIS and HEC-RAS files for the whole
 collection, renders your swatch, gallery card, preview and sample plots,
 writes `docs/<name>/README.md` and adds your palette to the gallery in the
 main README. Look at the sample page it produced. If a plot reads badly, go

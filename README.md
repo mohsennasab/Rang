@@ -4,7 +4,7 @@ Rang is a collection of thoughtfully crafted color palettes inspired by the
 rich visual traditions of Persian art. Drawing from carpets, miniature
 paintings, tilework, manuscripts, ceramics and architecture, each palette
 translates historic colors into clear, expressive and accessible schemes for
-Python, R, ArcGIS Pro and QGIS.
+Python, R, ArcGIS Pro, QGIS and HEC-RAS.
 
 The name Rang (Persian: رنگ) means "color" in Persian. The goal is to
 preserve the character of these works while adapting them for data
@@ -26,6 +26,7 @@ including NOAA AORC rainfall and CONUS elevation, before you commit to it.
   - [R](#r)
   - [ArcGIS Pro](#arcgis-pro)
   - [QGIS](#qgis)
+  - [HEC-RAS](#hec-ras)
 - [How palettes are made](#how-palettes-are-made)
 - [Contributing](#contributing)
 - [Repository layout](#repository-layout)
@@ -93,10 +94,12 @@ install.packages("remotes")
 remotes::install_github("mohsennasab/Rang", subdir = "r")
 ```
 
-### ArcGIS Pro and QGIS
+### ArcGIS Pro, QGIS and HEC-RAS
 
-No install. Grab the files from [arcgis/](arcgis/) or [qgis/](qgis/) and
-follow the [ArcGIS guide](arcgis/README.md) or the [QGIS guide](qgis/README.md).
+No install. Grab the files from [arcgis/](arcgis/), [qgis/](qgis/) or
+[hecras/](hecras/) and follow the matching guide,
+[ArcGIS](arcgis/README.md), [QGIS](qgis/README.md) or
+[HEC-RAS](hecras/README.md).
 
 ## Use the palettes
 
@@ -156,6 +159,19 @@ palette appears in the color ramp dropdowns, smooth and discrete. The `.gpl`
 files add the exact colors to the QGIS color picker. Steps are in the
 [QGIS guide](qgis/README.md).
 
+### HEC-RAS
+
+Each palette ships paste ready RAS Mapper surface fill blocks in
+[hecras/](hecras/), in the exact XML format the `.rasmap` project file uses,
+forward and reversed. Drop one into a depth, velocity or WSE layer's
+Symbology block, or generate a block scaled to a specific value range:
+
+```
+python tools/make_hecras_ramp.py kashan --min 0 --max 30
+```
+
+Steps and details are in the [HEC-RAS guide](hecras/README.md).
+
 ## How palettes are made
 
 The short version, with the full walkthrough in
@@ -171,9 +187,9 @@ The short version, with the full walkthrough in
 3. Separation is measured under normal vision and simulated protanopia,
    deuteranopia and tritanopia. A pick order is computed so that the first few
    discrete colors stay as far apart as possible under every vision type.
-4. One build command regenerates the Python, R, ArcGIS and QGIS files, the
-   sample plots and the documentation, so every palette in the collection is
-   packaged the same way.
+4. One build command regenerates the Python, R, ArcGIS, QGIS and HEC-RAS
+   files, the sample plots and the documentation, so every palette in the
+   collection is packaged the same way.
 
 The sample pages use real data on purpose: one day of NOAA AORC 1 km rainfall
 from Hurricane Harvey and a CONUS elevation grid, both fetched from AWS Open
@@ -198,6 +214,7 @@ python/      pip installable package, reads generated _palettes.py
 r/           R package, reads generated palettes_data.R
 arcgis/      .clr colormap files and the ArcGIS Pro guide
 qgis/        style file, .gpl swatches and the QGIS guide
+hecras/      RAS Mapper surface fill blocks and the HEC-RAS guide
 tools/       contributor scripts, extraction to build
 docs/        one page per palette with previews and sample plots
 data/        small real rainfall and elevation grids for the sample plots
