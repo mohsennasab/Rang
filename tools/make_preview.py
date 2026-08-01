@@ -49,7 +49,23 @@ def name_band(img, name, font_size):
            fill="black", font=font)
 
 
-def caption_lines(pal):
+def wrap_line(text, font, max_w):
+    """Split an overlong caption line at commas so it fits the column."""
+    parts = [p.strip() for p in text.split(",")]
+    lines, current = [], ""
+    for part in parts:
+        candidate = f"{current}, {part}" if current else part
+        if current and font.getlength(candidate) > max_w:
+            lines.append(current)
+            current = part
+        else:
+            current = candidate
+    if current:
+        lines.append(current)
+    return lines
+
+
+def caption_lines(pal, font=None, max_w=580):
     src = pal["source"]
     line2 = src.get("geography", "")
     if src.get("accession"):
@@ -58,7 +74,10 @@ def caption_lines(pal):
     lines = [f'{pal["name"]}, {src["title"]}, {src["date"]}', line2, line3]
     if src.get("credit") and not src.get("museum"):
         lines.append(src["credit"])
-    return [ln for ln in lines if ln]
+    lines = [ln for ln in lines if ln]
+    if font is not None:
+        lines = [w for ln in lines for w in wrap_line(ln, font, max_w)]
+    return lines
 
 
 def make_swatch(pal, out):
@@ -69,7 +88,9 @@ def make_swatch(pal, out):
 
 def make_card(pal, out):
     H = 380
-    art = Image.open(fetch_image(pal["source"]["image"])).convert("RGB")
+    src = pal["source"]
+    art_path = fetch_image(src.get("card_image") or src["image"])
+    art = Image.open(art_path).convert("RGB")
     art.thumbnail((520, H))
     gap = 24
     W = art.width + gap + 1500 - 520
@@ -93,7 +114,7 @@ def make_preview(pal, out):
         d.text((x0, y), VISION_LABELS[kind], fill=(60, 60, 60), font=label_font)
         canvas.paste(strip(pal["colors"], 560, 70, kind), (x0, y + 30))
         y += 130
-    for i, line in enumerate(caption_lines(pal)):
+    for i, line in enumerate(caption_lines(pal, label_font, 1180 - x0 - 20)):
         d.text((x0, y + 10 + 30 * i), line, fill=(60, 60, 60), font=label_font)
     canvas.save(out)
 

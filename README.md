@@ -42,7 +42,7 @@ sample plots, per color provenance and color vision numbers.
 
 ![Golestan, the artwork and its palette](docs/golestan/card.png)
 
-Tile panel with a hunting scene, Golestan Palace, Qajar period. Golestan Palace, UNESCO World Heritage Site. Photo by Mohsen Tahmasebi Nasab, 2018. [Reference](https://whc.unesco.org/en/list/1422/) Colorblind friendly. Say it goh-leh-STAHN, Persian for rose garden.
+Tile panel with a hunting scene, Qajar period. Golestan Palace, UNESCO World Heritage Site. Photo by Mohsen Tahmasebi Nasab, 2018. [Reference](https://whc.unesco.org/en/list/1422/) Colorblind friendly. Say it goh-leh-STAHN, Persian for rose garden.
 
 `#432f2c #ae6259 #b57f86 #b5b5ac #cbb11c #9a9a68 #45939c #577ab1 #333a80`
 

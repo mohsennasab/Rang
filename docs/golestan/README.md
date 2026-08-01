@@ -4,7 +4,7 @@
 
 ## Source
 
-Tile panel with a hunting scene, Golestan Palace, Qajar period. Tehran, Iran.
+Tile panel with a hunting scene, Qajar period. Tehran, Iran.
 Glazed polychrome tilework.
 Golestan Palace, UNESCO World Heritage Site.
 Photo by Mohsen Tahmasebi Nasab, 2018.
@@ -21,14 +21,14 @@ The panel in place at the palace, with a resident cat.
 
 | position | hex | drawn from | nearest pixel |
 |---|---|---|---|
-| 1 | `#432f2c` | dark umber, outlines and the hunter's horse | 0.3 |
-| 2 | `#ae6259` | coral red, blossoms and the rider's coat | 0.7 |
+| 1 | `#432f2c` | dark umber, outlines and the hunter's horse | 1.2 |
+| 2 | `#ae6259` | coral red, blossoms and the rider's coat | 0.3 |
 | 3 | `#b57f86` | rose pink, flowers among the scrollwork | 0.4 |
-| 4 | `#b5b5ac` | ivory, tile ground of the medallion | 0.5 |
-| 5 | `#cbb11c` | golden yellow, the field | 0.0 |
-| 6 | `#9a9a68` | pale olive, the hunting ground | 0.7 |
-| 7 | `#45939c` | turquoise, the medallion ring | 0.0 |
-| 8 | `#577ab1` | azure, lit edges of the scrollwork | 0.3 |
+| 4 | `#b5b5ac` | ivory, tile ground of the medallion | 0.0 |
+| 5 | `#cbb11c` | golden yellow, the field | 0.1 |
+| 6 | `#9a9a68` | pale olive, the hunting ground | 0.9 |
+| 7 | `#45939c` | turquoise, the medallion ring | 0.3 |
+| 8 | `#577ab1` | azure, lit edges of the scrollwork | 0.4 |
 | 9 | `#333a80` | cobalt, the arabesque scrolls | 0.3 |
 
 The nearest pixel column is the CIEDE2000 distance from each palette color to
