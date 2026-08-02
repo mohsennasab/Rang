@@ -267,9 +267,10 @@ def write_docs_page(pal):
 
     if pal.get("samples") == "water":
         samples_note = (
-            "Both panels are real data. The elevation panel is the USGS 100 year\n"
-            "high flood profile for the creeks at Ithaca, New York, and the network\n"
-            "is Fall Creek upstream of Ithaca from the USGS NLDI service.\n"
+            "Both panels use USGS data. The first shows the 100 year high flood\n"
+            "profile for the creeks at Ithaca, New York. The second uses NLDI\n"
+            "flowlines for Fall Creek, with widths based on NHDPlusV2 stream order\n"
+            "from USGS Fabric. The watershed interior is left unfilled.\n"
             f"Regenerate this page with `python tools/make_samples.py {name.lower()}`.")
     else:
         samples_note = (

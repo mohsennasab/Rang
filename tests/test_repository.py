@@ -128,6 +128,58 @@ class OutputTests(unittest.TestCase):
                     self.assertEqual(image.size, size)
         with Image.open(ROOT / "logo" / "rang.png") as image:
             self.assertEqual(image.size, (1024, 1024))
+        with Image.open(ROOT / "docs" / "termeh" / "samples.png") as image:
+            self.assertEqual(image.size, (2100, 1120))
+
+    def test_stream_network_attributes(self):
+        data = json.loads((ROOT / "data" / "streams.json").read_text(
+            encoding="utf-8"))
+        flowlines = data["flowlines"]
+        self.assertGreater(len(flowlines), 100)
+        self.assertTrue(all(line["stream_order"] >= 1 for line in flowlines))
+        self.assertTrue(all(line["drainage_sq_km"] >= 0 for line in flowlines))
+        self.assertGreater(max(line["drainage_sq_km"] for line in flowlines), 300)
+        self.assertGreater(len({line["stream_order"] for line in flowlines}), 2)
+        self.assertTrue(any(line["main_stem"] for line in flowlines))
+
+    def test_license_scope_and_package_copies(self):
+        root_license = (ROOT / "LICENSE").read_text(encoding="utf-8")
+        cc0 = (ROOT / "LICENSES" / "CC0-1.0.txt").read_text(encoding="utf-8")
+        scope = (ROOT / "LICENSES" / "README.md").read_text(encoding="utf-8")
+        notices = (ROOT / "THIRD_PARTY_NOTICES.md").read_text(encoding="utf-8")
+        python_license = (ROOT / "python" / "LICENSE").read_text(encoding="utf-8")
+        python_cc0 = (ROOT / "python" / "LICENSE-CC0.txt").read_text(
+            encoding="utf-8")
+        r_cc0 = (ROOT / "r" / "inst" / "LICENSE-CC0.txt").read_text(
+            encoding="utf-8")
+        self.assertIn("MIT License", root_license)
+        self.assertEqual(root_license, python_license)
+        self.assertIn("CC0 1.0 Universal", cc0)
+        self.assertIn("CC0 1.0 Universal", python_cc0)
+        self.assertEqual(python_cc0, r_cc0.replace("R software", "Python software")
+                         .replace("identified in DESCRIPTION and LICENSE",
+                                  "in LICENSE"))
+        self.assertIn("palette names, color values", scope)
+        self.assertRegex(notices.lower(), r"all rights\s+are reserved")
+
+    def test_colab_notebooks(self):
+        notebooks = {
+            "rang_python_colab.ipynb": ("python", "python3"),
+            "rang_r_colab.ipynb": ("R", "ir"),
+        }
+        for filename, (language, kernel) in notebooks.items():
+            path = ROOT / "examples" / filename
+            notebook = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(notebook["nbformat"], 4)
+            self.assertEqual(notebook["metadata"]["kernelspec"]["name"], kernel)
+            self.assertEqual(notebook["metadata"]["kernelspec"]["language"], language)
+            first_cell = "".join(notebook["cells"][0]["source"])
+            self.assertIn("colab-badge.svg", first_cell)
+            self.assertIn(f"/examples/{filename}", first_cell)
+            for cell in notebook["cells"]:
+                if cell["cell_type"] == "code":
+                    self.assertEqual(cell["outputs"], [])
+                    self.assertIsNone(cell["execution_count"])
 
     def test_no_embedded_origin_markers(self):
         words = ["cl" + "aude", "anth" + "ropic", "chat" + "g" + "pt",

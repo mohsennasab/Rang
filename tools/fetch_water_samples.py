@@ -8,7 +8,8 @@ Two real datasets, both public, both centered on Ithaca, New York:
                                   Sixmile, Cascadilla and Fall Creeks
                                   (ScienceBase item 5b757eb6e4b0f5d5787fe461)
   data/streams.json               Fall Creek's upstream flowline network and
-                                  basin boundary from the USGS NLDI service
+                                  basin boundary from the USGS NLDI service,
+                                  with NHDPlusV2 attributes from USGS Fabric
 
 The files ship with the repo, so contributors normally never run this. It
 needs rasterio on top of the regular tool requirements.
@@ -28,6 +29,8 @@ ITEM = "5b757eb6e4b0f5d5787fe461"
 PROFILE = "WSE12_100yrHigh"
 GAGE = "USGS-04234000"  # Fall Creek near Ithaca NY
 NLDI = "https://api.water.usgs.gov/nldi/linked-data/nwissite"
+FABRIC = ("https://api.water.usgs.gov/fabric/pygeoapi/collections/"
+          "nhdflowline_network/items")
 SCALE = 20  # stored value = (elevation ft - vmin) x SCALE + 1, 0 marks dry cells
 
 
@@ -97,32 +100,57 @@ def fetch_streams():
     tribs = get(f"{NLDI}/{GAGE}/navigation/UT/flowlines?distance=9999")
     main = get(f"{NLDI}/{GAGE}/navigation/UM/flowlines?distance=9999")
 
-    def lines(fc):
-        out = []
-        for feat in fc["features"]:
-            geom = feat["geometry"]
-            if geom["type"] == "LineString":
-                out.append(rounded(geom["coordinates"]))
-            elif geom["type"] == "MultiLineString":
-                out.extend(rounded(part) for part in geom["coordinates"])
-        return out
-
     ring = basin["features"][0]["geometry"]["coordinates"]
     ring = ring[0] if basin["features"][0]["geometry"]["type"] == "Polygon" else ring[0][0]
+    xs, ys = zip(*ring)
+    bbox = ",".join(str(round(value, 5)) for value in
+                    (min(xs), min(ys), max(xs), max(ys)))
+    fabric = get(f"{FABRIC}?bbox={bbox}&limit=1000&f=json")
+    attributes = {
+        int(feature["properties"]["comid"]): feature["properties"]
+        for feature in fabric["features"]
+    }
+    main_ids = {
+        int(feature["properties"]["nhdplus_comid"])
+        for feature in main["features"]
+    }
+
+    flowlines = []
+    missing = []
+    for feature in tribs["features"]:
+        comid = int(feature["properties"]["nhdplus_comid"])
+        props = attributes.get(comid)
+        if props is None:
+            missing.append(comid)
+            continue
+        geometry = feature["geometry"]
+        parts = ([geometry["coordinates"]] if geometry["type"] == "LineString"
+                 else geometry["coordinates"])
+        for part in parts:
+            flowlines.append({
+                "coordinates": rounded(part),
+                "comid": comid,
+                "stream_order": int(props["streamorde"]),
+                "drainage_sq_km": round(float(props["totdasqkm"]), 3),
+                "name": (props.get("gnis_name") or "").strip(),
+                "main_stem": comid in main_ids,
+            })
+    if missing:
+        raise RuntimeError(f"USGS Fabric did not return {len(missing)} flowlines")
 
     out = REPO_ROOT / "data"
     (out / "streams.json").write_text(json.dumps({
         "basin": rounded(ring),
-        "tributaries": lines(tribs),
-        "main_stem": lines(main),
+        "flowlines": flowlines,
         "place": "Fall Creek upstream of Ithaca, New York",
         "gage": GAGE,
-        "source": "USGS Network Linked Data Index",
+        "source": "USGS Network Linked Data Index and USGS Fabric",
         "url": "https://api.water.usgs.gov/nldi/",
-    }), encoding="utf-8")
-    n = sum(len(s) for s in lines(tribs))
+        "attributes_url": "https://api.water.usgs.gov/docs/fabric-pygeoapi/",
+    }, separators=(",", ":")), encoding="utf-8")
+    n = sum(len(line["coordinates"]) for line in flowlines)
     print(f"wrote {out / 'streams.json'} "
-          f"({len(lines(tribs))} tributary lines, {n} vertices)")
+          f"({len(flowlines)} flowlines, {n} vertices)")
 
 
 def main():

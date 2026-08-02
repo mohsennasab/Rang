@@ -6,7 +6,7 @@
 
 ## Checklist
 
-- [ ] Photo reuse status is accurate in `source.public_domain` and `source.rights`
+- [ ] Photo reuse status and exact license are accurate in `source.public_domain` and `source.rights`
 - [ ] `palettes/<name>.json` has every required field and one note per color
 - [ ] `python tools/check_palette.py --palette <name>` output pasted below
 - [ ] Colors sit within CIEDE2000 3 of sampled photo points, or exceptions are explained here

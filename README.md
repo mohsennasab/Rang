@@ -18,7 +18,7 @@ elevation data.
 
 ## Contents
 
-- [Rang | رنگ](#rang--رنگ)
+- [Rang | رنگ ](#rang--رنگ-)
   - [Contents](#contents)
   - [Palettes](#palettes)
     - [Kashan](#kashan)
@@ -125,6 +125,9 @@ No install. Grab the files from [arcgis/](arcgis/), [qgis/](qgis/) or
 [HEC-RAS](hecras/README.md).
 
 ## Use the palettes
+
+Want to try Rang without setting anything up locally? Start with the
+[Colab-ready Python and R examples](examples/).
 
 Palettes are stored as a color ramp plus a pick order. Asking for a few colors
 returns a well separated subset chosen for legibility, asking for more than
@@ -243,17 +246,26 @@ hecras/      RAS Mapper surface fill blocks and the HEC-RAS guide
 tools/       contributor scripts, extraction to build
 docs/        one page per palette with previews and sample plots
 data/        small real rainfall and elevation grids for the sample plots
+examples/    Colab-ready Python and R notebooks using public online data
 ```
 
 ## Credits and license
 
-Code is MIT licensed. The palettes themselves are free to use anywhere, with
-or without credit, though a link back is always appreciated.
+Rang source code is licensed under the [MIT License](LICENSE). To the extent
+that copyright or database rights apply, the palette names, color values,
+descriptions, and ordering are dedicated to the public domain under
+[CC0 1.0 Universal](LICENSES/CC0-1.0.txt). The palettes may therefore be used
+for any purpose without permission or credit, though a link back is always
+appreciated. The complete file-by-file scope is in
+[the licensing guide](LICENSES/README.md).
 
-Artwork photographs stay with their owners. The Kashan palette draws on the
+Artwork photographs are not covered by the MIT License or CC0 unless stated
+otherwise. The Golestan and Termeh photographs remain copyright Mohsen
+Tahmasebi Nasab, with all rights reserved. The Kashan palette draws on the
 [Silk Kashan Carpet](https://www.metmuseum.org/art/collection/search/451470)
-at The Metropolitan Museum of Art, used under its open access program. The
-Golestan palette comes from a photograph of the tilework at
+at The Metropolitan Museum of Art, whose qualifying Open Access images are
+available under CC0. The Golestan palette comes from a photograph of the
+tilework at
 [Golestan Palace](https://whc.unesco.org/en/list/1422/) in Tehran, taken by
 Mohsen Tahmasebi Nasab in 2018. The Termeh palette comes from his photograph
 of a termeh cloth, 2026. The Smithsonian's
@@ -267,9 +279,11 @@ elevation from the AWS Open Data
 GMTED2010 and ETOPO1, water surface elevation from the
 [USGS flood inundation study of the Ithaca creeks](https://www.sciencebase.gov/catalog/item/5b757eb6e4b0f5d5787fe461),
 and stream networks from the
-[USGS Network Linked Data Index](https://api.water.usgs.gov/nldi/).
+[USGS Network Linked Data Index](https://api.water.usgs.gov/nldi/), with
+NHDPlusV2 stream order from [USGS Fabric](https://api.water.usgs.gov/docs/fabric-pygeoapi/).
+Detailed source status, requested credits, and data notices are recorded in
+[the third-party notices](THIRD_PARTY_NOTICES.md).
 
-The package interface follows the conventions set by
+The package interface tries to follow the conventions set by
 [MetBrewer](https://github.com/BlakeRMills/MetBrewer) and
-[wesanderson](https://github.com/karthik/wesanderson), which made this style
-of palette package familiar to a lot of people.
+[wesanderson](https://github.com/karthik/wesanderson).

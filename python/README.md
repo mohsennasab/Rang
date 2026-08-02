@@ -22,3 +22,8 @@ The package has no required dependencies. `cmap()` needs matplotlib, which you
 can add with `pip install matplotlib`.
 Discrete requests use the stored separation order. Continuous requests
 interpolate through the source ramp in sRGB.
+
+The package software is available under the MIT License. To the extent that
+copyright or database rights apply, the Rang palette definitions are
+dedicated to the public domain under CC0 1.0 Universal. Photographs and
+third-party data are covered by the notices in the main repository.

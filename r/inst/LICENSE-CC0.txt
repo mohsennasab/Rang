@@ -1,0 +1,11 @@
+Rang palette data under CC0 1.0 Universal
+
+To the extent possible under law, Mohsen Tahmasebi Nasab has waived all
+copyright and related or neighboring rights in the Rang palette names, color
+values, descriptions, and ordering.
+
+This dedication applies only to the palette data. The R software remains
+licensed under the MIT License identified in DESCRIPTION and LICENSE.
+
+The complete CC0 1.0 Universal legal code is available at:
+https://creativecommons.org/publicdomain/zero/1.0/legalcode

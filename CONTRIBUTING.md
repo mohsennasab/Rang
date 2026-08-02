@@ -24,10 +24,10 @@ goes into picking the artwork and curating the colors.
   fit when the visual tradition is Persian.
 - A photograph you have the rights to share. Two paths work. Use a museum
   image whose object page states a suitable reuse license, or your own photo of
-  tilework, a building or an object, committed under `sources/<name>/` with
-  your credit line, the way the Golestan palette does it. Either way keep a
-  reference URL, an object page or something like the UNESCO listing for a
-  site.
+  tilework, a building or an object. New contributed photographs must use CC
+  BY 4.0 or CC0, with the exact license and credit line recorded in the palette
+  file. Either way keep a reference URL, an object page or something like the
+  UNESCO listing for a site.
 - Strong, varied color. A good source usually offers a warm side and a cool
   side so the ramp can carry both discrete classes and continuous data.
 
@@ -164,4 +164,4 @@ small requests about ramp order or a color that reads poorly in a plot.
 | `source.context_image` | no | second photo showing the work in its setting |
 | `source.context_caption` | no | one line under the context photo |
 | `source.public_domain` | yes | true for open access images, false for your own photo |
-| `source.rights` | own photos | for example "photographer's own work, contributed to the project" |
+| `source.rights` | own photos | exact license and credit, for example "CC BY 4.0, Photo by Your Name, year" |

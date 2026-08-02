@@ -9,7 +9,7 @@ Glazed polychrome tilework.
 Golestan Palace, UNESCO World Heritage Site.
 Photo by Mohsen Tahmasebi Nasab, 2018.
 
-[Site reference](https://whc.unesco.org/en/list/1422/). Photographer's own work, contributed to the project.
+[Site reference](https://whc.unesco.org/en/list/1422/). Copyright Mohsen Tahmasebi Nasab, all rights reserved.
 
 ## The setting
 

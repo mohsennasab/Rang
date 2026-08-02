@@ -11,7 +11,7 @@ Textile.
 Yazd textile tradition.
 Photo by Mohsen Tahmasebi Nasab, 2026.
 
-[Tradition reference](https://asia-archive.si.edu/object/S2017.14/). Photographer's own work, contributed to the project.
+[Tradition reference](https://asia-archive.si.edu/object/S2017.14/). Copyright Mohsen Tahmasebi Nasab, all rights reserved.
 
 ## The setting
 
@@ -43,9 +43,10 @@ numbers show that a close visual match occurs in the sampled image.
 
 ![Termeh samples](samples.png)
 
-Both panels are real data. The elevation panel is the USGS 100 year
-high flood profile for the creeks at Ithaca, New York, and the network
-is Fall Creek upstream of Ithaca from the USGS NLDI service.
+Both panels use USGS data. The first shows the 100 year high flood
+profile for the creeks at Ithaca, New York. The second uses NLDI
+flowlines for Fall Creek, with widths based on NHDPlusV2 stream order
+from USGS Fabric. The watershed interior is left unfilled.
 Regenerate this page with `python tools/make_samples.py termeh`.
 
 ## Separation and color vision

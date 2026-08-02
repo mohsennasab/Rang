@@ -21,6 +21,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.lines import Line2D
 from PIL import Image
 
 from colorlib import REPO_ROOT, discrete_subset, load_palette
@@ -216,12 +217,25 @@ def panel_wse(ax, fig, pal):
     # percentile stretch, most of a flood profile sits near the low end
     lo, hi = np.nanpercentile(wse, [1, 99])
     cmap = palette_cmap(pal).copy()
-    cmap.set_bad("#f2efe9")
+    cmap.set_bad((0, 0, 0, 0))
+    ax.set_facecolor("white")
     im = ax.imshow(np.ma.masked_invalid(wse), cmap=cmap, vmin=lo, vmax=hi)
-    fig.colorbar(im, ax=ax, shrink=0.85, label="ft NAVD 88", extend="max")
+    wet = np.isfinite(wse)
+    ax.contour(wet.astype(float), levels=[0.5], colors="#aebbc0",
+               linewidths=0.45, alpha=0.7)
+    fig.colorbar(im, ax=ax, shrink=0.82, pad=0.025,
+                 label="ft NAVD 88", extend="max")
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.set_title(f'Water surface elevation, {info["profile"]}, {info["place"]}')
+    ax.set_title("Water surface elevation\n"
+                 f'{info["profile"].capitalize()}, {info["place"]}', pad=12)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+
+
+def stream_linewidth(order):
+    """Return a readable line width for an NHDPlusV2 stream order."""
+    return 0.5 + 0.11 * max(order - 1, 0) ** 1.8
 
 
 def panel_streams(ax, pal):
@@ -229,35 +243,55 @@ def panel_streams(ax, pal):
     if not meta.exists():
         raise SystemExit("data/streams.json is missing, run tools/fetch_water_samples.py")
     info = json.loads(meta.read_text(encoding="utf-8"))
-    colors = pal["colors"]
-
+    flowlines = info["flowlines"]
     basin = np.asarray(info["basin"])
-    ax.fill(basin[:, 0], basin[:, 1], facecolor=colors[1], alpha=0.45,
-            edgecolor=colors[-2], linewidth=1.2)
-    for line in info["tributaries"]:
-        xy = np.asarray(line)
-        ax.plot(xy[:, 0], xy[:, 1], color=colors[-3], linewidth=0.8)
-    for line in info["main_stem"]:
-        xy = np.asarray(line)
-        ax.plot(xy[:, 0], xy[:, 1], color=colors[-1], linewidth=2.2)
+    ax.set_facecolor("white")
+    ax.fill(basin[:, 0], basin[:, 1], facecolor="none",
+            edgecolor="#9daeb4", linewidth=1.1, zorder=1)
+
+    orders = sorted({line["stream_order"] for line in flowlines})
+    lo, hi = min(orders), max(orders)
+    cmap = palette_cmap(pal)
+
+    def order_color(order):
+        fraction = 1 if hi == lo else (order - lo) / (hi - lo)
+        return cmap(0.28 + 0.72 * fraction)
+
+    for line in sorted(flowlines, key=lambda item: item["stream_order"]):
+        xy = np.asarray(line["coordinates"])
+        order = line["stream_order"]
+        ax.plot(xy[:, 0], xy[:, 1], color=order_color(order),
+                linewidth=stream_linewidth(order), solid_capstyle="round",
+                zorder=2 + order)
+
+    handles = [
+        Line2D([0], [0], color=order_color(order),
+               linewidth=stream_linewidth(order), label=f"Order {order}")
+        for order in orders
+    ]
+    handles.append(Line2D([0], [0], color="#9daeb4", linewidth=1.1,
+                          label="Watershed boundary"))
+    ax.legend(handles=handles, title="NHDPlusV2 stream order", loc="upper left",
+              frameon=False, fontsize=8, title_fontsize=8, ncol=2)
     mid_lat = float(np.mean(basin[:, 1]))
     ax.set_aspect(1 / np.cos(np.radians(mid_lat)))
+    ax.margins(0.035)
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.set_title(f'Stream network, {info["place"]}')
+    ax.set_title("Stream network by stream order\n"
+                 f'{info["place"]}', pad=12)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
 
 
 def water_page(pal):
-    fig, axes = plt.subplots(1, 2, figsize=(16, 7.5), dpi=140)
+    fig, axes = plt.subplots(1, 2, figsize=(15, 8), dpi=140)
     fig.patch.set_facecolor("white")
     panel_wse(axes[0], fig, pal)
     panel_streams(axes[1], pal)
-    for ax in axes:
-        for side in ("top", "right"):
-            ax.spines[side].set_visible(False)
     fig.suptitle(f'{pal["name"]}, water mapping examples',
-                 fontsize=16, fontfamily="serif")
-    fig.tight_layout(rect=(0, 0, 1, 0.95))
+                 fontsize=18, fontfamily="serif")
+    fig.tight_layout(rect=(0.025, 0.035, 0.975, 0.94), w_pad=3.2)
     return fig
 
 
