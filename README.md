@@ -4,7 +4,7 @@ Rang is a collection of color palettes drawn from the visual traditions of
 Persian art. Drawing from carpets, miniature
 paintings, tilework, manuscripts, ceramics and architecture, each palette
 translates source-image colors into expressive schemes for
-Python, R, ArcGIS Pro, QGIS and HEC-RAS.
+Python, R, ArcGIS Pro, QGIS, GeoLibre and HEC-RAS.
 
 The name Rang (Persian: رنگ) means "color" in Persian. The goal is to
 preserve the character of these works while adapting them for data
@@ -28,12 +28,13 @@ elevation data.
   - [Install](#install)
     - [Python](#python)
     - [R](#r)
-    - [ArcGIS Pro, QGIS and HEC-RAS](#arcgis-pro-qgis-and-hec-ras)
+    - [ArcGIS Pro, QGIS, GeoLibre and HEC-RAS](#arcgis-pro-qgis-geolibre-and-hec-ras)
   - [Use the palettes](#use-the-palettes)
     - [Python](#python-1)
     - [R](#r-1)
     - [ArcGIS Pro](#arcgis-pro)
     - [QGIS](#qgis)
+    - [GeoLibre](#geolibre)
     - [HEC-RAS](#hec-ras)
   - [How palettes are made](#how-palettes-are-made)
   - [Contributing](#contributing)
@@ -117,12 +118,12 @@ install.packages("remotes")
 remotes::install_github("mohsennasab/Rang", subdir = "r")
 ```
 
-### ArcGIS Pro, QGIS and HEC-RAS
+### ArcGIS Pro, QGIS, GeoLibre and HEC-RAS
 
-No install. Grab the files from [arcgis/](arcgis/), [qgis/](qgis/) or
-[hecras/](hecras/) and follow the matching guide,
-[ArcGIS](arcgis/README.md), [QGIS](qgis/README.md) or
-[HEC-RAS](hecras/README.md).
+No Rang install is needed. Grab the files from [arcgis/](arcgis/),
+[qgis/](qgis/), [geolibre/](geolibre/) or [hecras/](hecras/) and follow the
+matching guide, [ArcGIS](arcgis/README.md), [QGIS](qgis/README.md),
+[GeoLibre](geolibre/README.md) or [HEC-RAS](hecras/README.md).
 
 ## Use the palettes
 
@@ -186,6 +187,15 @@ palette appears in the color ramp dropdowns, smooth and discrete. The `.gpl`
 files add the exact colors to the QGIS color picker. Steps are in the
 [QGIS guide](qgis/README.md).
 
+### GeoLibre
+
+Copy a prepared color list from [geolibre/Rang.txt](geolibre/Rang.txt) into a
+raster Custom color ramp. For vectors, use the matching graduated or
+categorical list to replace the generated class colors. A machine-readable
+bundle for notebooks and project tooling is available as
+[geolibre/Rang.json](geolibre/Rang.json). The [GeoLibre guide](geolibre/README.md)
+covers raster layers, vector layers, legends, colorbars and Jupyter use.
+
 ### HEC-RAS
 
 Each palette ships RAS Mapper surface fill blocks in [hecras/](hecras/),
@@ -214,9 +224,9 @@ The short version, with the full walkthrough in
 3. Separation is measured under normal vision and simulated protanopia,
    deuteranopia and tritanopia. A pick order is computed so that the first few
    discrete colors stay as far apart as possible under every vision type.
-4. One build command regenerates the Python, R, ArcGIS, QGIS and HEC-RAS
-   files, the sample plots and the documentation, so every palette in the
-   collection is packaged the same way.
+4. One build command regenerates the Python, R, ArcGIS, QGIS, GeoLibre and
+   HEC-RAS files, the sample plots and the documentation, so every palette in
+   the collection is packaged the same way.
 
 The sample pages use real data on purpose: one day of NOAA AORC 1 km rainfall
 from Hurricane Harvey, a CONUS elevation grid from AWS Open Data, and, for the
@@ -242,6 +252,7 @@ python/      pip installable package, reads generated _palettes.py
 r/           R package, reads generated palettes_data.R
 arcgis/      Rang.stylx style file and the ArcGIS Pro guide
 qgis/        style file, .gpl swatches and the QGIS guide
+geolibre/    copy-ready and machine-readable color lists plus a usage guide
 hecras/      RAS Mapper surface fill blocks and the HEC-RAS guide
 tools/       contributor scripts, extraction to build
 docs/        one page per palette with previews and sample plots

@@ -106,6 +106,27 @@ class OutputTests(unittest.TestCase):
             self.assertEqual(fills[0].attrib["Colors"].split(","), expected)
             self.assertEqual(fills[1].attrib["Colors"].split(","), expected[::-1])
 
+    def test_geolibre_color_bundle(self):
+        bundle = json.loads((ROOT / "geolibre" / "Rang.json").read_text(
+            encoding="utf-8"))
+        text = (ROOT / "geolibre" / "Rang.txt").read_text(encoding="utf-8")
+        self.assertEqual(bundle["format"], "rang-geolibre-colors")
+        self.assertEqual(bundle["version"], 1)
+        self.assertEqual(bundle["license"], "CC0-1.0")
+        self.assertEqual(set(bundle["palettes"]),
+                         {palette["name"] for palette in self.palettes})
+        for palette in self.palettes:
+            entry = bundle["palettes"][palette["name"]]
+            self.assertEqual(entry["raster_anchors"], palette["colors"])
+            for n in range(2, 13):
+                self.assertEqual(entry["graduated"][str(n)],
+                                 colorlib.interpolate(palette["colors"], n))
+            for n in range(2, len(palette["colors"]) + 1):
+                expected = [color for color, rank in
+                            zip(palette["colors"], palette["order"]) if rank <= n]
+                self.assertEqual(entry["categorical"][str(n)], expected)
+            self.assertIn(f'{palette["name"]}\n  raster anchors:', text)
+
     def test_arcgis_style_database(self):
         db = sqlite3.connect(ROOT / "arcgis" / "Rang.stylx")
         try:

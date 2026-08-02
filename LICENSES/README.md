@@ -21,7 +21,7 @@ dedicates the following original material to the public domain under
 
 - palette names, color values, descriptions, and ordering in `palettes/`
 - generated representations of the palettes in the Python, R, ArcGIS, QGIS,
-  and HEC-RAS distributions
+  GeoLibre and HEC-RAS distributions
 - generated swatches and sample plots that do not contain source photographs
 
 CC0 permits use, modification, and redistribution for any purpose without an

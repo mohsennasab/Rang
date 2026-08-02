@@ -11,6 +11,8 @@ Reads palettes/*.json, the single source of truth, and regenerates
   qgis/<Name>.gpl                GIMP palette file QGIS imports as swatches
   hecras/<Name>.rasmap.xml       RAS Mapper surface fill blocks to paste into
                                  a project's .rasmap file
+  geolibre/Rang.json             GeoLibre-ready color lists for scripts
+  geolibre/Rang.txt              GeoLibre-ready color lists for copy and paste
   docs/<name>/swatch.png         color strip
   docs/<name>/card.png           artwork beside the strip, for the gallery
   docs/<name>/preview.png        artwork plus vision simulations
@@ -38,7 +40,7 @@ import make_samples
 import make_stylx
 from colorlib import (COLORBLIND_THRESHOLD, PALETTE_DIR, REPO_ROOT,
                       VISION_LABELS, VISION_TYPES, all_palettes, fetch_image,
-                      greedy_order, hex_to_rgb, load_palette,
+                      greedy_order, hex_to_rgb, interpolate, load_palette,
                       pairwise_min_mean, presence_in_image, worst_case)
 
 GALLERY_START = "<!-- gallery:start -->"
@@ -183,6 +185,61 @@ def write_hecras(pal):
     out = hdir / f"{name}.rasmap.xml"
     out.write_text("\n".join(blocks) + "\n", encoding="utf-8")
     print(f"wrote {out}")
+
+
+def write_geolibre(pals):
+    """Write color lists suited to GeoLibre's custom color controls.
+
+    GeoLibre accepts pasted anchor colors for raster ramps. Vector class
+    colors are edited as individual stops, so the bundle also includes the
+    exact continuous samples and Rang's well separated categorical picks.
+    """
+    gdir = REPO_ROOT / "geolibre"
+    gdir.mkdir(exist_ok=True)
+    entries = {}
+    text_lines = [
+        "Rang color lists for GeoLibre",
+        "",
+        "Paste raster anchors into a raster Custom color ramp.",
+        "Use graduated colors for ordered numeric classes.",
+        "Use categorical colors for distinct classes.",
+        "",
+    ]
+    for p in pals:
+        name = p["name"]
+        colors = p["colors"]
+        categories = {
+            str(n): [color for color, rank in zip(colors, p["order"]) if rank <= n]
+            for n in range(2, len(colors) + 1)
+        }
+        graduated = {str(n): interpolate(colors, n) for n in range(2, 13)}
+        entries[name] = {
+            "raster_anchors": colors,
+            "graduated": graduated,
+            "categorical": categories,
+        }
+        text_lines.extend([
+            name,
+            f'  raster anchors: {", ".join(colors)}',
+        ])
+        for n, values in graduated.items():
+            text_lines.append(f'  graduated {n}: {", ".join(values)}')
+        for n, values in categories.items():
+            text_lines.append(f'  categorical {n}: {", ".join(values)}')
+        text_lines.append("")
+
+    payload = {
+        "format": "rang-geolibre-colors",
+        "version": 1,
+        "license": "CC0-1.0",
+        "palettes": entries,
+    }
+    json_out = gdir / "Rang.json"
+    json_out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    print(f"wrote {json_out}")
+    text_out = gdir / "Rang.txt"
+    text_out.write_text("\n".join(text_lines), encoding="utf-8")
+    print(f"wrote {text_out}")
 
 
 # ------------------------------------------------------------- palette page
@@ -338,7 +395,9 @@ ArcGIS Pro users get every palette by importing
 [qgis/{name}.gpl](../../qgis/{name}.gpl) for swatches, see the
 [QGIS guide](../../qgis/README.md). HEC-RAS surface fills are in
 [hecras/{name}.rasmap.xml](../../hecras/{name}.rasmap.xml), see the
-[HEC-RAS guide](../../hecras/README.md).
+[HEC-RAS guide](../../hecras/README.md). GeoLibre users can copy colors from
+[geolibre/Rang.txt](../../geolibre/Rang.txt), with steps for raster and vector
+layers in the [GeoLibre guide](../../geolibre/README.md).
 """
     out = REPO_ROOT / "docs" / name.lower() / "README.md"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -439,6 +498,7 @@ def main():
     stylx_written = make_stylx.write_stylx(pals)
     for p in pals:
         write_hecras(p)
+    write_geolibre(pals)
 
     for name in targets:
         if not args.skip_images:

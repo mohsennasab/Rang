@@ -87,4 +87,6 @@ ArcGIS Pro users get every palette by importing
 [qgis/Golestan.gpl](../../qgis/Golestan.gpl) for swatches, see the
 [QGIS guide](../../qgis/README.md). HEC-RAS surface fills are in
 [hecras/Golestan.rasmap.xml](../../hecras/Golestan.rasmap.xml), see the
-[HEC-RAS guide](../../hecras/README.md).
+[HEC-RAS guide](../../hecras/README.md). GeoLibre users can copy colors from
+[geolibre/Rang.txt](../../geolibre/Rang.txt), with steps for raster and vector
+layers in the [GeoLibre guide](../../geolibre/README.md).
