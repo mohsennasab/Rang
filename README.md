@@ -1,4 +1,4 @@
-# Rang
+# Rang | رنگ <img align="right" src="logo/rang.png" width="200">
 
 Rang is a collection of thoughtfully crafted color palettes inspired by the
 rich visual traditions of Persian art. Drawing from carpets, miniature
@@ -18,19 +18,27 @@ including NOAA AORC rainfall and CONUS elevation, before you commit to it.
 
 ## Contents
 
-- [Palettes](#palettes)
-- [Saying the names](#saying-the-names)
-- [Install](#install)
-- [Use the palettes](#use-the-palettes)
-  - [Python](#python)
-  - [R](#r)
-  - [ArcGIS Pro](#arcgis-pro)
-  - [QGIS](#qgis)
-  - [HEC-RAS](#hec-ras)
-- [How palettes are made](#how-palettes-are-made)
-- [Contributing](#contributing)
-- [Repository layout](#repository-layout)
-- [Credits and license](#credits-and-license)
+- [Rang | رنگ](#rang--رنگ)
+  - [Contents](#contents)
+  - [Palettes](#palettes)
+    - [Kashan](#kashan)
+    - [Golestan](#golestan)
+    - [Termeh](#termeh)
+  - [Saying the names](#saying-the-names)
+  - [Install](#install)
+    - [Python](#python)
+    - [R](#r)
+    - [ArcGIS Pro, QGIS and HEC-RAS](#arcgis-pro-qgis-and-hec-ras)
+  - [Use the palettes](#use-the-palettes)
+    - [Python](#python-1)
+    - [R](#r-1)
+    - [ArcGIS Pro](#arcgis-pro)
+    - [QGIS](#qgis)
+    - [HEC-RAS](#hec-ras)
+  - [How palettes are made](#how-palettes-are-made)
+  - [Contributing](#contributing)
+  - [Repository layout](#repository-layout)
+  - [Credits and license](#credits-and-license)
 
 ## Palettes
 
