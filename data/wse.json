@@ -1,0 +1,9 @@
+{
+  "vmin_ft": 384.7293395996094,
+  "scale": 20,
+  "encoding": "value = (elevation ft - vmin_ft) x scale + 1, 0 marks dry cells",
+  "profile": "100 year high flood profile",
+  "place": "Ithaca, New York",
+  "source": "USGS, Water surface elevation (NAVD 88) for flood-inundation maps for Cayuga Inlet, Sixmile Creek, Cascadilla Creek, and Fall Creek at Ithaca, New York",
+  "url": "https://www.sciencebase.gov/catalog/item/5b757eb6e4b0f5d5787fe461"
+}

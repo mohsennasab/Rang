@@ -1,0 +1,51 @@
+{
+  "name": "Termeh",
+  "persian": "\u062a\u0631\u0645\u0647",
+  "pronunciation": "tehr-MEH",
+  "position": 3,
+  "samples": "water",
+  "about": "A sequential ramp made for water surface elevation and depth rasters, following the termeh's blue ground from foam light to deep indigo. The colors are named for the water they are meant to carry: Foam Mist, Glacial Blue, Powder Aqua, River Teal, Slate Blue, Deep Channel and Night Current.",
+  "colors": [
+    "#e5f0ee",
+    "#c8dfe3",
+    "#a9ccd7",
+    "#7fb5c1",
+    "#5d95a8",
+    "#3e738e",
+    "#274e68"
+  ],
+  "notes": [
+    "Foam Mist, white thread highlights",
+    "Glacial Blue, pale silk detailing",
+    "Powder Aqua, light ground between motifs",
+    "River Teal, the twill ground itself",
+    "Slate Blue, shaded folds of the ground",
+    "Deep Channel, blue fill of the boteh",
+    "Night Current, the darkest indigo threads"
+  ],
+  "source": {
+    "title": "Termeh cloth with paisley boteh",
+    "artist": "",
+    "date": "contemporary",
+    "geography": "Iran",
+    "medium": "Handwoven termeh textile",
+    "site": "Termeh weaving tradition of Yazd",
+    "url": "https://en.wikipedia.org/wiki/Termeh",
+    "image": "sources/termeh/cloth.jpg",
+    "context_image": "sources/termeh/setting.jpg",
+    "context_caption": "Termeh at rest, a draped cloth, runners and a covered chest",
+    "credit": "Photo by Mohsen Tahmasebi Nasab, 2026",
+    "public_domain": false,
+    "rights": "photographer's own work, contributed to the project"
+  },
+  "order": [
+    1,
+    7,
+    5,
+    6,
+    3,
+    4,
+    2
+  ],
+  "colorblind": false
+}

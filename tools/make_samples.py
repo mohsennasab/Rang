@@ -192,12 +192,78 @@ def panel_dem(ax, pal, dem_path=None):
     ax.set_title(title)
 
 
+# ------------------------------------------------- water palettes, two panels
+# Palettes with "samples": "water" in their json are made for water surface
+# elevation and depth rasters, so their page shows exactly that: a real USGS
+# flood profile and a real stream network instead of the six generic panels.
+
+def panel_wse(ax, fig, pal):
+    png = REPO_ROOT / "data" / "wse.png"
+    meta = REPO_ROOT / "data" / "wse.json"
+    if not (png.exists() and meta.exists()):
+        raise SystemExit("data/wse.png is missing, run tools/fetch_water_samples.py")
+    info = json.loads(meta.read_text(encoding="utf-8"))
+    raw = np.asarray(Image.open(png), float)
+    wse = np.where(raw > 0, (raw - 1) / info["scale"] + info["vmin_ft"], np.nan)
+
+    # crop to the wetted extent, with a little margin
+    rows = np.where(np.isfinite(wse).any(axis=1))[0]
+    cols = np.where(np.isfinite(wse).any(axis=0))[0]
+    pad = 20
+    wse = wse[max(rows[0] - pad, 0):rows[-1] + pad,
+              max(cols[0] - pad, 0):cols[-1] + pad]
+
+    # percentile stretch, most of a flood profile sits near the low end
+    lo, hi = np.nanpercentile(wse, [1, 99])
+    cmap = palette_cmap(pal).copy()
+    cmap.set_bad("#f2efe9")
+    im = ax.imshow(np.ma.masked_invalid(wse), cmap=cmap, vmin=lo, vmax=hi)
+    fig.colorbar(im, ax=ax, shrink=0.85, label="ft NAVD 88", extend="max")
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_title(f'Water surface elevation, {info["profile"]}, {info["place"]}')
+
+
+def panel_streams(ax, pal):
+    meta = REPO_ROOT / "data" / "streams.json"
+    if not meta.exists():
+        raise SystemExit("data/streams.json is missing, run tools/fetch_water_samples.py")
+    info = json.loads(meta.read_text(encoding="utf-8"))
+    colors = pal["colors"]
+
+    basin = np.asarray(info["basin"])
+    ax.fill(basin[:, 0], basin[:, 1], facecolor=colors[1], alpha=0.45,
+            edgecolor=colors[-2], linewidth=1.2)
+    for line in info["tributaries"]:
+        xy = np.asarray(line)
+        ax.plot(xy[:, 0], xy[:, 1], color=colors[-3], linewidth=0.8)
+    for line in info["main_stem"]:
+        xy = np.asarray(line)
+        ax.plot(xy[:, 0], xy[:, 1], color=colors[-1], linewidth=2.2)
+    mid_lat = float(np.mean(basin[:, 1]))
+    ax.set_aspect(1 / np.cos(np.radians(mid_lat)))
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_title(f'Stream network, {info["place"]}')
+
+
+def water_page(pal):
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7.5), dpi=140)
+    fig.patch.set_facecolor("white")
+    panel_wse(axes[0], fig, pal)
+    panel_streams(axes[1], pal)
+    for ax in axes:
+        for side in ("top", "right"):
+            ax.spines[side].set_visible(False)
+    fig.suptitle(f'{pal["name"]}, on the water data it was made for',
+                 fontsize=16, fontfamily="serif")
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
+    return fig
+
+
 # ------------------------------------------------------------------- assemble
 
-def main(name, dem_path=None):
-    pal = load_palette(name)
-    rng = np.random.default_rng(SEED)
-
+def standard_page(pal, rng, dem_path):
     fig, axes = plt.subplots(2, 3, figsize=(16, 9.5), dpi=140)
     fig.patch.set_facecolor("white")
 
@@ -213,6 +279,17 @@ def main(name, dem_path=None):
             ax.spines[side].set_visible(False)
     fig.suptitle(f'{pal["name"]}, sample plots', fontsize=16, fontfamily="serif")
     fig.tight_layout(rect=(0, 0, 1, 0.96))
+    return fig
+
+
+def main(name, dem_path=None):
+    pal = load_palette(name)
+    rng = np.random.default_rng(SEED)
+
+    if pal.get("samples") == "water":
+        fig = water_page(pal)
+    else:
+        fig = standard_page(pal, rng, dem_path)
 
     out_dir = REPO_ROOT / "docs" / pal["name"].lower()
     out_dir.mkdir(parents=True, exist_ok=True)

@@ -61,6 +61,20 @@ Tile panel with a hunting scene, Qajar period. Golestan Palace, UNESCO World Her
 
 [Sample plots and full details](docs/golestan/README.md)
 
+***
+
+### Termeh
+
+![Termeh, the artwork and its palette](docs/termeh/card.png)
+
+Termeh cloth with paisley boteh, contemporary. Termeh weaving tradition of Yazd. Photo by Mohsen Tahmasebi Nasab, 2026. [Reference](https://en.wikipedia.org/wiki/Termeh) Persian: ترمه. Say it tehr-MEH.
+
+A sequential ramp made for water surface elevation and depth rasters, following the termeh's blue ground from foam light to deep indigo. The colors are named for the water they are meant to carry: Foam Mist, Glacial Blue, Powder Aqua, River Teal, Slate Blue, Deep Channel and Night Current.
+
+`#e5f0ee #c8dfe3 #a9ccd7 #7fb5c1 #5d95a8 #3e738e #274e68`
+
+[Sample plots and full details](docs/termeh/README.md)
+
 <!-- gallery:end -->
 
 ## Saying the names
@@ -73,6 +87,7 @@ stress lands on the last syllable.
 | Rang | رنگ | rahng, close to the English word rung | color |
 | Kashan | کاشان | kah-SHAHN | a city famous for its carpets and silks |
 | Golestan | گلستان | goh-leh-STAHN | rose garden, the Qajar palace in Tehran |
+| Termeh | ترمه | tehr-MEH | the fine handwoven cloth of the Yazd tradition |
 
 Every palette page repeats its own pronunciation, and new palettes add
 themselves to this pattern through their json file.
@@ -192,8 +207,9 @@ The short version, with the full walkthrough in
    collection is packaged the same way.
 
 The sample pages use real data on purpose: one day of NOAA AORC 1 km rainfall
-from Hurricane Harvey and a CONUS elevation grid, both fetched from AWS Open
-Data by scripts in [tools/](tools/README.md).
+from Hurricane Harvey, a CONUS elevation grid from AWS Open Data, and, for the
+water palettes, a USGS flood profile and stream network from Ithaca, New York.
+The fetch scripts live in [tools/](tools/README.md).
 
 ## Contributing
 
@@ -230,14 +246,17 @@ Artwork photographs stay with their owners. The Kashan palette draws on the
 at The Metropolitan Museum of Art, used under its open access program. The
 Golestan palette comes from a photograph of the tilework at
 [Golestan Palace](https://whc.unesco.org/en/list/1422/) in Tehran, taken by
-Mohsen Tahmasebi Nasab in 2018.
+Mohsen Tahmasebi Nasab in 2018. The Termeh palette comes from his photograph
+of a handwoven [termeh](https://en.wikipedia.org/wiki/Termeh) cloth, 2026.
 
-The sample plots use public data from the AWS Open Data program: rainfall
-from the
-[NOAA Analysis of Record for Calibration](https://registry.opendata.aws/noaa-nws-aorc/)
-and elevation from the
+The sample plots use public data: rainfall from the
+[NOAA Analysis of Record for Calibration](https://registry.opendata.aws/noaa-nws-aorc/),
+elevation from the AWS Open Data
 [terrain tiles](https://registry.opendata.aws/terrain-tiles/) built on SRTM,
-GMTED2010 and ETOPO1.
+GMTED2010 and ETOPO1, water surface elevation from the
+[USGS flood inundation study of the Ithaca creeks](https://www.sciencebase.gov/catalog/item/5b757eb6e4b0f5d5787fe461),
+and stream networks from the
+[USGS Network Linked Data Index](https://api.water.usgs.gov/nldi/).
 
 The package interface follows the conventions set by
 [MetBrewer](https://github.com/BlakeRMills/MetBrewer) and

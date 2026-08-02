@@ -152,6 +152,8 @@ small requests about ramp order or a color that reads poorly in a plot.
 | `notes` | yes | one short phrase per color, where in the artwork it lives |
 | `order` | no | pick order for discrete use, computed by the build if absent |
 | `colorblind` | no | set by the build from the worst case separation if absent |
+| `about` | no | one short paragraph on what the palette was made for, shown in the gallery and on its page |
+| `samples` | no | leave out for the standard six panels, or "water" for the water surface elevation and stream network page |
 | `source.title` | yes | object or work title |
 | `source.artist` | no | empty string when unknown |
 | `source.date` | yes | as the museum or reference gives it |

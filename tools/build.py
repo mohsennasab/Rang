@@ -226,11 +226,9 @@ def source_section(src):
                       f'[full resolution photo]({src["image"]}), released by '
                       "the museum under open access.")
     else:
-        photo_note = (f'[Reference page]({src["url"]}). '
-                      f'{src.get("rights", "Photo used with permission.")}'.strip())
-        if not photo_note.endswith("."):
-            photo_note += "."
-        photo_note = photo_note[0].upper() + photo_note[1:]
+        rights = src.get("rights", "photo used with permission").strip().rstrip(".")
+        rights = rights[0].upper() + rights[1:]
+        photo_note = f'[Reference page]({src["url"]}). {rights}.'
     return text + "\n\n" + photo_note
 
 
@@ -271,11 +269,24 @@ def write_docs_page(pal):
     if pal.get("pronunciation"):
         bits.append(f'say it {pal["pronunciation"]}')
     say = f' ({", ".join(bits)})' if bits else ""
+    about = f'\n{pal["about"]}\n' if pal.get("about") else ""
+
+    if pal.get("samples") == "water":
+        samples_note = (
+            "Both panels are real data. The elevation panel is the USGS 100 year\n"
+            "high flood profile for the creeks at Ithaca, New York, and the network\n"
+            "is Fall Creek upstream of Ithaca from the USGS NLDI service.\n"
+            f"Regenerate this page with `python tools/make_samples.py {name.lower()}`.")
+    else:
+        samples_note = (
+            "The rainfall panel is real data, one day of NOAA AORC 1 km precipitation.\n"
+            f"Regenerate this page with `python tools/make_samples.py {name.lower()}`, and\n"
+            "pass `--dem your_dem.tif` to draw the elevation panel from your own raster.")
 
     body = f"""# {name}{say}
 
 ![{name} swatch](swatch.png)
-
+{about}
 ## Source
 
 {source_section(src)}
@@ -296,9 +307,7 @@ in the artwork.
 
 ![{name} samples](samples.png)
 
-The rainfall panel is real data, one day of NOAA AORC 1 km precipitation.
-Regenerate this page with `python tools/make_samples.py {name.lower()}`, and
-pass `--dem your_dem.tif` to draw the elevation panel from your own raster.
+{samples_note}
 
 ## Separation and color vision
 
@@ -352,15 +361,18 @@ def gallery_entry(pal):
     if pal.get("pronunciation"):
         say += f' Say it {pal["pronunciation"]}.'
     friendly = " Colorblind friendly." if pal["colorblind"] else ""
-    line = f'{src["title"]}, {src["date"]}. {held_by(src)}.'
+    line = f'{src["title"]}, {src["date"]}.'
+    if held_by(src):
+        line += f' {held_by(src)}.'
     if src.get("credit") and not src.get("museum"):
         line += f' {src["credit"]}.'
+    about = f'\n{pal["about"]}\n' if pal.get("about") else ""
     return f"""### {name}
 
 ![{name}, the artwork and its palette](docs/{name.lower()}/card.png)
 
 {line} [Reference]({src["url"]}){friendly}{say}
-
+{about}
 `{" ".join(pal["colors"])}`
 
 [Sample plots and full details](docs/{name.lower()}/README.md)

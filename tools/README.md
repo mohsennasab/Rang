@@ -18,6 +18,7 @@ pip install -r tools/requirements.txt
 | `build.py` | runs everything above and regenerates the Python, R, ArcGIS, QGIS and HEC-RAS files plus the README gallery |
 | `fetch_conus_dem.py` | rebuilds the small CONUS elevation grid in `data/`, rarely needed |
 | `fetch_aorc_precip.py` | rebuilds the AORC rainfall grid in `data/`, rarely needed, wants xarray, zarr and s3fs |
+| `fetch_water_samples.py` | rebuilds the USGS water surface elevation and stream network files in `data/`, rarely needed, wants rasterio |
 | `colorlib.py` | the shared color math, imported by the rest |
 
 A typical session while developing a palette:

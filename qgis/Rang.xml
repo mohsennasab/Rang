@@ -30,5 +30,19 @@
       <prop k="rampType" v="gradient"/>
       <prop k="stops" v="0.111111;174,98,89,255:0.222222;181,127,134,255:0.333333;181,181,172,255:0.444444;203,177,28,255:0.555556;154,154,104,255:0.666667;69,147,156,255:0.777778;87,122,177,255:0.888889;51,58,128,255"/>
     </colorramp>
+    <colorramp type="gradient" name="Termeh" tags="Rang">
+      <prop k="color1" v="229,240,238,255"/>
+      <prop k="color2" v="39,78,104,255"/>
+      <prop k="discrete" v="0"/>
+      <prop k="rampType" v="gradient"/>
+      <prop k="stops" v="0.166667;200,223,227,255:0.333333;169,204,215,255:0.5;127,181,193,255:0.666667;93,149,168,255:0.833333;62,115,142,255"/>
+    </colorramp>
+    <colorramp type="gradient" name="Termeh discrete" tags="Rang">
+      <prop k="color1" v="229,240,238,255"/>
+      <prop k="color2" v="39,78,104,255"/>
+      <prop k="discrete" v="1"/>
+      <prop k="rampType" v="gradient"/>
+      <prop k="stops" v="0.142857;200,223,227,255:0.285714;169,204,215,255:0.428571;127,181,193,255:0.571429;93,149,168,255:0.714286;62,115,142,255:0.857143;39,78,104,255"/>
+    </colorramp>
   </colorramps>
 </qgis_style>
