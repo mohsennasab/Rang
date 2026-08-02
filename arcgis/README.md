@@ -1,13 +1,13 @@
 # Rang in ArcGIS Pro
 
-One file, built with `tools/build.py`:
+One file, written by `tools/build.py`:
 
 | file | contents |
 |---|---|
 | `Rang.stylx` | every palette as an ArcGIS Pro style, colors plus smooth and discrete color schemes |
 
-A `.stylx` is the same kind of file ArcGIS Pro writes when you build a style
-yourself, so one import covers the whole collection:
+ArcGIS Pro stores styles as `.stylx` database files. Import this file once to
+add the collection to a project:
 
 1. Open the **Catalog** pane and find **Styles**.
 2. Right click **Styles**, then **Add**, then **Add Style** (on some versions
@@ -34,5 +34,5 @@ surface elevation grid, open **Symbology**, choose **Stretch** or
 
 Sequential data such as depth, water surface elevation or rainfall reads
 best with a smooth scheme, and Termeh was drawn for exactly that. Categorical
-maps read best with a discrete scheme, which keeps the palette's pick order
-so the first few classes stay far apart.
+maps read best with a discrete scheme, which keeps the exact palette colors
+as fixed steps in ramp order.

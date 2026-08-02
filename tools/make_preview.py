@@ -15,27 +15,32 @@ Run directly or let tools/build.py call it.
 import argparse
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 from colorlib import (REPO_ROOT, VISION_LABELS, VISION_TYPES, fetch_image,
                       hex_to_rgb, load_palette, simulate)
 
 
 def get_font(size):
-    for candidate in ("times.ttf", "georgia.ttf", "arial.ttf"):
+    for candidate in ("DejaVuSans.ttf", "C:/Windows/Fonts/georgia.ttf",
+                      "C:/Windows/Fonts/arial.ttf", "georgia.ttf", "arial.ttf"):
         try:
             return ImageFont.truetype(candidate, size)
         except OSError:
             continue
-    return ImageFont.load_default()
+    try:
+        return ImageFont.load_default(size=size)
+    except TypeError:
+        return ImageFont.load_default()
 
 
 def strip(colors, w, h, kind=None):
     img = Image.new("RGB", (w, h), "white")
-    cw = w / len(colors)
     for i, c in enumerate(colors):
         rgb = tuple(np.round(np.clip(simulate(hex_to_rgb(c), kind), 0, 255)).astype(int))
-        img.paste(Image.new("RGB", (int(cw) + 1, h), rgb), (int(i * cw), 0))
+        left = round(i * w / len(colors))
+        right = round((i + 1) * w / len(colors))
+        img.paste(Image.new("RGB", (right - left, h), rgb), (left, 0))
     return img
 
 
@@ -81,42 +86,46 @@ def caption_lines(pal, font=None, max_w=580):
 
 
 def make_swatch(pal, out):
-    img = strip(pal["colors"], 1400, 420)
-    name_band(img, pal["name"], 78)
-    img.save(out)
+    img = strip(pal["colors"], 1600, 360)
+    name_band(img, pal["name"], 72)
+    img.save(out, optimize=True, dpi=(96, 96))
 
 
 def make_card(pal, out):
-    H = 380
+    W, H = 1600, 450
+    art_w, gap = 600, 24
     src = pal["source"]
     art_path = fetch_image(src.get("card_image") or src["image"])
     art = Image.open(art_path).convert("RGB")
-    art.thumbnail((520, H))
-    gap = 24
-    W = art.width + gap + 1500 - 520
+    art = ImageOps.fit(art, (art_w, H), Image.Resampling.LANCZOS)
     card = Image.new("RGB", (W, H), "white")
-    card.paste(art, (0, (H - art.height) // 2))
-    sw = strip(pal["colors"], W - art.width - gap, H)
-    name_band(sw, pal["name"], 64)
-    card.paste(sw, (art.width + gap, 0))
-    card.save(out)
+    card.paste(art, (0, 0))
+    sw = strip(pal["colors"], W - art_w - gap, H)
+    name_band(sw, pal["name"], 68)
+    card.paste(sw, (art_w + gap, 0))
+    card.save(out, optimize=True, dpi=(96, 96))
 
 
 def make_preview(pal, out):
     art = Image.open(fetch_image(pal["source"]["image"])).convert("RGB")
-    art.thumbnail((520, 780))
-    canvas = Image.new("RGB", (1180, max(art.height + 40, 700)), "white")
-    canvas.paste(art, (20, 20))
+    art = ImageOps.contain(art, (620, 920), Image.Resampling.LANCZOS)
+    canvas = Image.new("RGB", (1600, 1000), "white")
+    art_panel = Image.new("RGB", (620, 920), "#f2efe9")
+    art_panel.paste(art, ((620 - art.width) // 2, (920 - art.height) // 2))
+    canvas.paste(art_panel, (40, 40))
     d = ImageDraw.Draw(canvas)
-    label_font = get_font(22)
-    x0, y = 580, 40
+    label_font = get_font(28)
+    caption_font = get_font(24)
+    x0, y = 720, 55
     for kind in VISION_TYPES:
         d.text((x0, y), VISION_LABELS[kind], fill=(60, 60, 60), font=label_font)
-        canvas.paste(strip(pal["colors"], 560, 70, kind), (x0, y + 30))
-        y += 130
-    for i, line in enumerate(caption_lines(pal, label_font, 1180 - x0 - 20)):
-        d.text((x0, y + 10 + 30 * i), line, fill=(60, 60, 60), font=label_font)
-    canvas.save(out)
+        canvas.paste(strip(pal["colors"], 820, 90, kind), (x0, y + 38))
+        y += 155
+    caption_y = 705
+    for i, line in enumerate(caption_lines(pal, caption_font, 820)):
+        d.text((x0, caption_y + 38 * i), line, fill=(60, 60, 60),
+               font=caption_font)
+    canvas.save(out, optimize=True, dpi=(96, 96))
 
 
 def main(name):

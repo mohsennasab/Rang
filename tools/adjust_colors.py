@@ -52,6 +52,8 @@ def main():
     args = ap.parse_args()
 
     before = [c.strip() for c in args.colors.split(",") if c.strip()]
+    if not before:
+        ap.error("provide at least one color")
     after = list(before)
     for idx, changes in args.edit:
         if not 0 <= idx < len(before):

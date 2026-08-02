@@ -1,6 +1,6 @@
 # Rang in QGIS
 
-Two file types, both built with `tools/build.py`:
+Two file types, both written by `tools/build.py`:
 
 | file | contents |
 |---|---|

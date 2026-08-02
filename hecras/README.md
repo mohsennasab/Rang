@@ -1,9 +1,8 @@
 # Rang in HEC-RAS
 
-RAS Mapper stores each layer's color ramp inside the project's `.rasmap`
-file, a plain XML text file that HEC themselves point users to for hand
-editing. Every Rang palette ships as a ready made `Symbology` block in that
-exact format, verified against files written by RAS Mapper 6.x:
+RAS Mapper stores layer settings in the project's XML based `.rasmap` file.
+Every Rang palette ships as a `Symbology` block based on SurfaceFill entries
+inspected in RAS Mapper 6.x project files:
 
 | file | contents |
 |---|---|
@@ -59,7 +58,7 @@ codes from the main README through the color dialog, then save the ramp to
 the color list so the project can reuse it. The file route above is faster
 and survives across layers with a copy and paste.
 
-One honest caveat. HEC does not publish a schema for `.rasmap`, so the
-format here mirrors what RAS Mapper 6.x writes for its own projects. If a
+HEC does not publish a schema for this part of `.rasmap`, so the format here
+mirrors entries inspected in RAS Mapper 6.x project files. If a
 future version changes the format, restyle one layer in the interface, look
 at what it wrote, and tell us so the generator gets updated.

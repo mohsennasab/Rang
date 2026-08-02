@@ -8,6 +8,7 @@ without a color science dependency.
 import itertools
 import json
 import pathlib
+import re
 import urllib.request
 
 import numpy as np
@@ -16,9 +17,8 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 PALETTE_DIR = REPO_ROOT / "palettes"
 CACHE_DIR = REPO_ROOT / "cache"
 
-# Smallest pairwise CIEDE2000 a palette must keep under every simulated vision
-# type before we mark it colorblind friendly. Calibrated against palettes whose
-# friendliness is widely agreed on rather than picked from thin air.
+# Project screening threshold for minimum pairwise CIEDE2000 under all four
+# viewing simulations. This convention is not an accessibility guarantee.
 COLORBLIND_THRESHOLD = 8.0
 
 # ---------------------------------------------------------------- sRGB and Lab
@@ -45,6 +45,8 @@ def hex_to_argb_int(hexcode, alpha=255):
     White with full alpha is -1, pure yellow is -256, which matches the
     Colors attribute RAS Mapper writes in SurfaceFill elements.
     """
+    if isinstance(alpha, bool) or not isinstance(alpha, int) or not 0 <= alpha <= 255:
+        raise ValueError("alpha must be an integer from 0 to 255")
     r, g, b = (int(v) for v in hex_to_rgb(hexcode))
     value = (alpha << 24) | (r << 16) | (g << 8) | b
     return value - 2 ** 32 if value >= 2 ** 31 else value
@@ -161,6 +163,8 @@ def ciede2000(lab1, lab2):
 
 def pairwise_min_mean(hexes, kind=None):
     """Minimum and mean CIEDE2000 between all color pairs under one vision type."""
+    if len(hexes) < 2:
+        raise ValueError("at least two colors are required")
     lab = rgb_to_lab(simulate(np.array([hex_to_rgb(h) for h in hexes]), kind))
     ds = [ciede2000(lab[i], lab[j]) for i, j in itertools.combinations(range(len(lab)), 2)]
     return min(ds), float(np.mean(ds))
@@ -216,6 +220,10 @@ def discrete_subset(colors, order, n):
 
 def interpolate(colors, n):
     """n colors linearly interpolated along the ramp in sRGB."""
+    if isinstance(n, bool) or not isinstance(n, int) or n < 1:
+        raise ValueError("n must be a positive integer")
+    if not colors:
+        raise ValueError("at least one source color is required")
     if n == 1:
         return [colors[0]]
     rgbs = [hex_to_rgb(c) for c in colors]
@@ -229,15 +237,17 @@ def interpolate(colors, n):
 
 
 def presence_in_image(hexes, image_path, step=17):
-    """How close each color sits to an actual pixel of the source photo.
+    """How close each color sits to a sampled point in the source photo.
 
-    Returns {hex: (nearest CIEDE2000, percent of sampled pixels within 8.0)}.
-    Evidence that a palette really comes off the artwork instead of being
-    invented around it.
+    The image is reduced to fit within 800 by 800 pixels, then every ``step``
+    point is evaluated. Returns each hex color's nearest CIEDE2000 distance
+    and the percentage of evaluated points within 8.0.
     """
     from PIL import Image
+    if step < 1:
+        raise ValueError("step must be at least 1")
     im = Image.open(image_path).convert("RGB")
-    im.thumbnail((800, 800))
+    im.thumbnail((800, 800), Image.Resampling.LANCZOS)
     lab = rgb_to_lab(np.asarray(im).reshape(-1, 3).astype(float))[::step]
     out = {}
     for h in hexes:
@@ -258,9 +268,50 @@ def load_palette(name):
         options = ", ".join(sorted(f.stem for f in PALETTE_DIR.glob("*.json")))
         raise FileNotFoundError(f"No palette file {p}. Available: {options}")
     pal = json.loads(p.read_text(encoding="utf-8"))
-    for key in ("name", "colors", "source"):
+    for key in ("name", "persian", "pronunciation", "colors", "notes", "source"):
         if key not in pal:
             raise KeyError(f"{p} is missing the required key '{key}'")
+    if not isinstance(pal["name"], str) or not re.fullmatch(r"[A-Z][A-Za-z]*", pal["name"]):
+        raise ValueError(f"{p}: name must be one capitalized ASCII word")
+    if pal["name"].lower() != p.stem.lower():
+        raise ValueError(f"{p}: name must match the filename")
+    colors = pal["colors"]
+    if not isinstance(colors, list) or not 5 <= len(colors) <= 12:
+        raise ValueError(f"{p}: colors must contain 5 to 12 values")
+    if any(not isinstance(c, str) or not re.fullmatch(r"#[0-9a-fA-F]{6}", c)
+           for c in colors):
+        raise ValueError(f"{p}: every color must be a six digit hex value")
+    if len({c.lower() for c in colors}) != len(colors):
+        raise ValueError(f"{p}: colors must be unique")
+    notes = pal["notes"]
+    if (not isinstance(notes, list) or len(notes) != len(colors)
+            or any(not isinstance(note, str) or not note.strip() for note in notes)):
+        raise ValueError(f"{p}: notes must contain one nonempty entry per color")
+    if "order" in pal and sorted(pal["order"]) != list(range(1, len(colors) + 1)):
+        raise ValueError(f"{p}: order must be a permutation from 1 to the color count")
+    if "colorblind" in pal and not isinstance(pal["colorblind"], bool):
+        raise ValueError(f"{p}: colorblind must be true or false")
+    if "position" in pal and (isinstance(pal["position"], bool)
+                              or not isinstance(pal["position"], int)
+                              or pal["position"] < 1):
+        raise ValueError(f"{p}: position must be a positive integer")
+    src = pal["source"]
+    source_keys = ("title", "date", "geography", "medium", "url", "image",
+                   "public_domain")
+    missing = [key for key in source_keys if key not in src]
+    if missing:
+        raise KeyError(f"{p}: source is missing {', '.join(missing)}")
+    if any(not isinstance(src[key], str) or not src[key].strip()
+           for key in source_keys if key != "public_domain"):
+        raise ValueError(f"{p}: required source text fields must be nonempty strings")
+    if not isinstance(src["public_domain"], bool):
+        raise ValueError(f"{p}: source.public_domain must be true or false")
+    if src["public_domain"]:
+        missing = [key for key in ("museum", "accession") if not src.get(key)]
+    else:
+        missing = [key for key in ("credit", "rights") if not src.get(key)]
+    if missing:
+        raise KeyError(f"{p}: source is missing {', '.join(missing)}")
     return pal
 
 

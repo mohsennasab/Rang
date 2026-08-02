@@ -3,7 +3,7 @@
 Reports the pairwise CIEDE2000 separation under normal vision and under
 simulated protanopia, deuteranopia and tritanopia, suggests the discrete pick
 order, and, when the source photo is available, measures how close each color
-sits to an actual pixel of the artwork.
+sits to a sampled point in a reduced copy of the artwork.
 
 Examples
 
@@ -37,6 +37,8 @@ def main():
     else:
         colors = [c.strip() for c in args.colors.split(",") if c.strip()]
         name = "palette"
+    if len(colors) < 2:
+        raise SystemExit("provide at least two colors")
 
     print(f"{name}: {len(colors)} colors")
     print("  " + " ".join(colors))
@@ -50,7 +52,7 @@ def main():
     d, a, b, where = worst_pair(colors)
     verdict = "yes" if wc >= COLORBLIND_THRESHOLD else "no"
     print(f"\n  closest pair: {a} and {b} under {where}, CIEDE2000 = {d:.1f}")
-    print(f"  colorblind friendly at threshold {COLORBLIND_THRESHOLD}: {verdict}")
+    print(f"  passes project CVD check at {COLORBLIND_THRESHOLD}: {verdict}")
 
     order = greedy_order(colors)
     print(f"\nSuggested pick order: {order}")
@@ -60,11 +62,11 @@ def main():
 
     if image:
         path = fetch_image(image)
-        print(f"\nDistance to the source photo ({path.name})")
+        print(f"\nDistance to sampled points in the source photo ({path.name})")
         for h, (nearest, share) in presence_in_image(colors, path).items():
             flag = "" if nearest <= 3 else "   <- check this one"
-            print(f"  {h}  nearest pixel = {nearest:4.1f}   "
-                  f"pixels within 8.0 = {share:5.2f}%{flag}")
+            print(f"  {h}  nearest sample = {nearest:4.1f}   "
+                  f"samples within 8.0 = {share:5.2f}%{flag}")
 
 
 if __name__ == "__main__":

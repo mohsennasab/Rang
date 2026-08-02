@@ -1,20 +1,20 @@
 # Rang | رنگ <img align="right" src="logo/rang.png" width="200">
 
-Rang is a collection of thoughtfully crafted color palettes inspired by the
-rich visual traditions of Persian art. Drawing from carpets, miniature
+Rang is a collection of color palettes drawn from the visual traditions of
+Persian art. Drawing from carpets, miniature
 paintings, tilework, manuscripts, ceramics and architecture, each palette
-translates historic colors into clear, expressive and accessible schemes for
+translates source-image colors into expressive schemes for
 Python, R, ArcGIS Pro, QGIS and HEC-RAS.
 
 The name Rang (Persian: رنگ) means "color" in Persian. The goal is to
 preserve the character of these works while adapting them for data
 visualization, cartography and creative coding.
 
-Every palette here traces back to a specific artwork with a documented
-photograph. Each one records where its colors came from, how far each color
-sits from actual pixels of the photo, and how well the set holds up under
-simulated color vision deficiency. Sample pages show the palette on real data,
-including NOAA AORC rainfall and CONUS elevation, before you commit to it.
+Every palette traces to a documented source photograph. Each record explains
+where its colors came from and reports the nearest match in a sampled, reduced
+copy of the photograph. The pages also report pairwise separation under four
+viewing simulations. Sample plots include NOAA AORC rainfall and CONUS
+elevation data.
 
 ## Contents
 
@@ -63,7 +63,7 @@ Silk Kashan Carpet, 16th century. The Metropolitan Museum of Art, New York. [Ref
 
 ![Golestan, the artwork and its palette](docs/golestan/card.png)
 
-Tile panel with a hunting scene, Qajar period. Golestan Palace, UNESCO World Heritage Site. Photo by Mohsen Tahmasebi Nasab, 2018. [Reference](https://whc.unesco.org/en/list/1422/) Colorblind friendly. Persian: گلستان. Say it goh-leh-STAHN, Persian for rose garden.
+Hunting-scene tile panel at Golestan Palace, photographed 2018. Golestan Palace, UNESCO World Heritage Site. Photo by Mohsen Tahmasebi Nasab, 2018. [Reference](https://whc.unesco.org/en/list/1422/) Passes the project CVD separation check. Persian: گلستان. Say it goh-leh-STAHN, Persian for rose garden.
 
 `#432f2c #ae6259 #b57f86 #b5b5ac #cbb11c #9a9a68 #45939c #577ab1 #333a80`
 
@@ -75,7 +75,7 @@ Tile panel with a hunting scene, Qajar period. Golestan Palace, UNESCO World Her
 
 ![Termeh, the artwork and its palette](docs/termeh/card.png)
 
-Termeh cloth with paisley boteh, contemporary. Termeh weaving tradition of Yazd. Photo by Mohsen Tahmasebi Nasab, 2026. [Reference](https://en.wikipedia.org/wiki/Termeh) Persian: ترمه. Say it tehr-MEH.
+Termeh cloth with boteh motifs, photographed 2026. Yazd textile tradition. Photo by Mohsen Tahmasebi Nasab, 2026. [Reference](https://asia-archive.si.edu/object/S2017.14/) Persian: ترمه. Say it tehr-MEH.
 
 A sequential ramp made for water surface elevation and depth rasters, following the termeh's blue ground from foam light to deep indigo. The colors are named for the water they are meant to carry: Foam Mist, Glacial Blue, Powder Aqua, River Teal, Slate Blue, Deep Channel and Night Current.
 
@@ -95,7 +95,7 @@ stress lands on the last syllable.
 | Rang | رنگ | rahng, close to the English word rung | color |
 | Kashan | کاشان | kah-SHAHN | a city famous for its carpets and silks |
 | Golestan | گلستان | goh-leh-STAHN | rose garden, the Qajar palace in Tehran |
-| Termeh | ترمه | tehr-MEH | the fine handwoven cloth of the Yazd tradition |
+| Termeh | ترمه | tehr-MEH | a patterned textile associated with Yazd |
 
 Every palette page repeats its own pronunciation, and new palettes add
 themselves to this pattern through their json file.
@@ -185,9 +185,9 @@ files add the exact colors to the QGIS color picker. Steps are in the
 
 ### HEC-RAS
 
-Each palette ships paste ready RAS Mapper surface fill blocks in
-[hecras/](hecras/), in the exact XML format the `.rasmap` project file uses,
-forward and reversed. Drop one into a depth, velocity or WSE layer's
+Each palette ships RAS Mapper surface fill blocks in [hecras/](hecras/),
+forward and reversed. Their structure is based on RAS Mapper 6.x project
+files. Drop one into a depth, velocity or WSE layer's
 Symbology block, or generate a block scaled to a specific value range:
 
 ```
@@ -206,8 +206,8 @@ The short version, with the full walkthrough in
    motifs are not averaged away by large fields of background. Sources are
    museum open access photos or the contributor's own photographs.
 2. The candidate set is trimmed to a ramp of five to twelve colors and checked
-   against the photo. Each color should sit within a small CIEDE2000 distance
-   of real pixels, and each palette page publishes those distances.
+   against a sampled, reduced copy of the photo. Each palette page publishes
+   the nearest CIEDE2000 distance found in that sample.
 3. Separation is measured under normal vision and simulated protanopia,
    deuteranopia and tritanopia. A pick order is computed so that the first few
    discrete colors stay as far apart as possible under every vision type.
@@ -224,7 +224,7 @@ The fetch scripts live in [tools/](tools/README.md).
 
 New palettes are welcome. The bar is that the source is Persian art with a
 photograph you have the rights to share, the colors verifiably come from that
-photograph, and the palette page is built with the standard tooling so it
+photograph, and the palette page is produced by the standard tooling so it
 matches the rest of the collection. [CONTRIBUTING.md](CONTRIBUTING.md) walks
 through the whole process, from picking an artwork to opening a pull request,
 including the sample code for extracting colors from a photo and adjusting any
@@ -256,7 +256,9 @@ at The Metropolitan Museum of Art, used under its open access program. The
 Golestan palette comes from a photograph of the tilework at
 [Golestan Palace](https://whc.unesco.org/en/list/1422/) in Tehran, taken by
 Mohsen Tahmasebi Nasab in 2018. The Termeh palette comes from his photograph
-of a handwoven [termeh](https://en.wikipedia.org/wiki/Termeh) cloth, 2026.
+of a termeh cloth, 2026. The Smithsonian's
+[termeh record](https://asia-archive.si.edu/object/S2017.14/) documents the
+Yazd tradition and the boteh motif.
 
 The sample plots use public data: rainfall from the
 [NOAA Analysis of Record for Calibration](https://registry.opendata.aws/noaa-nws-aorc/),

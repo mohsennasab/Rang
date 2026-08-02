@@ -1,10 +1,10 @@
 """Generate a RAS Mapper surface fill for a palette and a data range.
 
 RAS Mapper stores layer symbology in the project's .rasmap file as a
-SurfaceFill element with .NET ARGB color integers and the values each color
-sits at. This script prints a ready made Symbology block for any Rang palette
-scaled to the range you give it, so a depth, velocity or WSE layer picks up
-the palette exactly.
+SurfaceFill element with signed ARGB color integers and the values assigned to
+each color. This script prints a Symbology block for any Rang palette scaled
+to the range you give it. The structure is based on RAS Mapper 6.x project
+files because HEC does not publish a schema for this part of `.rasmap`.
 
 Examples
 
@@ -22,6 +22,10 @@ from colorlib import hex_to_argb_int, interpolate, load_palette
 
 
 def surface_fill(colors, vmin, vmax, alpha=255, use_dataset_minmax=False):
+    if not colors:
+        raise ValueError("at least one color is required")
+    if isinstance(alpha, bool) or not isinstance(alpha, int) or not 0 <= alpha <= 255:
+        raise ValueError("alpha must be an integer from 0 to 255")
     n = len(colors)
     argb = ",".join(str(hex_to_argb_int(c, alpha)) for c in colors)
     if n == 1:
@@ -55,6 +59,12 @@ def main():
                          "range instead of the values given here")
     ap.add_argument("--out", help="write to a file instead of printing")
     args = ap.parse_args()
+    if args.n is not None and args.n < 1:
+        ap.error("-n must be at least 1")
+    if not 0 <= args.alpha <= 255:
+        ap.error("--alpha must be from 0 to 255")
+    if args.max <= args.min:
+        ap.error("--max must be greater than --min")
 
     pal = load_palette(args.palette)
     colors = pal["colors"]

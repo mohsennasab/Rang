@@ -1,11 +1,10 @@
 """Build arcgis/Rang.stylx, an ArcGIS Pro style holding every palette.
 
-A .stylx is a SQLite database of style items whose content is CIM JSON, the
-same format ArcGIS Pro writes when you create a style yourself. This script
-reproduces that structure exactly, verified against a style authored in Pro.
-Each palette contributes its individual colors, a smooth color scheme for
-stretched and graduated symbology, and a discrete scheme that keeps the exact
-palette steps.
+A .stylx is a SQLite database of style items whose content is CIM JSON. This
+script writes the tables and item structures used by a style inspected in
+ArcGIS Pro 3.x. Esri does not publish the internal database schema. Each
+palette contributes its colors, a smooth scheme, and a fixed scheme with the
+exact palette steps.
 
 Import once in Pro through the Catalog pane, Styles, Add, Add Style File.
 The schemes then appear in every color scheme dropdown and the colors in
@@ -55,15 +54,10 @@ def fixed_ramp(colors):
 
 def write_stylx(pals, out=None):
     out = out or REPO_ROOT / "arcgis" / "Rang.stylx"
-    if out.exists():
-        try:
-            out.unlink()
-        except PermissionError:
-            print(f"skipped {out}, another program is holding it open. "
-                  "ArcGIS Pro locks styles it has loaded, close Pro or remove "
-                  "the style there and rerun the build to refresh the file.")
-            return
-    db = sqlite3.connect(out)
+    temp = out.with_name(out.name + ".tmp")
+    if temp.exists():
+        temp.unlink()
+    db = sqlite3.connect(temp)
     cur = db.cursor()
     cur.executescript("""
         CREATE TABLE ITEMS (ID INTEGER PRIMARY KEY, CLASS INTEGER,
@@ -109,7 +103,16 @@ def write_stylx(pals, out=None):
         items)
     db.commit()
     db.close()
+    try:
+        temp.replace(out)
+    except PermissionError:
+        temp.unlink()
+        print(f"skipped {out}, another program is holding it open. "
+              "ArcGIS Pro locks styles it has loaded, close Pro or remove "
+              "the style there and rerun the build to refresh the file.")
+        return False
     print(f"wrote {out} ({len(items)} style items, {len(pals)} palettes)")
+    return True
 
 
 if __name__ == "__main__":

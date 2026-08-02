@@ -5,6 +5,8 @@ few colors returns a well separated subset, asking for more than the palette
 holds interpolates along the ramp.
 """
 
+import operator
+
 from ._palettes import PALETTES
 
 __version__ = "0.1.0"
@@ -29,6 +31,23 @@ def _get(name):
 def _hex_to_rgb(h):
     h = h.lstrip("#")
     return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+
+
+def _positive_integer(value):
+    if isinstance(value, bool):
+        raise TypeError("n must be an integer")
+    try:
+        value = operator.index(value)
+    except TypeError as exc:
+        raise TypeError("n must be an integer") from exc
+    if value < 1:
+        raise ValueError("n must be at least 1")
+    return value
+
+
+def _check_direction(direction):
+    if direction not in (1, -1):
+        raise ValueError("direction must be 1 or -1")
 
 
 def _interpolate(colors, n):
@@ -62,10 +81,8 @@ def rang(name, n=None, kind=None, direction=1, override_order=False):
     colors, order = list(pal["colors"]), list(pal["order"])
     if n is None:
         n = len(colors)
-    if n < 1:
-        raise ValueError("n must be at least 1")
-    if direction not in (1, -1):
-        raise ValueError("direction must be 1 or -1")
+    n = _positive_integer(n)
+    _check_direction(direction)
     if kind is None:
         kind = "continuous" if n > len(colors) else "discrete"
     if kind not in ("discrete", "continuous"):
@@ -83,6 +100,7 @@ def rang(name, n=None, kind=None, direction=1, override_order=False):
 
 def cmap(name, direction=1):
     """A matplotlib colormap built from the palette ramp."""
+    _check_direction(direction)
     from matplotlib.colors import LinearSegmentedColormap
     colors = list(_get(name)["colors"])
     if direction == -1:
@@ -96,5 +114,5 @@ def source(name):
 
 
 def colorblind_friendly(name):
-    """Whether the full palette stays separable under simulated dichromacy."""
+    """Project CVD separation flag, not an accessibility guarantee."""
     return bool(_get(name)["colorblind"])

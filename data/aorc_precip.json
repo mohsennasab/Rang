@@ -9,6 +9,6 @@
     "lat_max": 33.5
   },
   "event": "Hurricane Harvey daily rainfall over Texas and Louisiana",
-  "source": "NOAA Analysis of Record for Calibration (AORC) v1.1, 1 km, hourly, via AWS Open Data",
+  "source": "NOAA Analysis of Record for Calibration (AORC) v1.1, roughly 1 km, hourly, via AWS Open Data",
   "url": "https://registry.opendata.aws/noaa-nws-aorc/"
 }

@@ -1,5 +1,5 @@
 # Rang, color palettes from Persian art.
-# Palette data lives in palettes_data.R, generated from palettes/*.json at the
+# Palette data lives in palettes_data.R, written from palettes/*.json at the
 # repo root. Edit the json and rerun tools/build.py rather than editing here.
 
 #' Build a Rang palette
@@ -27,15 +27,28 @@
 #' @export
 rang <- function(name, n, type = c("discrete", "continuous"),
                  direction = 1, override_order = FALSE) {
+  if (length(name) != 1 || !is.character(name) || is.na(name)) {
+    stop("name must be one palette name")
+  }
   pal <- rang_palettes[[name]]
-  if (is.null(pal) || is.numeric(name)) {
+  if (is.null(pal)) {
     stop("Palette not found. See names(rang_palettes).")
   }
   if (missing(n)) {
     n <- length(pal$colors)
   }
-  if (!direction %in% c(1, -1)) {
+  if (length(n) != 1 || !is.numeric(n) || is.na(n) || !is.finite(n) ||
+      n < 1 || n != floor(n)) {
+    stop("n must be a positive integer")
+  }
+  n <- as.integer(n)
+  if (length(direction) != 1 || is.na(direction) ||
+      !direction %in% c(1, -1)) {
     stop("direction must be 1 or -1")
+  }
+  if (length(override_order) != 1 || !is.logical(override_order) ||
+      is.na(override_order)) {
+    stop("override_order must be TRUE or FALSE")
   }
   if (missing(type)) {
     type <- if (n > length(pal$colors)) "continuous" else "discrete"
@@ -58,11 +71,11 @@ rang <- function(name, n, type = c("discrete", "continuous"),
   structure(out, class = "palette", name = name)
 }
 
-#' Is a palette colorblind friendly
+#' Check a palette against the project CVD separation rule
 #'
-#' TRUE when the full palette stays separable under simulated protanopia,
-#' deuteranopia and tritanopia. Details for each palette are on its page in
-#' the docs folder of the repository.
+#' TRUE when the full palette passes Rang's pairwise separation rule under
+#' simulated protanopia, deuteranopia and tritanopia. This project check is
+#' not an accessibility guarantee. Details are on each palette page.
 #'
 #' @param name Palette name, see names(rang_palettes)
 #' @return logical
@@ -70,6 +83,9 @@ rang <- function(name, n, type = c("discrete", "continuous"),
 #' colorblind_friendly("Kashan")
 #' @export
 colorblind_friendly <- function(name) {
+  if (length(name) != 1 || !is.character(name) || is.na(name)) {
+    stop("name must be one palette name")
+  }
   pal <- rang_palettes[[name]]
   if (is.null(pal)) {
     stop("Palette not found. See names(rang_palettes).")

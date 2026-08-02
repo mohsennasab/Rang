@@ -13,6 +13,7 @@ pip install -r tools/requirements.txt
 | `adjust_colors.py` | nudge a color in lightness, chroma or hue when the sampled value is not quite right |
 | `check_palette.py` | separation scores under four vision types, suggested pick order, distance to the source photo |
 | `make_preview.py` | the swatch strip and the artwork preview for one palette |
+| `make_logo.py` | the reproducible geometric logo used in the main README |
 | `make_samples.py` | the six standard sample plots for one palette |
 | `make_hecras_ramp.py` | a RAS Mapper surface fill block for any palette and value range |
 | `make_stylx.py` | the ArcGIS Pro style file with every palette's colors and schemes |

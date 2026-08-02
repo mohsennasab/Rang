@@ -1,6 +1,6 @@
 """Build the precipitation grid used by the sample plots.
 
-Pulls one day of NOAA AORC precipitation (1 km analysis of record) from the
+Pulls one day of NOAA AORC precipitation, on a roughly 1 km grid, from the
 AWS Open Data bucket, sums the hourly fields, and stores the result as a
 16 bit grayscale PNG in data/. The default day is 27 August 2017, Hurricane
 Harvey stalled over the Texas coast, which gives the sample pages a dramatic
@@ -66,7 +66,7 @@ def main():
                  "lon_max": BBOX[2], "lat_max": BBOX[3]},
         "event": "Hurricane Harvey daily rainfall over Texas and Louisiana",
         "source": "NOAA Analysis of Record for Calibration (AORC) v1.1, "
-                  "1 km, hourly, via AWS Open Data",
+                  "roughly 1 km, hourly, via AWS Open Data",
         "url": "https://registry.opendata.aws/noaa-nws-aorc/",
     }, indent=2), encoding="utf-8")
     print(f"wrote {out / 'aorc_precip.png'} and aorc_precip.json")

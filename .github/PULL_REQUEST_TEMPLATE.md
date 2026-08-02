@@ -6,12 +6,12 @@
 
 ## Checklist
 
-- [ ] Photo is open access and `source.public_domain` is true
+- [ ] Photo reuse status is accurate in `source.public_domain` and `source.rights`
 - [ ] `palettes/<name>.json` has every required field and one note per color
 - [ ] `python tools/check_palette.py --palette <name>` output pasted below
-- [ ] Colors sit within CIEDE2000 3 of the photo, or the exceptions are explained here
+- [ ] Colors sit within CIEDE2000 3 of sampled photo points, or exceptions are explained here
 - [ ] `python tools/build.py <name>` ran cleanly and the generated files are committed
-- [ ] The sample page reads well, and I looked at the colorblind rows on the preview
+- [ ] The sample page reads well, and I checked all four viewing rows in the preview
 
 ## Check output
 

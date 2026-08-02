@@ -36,6 +36,10 @@ def parse_region(text):
 
 
 def cluster(pixels, k):
+    if k < 1:
+        raise ValueError("k must be at least 1")
+    if len(pixels) < k:
+        raise ValueError(f"k={k} exceeds the {len(pixels)} sampled pixels")
     km = KMeans(n_clusters=k, n_init=10, random_state=0).fit(rgb_to_lab(pixels))
     order = np.argsort(-np.bincount(km.labels_, minlength=k))
     rows = []
@@ -63,9 +67,17 @@ def main():
     regions = args.region or [("whole image", (0, 0, *full.size))]
     results = []
     for label, box in regions:
+        x0, y0, x1, y1 = box
+        if x0 < 0 or y0 < 0 or x1 > full.width or y1 > full.height:
+            ap.error(f"region {label!r} lies outside the image")
+        if x1 <= x0 or y1 <= y0:
+            ap.error(f"region {label!r} has an empty or reversed extent")
         im = full.crop(box)
         im.thumbnail((400, 400))
-        rows = cluster(np.asarray(im).reshape(-1, 3).astype(float), args.k)
+        try:
+            rows = cluster(np.asarray(im).reshape(-1, 3).astype(float), args.k)
+        except ValueError as exc:
+            ap.error(str(exc))
         results.append((label, rows))
         print(f"\n=== {label} {box} ===")
         for hexcode, lab, share in rows:

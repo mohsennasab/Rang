@@ -32,6 +32,7 @@ import json
 import re
 
 import make_hecras_ramp
+import make_logo
 import make_preview
 import make_samples
 import make_stylx
@@ -56,7 +57,7 @@ def held_by(src):
 # ------------------------------------------------------------ generated code
 
 def write_python(pals):
-    lines = ['"""Palette data. Built with tools/build.py, edit palettes/*.json instead."""',
+    lines = ['"""Palette data written by tools/build.py. Edit palettes/*.json instead."""',
              "", "PALETTES = {"]
     for p in pals:
         entry = {
@@ -75,13 +76,13 @@ def write_python(pals):
 
 
 def write_r(pals):
-    lines = ["# Palette data. Built with tools/build.py, edit palettes/*.json instead.",
+    lines = ["# Palette data written by tools/build.py. Edit palettes/*.json instead.",
              "",
              "#' Complete list of Rang palettes",
              "#'",
              "#' Use names(rang_palettes) for the available names and rang() to build",
              "#' a palette. Each entry holds the colors, the discrete pick order and a",
-             "#' colorblind friendliness flag.",
+             "#' project CVD separation flag.",
              "#'",
              "#' @export",
              "rang_palettes <- list("]
@@ -91,6 +92,7 @@ def write_r(pals):
         flag = "TRUE" if p["colorblind"] else "FALSE"
         src = p["source"]
         cite = f'{src["title"]}, {src["date"]}, {held_by(src)}, {src["url"]}'
+        cite = cite.replace("\\", "\\\\").replace('"', '\\"')
         lines.append(f'  {p["name"]} = list(')
         lines.append(f'    colors = c({cols}),')
         lines.append(f'    order = c({order}),')
@@ -158,16 +160,16 @@ def write_qgis(pals):
 def write_hecras(pal):
     """Paste ready RAS Mapper surface fill blocks for one palette.
 
-    The format matches what RAS Mapper itself writes into a project's .rasmap
-    file. Shipped blocks let RAS Mapper stretch the ramp over the layer's own
-    range, and tools/make_hecras_ramp.py generates blocks with fixed values.
+    The format is based on SurfaceFill blocks inspected in RAS Mapper 6.x
+    project files. Shipped blocks stretch over the layer's own range, and
+    tools/make_hecras_ramp.py writes blocks with fixed values.
     """
     hdir = REPO_ROOT / "hecras"
     hdir.mkdir(exist_ok=True)
     name = pal["name"]
     colors = pal["colors"]
     blocks = [
-        f"<!-- Rang {name} for HEC-RAS RAS Mapper. Built with tools/build.py. -->",
+        f"<!-- Rang {name} for HEC-RAS RAS Mapper. Written by tools/build.py. -->",
         "<!-- Close HEC-RAS, open the project's .rasmap file in a text editor, and -->",
         "<!-- replace the target layer's Symbology block with one of these. For a -->",
         "<!-- fixed value range use tools/make_hecras_ramp.py instead. -->",
@@ -215,7 +217,8 @@ def source_section(src):
     else:
         rights = src.get("rights", "photo used with permission").strip().rstrip(".")
         rights = rights[0].upper() + rights[1:]
-        photo_note = f'[Reference page]({src["url"]}). {rights}.'
+        label = src.get("reference_label", "Reference page")
+        photo_note = f'[{label}]({src["url"]}). {rights}.'
     return text + "\n\n" + photo_note
 
 
@@ -240,7 +243,7 @@ def write_docs_page(pal):
     except Exception as e:
         print(f"presence check skipped: {e}")
 
-    hex_rows = ["| position | hex | drawn from |" + (" nearest pixel |" if presence else ""),
+    hex_rows = ["| position | hex | drawn from |" + (" nearest sample |" if presence else ""),
                 "|---|---|---|" + ("---|" if presence else "")]
     for i, (c, note) in enumerate(zip(colors, notes), start=1):
         row = f"| {i} | `{c}` | {note} |"
@@ -250,6 +253,10 @@ def write_docs_page(pal):
 
     wc = worst_case(colors)
     verdict = ("passes" if pal["colorblind"] else "does not pass")
+    margin_note = ""
+    if 0 <= wc - COLORBLIND_THRESHOLD < 0.1:
+        margin_note = ("\nThe margin is less than 0.1, so small changes to a color or the "
+                       "simulation can alter the result.")
     bits = []
     if pal.get("persian"):
         bits.append(f'Persian: {pal["persian"]}')
@@ -266,7 +273,7 @@ def write_docs_page(pal):
             f"Regenerate this page with `python tools/make_samples.py {name.lower()}`.")
     else:
         samples_note = (
-            "The rainfall panel is real data, one day of NOAA AORC 1 km precipitation.\n"
+            "The rainfall panel is real data, one day of NOAA AORC precipitation on a roughly 1 km grid.\n"
             f"Regenerate this page with `python tools/make_samples.py {name.lower()}`, and\n"
             "pass `--dem your_dem.tif` to draw the elevation panel from your own raster.")
 
@@ -282,9 +289,9 @@ def write_docs_page(pal):
 
 {chr(10).join(hex_rows)}
 
-The nearest pixel column is the CIEDE2000 distance from each palette color to
-the closest pixel in the source photo. Small numbers mean the color is really
-in the artwork.
+The nearest sample column is the CIEDE2000 distance from each palette color to
+the closest evaluated point in a reduced copy of the source photo. Small
+numbers show that a close visual match occurs in the sampled image.
 
 ## The palette beside the artwork
 
@@ -301,7 +308,8 @@ in the artwork.
 {cvd_table(colors)}
 
 The worst case across the four vision types is {wc:.1f}, so this palette
-{verdict} the collection's colorblind friendliness threshold of {COLORBLIND_THRESHOLD:.0f}.
+{verdict} the project's CVD separation threshold of {COLORBLIND_THRESHOLD:.0f}.{margin_note}
+This screening rule is not an accessibility guarantee.
 Discrete picks use the stored order, which was chosen to keep the first few
 colors as far apart as possible under every vision type.
 
@@ -347,7 +355,7 @@ def gallery_entry(pal):
         say += f' Persian: {pal["persian"]}.'
     if pal.get("pronunciation"):
         say += f' Say it {pal["pronunciation"]}.'
-    friendly = " Colorblind friendly." if pal["colorblind"] else ""
+    friendly = " Passes the project CVD separation check." if pal["colorblind"] else ""
     line = f'{src["title"]}, {src["date"]}.'
     if held_by(src):
         line += f' {held_by(src)}.'
@@ -389,8 +397,9 @@ def ensure_order(name):
         pal["order"] = greedy_order(pal["colors"])
         changed = True
         print(f"computed order for {pal['name']}: {pal['order']}")
-    if "colorblind" not in pal:
-        pal["colorblind"] = worst_case(pal["colors"]) >= COLORBLIND_THRESHOLD
+    computed_flag = worst_case(pal["colors"]) >= COLORBLIND_THRESHOLD
+    if pal.get("colorblind") is not computed_flag:
+        pal["colorblind"] = computed_flag
         changed = True
         print(f"computed colorblind flag for {pal['name']}: {pal['colorblind']}")
     if "position" not in pal:
@@ -422,10 +431,11 @@ def main():
         ensure_order(name)
 
     pals = all_palettes()
+    make_logo.main()
     write_python(pals)
     write_r(pals)
     write_qgis(pals)
-    make_stylx.write_stylx(pals)
+    stylx_written = make_stylx.write_stylx(pals)
     for p in pals:
         write_hecras(p)
 
@@ -436,6 +446,8 @@ def main():
         write_docs_page(load_palette(name.lower()))
 
     update_readme(pals)
+    if not stylx_written:
+        raise SystemExit("build incomplete because arcgis/Rang.stylx was locked")
     print("\nbuild finished")
 
 

@@ -19,4 +19,6 @@ rang.source("Kashan")                     # the artwork behind the palette
 ```
 
 The package has no required dependencies. `cmap()` needs matplotlib, which you
-likely have already if you want a colormap.
+can add with `pip install matplotlib`.
+Discrete requests use the stored separation order. Continuous requests
+interpolate through the source ramp in sRGB.

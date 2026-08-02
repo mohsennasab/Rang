@@ -22,9 +22,8 @@ goes into picking the artwork and curating the colors.
 - Persian art in a broad sense. Carpets, miniatures, tilework, manuscripts,
   ceramics, metalwork, architecture. Works from the wider Persianate world
   fit when the visual tradition is Persian.
-- A photograph you have the rights to share. Two paths work. Museum open
-  access images, The Met, the Cleveland Museum of Art, the Smithsonian and
-  the David Collection all release suitable ones. Or your own photograph of
+- A photograph you have the rights to share. Two paths work. Use a museum
+  image whose object page states a suitable reuse license, or your own photo of
   tilework, a building or an object, committed under `sources/<name>/` with
   your credit line, the way the Golestan palette does it. Either way keep a
   reference URL, an object page or something like the UNESCO listing for a
@@ -53,10 +52,7 @@ toward muddy averages. Read pixel coordinates for regions off any image viewer
 that shows cursor position.
 
 ```
-python tools/extract_colors.py --image <photo url> -k 8 ^
-    --region 900,1400,1700,2200,medallion ^
-    --region 700,700,1900,1300,field ^
-    --swatches cache/clusters.png
+python tools/extract_colors.py --image "PHOTO_URL" -k 8 --region 900,1400,1700,2200,medallion --region 700,700,1900,1300,field --swatches cache/clusters.png
 ```
 
 You get a table of hex codes with CIELAB values and pixel share per region,
@@ -73,19 +69,18 @@ like.
 ## Step 3, check the palette
 
 ```
-python tools/check_palette.py --colors "#7f3020,#ab4a47,#c07049,#1a3b45" ^
-    --image <photo url>
+python tools/check_palette.py --colors "#7f3020,#ab4a47,#c07049,#1a3b45" --image "PHOTO_URL"
 ```
 
 The report covers three things:
 
 - Separation under normal vision and simulated protanopia, deuteranopia and
-  tritanopia, as pairwise CIEDE2000. The collection marks a palette
-  colorblind friendly when the worst case stays at or above 8.
+  tritanopia, as pairwise CIEDE2000. The project CVD check passes when the
+  worst case stays at or above 8. This is not an accessibility guarantee.
 - A suggested pick order, the order in which colors enter the discrete
   palette. Keep it unless you have a reason not to.
-- Distance from each color to the nearest pixel of the photo. Aim for 3 or
-  less. If a color sits farther out, either pull it back toward the artwork
+- Distance from each color to the nearest sampled point in a reduced copy of
+  the photo. Aim for 3 or less. If a color sits farther out, pull it back
   or say in the pull request why it needs to drift, for example lifting a
   color slightly so neighbors stay separable.
 
@@ -95,8 +90,7 @@ When a color is close but not right, nudge it in lightness, chroma or hue
 instead of hand editing hex codes:
 
 ```
-python tools/adjust_colors.py --colors "#8a9463,#345f72" ^
-    --edit "1:L+4,C-2" --png cache/before_after.png
+python tools/adjust_colors.py --colors "#8a9463,#345f72" --edit "1:L+4,C-2" --png cache/before_after.png
 ```
 
 Rerun the check after adjusting. The two scripts are meant to be cycled until
@@ -151,7 +145,7 @@ small requests about ramp order or a color that reads poorly in a plot.
 | `colors` | yes | 5 to 12 hex codes in ramp order |
 | `notes` | yes | one short phrase per color, where in the artwork it lives |
 | `order` | no | pick order for discrete use, computed by the build if absent |
-| `colorblind` | no | set by the build from the worst case separation if absent |
+| `colorblind` | no | project CVD separation flag, set by the build when absent |
 | `about` | no | one short paragraph on what the palette was made for, shown in the gallery and on its page |
 | `samples` | no | leave out for the standard six panels, or "water" for the water surface elevation and stream network page |
 | `source.title` | yes | object or work title |

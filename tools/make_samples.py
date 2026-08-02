@@ -118,7 +118,7 @@ def panel_precip(ax, fig, pal, rng):
     fig.colorbar(im, ax=ax, shrink=0.85, label="mm per day")
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.set_title(f'Precipitation, AORC 1 km, {info["date"]}')
+    ax.set_title(f'Precipitation, AORC roughly 1 km, {info["date"]}')
 
 
 # ----------------------------------------------------------------- elevation
@@ -255,7 +255,7 @@ def water_page(pal):
     for ax in axes:
         for side in ("top", "right"):
             ax.spines[side].set_visible(False)
-    fig.suptitle(f'{pal["name"]}, on the water data it was made for',
+    fig.suptitle(f'{pal["name"]}, water mapping examples',
                  fontsize=16, fontfamily="serif")
     fig.tight_layout(rect=(0, 0, 1, 0.95))
     return fig
@@ -293,7 +293,7 @@ def main(name, dem_path=None):
 
     out_dir = REPO_ROOT / "docs" / pal["name"].lower()
     out_dir.mkdir(parents=True, exist_ok=True)
-    fig.savefig(out_dir / "samples.png", bbox_inches="tight")
+    fig.savefig(out_dir / "samples.png", metadata={"Software": "Rang"})
     plt.close(fig)
     print(f"wrote {out_dir / 'samples.png'}")
 

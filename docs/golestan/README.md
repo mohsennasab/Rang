@@ -4,12 +4,12 @@
 
 ## Source
 
-Tile panel with a hunting scene, Qajar period. Tehran, Iran.
+Hunting-scene tile panel at Golestan Palace, photographed 2018. Tehran, Iran.
 Glazed polychrome tilework.
 Golestan Palace, UNESCO World Heritage Site.
 Photo by Mohsen Tahmasebi Nasab, 2018.
 
-[Reference page](https://whc.unesco.org/en/list/1422/). Photographer's own work, contributed to the project.
+[Site reference](https://whc.unesco.org/en/list/1422/). Photographer's own work, contributed to the project.
 
 ## The setting
 
@@ -19,21 +19,21 @@ The panel in place at the palace, with a resident cat.
 
 ## Colors
 
-| position | hex | drawn from | nearest pixel |
+| position | hex | drawn from | nearest sample |
 |---|---|---|---|
-| 1 | `#432f2c` | dark umber, outlines and the hunter's horse | 1.2 |
-| 2 | `#ae6259` | coral red, blossoms and the rider's coat | 0.3 |
+| 1 | `#432f2c` | dark umber, outlines and the hunter's horse | 0.7 |
+| 2 | `#ae6259` | coral red, blossoms and the rider's coat | 0.6 |
 | 3 | `#b57f86` | rose pink, flowers among the scrollwork | 0.4 |
-| 4 | `#b5b5ac` | ivory, tile ground of the medallion | 0.0 |
-| 5 | `#cbb11c` | golden yellow, the field | 0.1 |
-| 6 | `#9a9a68` | pale olive, the hunting ground | 0.9 |
-| 7 | `#45939c` | turquoise, the medallion ring | 0.3 |
-| 8 | `#577ab1` | azure, lit edges of the scrollwork | 0.4 |
-| 9 | `#333a80` | cobalt, the arabesque scrolls | 0.3 |
+| 4 | `#b5b5ac` | ivory, tile ground of the medallion | 0.3 |
+| 5 | `#cbb11c` | golden yellow, the field | 0.0 |
+| 6 | `#9a9a68` | pale olive, the hunting ground | 0.7 |
+| 7 | `#45939c` | turquoise, the medallion ring | 0.6 |
+| 8 | `#577ab1` | azure, lit edges of the scrollwork | 0.3 |
+| 9 | `#333a80` | cobalt, the arabesque scrolls | 0.0 |
 
-The nearest pixel column is the CIEDE2000 distance from each palette color to
-the closest pixel in the source photo. Small numbers mean the color is really
-in the artwork.
+The nearest sample column is the CIEDE2000 distance from each palette color to
+the closest evaluated point in a reduced copy of the source photo. Small
+numbers show that a close visual match occurs in the sampled image.
 
 ## The palette beside the artwork
 
@@ -43,7 +43,7 @@ in the artwork.
 
 ![Golestan samples](samples.png)
 
-The rainfall panel is real data, one day of NOAA AORC 1 km precipitation.
+The rainfall panel is real data, one day of NOAA AORC precipitation on a roughly 1 km grid.
 Regenerate this page with `python tools/make_samples.py golestan`, and
 pass `--dem your_dem.tif` to draw the elevation panel from your own raster.
 
@@ -57,7 +57,9 @@ pass `--dem your_dem.tif` to draw the elevation panel from your own raster.
 | tritanopia | 8.0 | 34.4 |
 
 The worst case across the four vision types is 8.0, so this palette
-passes the collection's colorblind friendliness threshold of 8.
+passes the project's CVD separation threshold of 8.
+The margin is less than 0.1, so small changes to a color or the simulation can alter the result.
+This screening rule is not an accessibility guarantee.
 Discrete picks use the stored order, which was chosen to keep the first few
 colors as far apart as possible under every vision type.
 

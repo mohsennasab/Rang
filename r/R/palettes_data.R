@@ -1,10 +1,10 @@
-# Palette data. Built with tools/build.py, edit palettes/*.json instead.
+# Palette data written by tools/build.py. Edit palettes/*.json instead.
 
 #' Complete list of Rang palettes
 #'
 #' Use names(rang_palettes) for the available names and rang() to build
 #' a palette. Each entry holds the colors, the discrete pick order and a
-#' colorblind friendliness flag.
+#' project CVD separation flag.
 #'
 #' @export
 rang_palettes <- list(
@@ -18,12 +18,12 @@ rang_palettes <- list(
     colors = c("#432f2c", "#ae6259", "#b57f86", "#b5b5ac", "#cbb11c", "#9a9a68", "#45939c", "#577ab1", "#333a80"),
     order = c(4, 5, 8, 6, 1, 7, 3, 9, 2),
     colorblind = TRUE,
-    source = "Tile panel with a hunting scene, Qajar period, Golestan Palace, UNESCO World Heritage Site, https://whc.unesco.org/en/list/1422/"
+    source = "Hunting-scene tile panel at Golestan Palace, photographed 2018, Golestan Palace, UNESCO World Heritage Site, https://whc.unesco.org/en/list/1422/"
   ),
   Termeh = list(
     colors = c("#e5f0ee", "#c8dfe3", "#a9ccd7", "#7fb5c1", "#5d95a8", "#3e738e", "#274e68"),
     order = c(1, 7, 5, 6, 3, 4, 2),
     colorblind = FALSE,
-    source = "Termeh cloth with paisley boteh, contemporary, Termeh weaving tradition of Yazd, https://en.wikipedia.org/wiki/Termeh"
+    source = "Termeh cloth with boteh motifs, photographed 2026, Yazd textile tradition, https://asia-archive.si.edu/object/S2017.14/"
   )
 )

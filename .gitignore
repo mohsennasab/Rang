@@ -14,12 +14,6 @@ dist/
 cache/
 
 # local working files
-
-
-
-
-
-
 notes/
 *.local.md
 .DS_Store

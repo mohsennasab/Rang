@@ -1,4 +1,4 @@
-<!-- Rang Kashan for HEC-RAS RAS Mapper. Built with tools/build.py. -->
+<!-- Rang Kashan for HEC-RAS RAS Mapper. Written by tools/build.py. -->
 <!-- Close HEC-RAS, open the project's .rasmap file in a text editor, and -->
 <!-- replace the target layer's Symbology block with one of these. For a -->
 <!-- fixed value range use tools/make_hecras_ramp.py instead. -->
