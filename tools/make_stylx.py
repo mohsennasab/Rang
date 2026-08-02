@@ -56,7 +56,13 @@ def fixed_ramp(colors):
 def write_stylx(pals, out=None):
     out = out or REPO_ROOT / "arcgis" / "Rang.stylx"
     if out.exists():
-        out.unlink()
+        try:
+            out.unlink()
+        except PermissionError:
+            print(f"skipped {out}, another program is holding it open. "
+                  "ArcGIS Pro locks styles it has loaded, close Pro or remove "
+                  "the style there and rerun the build to refresh the file.")
+            return
     db = sqlite3.connect(out)
     cur = db.cursor()
     cur.executescript("""
