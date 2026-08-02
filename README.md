@@ -164,10 +164,9 @@ ggplot(faithfuld, aes(waiting, eruptions, fill = density)) +
 
 Import [arcgis/Rang.stylx](arcgis/Rang.stylx) once through the Catalog pane
 and every palette lands in the color scheme dropdowns, smooth and discrete,
-plus the individual colors in every color picker. That route works for any
-raster type, floating point included. The `.clr` colormap files are also
-there for integer rasters, where the Add Colormap tool applies. Steps for
-both are in the [ArcGIS guide](arcgis/README.md).
+plus the individual colors in every color picker. Color schemes live in the
+symbology rather than the dataset, so this works for any raster type,
+floating point included. Steps are in the [ArcGIS guide](arcgis/README.md).
 
 ### QGIS
 
@@ -230,7 +229,7 @@ palettes/    one json per palette, the single source of truth
 sources/     contributor photographs referenced by the palette files
 python/      pip installable package, reads generated _palettes.py
 r/           R package, reads generated palettes_data.R
-arcgis/      Rang.stylx style, .clr colormap files and the ArcGIS Pro guide
+arcgis/      Rang.stylx style file and the ArcGIS Pro guide
 qgis/        style file, .gpl swatches and the QGIS guide
 hecras/      RAS Mapper surface fill blocks and the HEC-RAS guide
 tools/       contributor scripts, extraction to build
