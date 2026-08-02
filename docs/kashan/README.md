@@ -72,9 +72,11 @@ library(Rang)
 rang("Kashan", 5)
 ```
 
-ArcGIS Pro colormaps are in [arcgis/Kashan.clr](../../arcgis/Kashan.clr) and
-[arcgis/Kashan_continuous.clr](../../arcgis/Kashan_continuous.clr), with steps
-in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
+ArcGIS Pro users get every palette by importing
+[arcgis/Rang.stylx](../../arcgis/Rang.stylx) once, and this palette's
+colormaps for integer rasters are in [arcgis/Kashan.clr](../../arcgis/Kashan.clr)
+and [arcgis/Kashan_continuous.clr](../../arcgis/Kashan_continuous.clr), with
+steps in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
 [qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
 [qgis/Kashan.gpl](../../qgis/Kashan.gpl) for swatches, see the
 [QGIS guide](../../qgis/README.md). HEC-RAS surface fills are in

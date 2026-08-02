@@ -1,54 +1,62 @@
 # Rang in ArcGIS Pro
 
-Each palette ships two Esri colormap files, built with `tools/build.py`:
+Three kinds of files, all built with `tools/build.py`:
 
 | file | contents |
 |---|---|
-| `<Name>.clr` | the discrete colors, one line per class value |
-| `<Name>_continuous.clr` | a 256 step ramp interpolated along the palette |
+| `Rang.stylx` | every palette as an ArcGIS Pro style, colors plus smooth and discrete color schemes |
+| `<Name>.clr` | the discrete colors as an Esri colormap file, for integer rasters |
+| `<Name>_continuous.clr` | a 256 step ramp as an Esri colormap file, for integer rasters |
 
-A `.clr` file is plain text, one `value red green blue` line per entry, so you
-can also open it in a text editor and copy values out.
+## The style file, start here
 
-## Apply a colormap to a raster
+`Rang.stylx` is the same kind of file ArcGIS Pro writes when you build a
+style yourself, so one import covers everything:
 
-Works for integer rasters such as classified land cover, flood zones or a
-reclassified DEM.
+1. Open the **Catalog** pane and find **Styles**.
+2. Right click **Styles**, then **Add**, then **Add Style File** (on some
+   versions this sits under **Insert**, **Styles**).
+3. Pick `Rang.stylx`.
 
-1. In the Geoprocessing pane search for the **Add Colormap** tool.
-2. Set your raster as input and pick the `.clr` file. Use `<Name>.clr` when
-   your raster holds class values 1, 2, 3 and so on, or
-   `<Name>_continuous.clr` when it holds values 0 to 255.
-3. Symbolize the raster with the **Colormap** renderer.
+Every palette then shows up in two places:
 
-The **Colormap** raster function does the same thing without writing to the
-dataset.
+- Each **color scheme dropdown**, symbology for stretched rasters, unclassed
+  and graduated colors, bivariate schemes, charts. The plain name, such as
+  "Rang - Termeh", is the smooth ramp. The name marked discrete holds the
+  exact palette steps for classified data.
+- Each **color picker**, under the Rang category, one swatch per palette
+  color, named with its hex code.
 
-## Build a color scheme for any layer
+This route works with any raster type, floating point included, because the
+symbology does the coloring instead of the dataset. For a depth or water
+surface elevation grid, open **Symbology**, choose **Stretch** or
+**Classify**, and pick the Rang scheme from the dropdown.
 
-For graduated colors, unclassed colors or a stretch renderer you want a saved
-color scheme:
+## The .clr files, integer rasters only
 
-1. Open the **Catalog** pane, right click **Styles**, then **New**, then
-   **New Mobile Style**, and give it a name such as `Rang`.
-2. Right click the new style, **Manage**, then **New**, then **Color Scheme**.
-3. In the scheme editor add one stop per palette color. Each hex code goes in
-   through the color picker, **Color Properties**, **HEX** field. Use the ramp
-   order listed on the palette page in `docs/`.
-4. For a discrete scheme set the stops to discrete, for a smooth ramp leave
-   them continuous.
+A `.clr` file writes a colormap into the raster dataset itself through the
+**Add Colormap** tool or the **Colormap** raster function. ArcGIS only
+allows that for integer rasters, so on a floating point raster the tool
+stops with error 000199, "Failed to add Colormap".
 
-The scheme then shows up in every color scheme dropdown, including raster
-stretch symbology and graduated colors for vector layers.
+So use `.clr` when the raster is integer, classified land cover, flood
+zones, a reclassified DEM. `<Name>.clr` fits class values 1, 2, 3 and so
+on, `<Name>_continuous.clr` fits values 0 to 255. If you really want a
+colormap burned into a float raster, convert it first with the **Int** tool
+or a reclassify, though for display the style file above is the better
+answer.
+
+A `.clr` file is plain text, one `value red green blue` line per entry, so
+you can also open it in a text editor and copy values out.
 
 ## Pick single colors
 
-Any color picker in Pro accepts hex codes through **Color Properties**. The
-hex codes for every palette are in the main README and on each palette page.
+Any color picker in Pro accepts hex codes through **Color Properties**. With
+the style imported you rarely need to, the swatches are already there.
 
 ## Suggested pairings
 
-Sequential data such as elevation or rainfall reads best with the continuous
-ramp. Categorical maps read best with the discrete colors in their pick
-order, which keeps the first few classes as far apart as possible. Palette
-pages in `docs/` show both against real plot types.
+Sequential data such as depth, water surface elevation or rainfall reads
+best with a smooth scheme, and Termeh was drawn for exactly that. Categorical
+maps read best with a discrete scheme, which keeps the palette's pick order
+so the first few classes stay far apart.

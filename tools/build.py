@@ -4,7 +4,9 @@ Reads palettes/*.json, the single source of truth, and regenerates
 
   python/rang/_palettes.py       the Python package data
   r/R/palettes_data.R            the R package data
-  arcgis/<Name>.clr              discrete Esri colormap file
+  arcgis/Rang.stylx              ArcGIS Pro style with every palette's colors
+                                 and color schemes, one import in Catalog
+  arcgis/<Name>.clr              discrete Esri colormap file, integer rasters
   arcgis/<Name>_continuous.clr   256 step ramp as an Esri colormap file
   qgis/Rang.xml                  QGIS style file with every ramp, smooth and
                                  discrete, for the Style Manager
@@ -34,6 +36,7 @@ import re
 import make_hecras_ramp
 import make_preview
 import make_samples
+import make_stylx
 from colorlib import (COLORBLIND_THRESHOLD, PALETTE_DIR, REPO_ROOT,
                       VISION_LABELS, VISION_TYPES, all_palettes, fetch_image,
                       greedy_order, hex_to_rgb, interpolate, load_palette,
@@ -335,9 +338,11 @@ library(Rang)
 rang("{name}", 5)
 ```
 
-ArcGIS Pro colormaps are in [arcgis/{name}.clr](../../arcgis/{name}.clr) and
-[arcgis/{name}_continuous.clr](../../arcgis/{name}_continuous.clr), with steps
-in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
+ArcGIS Pro users get every palette by importing
+[arcgis/Rang.stylx](../../arcgis/Rang.stylx) once, and this palette's
+colormaps for integer rasters are in [arcgis/{name}.clr](../../arcgis/{name}.clr)
+and [arcgis/{name}_continuous.clr](../../arcgis/{name}_continuous.clr), with
+steps in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
 [qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
 [qgis/{name}.gpl](../../qgis/{name}.gpl) for swatches, see the
 [QGIS guide](../../qgis/README.md). HEC-RAS surface fills are in
@@ -438,6 +443,7 @@ def main():
     write_python(pals)
     write_r(pals)
     write_qgis(pals)
+    make_stylx.write_stylx(pals)
     for p in pals:
         write_clr(p)
         write_hecras(p)

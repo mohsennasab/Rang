@@ -15,6 +15,7 @@ pip install -r tools/requirements.txt
 | `make_preview.py` | the swatch strip and the artwork preview for one palette |
 | `make_samples.py` | the six standard sample plots for one palette |
 | `make_hecras_ramp.py` | a RAS Mapper surface fill block for any palette and value range |
+| `make_stylx.py` | the ArcGIS Pro style file with every palette's colors and schemes |
 | `build.py` | runs everything above and regenerates the Python, R, ArcGIS, QGIS and HEC-RAS files plus the README gallery |
 | `fetch_conus_dem.py` | rebuilds the small CONUS elevation grid in `data/`, rarely needed |
 | `fetch_aorc_precip.py` | rebuilds the AORC rainfall grid in `data/`, rarely needed, wants xarray, zarr and s3fs |

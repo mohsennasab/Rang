@@ -78,9 +78,11 @@ library(Rang)
 rang("Golestan", 5)
 ```
 
-ArcGIS Pro colormaps are in [arcgis/Golestan.clr](../../arcgis/Golestan.clr) and
-[arcgis/Golestan_continuous.clr](../../arcgis/Golestan_continuous.clr), with steps
-in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
+ArcGIS Pro users get every palette by importing
+[arcgis/Rang.stylx](../../arcgis/Rang.stylx) once, and this palette's
+colormaps for integer rasters are in [arcgis/Golestan.clr](../../arcgis/Golestan.clr)
+and [arcgis/Golestan_continuous.clr](../../arcgis/Golestan_continuous.clr), with
+steps in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
 [qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
 [qgis/Golestan.gpl](../../qgis/Golestan.gpl) for swatches, see the
 [QGIS guide](../../qgis/README.md). HEC-RAS surface fills are in

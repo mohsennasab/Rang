@@ -79,9 +79,11 @@ library(Rang)
 rang("Termeh", 5)
 ```
 
-ArcGIS Pro colormaps are in [arcgis/Termeh.clr](../../arcgis/Termeh.clr) and
-[arcgis/Termeh_continuous.clr](../../arcgis/Termeh_continuous.clr), with steps
-in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
+ArcGIS Pro users get every palette by importing
+[arcgis/Rang.stylx](../../arcgis/Rang.stylx) once, and this palette's
+colormaps for integer rasters are in [arcgis/Termeh.clr](../../arcgis/Termeh.clr)
+and [arcgis/Termeh_continuous.clr](../../arcgis/Termeh_continuous.clr), with
+steps in the [ArcGIS guide](../../arcgis/README.md). QGIS users can import
 [qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
 [qgis/Termeh.gpl](../../qgis/Termeh.gpl) for swatches, see the
 [QGIS guide](../../qgis/README.md). HEC-RAS surface fills are in
