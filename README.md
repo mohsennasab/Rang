@@ -18,6 +18,9 @@ elevation data.
 Use Rang with Python, R, ArcGIS Pro, QGIS, GeoLibre and HEC-RAS. The same
 palette can move easily from code to maps and hydraulic models.
 
+Created by **Mohsen Tahmasebi Nasab, PhD**. Read
+[the story behind Rang](https://hydromohsen.com/blog/the-story-behind-rang/).
+
 ## Contents
 
 [Palettes](#palettes) | [Install](#install) | [Use](#use-the-palettes) | [How they are made](#how-palettes-are-made) | [Contribute](#contributing) | [Credits and license](#credits-and-license)
