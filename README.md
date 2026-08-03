@@ -212,16 +212,10 @@ covers raster layers, vector layers, legends, colorbars and Jupyter use.
 
 ### HEC-RAS
 
-Each palette ships RAS Mapper surface fill blocks in [hecras/](hecras/),
-forward and reversed. Their structure is based on RAS Mapper 6.x project
-files. Drop one into a depth, velocity or WSE layer's
-Symbology block, or generate a block scaled to a specific value range:
-
-```
-python tools/make_hecras_ramp.py kashan --min 0 --max 30
-```
-
-Steps and details are in the [HEC-RAS guide](hecras/README.md).
+Import [hecras/Rang-All.xml](hecras/Rang-All.xml) through the RAS Mapper
+Surface Fill window to add the full collection, or download one palette from
+the [hecras folder](hecras/). The [HEC-RAS guide](hecras/README.md) walks
+through the interface step by step.
 
 ## How palettes are made
 
@@ -267,7 +261,7 @@ r/           R package, reads generated palettes_data.R
 arcgis/      Rang.stylx style file and the ArcGIS Pro guide
 qgis/        style file, .gpl swatches and the QGIS guide
 geolibre/    copy-ready and machine-readable color lists plus a usage guide
-hecras/      RAS Mapper surface fill blocks and the HEC-RAS guide
+hecras/      HEC-RAS custom color-ramp imports and the interface guide
 tools/       contributor scripts, extraction to build
 docs/        one page per palette with previews and sample plots
 data/        small real rainfall and elevation grids for the sample plots

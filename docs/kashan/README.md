@@ -78,8 +78,8 @@ ArcGIS Pro users get every palette by importing
 [ArcGIS guide](../../arcgis/README.md). QGIS users can import
 [qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
 [qgis/Kashan.gpl](../../qgis/Kashan.gpl) for swatches, see the
-[QGIS guide](../../qgis/README.md). HEC-RAS surface fills are in
-[hecras/Kashan.rasmap.xml](../../hecras/Kashan.rasmap.xml), see the
+[QGIS guide](../../qgis/README.md). HEC-RAS users can import
+[hecras/Rang-Kashan.xml](../../hecras/Rang-Kashan.xml), see the
 [HEC-RAS guide](../../hecras/README.md). GeoLibre users can copy colors from
 [geolibre/Rang.txt](../../geolibre/Rang.txt), with steps for raster and vector
 layers in the [GeoLibre guide](../../geolibre/README.md).

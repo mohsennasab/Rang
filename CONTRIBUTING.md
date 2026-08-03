@@ -125,10 +125,11 @@ python tools/build.py <name>
 ```
 
 This regenerates the Python, R, ArcGIS, QGIS, GeoLibre and HEC-RAS files for
-the whole collection, renders your swatch, gallery card, preview and sample
-plots, writes `docs/<name>/README.md` and adds your palette to the gallery in
-the main README. Look at the sample page it produced. If a plot reads badly,
-go back to step 4.
+the whole collection, including the combined HEC-RAS import. It also renders
+your swatch, gallery card, preview and sample plots, writes
+`docs/<name>/README.md` and adds your palette to the gallery in the main
+README. Look at the sample page it produced. If a plot reads badly, go back
+to step 4.
 
 The rainfall and elevation panels use the real grids in `data/`, one day of
 NOAA AORC precipitation and a CONUS DEM. Pass your own raster with
