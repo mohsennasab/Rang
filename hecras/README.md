@@ -1,64 +1,34 @@
 # Rang in HEC-RAS
 
-RAS Mapper stores layer settings in the project's XML based `.rasmap` file.
-Every Rang palette ships as a `Symbology` block based on SurfaceFill entries
-inspected in RAS Mapper 6.x project files:
+Rang palettes can be imported through the HEC-RAS interface as user-defined
+color ramps. Download [Rang-All.xml](Rang-All.xml) to add the full collection,
+or choose an individual `Rang-<Name>.xml` file from this folder.
 
-| file | contents |
-|---|---|
-| `<Name>.rasmap.xml` | two paste ready surface fill blocks, the ramp forward and reversed |
+Save your current HEC-RAS changes before importing. HEC-RAS warns that any
+unsaved changes in the Surface Fill window will be lost.
 
-Each block looks like this, with colors stored as the signed ARGB integers
-RAS Mapper uses:
+## Import a color ramp
 
-```xml
-<Symbology>
-  <SurfaceFill Colors="-8441824,-5551545,-4165559,..." Values="0,0.125,..."
-    Stretched="True" AlphaTag="255" UseDatasetMinMax="True"
-    RegenerateForScreen="True" />
-</Symbology>
-```
+1. In RAS Mapper, right-click the layer whose color ramp you want to change.
+2. Click **Image Display Properties**, the first option in the menu.
+3. In **Layer Properties**, click **Edit** beside the surface display.
+4. In the **Select Surface Fill** window, click **Import**.
+5. When HEC-RAS warns that unsaved changes will be lost, click **Yes**.
+6. In the Browse window, select `Rang-All.xml` or an individual Rang XML file,
+   then click **Open**.
+7. Clear **RAS Defaults** and select **User Defined**.
+8. Open the **Color Ramp** list and choose a palette such as
+   **Rang - Golestan**.
+9. Click **OK** to apply the ramp.
 
-## Apply to a results layer
+![HEC-RAS color-ramp import steps](RAS_instructions.png)
 
-1. Close HEC-RAS, and make a copy of the project's `.rasmap` file in case
-   you want the old symbology back.
-2. Open the `.rasmap` file in a text editor and find the layer you want to
-   restyle, for example `<Layer Name="depth" ...>`. Inside it sits a
-   `<Symbology>` block with a `SurfaceFill` line.
-3. Replace that block with one from `<Name>.rasmap.xml`, save, and reopen
-   the project. The layer draws with the palette stretched over its own
-   value range, since the shipped blocks set `UseDatasetMinMax="True"`.
+## Files
 
-The reversed variant runs the ramp light end first, which usually reads
-better for depth grids where shallow water should stay light.
+- `Rang-All.xml` contains every palette and is the simplest way to install the
+  full collection.
+- `Rang-<Name>.xml` contains one palette when you only want a single ramp.
 
-## Fixed value ranges
-
-When you want the breaks at specific values instead of the layer's min and
-max, generate the block with the ramp script and paste that in:
-
-```
-python tools/make_hecras_ramp.py kashan --min 0 --max 30
-python tools/make_hecras_ramp.py golestan --min 0 --max 12 -n 12 --reverse
-python tools/make_hecras_ramp.py kashan --min 480 --max 520 --alpha 200
-```
-
-`-n` interpolates the ramp to any number of stops, `--reverse` flips it, and
-`--alpha` sets transparency. The values it writes are evenly spaced across
-your range, and you can edit any of them afterward, RAS Mapper accepts
-uneven spacing.
-
-## Through the interface instead
-
-If you would rather not touch the file, open **RAS Mapper**, right click the
-layer, **Layer Properties**, then **Edit** under the surface fill. Set the
-number of colors to the palette size, click each color box and enter the hex
-codes from the main README through the color dialog, then save the ramp to
-the color list so the project can reuse it. The file route above is faster
-and survives across layers with a copy and paste.
-
-HEC does not publish a schema for this part of `.rasmap`, so the format here
-mirrors entries inspected in RAS Mapper 6.x project files. If a
-future version changes the format, restyle one layer in the interface, look
-at what it wrote, and tell us so the generator gets updated.
+The files are generated from `palettes/*.json` by `tools/build.py`. Adding a
+new palette and running the build updates the individual files and
+`Rang-All.xml` automatically.

@@ -88,8 +88,8 @@ ArcGIS Pro users get every palette by importing
 [ArcGIS guide](../../arcgis/README.md). QGIS users can import
 [qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
 [qgis/Nasir.gpl](../../qgis/Nasir.gpl) for swatches, see the
-[QGIS guide](../../qgis/README.md). HEC-RAS surface fills are in
-[hecras/Nasir.rasmap.xml](../../hecras/Nasir.rasmap.xml), see the
+[QGIS guide](../../qgis/README.md). HEC-RAS users can import
+[hecras/Rang-Nasir.xml](../../hecras/Rang-Nasir.xml), see the
 [HEC-RAS guide](../../hecras/README.md). GeoLibre users can copy colors from
 [geolibre/Rang.txt](../../geolibre/Rang.txt), with steps for raster and vector
 layers in the [GeoLibre guide](../../geolibre/README.md).

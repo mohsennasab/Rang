@@ -101,16 +101,49 @@ class OutputTests(unittest.TestCase):
                         for c in palette["colors"]]
             self.assertEqual(rgb, expected)
 
-    def test_hecras_blocks(self):
+    def test_hecras_imports(self):
+        expected_files = {f'Rang-{palette["name"]}.xml'
+                          for palette in self.palettes}
+        expected_files.add("Rang-All.xml")
+        self.assertEqual(
+            {path.name for path in (ROOT / "hecras").glob("*.xml")},
+            expected_files,
+        )
+
         for palette in self.palettes:
-            text = (ROOT / "hecras" / f'{palette["name"]}.rasmap.xml').read_text(
-                encoding="utf-8")
-            root = ET.fromstring(f"<root>{text}</root>")
-            fills = root.findall("./Symbology/SurfaceFill")
-            self.assertEqual(len(fills), 2)
+            path = ROOT / "hecras" / f'Rang-{palette["name"]}.xml'
+            text = path.read_text(encoding="utf-8")
+            self.assertEqual(len(text.splitlines()), 1)
+            root = ET.fromstring(text)
+            fills = root.findall("./UserDefinedColorRamps/SurfaceFill")
+            self.assertEqual(len(fills), 1)
             expected = [str(colorlib.hex_to_argb_int(c)) for c in palette["colors"]]
             self.assertEqual(fills[0].attrib["Colors"].split(","), expected)
-            self.assertEqual(fills[1].attrib["Colors"].split(","), expected[::-1])
+            self.assertEqual(fills[0].attrib["Name"], f'Rang - {palette["name"]}')
+            self.assertEqual(fills[0].attrib["Stretched"], "True")
+            self.assertEqual(fills[0].attrib["AlphaTag"], "255")
+            self.assertEqual(fills[0].attrib["UseDatasetMinMax"], "False")
+            self.assertEqual(fills[0].attrib["RegenerateForScreen"], "False")
+            self.assertEqual(len(fills[0].attrib["Values"].split(",")),
+                             len(expected))
+            custom = root.findall("./CustomColors/Color")
+            self.assertEqual([color.text for color in custom], ["16777215"] * 16)
+
+        combined_text = (ROOT / "hecras" / "Rang-All.xml").read_text(
+            encoding="utf-8")
+        self.assertEqual(len(combined_text.splitlines()), 1)
+        combined = ET.fromstring(combined_text)
+        fills = combined.findall("./UserDefinedColorRamps/SurfaceFill")
+        self.assertEqual(
+            [fill.attrib["Name"] for fill in fills],
+            [f'Rang - {palette["name"]}' for palette in self.palettes],
+        )
+        for fill, palette in zip(fills, self.palettes):
+            expected = [str(colorlib.hex_to_argb_int(color))
+                        for color in palette["colors"]]
+            self.assertEqual(fill.attrib["Colors"].split(","), expected)
+        custom = combined.findall("./CustomColors/Color")
+        self.assertEqual([color.text for color in custom], ["16777215"] * 16)
 
     def test_geolibre_color_bundle(self):
         bundle = json.loads((ROOT / "geolibre" / "Rang.json").read_text(
