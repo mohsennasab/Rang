@@ -178,5 +178,8 @@ small requests about ramp order or a color that reads poorly in a plot.
 | `source.card_image` | no | square crop used beside the palette in the gallery, falls back to `source.image` |
 | `source.context_image` | no | second photo showing the work in its setting |
 | `source.context_caption` | no | one line under the context photo |
+| `source.context_url` | no | source page for the context photo |
+| `source.context_credit` | no | photographer and date for the context photo |
+| `source.context_rights` | no | license or rights statement for the context photo |
 | `source.public_domain` | yes | true for open access images, false for your own photo |
 | `source.rights` | own photos | exact license and credit, for example "CC BY 4.0, Photo by Your Name, year" |

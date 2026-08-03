@@ -33,12 +33,16 @@ other people or organizations.
 
 ## Photographs and logo
 
-The Golestan and Termeh source photographs and the Rang logo remain copyright
-of Mohsen Tahmasebi Nasab. All rights are reserved. They are not covered by
-the MIT License or the CC0 dedication.
+The Golestan, Termeh and Khatam source photographs and the Rang logo remain
+copyright of Mohsen Tahmasebi Nasab. All rights are reserved. They are not
+covered by the MIT License or the CC0 dedication.
 
 The Kashan source image comes from The Metropolitan Museum of Art Open Access
 program and is identified separately in
+[`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md).
+
+The Nasir source images come from Wikimedia Commons and are licensed under
+CC BY-SA 4.0. Their authors, source pages and reuse terms are identified in
 [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md).
 
 Generated gallery cards and artwork previews follow the rights status of the

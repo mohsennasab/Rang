@@ -82,6 +82,20 @@ A warm ramp from khatam marquetry, the Persian craft of laying wood, bone and br
 
 [Sample plots and full details](docs/khatam/README.md)
 
+***
+
+### Nasir
+
+![Nasir, the artwork and its palette](docs/nasir/card.png)
+
+Stained-glass window at Nasir al-Mulk Mosque, 2018. Nasir al-Mulk Mosque. Photograph by Tpmehdi, 2018. [Reference](https://commons.wikimedia.org/wiki/File:DSC_0277-%D9%85%D8%B3%D8%AC%D8%AF_%D9%86%D8%B5%DB%8C%D8%B1%D8%A7%D9%84%D9%85%D9%84%DA%A9.jpg) Persian: نصیر. Say it nah-SEER, from Nasir al-Mulk Mosque in Shiraz.
+
+A vivid spectrum drawn from the stained glass of Nasir al-Mulk Mosque in Shiraz. Violet and cobalt open into cyan and green, then warm through gold to vermilion. It is especially lively for categories, lines and maps that call for strong contrast.
+
+`#261410 #3b1261 #4027e1 #518ffd #74ecf9 #50a877 #6dd96f #ebc05c #f04a23`
+
+[Sample plots and full details](docs/nasir/README.md)
+
 <!-- gallery:end -->
 
 ## Saying the names
@@ -96,6 +110,7 @@ stress lands on the last syllable.
 | Golestan | گلستان | goh-leh-STAHN | rose garden, the Qajar palace in Tehran |
 | Termeh | ترمه | tehr-MEH | a patterned textile associated with Yazd |
 | Khatam | خاتم | khaw-TAM | marquetry of star patterns in wood, bone and brass |
+| Nasir | نصیر | nah-SEER | from Nasir al-Mulk Mosque in Shiraz |
 
 Every palette page repeats its own pronunciation, and new palettes add
 themselves to this pattern through their json file.
@@ -286,6 +301,12 @@ photographs of khatam marquetry, 2026, and of a handicraft shop in the
 Isfahan bazaar, 2018. The Encyclopaedia Iranica article on
 [crafts in Isfahan](https://www.iranicaonline.org/articles/isfahan-xiii-crafts/)
 documents the craft's history in Shiraz, Isfahan and Tehran.
+The Nasir palette draws on a
+[stained-glass photograph](https://commons.wikimedia.org/wiki/File:DSC_0277-%D9%85%D8%B3%D8%AC%D8%AF_%D9%86%D8%B5%DB%8C%D8%B1%D8%A7%D9%84%D9%85%D9%84%DA%A9.jpg)
+by Tpmehdi, 2018, and an
+[interior photograph](https://commons.wikimedia.org/wiki/File:Nasir_al-_mulk_mosque%2C_Shiraz.jpg)
+by MohammadReza Domiri Ganji, 2013. Both are licensed under
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 The sample plots use public data: rainfall from the
 [NOAA Analysis of Record for Calibration](https://registry.opendata.aws/noaa-nws-aorc/),
