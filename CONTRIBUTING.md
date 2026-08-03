@@ -58,6 +58,11 @@ python tools/extract_colors.py --image "PHOTO_URL" -k 8 --region 900,1400,1700,2
 You get a table of hex codes with CIELAB values and pixel share per region,
 and an optional swatch sheet to look at.
 
+This process is not meant to produce one inevitable answer. The regions you
+notice, the details you care about and the colors that feel true to the work
+will differ from one person to another. That is part of making the palette.
+Treat the extracted clusters as a starting point, not a verdict.
+
 ## Step 2, curate the ramp
 
 Pick five to twelve colors and arrange them as a ramp, dark to light to dark,
@@ -65,6 +70,13 @@ warm to cool, whatever walk through the artwork reads smoothly when
 interpolated. Look at the artwork while you do this. The clusters are
 candidates, the palette is a judgment call about what the work actually looks
 like.
+
+Trust your eyes here. You are welcome to move away from an extracted center,
+replace it with a color you find more beautiful or leave out a dominant color
+that does not help the palette. What matters is that the finished colors still
+belong to the artwork, feel good together and work clearly in real
+visualizations. The checks in the next steps are guides for that judgment, not
+a recipe that overrides it.
 
 ## Step 3, check the palette
 
@@ -112,11 +124,11 @@ Leave out `order` and `colorblind` if you want the build to compute them.
 python tools/build.py <name>
 ```
 
-This regenerates the Python, R, ArcGIS, QGIS and HEC-RAS files for the whole
-collection, renders your swatch, gallery card, preview and sample plots,
-writes `docs/<name>/README.md` and adds your palette to the gallery in the
-main README. Look at the sample page it produced. If a plot reads badly, go
-back to step 4.
+This regenerates the Python, R, ArcGIS, QGIS, GeoLibre and HEC-RAS files for
+the whole collection, renders your swatch, gallery card, preview and sample
+plots, writes `docs/<name>/README.md` and adds your palette to the gallery in
+the main README. Look at the sample page it produced. If a plot reads badly,
+go back to step 4.
 
 The rainfall and elevation panels use the real grids in `data/`, one day of
 NOAA AORC precipitation and a CONUS DEM. Pass your own raster with
@@ -148,6 +160,7 @@ small requests about ramp order or a color that reads poorly in a plot.
 | `colorblind` | no | project CVD separation flag, set by the build when absent |
 | `about` | no | one short paragraph on what the palette was made for, shown in the gallery and on its page |
 | `samples` | no | leave out for the standard six panels, or "water" for the water surface elevation and stream network page |
+| `craft` | no | a paragraph or two on how the art form is made and its history, claims you can back up, shown on the palette page |
 | `source.title` | yes | object or work title |
 | `source.artist` | no | empty string when unknown |
 | `source.date` | yes | as the museum or reference gives it |
