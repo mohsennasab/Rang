@@ -253,7 +253,10 @@ def cvd_table(colors):
 
 
 def source_section(src):
-    parts = [f'{src["title"]}, {src["date"]}. {src.get("geography", "")}.']
+    citation = src.get("citation")
+    if not citation:
+        citation = f'{src["title"]}, {src["date"]}. {src.get("geography", "")}.'
+    parts = [citation]
     if src.get("medium"):
         parts.append(f'{src["medium"]}.')
     line2 = held_by(src)
@@ -286,6 +289,16 @@ def context_block(pal):
     rel = "../../" + src["context_image"].replace("\\", "/")
     caption = src.get("context_caption", "The work in its setting")
     return f"\n## The setting\n\n![{caption}]({rel})\n\n{caption}.\n"
+
+
+def craft_block(pal):
+    """Optional section on how the art form is made and where it comes from."""
+    craft = pal.get("craft")
+    if not craft:
+        return ""
+    if isinstance(craft, str):
+        craft = [craft]
+    return "\n## The craft\n\n" + "\n\n".join(craft) + "\n"
 
 
 def write_docs_page(pal):
@@ -342,7 +355,7 @@ def write_docs_page(pal):
 ## Source
 
 {source_section(src)}
-{context_block(pal)}
+{context_block(pal)}{craft_block(pal)}
 ## Colors
 
 {chr(10).join(hex_rows)}

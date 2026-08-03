@@ -25,5 +25,11 @@ rang_palettes <- list(
     order = c(1, 7, 5, 6, 3, 4, 2),
     colorblind = FALSE,
     source = "Termeh cloth with boteh motifs, photographed 2026, Yazd textile tradition, https://asia-archive.si.edu/object/S2017.14/"
+  ),
+  Khatam = list(
+    colors = c("#1c110b", "#542020", "#8d310e", "#bf480d", "#b27a3c", "#c58c51", "#d9a545", "#dbba94", "#e5c870"),
+    order = c(1, 6, 5, 3, 8, 4, 7, 9, 2),
+    colorblind = FALSE,
+    source = "Khatam panel with brass stars, 2026, Khatam marquetry tradition, https://www.iranicaonline.org/articles/isfahan-xiii-crafts/"
   )
 )

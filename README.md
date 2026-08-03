@@ -24,6 +24,7 @@ elevation data.
     - [Kashan](#kashan)
     - [Golestan](#golestan)
     - [Termeh](#termeh)
+    - [Khatam](#khatam)
   - [Saying the names](#saying-the-names)
   - [Install](#install)
     - [Python](#python)
@@ -84,6 +85,20 @@ A sequential ramp made for water surface elevation and depth rasters, following 
 
 [Sample plots and full details](docs/termeh/README.md)
 
+***
+
+### Khatam
+
+![Khatam, the artwork and its palette](docs/khatam/card.png)
+
+Khatam panel with brass stars, 2026. Khatam marquetry tradition. Photos by Mohsen Tahmasebi Nasab, 2018 and 2026. [Reference](https://www.iranicaonline.org/articles/isfahan-xiii-crafts/) Persian: خاتم. Say it khaw-TAM.
+
+A warm ramp from khatam marquetry, the Persian craft of laying wood, bone and brass into star patterns. It runs from ebony dark to brass bright, and the discrete picks jump between wood, metal and bone so classes stay easy to tell apart.
+
+`#1c110b #542020 #8d310e #bf480d #b27a3c #c58c51 #d9a545 #dbba94 #e5c870`
+
+[Sample plots and full details](docs/khatam/README.md)
+
 <!-- gallery:end -->
 
 ## Saying the names
@@ -97,6 +112,7 @@ stress lands on the last syllable.
 | Kashan | کاشان | kah-SHAHN | a city famous for its carpets and silks |
 | Golestan | گلستان | goh-leh-STAHN | rose garden, the Qajar palace in Tehran |
 | Termeh | ترمه | tehr-MEH | a patterned textile associated with Yazd |
+| Khatam | خاتم | khaw-TAM | marquetry of star patterns in wood, bone and brass |
 
 Every palette page repeats its own pronunciation, and new palettes add
 themselves to this pattern through their json file.
@@ -271,8 +287,9 @@ appreciated. The complete file-by-file scope is in
 [the licensing guide](LICENSES/README.md).
 
 Artwork photographs are not covered by the MIT License or CC0 unless stated
-otherwise. The Golestan and Termeh photographs remain copyright Mohsen
-Tahmasebi Nasab, with all rights reserved. The Kashan palette draws on the
+otherwise. The Golestan, Termeh and Khatam photographs remain copyright
+Mohsen Tahmasebi Nasab, with all rights reserved. The Kashan palette draws
+on the
 [Silk Kashan Carpet](https://www.metmuseum.org/art/collection/search/451470)
 at The Metropolitan Museum of Art, whose qualifying Open Access images are
 available under CC0. The Golestan palette comes from a photograph of the
@@ -281,7 +298,11 @@ tilework at
 Mohsen Tahmasebi Nasab in 2018. The Termeh palette comes from his photograph
 of a termeh cloth, 2026. The Smithsonian's
 [termeh record](https://asia-archive.si.edu/object/S2017.14/) documents the
-Yazd tradition and the boteh motif.
+Yazd tradition and the boteh motif. The Khatam palette comes from his
+photographs of khatam marquetry, 2026, and of a handicraft shop in the
+Isfahan bazaar, 2018. The Encyclopaedia Iranica article on
+[crafts in Isfahan](https://www.iranicaonline.org/articles/isfahan-xiii-crafts/)
+documents the craft's history in Shiraz, Isfahan and Tehran.
 
 The sample plots use public data: rainfall from the
 [NOAA Analysis of Record for Calibration](https://registry.opendata.aws/noaa-nws-aorc/),

@@ -1,0 +1,52 @@
+{
+  "name": "Khatam",
+  "persian": "خاتم",
+  "pronunciation": "khaw-TAM",
+  "position": 4,
+  "about": "A warm ramp from khatam marquetry, the Persian craft of laying wood, bone and brass into star patterns. It runs from ebony dark to brass bright, and the discrete picks jump between wood, metal and bone so classes stay easy to tell apart.",
+  "craft": [
+    "Khatam, also called khatam-kari or khatam-sazi, is Persian marquetry made from small pieces of wood, bone and brass. The pieces form dense mosaics of stars and other geometric shapes on boxes, furniture, frames, doors and musical instruments. The geometry does the drawing. In the source photo, each star, dot and triangle comes from the cross section of bundled material.",
+    "Encyclopaedia Iranica traces khatam work in Shiraz and Isfahan to at least the Zand period in the late eighteenth century. The craft later declined and was revived in Isfahan during the twentieth century, with palace commissions in Tehran helping it flourish again. Khatam boxes and small objects are still easy to spot in Iranian handicraft shops, like those in the second photograph."
+  ],
+  "colors": [
+    "#1c110b",
+    "#542020",
+    "#8d310e",
+    "#bf480d",
+    "#b27a3c",
+    "#c58c51",
+    "#d9a545",
+    "#dbba94",
+    "#e5c870"
+  ],
+  "notes": [
+    "ebony dark, the stained triangles around each star",
+    "maroon, the dyed divider rails",
+    "russet, orange rods in shadow",
+    "burnt orange, the brightest rods",
+    "oak brown, framing strips",
+    "light oak, sanded frame edges",
+    "straw gold, the hexagon field",
+    "bone, the pale triangles",
+    "brass, the six point stars"
+  ],
+  "order": [1, 6, 5, 3, 8, 4, 7, 9, 2],
+  "colorblind": false,
+  "source": {
+    "title": "Khatam panel with brass stars",
+    "citation": "Khatam panel with brass stars.",
+    "artist": "",
+    "date": "2026",
+    "geography": "Iran",
+    "medium": "Wood, bone and brass marquetry",
+    "site": "Khatam marquetry tradition",
+    "reference_label": "Craft history",
+    "url": "https://www.iranicaonline.org/articles/isfahan-xiii-crafts/",
+    "image": "sources/khatam/inlay.jpg",
+    "context_image": "sources/khatam/bazaar.jpg",
+    "context_caption": "A handicraft shop in the Isfahan bazaar, 2018, khatam boxes stacked in front of minakari enamel and metalwork",
+    "credit": "Photos by Mohsen Tahmasebi Nasab, 2018 and 2026",
+    "public_domain": false,
+    "rights": "Copyright Mohsen Tahmasebi Nasab, all rights reserved"
+  }
+}

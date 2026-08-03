@@ -67,3 +67,25 @@ Termeh
   categorical 5: #e5f0ee, #a9ccd7, #5d95a8, #3e738e, #274e68
   categorical 6: #e5f0ee, #a9ccd7, #7fb5c1, #5d95a8, #3e738e, #274e68
   categorical 7: #e5f0ee, #c8dfe3, #a9ccd7, #7fb5c1, #5d95a8, #3e738e, #274e68
+
+Khatam
+  raster anchors: #1c110b, #542020, #8d310e, #bf480d, #b27a3c, #c58c51, #d9a545, #dbba94, #e5c870
+  graduated 2: #1c110b, #e5c870
+  graduated 3: #1c110b, #b27a3c, #e5c870
+  graduated 4: #1c110b, #ae400d, #cc944d, #e5c870
+  graduated 5: #1c110b, #8d310e, #b27a3c, #d9a545, #e5c870
+  graduated 6: #1c110b, #762a15, #bc5216, #c1884d, #daad65, #e5c870
+  graduated 7: #1c110b, #67261a, #ae400d, #b27a3c, #cc944d, #dab37a, #e5c870
+  graduated 8: #1c110b, #5c221d, #9b380e, #b95d21, #bd8448, #d39e48, #dbb789, #e5c870
+  graduated 9: #1c110b, #542020, #8d310e, #bf480d, #b27a3c, #c58c51, #d9a545, #dbba94, #e5c870
+  graduated 10: #1c110b, #4e1e1e, #802d12, #ae400d, #b86427, #ba8245, #cc944d, #d9aa57, #dcbc90, #e5c870
+  graduated 11: #1c110b, #491d1c, #762a15, #a13a0e, #bc5216, #b27a3c, #c1884d, #d19b4a, #daad65, #ddbd8d, #e5c870
+  graduated 12: #1c110b, #451c1a, #6e2818, #96350e, #ba460d, #b7682b, #b98144, #c78e50, #d5a047, #dab070, #debe8a, #e5c870
+  categorical 2: #1c110b, #e5c870
+  categorical 3: #1c110b, #bf480d, #e5c870
+  categorical 4: #1c110b, #bf480d, #c58c51, #e5c870
+  categorical 5: #1c110b, #8d310e, #bf480d, #c58c51, #e5c870
+  categorical 6: #1c110b, #542020, #8d310e, #bf480d, #c58c51, #e5c870
+  categorical 7: #1c110b, #542020, #8d310e, #bf480d, #c58c51, #d9a545, #e5c870
+  categorical 8: #1c110b, #542020, #8d310e, #bf480d, #b27a3c, #c58c51, #d9a545, #e5c870
+  categorical 9: #1c110b, #542020, #8d310e, #bf480d, #b27a3c, #c58c51, #d9a545, #dbba94, #e5c870

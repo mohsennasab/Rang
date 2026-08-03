@@ -24,6 +24,9 @@ are not covered by the repository's MIT License or CC0 dedication.
 - `sources/golestan/tilework.jpg`, photographed 2018
 - `sources/golestan/palace.jpg`, photographed 2018
 - `sources/termeh/cloth.jpg`, photographed 2026
+- `sources/termeh/setting.jpg`, photographed 2026
+- `sources/khatam/inlay.jpg`, photographed 2026
+- `sources/khatam/bazaar.jpg`, photographed 2018
 
 The corresponding gallery cards and artwork previews contain these
 photographs and have the same restriction.

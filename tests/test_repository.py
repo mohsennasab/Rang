@@ -24,7 +24,7 @@ class PaletteTests(unittest.TestCase):
 
     def test_schema_order_and_flag(self):
         self.assertEqual([p["name"] for p in self.palettes],
-                         ["Kashan", "Golestan", "Termeh"])
+                         ["Kashan", "Golestan", "Termeh", "Khatam"])
         for palette in self.palettes:
             colors = palette["colors"]
             self.assertEqual(palette["order"], colorlib.greedy_order(colors))
@@ -32,7 +32,12 @@ class PaletteTests(unittest.TestCase):
                              colorlib.worst_case(colors) >= colorlib.COLORBLIND_THRESHOLD)
 
     def test_persian_names(self):
-        expected = {"Kashan": "کاشان", "Golestan": "گلستان", "Termeh": "ترمه"}
+        expected = {
+            "Kashan": "کاشان",
+            "Golestan": "گلستان",
+            "Termeh": "ترمه",
+            "Khatam": "خاتم",
+        }
         self.assertEqual({p["name"]: p["persian"] for p in self.palettes}, expected)
 
     def test_ciede2000_reference_pairs(self):
