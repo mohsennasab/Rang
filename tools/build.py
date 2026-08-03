@@ -288,7 +288,16 @@ def context_block(pal):
         return ""
     rel = "../../" + src["context_image"].replace("\\", "/")
     caption = src.get("context_caption", "The work in its setting")
-    return f"\n## The setting\n\n![{caption}]({rel})\n\n{caption}.\n"
+    details = []
+    if src.get("context_credit"):
+        details.append(src["context_credit"].strip().rstrip(".") + ".")
+    if src.get("context_url"):
+        details.append(f'[Context photograph source]({src["context_url"]}).')
+    if src.get("context_rights"):
+        details.append(src["context_rights"].strip().rstrip(".") + ".")
+    attribution = "\n\n" + " ".join(details) if details else ""
+    return (f"\n## The setting\n\n![{caption}]({rel})\n\n{caption}."
+            f"{attribution}\n")
 
 
 def craft_block(pal):

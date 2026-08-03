@@ -1,0 +1,60 @@
+{
+  "name": "Nasir",
+  "persian": "\u0646\u0635\u06cc\u0631",
+  "pronunciation": "nah-SEER, from Nasir al-Mulk Mosque in Shiraz",
+  "position": 5,
+  "about": "A vivid spectrum drawn from the stained glass of Nasir al-Mulk Mosque in Shiraz. Violet and cobalt open into cyan and green, then warm through gold to vermilion. It is especially lively for categories, lines and maps that call for strong contrast.",
+  "colors": [
+    "#261410",
+    "#3b1261",
+    "#4027e1",
+    "#518ffd",
+    "#74ecf9",
+    "#50a877",
+    "#6dd96f",
+    "#ebc05c",
+    "#f04a23"
+  ],
+  "notes": [
+    "deep shadow, the wooden frame and dark interior",
+    "violet, the smallest rosettes",
+    "cobalt, pointed panes and flower centers",
+    "azure, blue glass around the upper fans",
+    "cyan, the brightest upper panes",
+    "jade, green rings in the rose windows",
+    "spring green, the lower floral panels",
+    "gold, the glowing quatrefoils",
+    "vermilion, red petals and floor reflections"
+  ],
+  "source": {
+    "title": "Stained-glass window at Nasir al-Mulk Mosque",
+    "artist": "Tpmehdi",
+    "date": "2018",
+    "geography": "Shiraz, Iran",
+    "medium": "Digital photograph",
+    "site": "Nasir al-Mulk Mosque",
+    "reference_label": "Wikimedia Commons source",
+    "url": "https://commons.wikimedia.org/wiki/File:DSC_0277-%D9%85%D8%B3%D8%AC%D8%AF_%D9%86%D8%B5%DB%8C%D8%B1%D8%A7%D9%84%D9%85%D9%84%DA%A9.jpg",
+    "image": "sources/nasir/window.jpg",
+    "context_image": "sources/nasir/interior.jpg",
+    "context_caption": "Sunlight and stained glass reflected across the prayer hall of Nasir al-Mulk Mosque",
+    "context_url": "https://commons.wikimedia.org/wiki/File:Nasir_al-_mulk_mosque%2C_Shiraz.jpg",
+    "context_credit": "Photograph by MohammadReza Domiri Ganji, 2013",
+    "context_rights": "Licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)",
+    "credit": "Photograph by Tpmehdi, 2018",
+    "public_domain": false,
+    "rights": "Licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Rang gallery images use cropped and resized adaptations"
+  },
+  "order": [
+    1,
+    7,
+    3,
+    5,
+    2,
+    8,
+    9,
+    4,
+    6
+  ],
+  "colorblind": false
+}

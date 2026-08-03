@@ -31,6 +31,23 @@ are not covered by the repository's MIT License or CC0 dedication.
 The corresponding gallery cards and artwork previews contain these
 photographs and have the same restriction.
 
+## Wikimedia Commons photographs
+
+`sources/nasir/window.jpg` is the photograph
+[DSC 0277, Nasir al-Mulk Mosque](https://commons.wikimedia.org/wiki/File:DSC_0277-%D9%85%D8%B3%D8%AC%D8%AF_%D9%86%D8%B5%DB%8C%D8%B1%D8%A7%D9%84%D9%85%D9%84%DA%A9.jpg)
+by Tpmehdi, photographed 21 December 2018.
+
+`sources/nasir/interior.jpg` is the photograph
+[Inside Nasir al-Mulk Mosque, Shiraz](https://commons.wikimedia.org/wiki/File:Nasir_al-_mulk_mosque%2C_Shiraz.jpg)
+by MohammadReza Domiri Ganji, photographed 6 September 2013.
+
+Both photographs are licensed under
+[Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
+The copies under `sources/nasir/` retain their original resolution and have
+not been modified. The Nasir gallery card and artwork preview crop and resize
+the source photograph. Those adaptations are distributed under the same
+CC BY-SA 4.0 license.
+
 ## NOAA AORC precipitation
 
 `data/aorc_precip.png` and `data/aorc_precip.json` contain a reduced and

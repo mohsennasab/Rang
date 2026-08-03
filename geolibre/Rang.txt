@@ -89,3 +89,25 @@ Khatam
   categorical 7: #1c110b, #542020, #8d310e, #bf480d, #c58c51, #d9a545, #e5c870
   categorical 8: #1c110b, #542020, #8d310e, #bf480d, #b27a3c, #c58c51, #d9a545, #e5c870
   categorical 9: #1c110b, #542020, #8d310e, #bf480d, #b27a3c, #c58c51, #d9a545, #dbba94, #e5c870
+
+Nasir
+  raster anchors: #261410, #3b1261, #4027e1, #518ffd, #74ecf9, #50a877, #6dd96f, #ebc05c, #f04a23
+  graduated 2: #261410, #f04a23
+  graduated 3: #261410, #74ecf9, #f04a23
+  graduated 4: #261410, #4b6cf4, #5ab874, #f04a23
+  graduated 5: #261410, #4027e1, #74ecf9, #6dd96f, #f04a23
+  graduated 6: #261410, #3e1fae, #58a2fc, #57b691, #9fcf67, #f04a23
+  graduated 7: #261410, #3d198c, #4b6cf4, #74ecf9, #5ab874, #c1c862, #f04a23
+  graduated 8: #261410, #3c1573, #4545e9, #60b7fb, #5fc5af, #65cb71, #d9c45f, #f04a23
+  graduated 9: #261410, #3b1261, #4027e1, #518ffd, #74ecf9, #50a877, #6dd96f, #ebc05c, #f04a23
+  graduated 10: #261410, #391258, #3f22c5, #4b6cf4, #64c3fb, #64cebf, #5ab874, #89d36b, #ecb356, #f04a23
+  graduated 11: #261410, #371251, #3e1fae, #4751ec, #58a2fc, #74ecf9, #57b691, #61c572, #9fcf67, #eca851, #f04a23
+  graduated 12: #261410, #35134b, #3d1c9b, #433ae6, #4f86fa, #67cafa, #67d3ca, #53ac76, #68d070, #b2cb65, #eca04c, #f04a23
+  categorical 2: #261410, #74ecf9
+  categorical 3: #261410, #4027e1, #74ecf9
+  categorical 4: #261410, #4027e1, #74ecf9, #ebc05c
+  categorical 5: #261410, #4027e1, #518ffd, #74ecf9, #ebc05c
+  categorical 6: #261410, #4027e1, #518ffd, #74ecf9, #ebc05c, #f04a23
+  categorical 7: #261410, #3b1261, #4027e1, #518ffd, #74ecf9, #ebc05c, #f04a23
+  categorical 8: #261410, #3b1261, #4027e1, #518ffd, #74ecf9, #50a877, #ebc05c, #f04a23
+  categorical 9: #261410, #3b1261, #4027e1, #518ffd, #74ecf9, #50a877, #6dd96f, #ebc05c, #f04a23

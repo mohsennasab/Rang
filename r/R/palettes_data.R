@@ -31,5 +31,11 @@ rang_palettes <- list(
     order = c(1, 6, 5, 3, 8, 4, 7, 9, 2),
     colorblind = FALSE,
     source = "Khatam panel with brass stars, 2026, Khatam marquetry tradition, https://www.iranicaonline.org/articles/isfahan-xiii-crafts/"
+  ),
+  Nasir = list(
+    colors = c("#261410", "#3b1261", "#4027e1", "#518ffd", "#74ecf9", "#50a877", "#6dd96f", "#ebc05c", "#f04a23"),
+    order = c(1, 7, 3, 5, 2, 8, 9, 4, 6),
+    colorblind = FALSE,
+    source = "Stained-glass window at Nasir al-Mulk Mosque, 2018, Nasir al-Mulk Mosque, https://commons.wikimedia.org/wiki/File:DSC_0277-%D9%85%D8%B3%D8%AC%D8%AF_%D9%86%D8%B5%DB%8C%D8%B1%D8%A7%D9%84%D9%85%D9%84%DA%A9.jpg"
   )
 )

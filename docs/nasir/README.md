@@ -1,0 +1,95 @@
+# Nasir (Persian: نصیر, say it nah-SEER, from Nasir al-Mulk Mosque in Shiraz)
+
+![Nasir swatch](swatch.png)
+
+A vivid spectrum drawn from the stained glass of Nasir al-Mulk Mosque in Shiraz. Violet and cobalt open into cyan and green, then warm through gold to vermilion. It is especially lively for categories, lines and maps that call for strong contrast.
+
+## Source
+
+Stained-glass window at Nasir al-Mulk Mosque, 2018. Shiraz, Iran.
+Digital photograph.
+Nasir al-Mulk Mosque.
+Photograph by Tpmehdi, 2018.
+
+[Wikimedia Commons source](https://commons.wikimedia.org/wiki/File:DSC_0277-%D9%85%D8%B3%D8%AC%D8%AF_%D9%86%D8%B5%DB%8C%D8%B1%D8%A7%D9%84%D9%85%D9%84%DA%A9.jpg). Licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Rang gallery images use cropped and resized adaptations.
+
+## The setting
+
+![Sunlight and stained glass reflected across the prayer hall of Nasir al-Mulk Mosque](../../sources/nasir/interior.jpg)
+
+Sunlight and stained glass reflected across the prayer hall of Nasir al-Mulk Mosque.
+
+Photograph by MohammadReza Domiri Ganji, 2013. [Context photograph source](https://commons.wikimedia.org/wiki/File:Nasir_al-_mulk_mosque%2C_Shiraz.jpg). Licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
+## Colors
+
+| position | hex | drawn from | nearest sample |
+|---|---|---|---|
+| 1 | `#261410` | deep shadow, the wooden frame and dark interior | 0.5 |
+| 2 | `#3b1261` | violet, the smallest rosettes | 0.4 |
+| 3 | `#4027e1` | cobalt, pointed panes and flower centers | 1.0 |
+| 4 | `#518ffd` | azure, blue glass around the upper fans | 0.7 |
+| 5 | `#74ecf9` | cyan, the brightest upper panes | 1.4 |
+| 6 | `#50a877` | jade, green rings in the rose windows | 2.2 |
+| 7 | `#6dd96f` | spring green, the lower floral panels | 0.6 |
+| 8 | `#ebc05c` | gold, the glowing quatrefoils | 1.3 |
+| 9 | `#f04a23` | vermilion, red petals and floor reflections | 1.0 |
+
+The nearest sample column is the CIEDE2000 distance from each palette color to
+the closest evaluated point in a reduced copy of the source photo. Small
+numbers show that a close visual match occurs in the sampled image.
+
+## The palette beside the artwork
+
+![Nasir preview](preview.png)
+
+## Sample plots
+
+![Nasir samples](samples.png)
+
+The rainfall panel is real data, one day of NOAA AORC precipitation on a roughly 1 km grid.
+Regenerate this page with `python tools/make_samples.py nasir`, and
+pass `--dem your_dem.tif` to draw the elevation panel from your own raster.
+
+## Separation and color vision
+
+| vision | min CIEDE2000 | mean |
+|---|---|---|
+| normal vision | 15.6 | 51.5 |
+| protanopia | 2.8 | 46.4 |
+| deuteranopia | 6.1 | 46.0 |
+| tritanopia | 9.6 | 47.4 |
+
+The worst case across the four vision types is 2.8, so this palette
+does not pass the project's CVD separation threshold of 8.
+This screening rule is not an accessibility guarantee.
+Discrete picks use the stored order, which was chosen to keep the first few
+colors as far apart as possible under every vision type.
+
+## Use it
+
+Python
+
+```python
+import rang
+rang.rang("Nasir", 5)
+rang.cmap("Nasir")
+```
+
+R
+
+```r
+library(Rang)
+rang("Nasir", 5)
+```
+
+ArcGIS Pro users get every palette by importing
+[arcgis/Rang.stylx](../../arcgis/Rang.stylx) once, with steps in the
+[ArcGIS guide](../../arcgis/README.md). QGIS users can import
+[qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
+[qgis/Nasir.gpl](../../qgis/Nasir.gpl) for swatches, see the
+[QGIS guide](../../qgis/README.md). HEC-RAS surface fills are in
+[hecras/Nasir.rasmap.xml](../../hecras/Nasir.rasmap.xml), see the
+[HEC-RAS guide](../../hecras/README.md). GeoLibre users can copy colors from
+[geolibre/Rang.txt](../../geolibre/Rang.txt), with steps for raster and vector
+layers in the [GeoLibre guide](../../geolibre/README.md).
