@@ -3,8 +3,7 @@
 Rang is a collection of color palettes drawn from the visual traditions of
 Persian art. Drawing from carpets, miniature
 paintings, tilework, manuscripts, ceramics and architecture, each palette
-translates source-image colors into expressive schemes for
-Python, R, ArcGIS Pro, QGIS, GeoLibre and HEC-RAS.
+turns the character of an artwork into a practical color scheme.
 
 The name Rang (Persian: رنگ) means "color" in Persian. The goal is to
 preserve the character of these works while adapting them for data
@@ -16,31 +15,12 @@ copy of the photograph. The pages also report pairwise separation under four
 viewing simulations. Sample plots include NOAA AORC rainfall and CONUS
 elevation data.
 
+Use Rang with Python, R, ArcGIS Pro, QGIS, GeoLibre and HEC-RAS. The same
+palette can move easily from code to maps and hydraulic models.
+
 ## Contents
 
-- [Rang | رنگ ](#rang--رنگ-)
-  - [Contents](#contents)
-  - [Palettes](#palettes)
-    - [Kashan](#kashan)
-    - [Golestan](#golestan)
-    - [Termeh](#termeh)
-    - [Khatam](#khatam)
-  - [Saying the names](#saying-the-names)
-  - [Install](#install)
-    - [Python](#python)
-    - [R](#r)
-    - [ArcGIS Pro, QGIS, GeoLibre and HEC-RAS](#arcgis-pro-qgis-geolibre-and-hec-ras)
-  - [Use the palettes](#use-the-palettes)
-    - [Python](#python-1)
-    - [R](#r-1)
-    - [ArcGIS Pro](#arcgis-pro)
-    - [QGIS](#qgis)
-    - [GeoLibre](#geolibre)
-    - [HEC-RAS](#hec-ras)
-  - [How palettes are made](#how-palettes-are-made)
-  - [Contributing](#contributing)
-  - [Repository layout](#repository-layout)
-  - [Credits and license](#credits-and-license)
+[Palettes](#palettes) | [Install](#install) | [Use](#use-the-palettes) | [How they are made](#how-palettes-are-made) | [Contribute](#contributing) | [Credits and license](#credits-and-license)
 
 ## Palettes
 
