@@ -27,6 +27,7 @@ are not covered by the repository's MIT License or CC0 dedication.
 - `sources/termeh/setting.jpg`, photographed 2026
 - `sources/khatam/inlay.jpg`, photographed 2026
 - `sources/khatam/bazaar.jpg`, photographed 2018
+- `sources/mina/piece.jpg`, photographed 2026
 
 The corresponding gallery cards and artwork previews contain these
 photographs and have the same restriction.
@@ -47,6 +48,16 @@ The copies under `sources/nasir/` retain their original resolution and have
 not been modified. The Nasir gallery card and artwork preview crop and resize
 the source photograph. Those adaptations are distributed under the same
 CC BY-SA 4.0 license.
+
+`sources/mina/context.jpg` is the photograph
+[Iranian vitreous enamel, cropped](https://commons.wikimedia.org/wiki/File:Iranian_vitreous_enamel_(cropped).JPG).
+The original photograph was made by Wikimedia Commons user مانفی in 2012.
+Joalbertine made the cropped version in 2020.
+
+The photograph is licensed under
+[Creative Commons Attribution-ShareAlike 3.0 Unported](https://creativecommons.org/licenses/by-sa/3.0/).
+The copy in `sources/mina/` retains the cropped file's original resolution
+and has not been modified.
 
 ## NOAA AORC precipitation
 

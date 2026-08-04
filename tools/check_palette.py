@@ -52,7 +52,7 @@ def main():
     d, a, b, where = worst_pair(colors)
     verdict = "yes" if wc >= COLORBLIND_THRESHOLD else "no"
     print(f"\n  closest pair: {a} and {b} under {where}, CIEDE2000 = {d:.1f}")
-    print(f"  passes project CVD check at {COLORBLIND_THRESHOLD}: {verdict}")
+    print(f"  all pairs at or above {COLORBLIND_THRESHOLD}: {verdict}")
 
     order = greedy_order(colors)
     print(f"\nSuggested pick order: {order}")

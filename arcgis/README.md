@@ -18,11 +18,11 @@ add the collection to a project:
 
 Every palette then shows up in two places:
 
-- Each **color scheme dropdown**, symbology for stretched rasters, unclassed
-  and graduated colors, unique values, charts. The plain name, such as
+- **Color scheme menus** for stretched rasters, unclassed and graduated
+  colors, unique values and charts. The plain name, such as
   "Rang - Termeh", is the smooth ramp. The name marked discrete holds the
   exact palette steps for classified data.
-- Each **color picker**, under the Rang category, one swatch per palette
+- **Color pickers**, under the Rang category, with one swatch per palette
   color, named with its hex code.
 
 Because a color scheme lives in the symbology rather than the dataset, this
@@ -32,7 +32,6 @@ surface elevation grid, open **Symbology**, choose **Stretch** or
 
 ## Suggested pairings
 
-Sequential data such as depth, water surface elevation or rainfall reads
-best with a smooth scheme, and Termeh was drawn for exactly that. Categorical
-maps read best with a discrete scheme, which keeps the exact palette colors
-as fixed steps in ramp order.
+Use a smooth scheme for depth, water surface elevation, rainfall and other
+continuous data. Termeh was made with those maps in mind. Use a discrete
+scheme for categories or classes that need fixed colors.

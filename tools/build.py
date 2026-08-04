@@ -308,11 +308,24 @@ def write_docs_page(pal):
         hex_rows.append(row)
 
     wc = worst_case(colors)
-    verdict = ("passes" if pal["colorblind"] else "does not pass")
-    margin_note = ""
-    if 0 <= wc - COLORBLIND_THRESHOLD < 0.1:
-        margin_note = ("\nThe margin is less than 0.1, so small changes to a color or the "
-                       "simulation can alter the result.")
+    if pal["colorblind"]:
+        separation_note = (
+            f"The lowest score is {wc:.1f}. Rang's cutoff is "
+            f"{COLORBLIND_THRESHOLD:.0f}, so all pairwise scores are above it."
+        )
+        if 0 <= wc - COLORBLIND_THRESHOLD < 0.1:
+            separation_note += (
+                f" The difference is less than 0.1, so treat {name} as borderline."
+            )
+    else:
+        separation_note = (
+            f"The lowest score is {wc:.1f}, below Rang's cutoff of "
+            f"{COLORBLIND_THRESHOLD:.0f}."
+        )
+    separation_note += (
+        "\n\nWhen you ask for fewer colors, the stored pick order spreads them "
+        "out. Check the finished figure when color distinction matters."
+    )
     bits = []
     if pal.get("persian"):
         bits.append(f'Persian: {pal["persian"]}')
@@ -323,16 +336,16 @@ def write_docs_page(pal):
 
     if pal.get("samples") == "water":
         samples_note = (
-            "Both panels use USGS data. The first shows the 100 year high flood\n"
-            "profile for the creeks at Ithaca, New York. The second uses NLDI\n"
-            "flowlines for Fall Creek, with widths based on NHDPlusV2 stream order\n"
-            "from USGS Fabric. The watershed interior is left unfilled.\n"
-            f"Regenerate this page with `python tools/make_samples.py {name.lower()}`.")
+            "Both maps use USGS data. The first shows the 100 year high flood\n"
+            "profile for the creeks at Ithaca, New York. The second follows Fall\n"
+            "Creek, with stream widths drawn from NHDPlusV2 order in USGS Fabric.\n"
+            "The watershed interior has no fill.\n"
+            f"Run `python tools/make_samples.py {name.lower()}` to remake them.")
     else:
         samples_note = (
-            "The rainfall panel is real data, one day of NOAA AORC precipitation on a roughly 1 km grid.\n"
-            f"Regenerate this page with `python tools/make_samples.py {name.lower()}`, and\n"
-            "pass `--dem your_dem.tif` to draw the elevation panel from your own raster.")
+            "The rainfall map uses one day of NOAA AORC precipitation on a roughly 1 km grid.\n"
+            f"Run `python tools/make_samples.py {name.lower()}` to remake the plots. Add\n"
+            "`--dem your_dem.tif` to use your own elevation raster.")
 
     body = f"""# {name}{say}
 
@@ -346,9 +359,8 @@ def write_docs_page(pal):
 
 {chr(10).join(hex_rows)}
 
-The nearest sample column is the CIEDE2000 distance from each palette color to
-the closest evaluated point in a reduced copy of the source photo. Small
-numbers show that a close visual match occurs in the sampled image.
+The last column shows the CIEDE2000 distance to the closest sampled color in
+the source photo. Lower numbers mean a closer match.
 
 ## The palette beside the artwork
 
@@ -364,11 +376,7 @@ numbers show that a close visual match occurs in the sampled image.
 
 {cvd_table(colors)}
 
-The worst case across the four vision types is {wc:.1f}, so this palette
-{verdict} the project's CVD separation threshold of {COLORBLIND_THRESHOLD:.0f}.{margin_note}
-This screening rule is not an accessibility guarantee.
-Discrete picks use the stored order, which was chosen to keep the first few
-colors as far apart as possible under every vision type.
+{separation_note}
 
 ## Use it
 
@@ -414,7 +422,6 @@ def gallery_entry(pal):
         say += f' Persian: {pal["persian"]}.'
     if pal.get("pronunciation"):
         say += f' Say it {pal["pronunciation"]}.'
-    friendly = " Passes the project CVD separation check." if pal["colorblind"] else ""
     line = f'{src["title"]}, {src["date"]}.'
     if held_by(src):
         line += f' {held_by(src)}.'
@@ -425,7 +432,7 @@ def gallery_entry(pal):
 
 ![{name}, the artwork and its palette](docs/{name.lower()}/card.png)
 
-{line} [Reference]({src["url"]}){friendly}{say}
+{line} [Reference]({src["url"]}){say}
 {about}
 `{" ".join(pal["colors"])}`
 

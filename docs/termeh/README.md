@@ -2,7 +2,7 @@
 
 ![Termeh swatch](swatch.png)
 
-A sequential ramp made for water surface elevation and depth rasters, following the termeh's blue ground from foam light to deep indigo. The colors are named for the water they are meant to carry: Foam Mist, Glacial Blue, Powder Aqua, River Teal, Slate Blue, Deep Channel and Night Current.
+I made this sequential ramp for water surface elevation and depth rasters. It follows the termeh's blue ground from foam light to deep indigo. The color names come from the water they are meant to carry: Foam Mist, Glacial Blue, Powder Aqua, River Teal, Slate Blue, Deep Channel and Night Current.
 
 ## Source
 
@@ -31,9 +31,8 @@ Termeh at rest, a draped cloth, runners and a covered chest.
 | 6 | `#3e738e` | Deep Channel, blue fill of the boteh | 0.3 |
 | 7 | `#274e68` | Night Current, the darkest indigo threads | 0.5 |
 
-The nearest sample column is the CIEDE2000 distance from each palette color to
-the closest evaluated point in a reduced copy of the source photo. Small
-numbers show that a close visual match occurs in the sampled image.
+The last column shows the CIEDE2000 distance to the closest sampled color in
+the source photo. Lower numbers mean a closer match.
 
 ## The palette beside the artwork
 
@@ -43,11 +42,11 @@ numbers show that a close visual match occurs in the sampled image.
 
 ![Termeh samples](samples.png)
 
-Both panels use USGS data. The first shows the 100 year high flood
-profile for the creeks at Ithaca, New York. The second uses NLDI
-flowlines for Fall Creek, with widths based on NHDPlusV2 stream order
-from USGS Fabric. The watershed interior is left unfilled.
-Regenerate this page with `python tools/make_samples.py termeh`.
+Both maps use USGS data. The first shows the 100 year high flood
+profile for the creeks at Ithaca, New York. The second follows Fall
+Creek, with stream widths drawn from NHDPlusV2 order in USGS Fabric.
+The watershed interior has no fill.
+Run `python tools/make_samples.py termeh` to remake them.
 
 ## Separation and color vision
 
@@ -58,11 +57,9 @@ Regenerate this page with `python tools/make_samples.py termeh`.
 | deuteranopia | 6.0 | 24.7 |
 | tritanopia | 6.8 | 24.6 |
 
-The worst case across the four vision types is 5.2, so this palette
-does not pass the project's CVD separation threshold of 8.
-This screening rule is not an accessibility guarantee.
-Discrete picks use the stored order, which was chosen to keep the first few
-colors as far apart as possible under every vision type.
+The lowest score is 5.2, below Rang's cutoff of 8.
+
+When you ask for fewer colors, the stored pick order spreads them out. Check the finished figure when color distinction matters.
 
 ## Use it
 

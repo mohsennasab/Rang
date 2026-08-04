@@ -1,7 +1,8 @@
 # rang for Python
 
 Color palettes from Persian art. Part of the [Rang](https://github.com/mohsennasab/Rang)
-project, which also ships the palettes for R and ArcGIS Pro.
+project, which also packages the palettes for R, ArcGIS Pro, QGIS, GeoLibre
+and HEC-RAS.
 
 ```
 pip install "git+https://github.com/mohsennasab/Rang.git#subdirectory=python"

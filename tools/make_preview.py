@@ -96,7 +96,7 @@ def make_card(pal, out):
     art_w, gap = 600, 24
     src = pal["source"]
     art_path = fetch_image(src.get("card_image") or src["image"])
-    art = Image.open(art_path).convert("RGB")
+    art = ImageOps.exif_transpose(Image.open(art_path)).convert("RGB")
     art = ImageOps.fit(art, (art_w, H), Image.Resampling.LANCZOS)
     card = Image.new("RGB", (W, H), "white")
     card.paste(art, (0, 0))
@@ -107,7 +107,9 @@ def make_card(pal, out):
 
 
 def make_preview(pal, out):
-    art = Image.open(fetch_image(pal["source"]["image"])).convert("RGB")
+    art = ImageOps.exif_transpose(
+        Image.open(fetch_image(pal["source"]["image"]))
+    ).convert("RGB")
     art = ImageOps.contain(art, (620, 920), Image.Resampling.LANCZOS)
     canvas = Image.new("RGB", (1600, 1000), "white")
     art_panel = Image.new("RGB", (620, 920), "#f2efe9")

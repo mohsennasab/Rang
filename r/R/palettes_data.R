@@ -37,5 +37,11 @@ rang_palettes <- list(
     order = c(1, 7, 3, 5, 2, 8, 9, 4, 6),
     colorblind = FALSE,
     source = "Stained-glass window at Nasir al-Mulk Mosque, 2018, Nasir al-Mulk Mosque, https://commons.wikimedia.org/wiki/File:DSC_0277-%D9%85%D8%B3%D8%AC%D8%AF_%D9%86%D8%B5%DB%8C%D8%B1%D8%A7%D9%84%D9%85%D9%84%DA%A9.jpg"
+  ),
+  Mina = list(
+    colors = c("#581c1d", "#984946", "#c19498", "#e7f2f6", "#9ecaee", "#56adee", "#4090a2", "#193caa", "#07187b"),
+    order = c(5, 3, 7, 1, 6, 9, 4, 8, 2),
+    colorblind = TRUE,
+    source = "Lidded enamel vessel, photographed 2026, Persian enamelwork tradition, https://www.iranicaonline.org/articles/enamel/"
   )
 )

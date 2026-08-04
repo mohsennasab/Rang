@@ -1,0 +1,53 @@
+{
+  "name": "Mina",
+  "persian": "مینا",
+  "pronunciation": "mee-NAH, Persian for enamel",
+  "position": 6,
+  "about": "Mina is Persian for enamel, while minakari is the craft of decorating metal with it. This diverging palette comes from a lidded minakari vessel. Copper and rose meet at an enamel-white center, then turn toward pale blue, turquoise, cobalt and indigo. The blue side dominates, just as it does on the piece.",
+  "craft": [
+    "Mina is the enamel itself, a heat-fused glass paste colored by metal oxides. Minakari means enamelwork, the craft of decorating metal with that enamel. Persian makers have used the medium for vessels and boxes, often with floral designs, fine detail, royal blue, turquoise and pink."
+  ],
+  "colors": [
+    "#581c1d",
+    "#984946",
+    "#c19498",
+    "#e7f2f6",
+    "#9ecaee",
+    "#56adee",
+    "#4090a2",
+    "#193caa",
+    "#07187b"
+  ],
+  "notes": [
+    "deep claret, the darkest red flower strokes",
+    "copper red, outlines around the body panels",
+    "dusty rose, sunlit edges of the copper outlines",
+    "enamel white, the floral ground",
+    "pale sky, blue-white highlights in the panels",
+    "clear blue, the broad painted leaves and petals",
+    "turquoise, small leaf strokes across the white ground",
+    "cobalt, the main arabesques and blue bands",
+    "indigo, the deepest outlines and shaded blue enamel"
+  ],
+  "order": [5, 3, 7, 1, 6, 9, 4, 8, 2],
+  "colorblind": true,
+  "source": {
+    "title": "Lidded enamel vessel",
+    "artist": "",
+    "date": "photographed 2026",
+    "geography": "Iran",
+    "medium": "Painted enamel on metal",
+    "site": "Persian enamelwork tradition",
+    "reference_label": "Craft history",
+    "url": "https://www.iranicaonline.org/articles/enamel/",
+    "image": "sources/mina/piece.jpg",
+    "context_image": "sources/mina/context.jpg",
+    "context_caption": "Minakari enamelware displayed in an Isfahan shop",
+    "context_url": "https://commons.wikimedia.org/wiki/File:Iranian_vitreous_enamel_(cropped).JPG",
+    "context_credit": "Photograph by Wikimedia Commons user مانفی, 2012. Cropped by Joalbertine, 2020",
+    "context_rights": "Licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)",
+    "credit": "Photo by Mohsen Tahmasebi Nasab, 2026",
+    "public_domain": false,
+    "rights": "Copyright Mohsen Tahmasebi Nasab, all rights reserved"
+  }
+}
