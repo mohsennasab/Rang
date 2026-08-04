@@ -59,6 +59,20 @@ The photograph is licensed under
 The copy in `sources/mina/` retains the cropped file's original resolution
 and has not been modified.
 
+## Iran Darroudi painting
+
+`sources/rostan/growing-in-thus-way.jpg` is a low-resolution reference image
+of Iran Darroudi's 1972 painting *Growing in thus Way*, also titled *Az In
+Gooneh Rostan*. The official record gives the work's dimensions as 140 x 140
+cm.
+
+The [official artwork page](https://www.irandarroudi.com/en/paints) identifies
+the work and marks the website content copyright Iran Darroudi, all rights
+reserved. The copy in this repository is included for identification and
+commentary only. It is not licensed under MIT or CC0, and no permission to
+reuse it is granted here. The Rostan gallery card and artwork preview contain
+reduced versions of the same image and carry the same restriction.
+
 ## NOAA AORC precipitation
 
 `data/aorc_precip.png` and `data/aorc_precip.json` contain a reduced and

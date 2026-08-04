@@ -245,6 +245,10 @@ def source_section(src):
         parts.append(line2 + ".")
     if src.get("credit"):
         parts.append(src["credit"] + ".")
+    if src.get("artist_url"):
+        parts.append(f'[Artist biography]({src["artist_url"]}).')
+    if src.get("note"):
+        parts.append(src["note"].strip().rstrip(".") + ".")
     text = "\n".join(parts)
 
     if src.get("public_domain"):
@@ -423,6 +427,8 @@ def gallery_entry(pal):
     if pal.get("pronunciation"):
         say += f' Say it {pal["pronunciation"]}.'
     line = f'{src["title"]}, {src["date"]}.'
+    if src.get("dimensions"):
+        line = f'{src["title"]}, {src["date"]}, {src["dimensions"]}.'
     if held_by(src):
         line += f' {held_by(src)}.'
     if src.get("credit") and not src.get("museum"):
