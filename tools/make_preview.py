@@ -76,7 +76,10 @@ def caption_lines(pal, font=None, max_w=580):
     if src.get("accession"):
         line2 += f', accession {src["accession"]}'
     line3 = src.get("museum") or src.get("site") or ""
-    lines = [f'{pal["name"]}, {src["title"]}, {src["date"]}', line2, line3]
+    work = f'{pal["name"]}, {src["title"]}, {src["date"]}'
+    if src.get("dimensions"):
+        work += f', {src["dimensions"]}'
+    lines = [work, line2, line3]
     if src.get("credit") and not src.get("museum"):
         lines.append(src["credit"])
     lines = [ln for ln in lines if ln]
@@ -97,7 +100,13 @@ def make_card(pal, out):
     src = pal["source"]
     art_path = fetch_image(src.get("card_image") or src["image"])
     art = ImageOps.exif_transpose(Image.open(art_path)).convert("RGB")
-    art = ImageOps.fit(art, (art_w, H), Image.Resampling.LANCZOS)
+    if src.get("preserve_aspect"):
+        fitted = ImageOps.contain(art, (art_w, H), Image.Resampling.LANCZOS)
+        art = Image.new("RGB", (art_w, H), "white")
+        art.paste(fitted, ((art_w - fitted.width) // 2,
+                           (H - fitted.height) // 2))
+    else:
+        art = ImageOps.fit(art, (art_w, H), Image.Resampling.LANCZOS)
     card = Image.new("RGB", (W, H), "white")
     card.paste(art, (0, 0))
     sw = strip(pal["colors"], W - art_w - gap, H)
@@ -112,7 +121,8 @@ def make_preview(pal, out):
     ).convert("RGB")
     art = ImageOps.contain(art, (620, 920), Image.Resampling.LANCZOS)
     canvas = Image.new("RGB", (1600, 1000), "white")
-    art_panel = Image.new("RGB", (620, 920), "#f2efe9")
+    panel_color = "white" if pal["source"].get("preserve_aspect") else "#f2efe9"
+    art_panel = Image.new("RGB", (620, 920), panel_color)
     art_panel.paste(art, ((620 - art.width) // 2, (920 - art.height) // 2))
     canvas.paste(art_panel, (40, 40))
     d = ImageDraw.Draw(canvas)

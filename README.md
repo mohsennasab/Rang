@@ -108,6 +108,20 @@ Mina is Persian for enamel, while minakari is the craft of decorating metal with
 
 [Sample plots and full details](docs/mina/README.md)
 
+***
+
+### Rostan
+
+![Rostan, the artwork and its palette](docs/rostan/card.png)
+
+Growing in thus Way, 1972, 140 x 140 cm. Iran Darroudi official website. Artwork by Iran Darroudi. [Reference](https://www.irandarroudi.com/en/paints) Persian: رستن. Say it rohs-TAN, from the Persian title Az In Gooneh Rostan.
+
+Rostan comes from Iran Darroudi's 1972 painting Az In Gooneh Rostan, or Growing in thus Way. Near-black earth rises through wine and urgent crimson, then opens into coral, dusty rose and a pale sky. To me, the red feels both wounded and alive, while the quieter tones hold the scene in stillness.
+
+`#4b241e #603d34 #883c3e #aa3a41 #d63d3b #d26c55 #d98665 #c0947d #d2b6a1`
+
+[Sample plots and full details](docs/rostan/README.md)
+
 <!-- gallery:end -->
 
 ## Saying the names
@@ -124,6 +138,7 @@ stress lands on the last syllable.
 | Khatam | خاتم | khaw-TAM | marquetry of star patterns in wood, bone and brass |
 | Nasir | نصیر | nah-SEER | from Nasir al-Mulk Mosque in Shiraz |
 | Mina | مینا | mee-NAH | enamel, the material used in minakari |
+| Rostan | رستن | rohs-TAN | to grow, from the painting's Persian title |
 
 Each palette page repeats the pronunciation beside its name.
 
@@ -318,6 +333,11 @@ lidded enamel vessel, taken in 2026. Its setting photograph,
 was made by Wikimedia Commons user مانفی in 2012 and cropped by Joalbertine in
 2020. It is licensed under
 [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+
+The Rostan palette comes from Iran Darroudi's 1972 painting
+[*Growing in thus Way*](https://www.irandarroudi.com/en/paints). The
+low-resolution reference image is all rights reserved and is included only
+to identify and discuss the source work.
 
 The sample plots use public data: rainfall from the
 [NOAA Analysis of Record for Calibration](https://registry.opendata.aws/noaa-nws-aorc/),

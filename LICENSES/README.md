@@ -49,8 +49,14 @@ The Mina context image comes from Wikimedia Commons and is licensed under
 CC BY-SA 3.0. Its authors, source page and reuse terms are identified in
 [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md).
 
+The Rostan source image reproduces Iran Darroudi's painting *Growing in thus
+Way*. The work and image are all rights reserved. The low-resolution copy is
+included only to identify and discuss the source artwork. It is not covered by
+the MIT License or CC0 dedication. See
+[`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) for the source record.
+
 Generated gallery cards and artwork previews follow the rights status of the
-source photograph they contain.
+source image they contain.
 
 ## Third-party material
 

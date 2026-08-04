@@ -164,9 +164,11 @@ small requests about ramp order or a color that reads poorly in a plot.
 | `samples` | no | leave out for the standard six panels, or "water" for the water surface elevation and stream network page |
 | `craft` | no | a paragraph or two on how the art form is made and its history, claims you can back up, shown on the palette page |
 | `source.title` | yes | object or work title |
+| `source.note` | no | a brief clarification about the source record |
 | `source.citation` | no | first source line on the palette page, used when the standard title, date and geography line does not fit |
 | `source.artist` | no | empty string when unknown |
 | `source.date` | yes | as the museum or reference gives it |
+| `source.dimensions` | no | physical dimensions when they matter to the work |
 | `source.geography` | yes | for example "Iran, probably Kashan" |
 | `source.medium` | yes | for example "Glazed polychrome tilework" |
 | `source.museum` | museum sources | full museum name |
@@ -176,8 +178,10 @@ small requests about ramp order or a color that reads poorly in a plot.
 | `source.credit` | own photos | your credit line, "Photo by Your Name, year" |
 | `source.url` | yes | object page or reference page for the site |
 | `source.reference_label` | no | link text for the reference on the palette page |
+| `source.artist_url` | no | official biography or artist page |
 | `source.image` | yes | image URL, or repo path under `sources/` for your own photo |
 | `source.card_image` | no | square crop used beside the palette in the gallery, falls back to `source.image` |
+| `source.preserve_aspect` | no | true when the complete image must appear without cropping |
 | `source.context_image` | no | second photo showing the work in its setting |
 | `source.context_caption` | no | one line under the context photo |
 | `source.context_url` | no | source page for the context photo |

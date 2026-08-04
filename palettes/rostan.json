@@ -1,0 +1,50 @@
+{
+  "name": "Rostan",
+  "persian": "رستن",
+  "pronunciation": "rohs-TAN, from the Persian title Az In Gooneh Rostan",
+  "position": 7,
+  "about": "Rostan comes from Iran Darroudi's 1972 painting Az In Gooneh Rostan, or Growing in thus Way. Near-black earth rises through wine and urgent crimson, then opens into coral, dusty rose and a pale sky. To me, the red feels both wounded and alive, while the quieter tones hold the scene in stillness.",
+  "colors": [
+    "#4b241e",
+    "#603d34",
+    "#883c3e",
+    "#aa3a41",
+    "#d63d3b",
+    "#d26c55",
+    "#d98665",
+    "#c0947d",
+    "#d2b6a1"
+  ],
+  "notes": [
+    "near-black umber, the deepest marks and scorched ground",
+    "smoked brown, the horizontal bands across the upper sky",
+    "wine red, shadowed growth along the lower edge",
+    "crimson, the tangled forms rising from the earth",
+    "scarlet, the brightest and most insistent red",
+    "warm coral, light caught along the red forms",
+    "bloom coral, the flower above the central structure",
+    "dusty rose, the softened bands of distant haze",
+    "pale sand, the quiet light across the open sky"
+  ],
+  "order": [1, 9, 5, 8, 3, 7, 4, 6, 2],
+  "colorblind": false,
+  "source": {
+    "title": "Growing in thus Way",
+    "note": "The English title follows the wording on the artist's official website",
+    "citation": "Growing in thus Way, 1972, 140 x 140 cm.",
+    "artist": "Iran Darroudi",
+    "artist_url": "https://www.irandarroudi.com/en/biography",
+    "date": "1972",
+    "dimensions": "140 x 140 cm",
+    "geography": "Iran",
+    "medium": "Painting",
+    "site": "Iran Darroudi official website",
+    "reference_label": "Official artwork page",
+    "url": "https://www.irandarroudi.com/en/paints",
+    "image": "sources/rostan/growing-in-thus-way.jpg",
+    "credit": "Artwork by Iran Darroudi",
+    "public_domain": false,
+    "rights": "Copyright Iran Darroudi, all rights reserved. This low-resolution reference image is included for identification and commentary only",
+    "preserve_aspect": true
+  }
+}

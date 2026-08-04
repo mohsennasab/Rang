@@ -43,5 +43,11 @@ rang_palettes <- list(
     order = c(5, 3, 7, 1, 6, 9, 4, 8, 2),
     colorblind = TRUE,
     source = "Lidded enamel vessel, photographed 2026, Persian enamelwork tradition, https://www.iranicaonline.org/articles/enamel/"
+  ),
+  Rostan = list(
+    colors = c("#4b241e", "#603d34", "#883c3e", "#aa3a41", "#d63d3b", "#d26c55", "#d98665", "#c0947d", "#d2b6a1"),
+    order = c(1, 9, 5, 8, 3, 7, 4, 6, 2),
+    colorblind = FALSE,
+    source = "Growing in thus Way, 1972, Iran Darroudi official website, https://www.irandarroudi.com/en/paints"
   )
 )

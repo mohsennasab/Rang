@@ -7,7 +7,7 @@ import sys
 import unittest
 import xml.etree.ElementTree as ET
 
-from PIL import Image
+from PIL import Image, ImageChops
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
@@ -25,7 +25,7 @@ class PaletteTests(unittest.TestCase):
     def test_schema_order_and_flag(self):
         self.assertEqual([p["name"] for p in self.palettes],
                          ["Kashan", "Golestan", "Termeh", "Khatam", "Nasir",
-                          "Mina"])
+                          "Mina", "Rostan"])
         for palette in self.palettes:
             colors = palette["colors"]
             self.assertEqual(palette["order"], colorlib.greedy_order(colors))
@@ -40,6 +40,7 @@ class PaletteTests(unittest.TestCase):
             "Khatam": "خاتم",
             "Nasir": "نصیر",
             "Mina": "مینا",
+            "Rostan": "رستن",
         }
         self.assertEqual({p["name"]: p["persian"] for p in self.palettes}, expected)
 
@@ -192,6 +193,13 @@ class OutputTests(unittest.TestCase):
             self.assertEqual(image.size, (1024, 1024))
         with Image.open(ROOT / "docs" / "termeh" / "samples.png") as image:
             self.assertEqual(image.size, (2100, 1120))
+
+    def test_rostan_card_preserves_the_complete_painting(self):
+        with Image.open(ROOT / "docs" / "rostan" / "card.png") as image:
+            panel = image.convert("RGB").crop((0, 0, 600, 450))
+        white = Image.new("RGB", panel.size, "white")
+        self.assertEqual(ImageChops.difference(panel, white).getbbox(),
+                         (73, 0, 527, 450))
 
     def test_stream_network_attributes(self):
         data = json.loads((ROOT / "data" / "streams.json").read_text(
