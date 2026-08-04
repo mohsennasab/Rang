@@ -5,15 +5,13 @@ Persian art. Drawing from carpets, miniature
 paintings, tilework, manuscripts, ceramics and architecture, each palette
 turns the character of an artwork into a practical color scheme.
 
-The name Rang (Persian: رنگ) means "color" in Persian. The goal is to
+The name Rang (Persian: رنگ) means "color" in Persian. My goal is to
 preserve the character of these works while adapting them for data
 visualization, cartography and creative coding.
 
 Every palette traces to a documented source photograph. Each record explains
-where its colors came from and reports the nearest match in a sampled, reduced
-copy of the photograph. The pages also report pairwise separation under four
-viewing simulations. Sample plots include NOAA AORC rainfall and CONUS
-elevation data.
+where its colors came from and reports the nearest match in a sampled. The description pages also report pairwise separation under four
+viewing simulations. Sample plots are also included to show how the colors look like when vizualized. 
 
 Use Rang with Python, R, ArcGIS Pro, QGIS, GeoLibre and HEC-RAS. The same
 palette can move easily from code to maps and hydraulic models.
@@ -27,8 +25,8 @@ Created by **Mohsen Tahmasebi Nasab, PhD**. Read
 
 ## Palettes
 
-Each entry shows the artwork beside its palette and links to a page with
-sample plots, per color provenance and color vision numbers.
+Each entry pairs the artwork with its palette. Follow the link for sample
+plots, notes on each color and the color-vision checks.
 
 <!-- gallery:start -->
 
@@ -48,7 +46,7 @@ Silk Kashan Carpet, 16th century. The Metropolitan Museum of Art, New York. [Ref
 
 ![Golestan, the artwork and its palette](docs/golestan/card.png)
 
-Hunting-scene tile panel at Golestan Palace, photographed 2018. Golestan Palace, UNESCO World Heritage Site. Photo by Mohsen Tahmasebi Nasab, 2018. [Reference](https://whc.unesco.org/en/list/1422/) Passes the project CVD separation check. Persian: گلستان. Say it goh-leh-STAHN, Persian for rose garden.
+Hunting-scene tile panel at Golestan Palace, photographed 2018. Golestan Palace, UNESCO World Heritage Site. Photo by Mohsen Tahmasebi Nasab, 2018. [Reference](https://whc.unesco.org/en/list/1422/) Persian: گلستان. Say it goh-leh-STAHN, Persian for rose garden.
 
 `#432f2c #ae6259 #b57f86 #b5b5ac #cbb11c #9a9a68 #45939c #577ab1 #333a80`
 
@@ -62,7 +60,7 @@ Hunting-scene tile panel at Golestan Palace, photographed 2018. Golestan Palace,
 
 Termeh cloth with boteh motifs, photographed 2026. Yazd textile tradition. Photo by Mohsen Tahmasebi Nasab, 2026. [Reference](https://asia-archive.si.edu/object/S2017.14/) Persian: ترمه. Say it tehr-MEH.
 
-A sequential ramp made for water surface elevation and depth rasters, following the termeh's blue ground from foam light to deep indigo. The colors are named for the water they are meant to carry: Foam Mist, Glacial Blue, Powder Aqua, River Teal, Slate Blue, Deep Channel and Night Current.
+I made this sequential ramp for water surface elevation and depth rasters. It follows the termeh's blue ground from foam light to deep indigo. The color names come from the water they are meant to carry: Foam Mist, Glacial Blue, Powder Aqua, River Teal, Slate Blue, Deep Channel and Night Current.
 
 `#e5f0ee #c8dfe3 #a9ccd7 #7fb5c1 #5d95a8 #3e738e #274e68`
 
@@ -76,7 +74,7 @@ A sequential ramp made for water surface elevation and depth rasters, following 
 
 Khatam panel with brass stars, 2026. Khatam marquetry tradition. Photos by Mohsen Tahmasebi Nasab, 2018 and 2026. [Reference](https://www.iranicaonline.org/articles/isfahan-xiii-crafts/) Persian: خاتم. Say it khaw-TAM.
 
-A warm ramp from khatam marquetry, the Persian craft of laying wood, bone and brass into star patterns. It runs from ebony dark to brass bright, and the discrete picks jump between wood, metal and bone so classes stay easy to tell apart.
+This warm ramp comes from khatam marquetry, the Persian craft of laying wood, bone and brass into star patterns. It moves from ebony dark to brass bright. For categories, the pick order jumps between wood, metal and bone.
 
 `#1c110b #542020 #8d310e #bf480d #b27a3c #c58c51 #d9a545 #dbba94 #e5c870`
 
@@ -90,11 +88,25 @@ A warm ramp from khatam marquetry, the Persian craft of laying wood, bone and br
 
 Stained-glass window at Nasir al-Mulk Mosque, 2018. Nasir al-Mulk Mosque. Photograph by Tpmehdi, 2018. [Reference](https://commons.wikimedia.org/wiki/File:DSC_0277-%D9%85%D8%B3%D8%AC%D8%AF_%D9%86%D8%B5%DB%8C%D8%B1%D8%A7%D9%84%D9%85%D9%84%DA%A9.jpg) Persian: نصیر. Say it nah-SEER, from Nasir al-Mulk Mosque in Shiraz.
 
-A vivid spectrum drawn from the stained glass of Nasir al-Mulk Mosque in Shiraz. Violet and cobalt open into cyan and green, then warm through gold to vermilion. It is especially lively for categories, lines and maps that call for strong contrast.
+This vivid spectrum comes from the stained glass of Nasir al-Mulk Mosque in Shiraz. Violet and cobalt open into cyan and green, then turn through gold to vermilion. I use it when a map or chart needs bright colors and strong contrast.
 
 `#261410 #3b1261 #4027e1 #518ffd #74ecf9 #50a877 #6dd96f #ebc05c #f04a23`
 
 [Sample plots and full details](docs/nasir/README.md)
+
+***
+
+### Mina
+
+![Mina, the artwork and its palette](docs/mina/card.png)
+
+Lidded enamel vessel, photographed 2026. Persian enamelwork tradition. Photo by Mohsen Tahmasebi Nasab, 2026. [Reference](https://www.iranicaonline.org/articles/enamel/) Persian: مینا. Say it mee-NAH, Persian for enamel.
+
+Mina is Persian for enamel, while minakari is the craft of decorating metal with it. This diverging palette comes from a lidded minakari vessel. Copper and rose meet at an enamel-white center, then turn toward pale blue, turquoise, cobalt and indigo. The blue side dominates, just as it does on the piece.
+
+`#581c1d #984946 #c19498 #e7f2f6 #9ecaee #56adee #4090a2 #193caa #07187b`
+
+[Sample plots and full details](docs/mina/README.md)
 
 <!-- gallery:end -->
 
@@ -111,9 +123,9 @@ stress lands on the last syllable.
 | Termeh | ترمه | tehr-MEH | a patterned textile associated with Yazd |
 | Khatam | خاتم | khaw-TAM | marquetry of star patterns in wood, bone and brass |
 | Nasir | نصیر | nah-SEER | from Nasir al-Mulk Mosque in Shiraz |
+| Mina | مینا | mee-NAH | enamel, the material used in minakari |
 
-Every palette page repeats its own pronunciation, and new palettes add
-themselves to this pattern through their json file.
+Each palette page repeats the pronunciation beside its name.
 
 ## Install
 
@@ -144,9 +156,9 @@ matching guide, [ArcGIS](arcgis/README.md), [QGIS](qgis/README.md),
 Want to try Rang without setting anything up locally? Start with the
 [Colab-ready Python and R examples](examples/).
 
-Palettes are stored as a color ramp plus a pick order. Asking for a few colors
-returns a well separated subset chosen for legibility, asking for more than
-the palette holds interpolates along the ramp.
+A palette stores its ramp and a pick order. Ask for a few colors and Rang
+selects a well-separated subset. Ask for more than the palette contains and
+Rang interpolates along the ramp.
 
 ### Python
 
@@ -188,11 +200,10 @@ ggplot(faithfuld, aes(waiting, eruptions, fill = density)) +
 
 ### ArcGIS Pro
 
-Import [arcgis/Rang.stylx](arcgis/Rang.stylx) once through the Catalog pane
-and every palette lands in the color scheme dropdowns, smooth and discrete,
-plus the individual colors in every color picker. Color schemes live in the
-symbology rather than the dataset, so this works for any raster type,
-floating point included. Steps are in the [ArcGIS guide](arcgis/README.md).
+Import [arcgis/Rang.stylx](arcgis/Rang.stylx) once through the Catalog pane.
+Each palette appears as smooth and discrete color schemes, with its individual
+swatches in the color picker. The schemes work with integer and floating-point
+rasters. Steps are in the [ArcGIS guide](arcgis/README.md).
 
 ### QGIS
 
@@ -219,8 +230,8 @@ through the interface step by step.
 
 ## How palettes are made
 
-The short version, with the full walkthrough in
-[CONTRIBUTING.md](CONTRIBUTING.md):
+I use the same basic process for each palette. The complete walkthrough is in
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 1. Colors are sampled from a photo of the artwork by k-means clustering in
    CIELAB, run region by region rather than over the whole image so small
@@ -279,9 +290,9 @@ appreciated. The complete file-by-file scope is in
 [the licensing guide](LICENSES/README.md).
 
 Artwork photographs are not covered by the MIT License or CC0 unless stated
-otherwise. The Golestan, Termeh and Khatam photographs remain copyright
-Mohsen Tahmasebi Nasab, with all rights reserved. The Kashan palette draws
-on the
+otherwise. The Golestan, Termeh, Khatam and Mina source photographs remain
+copyright Mohsen Tahmasebi Nasab, with all rights reserved. The Kashan palette
+draws on the
 [Silk Kashan Carpet](https://www.metmuseum.org/art/collection/search/451470)
 at The Metropolitan Museum of Art, whose qualifying Open Access images are
 available under CC0. The Golestan palette comes from a photograph of the
@@ -301,6 +312,12 @@ by Tpmehdi, 2018, and an
 [interior photograph](https://commons.wikimedia.org/wiki/File:Nasir_al-_mulk_mosque%2C_Shiraz.jpg)
 by MohammadReza Domiri Ganji, 2013. Both are licensed under
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+The Mina palette comes from Mohsen Tahmasebi Nasab's photograph of a
+lidded enamel vessel, taken in 2026. Its setting photograph,
+[Iranian vitreous enamel, cropped](https://commons.wikimedia.org/wiki/File:Iranian_vitreous_enamel_(cropped).JPG),
+was made by Wikimedia Commons user مانفی in 2012 and cropped by Joalbertine in
+2020. It is licensed under
+[CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 
 The sample plots use public data: rainfall from the
 [NOAA Analysis of Record for Calibration](https://registry.opendata.aws/noaa-nws-aorc/),

@@ -87,8 +87,9 @@ python tools/check_palette.py --colors "#7f3020,#ab4a47,#c07049,#1a3b45" --image
 The report covers three things:
 
 - Separation under normal vision and simulated protanopia, deuteranopia and
-  tritanopia, as pairwise CIEDE2000. The project CVD check passes when the
-  worst case stays at or above 8. This is not an accessibility guarantee.
+  tritanopia, as pairwise CIEDE2000. Rang uses 8 as its cutoff for the lowest
+  pairwise score. Treat the number as one check, then look at the finished
+  figure yourself.
 - A suggested pick order, the order in which colors enter the discrete
   palette. Keep it unless you have a reason not to.
 - Distance from each color to the nearest sampled point in a reduced copy of

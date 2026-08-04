@@ -24,7 +24,8 @@ class PaletteTests(unittest.TestCase):
 
     def test_schema_order_and_flag(self):
         self.assertEqual([p["name"] for p in self.palettes],
-                         ["Kashan", "Golestan", "Termeh", "Khatam", "Nasir"])
+                         ["Kashan", "Golestan", "Termeh", "Khatam", "Nasir",
+                          "Mina"])
         for palette in self.palettes:
             colors = palette["colors"]
             self.assertEqual(palette["order"], colorlib.greedy_order(colors))
@@ -38,6 +39,7 @@ class PaletteTests(unittest.TestCase):
             "Termeh": "ترمه",
             "Khatam": "خاتم",
             "Nasir": "نصیر",
+            "Mina": "مینا",
         }
         self.assertEqual({p["name"]: p["persian"] for p in self.palettes}, expected)
 
@@ -261,6 +263,13 @@ class OutputTests(unittest.TestCase):
             text = path.read_text(encoding="utf-8")
             for codepoint in (0x2014, 0x2013, 0x3B):
                 self.assertNotIn(chr(codepoint), text, str(path))
+
+    def test_readmes_avoid_canned_copy(self):
+        banned = ["project " + "cvd separation", "screening rule " + "is not"]
+        for path in ROOT.rglob("README.md"):
+            text = path.read_text(encoding="utf-8").lower()
+            for phrase in banned:
+                self.assertNotIn(phrase, text, str(path))
 
 
 if __name__ == "__main__":

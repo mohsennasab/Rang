@@ -20,7 +20,7 @@ read them off.
 import argparse
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageOps
 from sklearn.cluster import KMeans
 
 from colorlib import fetch_image, lab_to_rgb, rgb_to_hex, rgb_to_lab
@@ -61,7 +61,7 @@ def main():
     args = ap.parse_args()
 
     path = fetch_image(args.image)
-    full = Image.open(path).convert("RGB")
+    full = ImageOps.exif_transpose(Image.open(path)).convert("RGB")
     print(f"image: {path}  size: {full.size[0]}x{full.size[1]}")
 
     regions = args.region or [("whole image", (0, 0, *full.size))]

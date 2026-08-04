@@ -2,7 +2,7 @@
 
 ![Nasir swatch](swatch.png)
 
-A vivid spectrum drawn from the stained glass of Nasir al-Mulk Mosque in Shiraz. Violet and cobalt open into cyan and green, then warm through gold to vermilion. It is especially lively for categories, lines and maps that call for strong contrast.
+This vivid spectrum comes from the stained glass of Nasir al-Mulk Mosque in Shiraz. Violet and cobalt open into cyan and green, then turn through gold to vermilion. I use it when a map or chart needs bright colors and strong contrast.
 
 ## Source
 
@@ -35,9 +35,8 @@ Photograph by MohammadReza Domiri Ganji, 2013. [Context photograph source](https
 | 8 | `#ebc05c` | gold, the glowing quatrefoils | 1.3 |
 | 9 | `#f04a23` | vermilion, red petals and floor reflections | 1.0 |
 
-The nearest sample column is the CIEDE2000 distance from each palette color to
-the closest evaluated point in a reduced copy of the source photo. Small
-numbers show that a close visual match occurs in the sampled image.
+The last column shows the CIEDE2000 distance to the closest sampled color in
+the source photo. Lower numbers mean a closer match.
 
 ## The palette beside the artwork
 
@@ -47,9 +46,9 @@ numbers show that a close visual match occurs in the sampled image.
 
 ![Nasir samples](samples.png)
 
-The rainfall panel is real data, one day of NOAA AORC precipitation on a roughly 1 km grid.
-Regenerate this page with `python tools/make_samples.py nasir`, and
-pass `--dem your_dem.tif` to draw the elevation panel from your own raster.
+The rainfall map uses one day of NOAA AORC precipitation on a roughly 1 km grid.
+Run `python tools/make_samples.py nasir` to remake the plots. Add
+`--dem your_dem.tif` to use your own elevation raster.
 
 ## Separation and color vision
 
@@ -60,11 +59,9 @@ pass `--dem your_dem.tif` to draw the elevation panel from your own raster.
 | deuteranopia | 6.1 | 46.0 |
 | tritanopia | 9.6 | 47.4 |
 
-The worst case across the four vision types is 2.8, so this palette
-does not pass the project's CVD separation threshold of 8.
-This screening rule is not an accessibility guarantee.
-Discrete picks use the stored order, which was chosen to keep the first few
-colors as far apart as possible under every vision type.
+The lowest score is 2.8, below Rang's cutoff of 8.
+
+When you ask for fewer colors, the stored pick order spreads them out. Check the finished figure when color distinction matters.
 
 ## Use it
 

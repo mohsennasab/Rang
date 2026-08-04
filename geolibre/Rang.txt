@@ -111,3 +111,25 @@ Nasir
   categorical 7: #261410, #3b1261, #4027e1, #518ffd, #74ecf9, #ebc05c, #f04a23
   categorical 8: #261410, #3b1261, #4027e1, #518ffd, #74ecf9, #50a877, #ebc05c, #f04a23
   categorical 9: #261410, #3b1261, #4027e1, #518ffd, #74ecf9, #50a877, #6dd96f, #ebc05c, #f04a23
+
+Mina
+  raster anchors: #581c1d, #984946, #c19498, #e7f2f6, #9ecaee, #56adee, #4090a2, #193caa, #07187b
+  graduated 2: #581c1d, #07187b
+  graduated 3: #581c1d, #9ecaee, #07187b
+  graduated 4: #581c1d, #dad3d7, #4fa3d5, #07187b
+  graduated 5: #581c1d, #c19498, #9ecaee, #4090a2, #07187b
+  graduated 6: #581c1d, #b17677, #d8eaf4, #64b3ee, #306ea5, #07187b
+  graduated 7: #581c1d, #a66261, #dad3d7, #9ecaee, #4fa3d5, #2658a7, #07187b
+  graduated 8: #581c1d, #9e5452, #ccafb3, #c8e1f3, #75b9ee, #4698b8, #1f48a9, #07187b
+  graduated 9: #581c1d, #984946, #c19498, #e7f2f6, #9ecaee, #56adee, #4090a2, #193caa, #07187b
+  graduated 10: #581c1d, #914441, #b88386, #dad3d7, #bedcf2, #7ebdee, #4fa3d5, #377da4, #1738a5, #07187b
+  graduated 11: #581c1d, #8b403e, #b17677, #d0babe, #d8eaf4, #9ecaee, #64b3ee, #499cc0, #306ea5, #1535a1, #07187b
+  graduated 12: #581c1d, #873d3b, #ab6b6b, #c8a5a9, #e4e9ed, #b9d9f1, #84bfee, #54aae7, #4495b0, #2b62a6, #14329d, #07187b
+  categorical 2: #e7f2f6, #07187b
+  categorical 3: #984946, #e7f2f6, #07187b
+  categorical 4: #984946, #e7f2f6, #4090a2, #07187b
+  categorical 5: #581c1d, #984946, #e7f2f6, #4090a2, #07187b
+  categorical 6: #581c1d, #984946, #e7f2f6, #9ecaee, #4090a2, #07187b
+  categorical 7: #581c1d, #984946, #c19498, #e7f2f6, #9ecaee, #4090a2, #07187b
+  categorical 8: #581c1d, #984946, #c19498, #e7f2f6, #9ecaee, #4090a2, #193caa, #07187b
+  categorical 9: #581c1d, #984946, #c19498, #e7f2f6, #9ecaee, #56adee, #4090a2, #193caa, #07187b

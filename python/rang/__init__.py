@@ -114,5 +114,5 @@ def source(name):
 
 
 def colorblind_friendly(name):
-    """Project CVD separation flag, not an accessibility guarantee."""
+    """Stored separation flag based on Rang's cutoff of 8."""
     return bool(_get(name)["colorblind"])

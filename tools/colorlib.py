@@ -18,7 +18,7 @@ PALETTE_DIR = REPO_ROOT / "palettes"
 CACHE_DIR = REPO_ROOT / "cache"
 
 # Project screening threshold for minimum pairwise CIEDE2000 under all four
-# viewing simulations. This convention is not an accessibility guarantee.
+# viewing simulations. Use it as a comparison, then check the finished figure.
 COLORBLIND_THRESHOLD = 8.0
 
 # ---------------------------------------------------------------- sRGB and Lab
@@ -243,10 +243,10 @@ def presence_in_image(hexes, image_path, step=17):
     point is evaluated. Returns each hex color's nearest CIEDE2000 distance
     and the percentage of evaluated points within 8.0.
     """
-    from PIL import Image
+    from PIL import Image, ImageOps
     if step < 1:
         raise ValueError("step must be at least 1")
-    im = Image.open(image_path).convert("RGB")
+    im = ImageOps.exif_transpose(Image.open(image_path)).convert("RGB")
     im.thumbnail((800, 800), Image.Resampling.LANCZOS)
     lab = rgb_to_lab(np.asarray(im).reshape(-1, 3).astype(float))[::step]
     out = {}
