@@ -6,8 +6,10 @@ https://hydromohsen.com
 Copyright (c) 2026 Mohsen Tahmasebi Nasab
 Licensed under the MIT License in the repository root.
 """
+import base64
 import json
 import pathlib
+import zlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
@@ -20,8 +22,13 @@ def markdown(text):
     return {"cell_type": "markdown", "metadata": {}, "source": _source(text)}
 
 
-def code(text, tag=None):
+def code(text, tag=None, hidden=False):
     metadata = {"tags": [tag]} if tag else {}
+    if hidden:
+        metadata.update({
+            "cellView": "form",
+            "jupyter": {"source_hidden": True},
+        })
     return {
         "cell_type": "code",
         "execution_count": None,
@@ -69,14 +76,17 @@ def embedded_runtime():
     sources = {}
     for name in ("colorlib", "adjust_colors", "notebook_workflow"):
         sources[name] = (ROOT / "tools" / f"{name}.py").read_text(encoding="utf-8")
-    encoded = json.dumps(sources, ensure_ascii=False)
-    return code(f'''
+    encoded = json.dumps(sources, ensure_ascii=False).encode("utf-8")
+    packed = base64.b85encode(zlib.compress(encoded, level=9)).decode("ascii")
+    return code(f'''#@title Set up this notebook
+import base64
 import json
 import shutil
 import subprocess
 import sys
 import types
 import zipfile
+import zlib
 from pathlib import Path
 
 IN_COLAB = False
@@ -97,7 +107,9 @@ except ImportError:
         "numpy", "pillow", "scikit-learn", "matplotlib"
     ], check=True)
 
-MODULE_SOURCES = {encoded}
+PACKED_MODULE_SOURCES = {json.dumps(packed)}
+MODULE_SOURCES = json.loads(zlib.decompress(
+    base64.b85decode(PACKED_MODULE_SOURCES)).decode("utf-8"))
 for module_name in ("colorlib", "adjust_colors", "notebook_workflow"):
     module = types.ModuleType(module_name)
     module.__file__ = f"{{module_name}}.py"
@@ -164,7 +176,7 @@ def offer_download(path):
         files.download(str(path))
 
 print("Working folder:", WORK_DIR)
-''')
+''', tag="setup", hidden=True)
 
 
 def start_cells(example, first=False):

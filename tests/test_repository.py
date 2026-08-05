@@ -292,6 +292,23 @@ class OutputTests(unittest.TestCase):
                 tags = {tag for cell in notebook["cells"]
                         for tag in cell.get("metadata", {}).get("tags", [])}
                 self.assertIn("user-input", tags)
+                setup_cells = [
+                    cell for cell in notebook["cells"]
+                    if "setup" in cell.get("metadata", {}).get("tags", [])
+                ]
+                self.assertEqual(len(setup_cells), 1)
+                self.assertEqual(
+                    setup_cells[0]["metadata"].get("cellView"), "form"
+                )
+                self.assertTrue(
+                    setup_cells[0]["metadata"].get("jupyter", {}).get(
+                        "source_hidden"
+                    )
+                )
+                setup_text = "".join(setup_cells[0]["source"])
+                self.assertIn("#@title Set up this notebook", setup_text)
+                self.assertIn("PACKED_MODULE_SOURCES", setup_text)
+                self.assertNotIn('MODULE_SOURCES = {"colorlib"', setup_text)
                 for cell in notebook["cells"]:
                     if cell["cell_type"] == "code":
                         self.assertEqual(cell["outputs"], [])
