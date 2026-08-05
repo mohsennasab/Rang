@@ -195,18 +195,21 @@ class OutputTests(unittest.TestCase):
             for filename, size in expected.items():
                 with Image.open(folder / filename) as image:
                     self.assertEqual(image.size, size)
-        with Image.open(ROOT / "logo" / "rang.png") as image:
+        with Image.open(
+                ROOT / "logo" / "rang_pixel_medallion_logo.png") as image:
             self.assertEqual(image.size, (1024, 1024))
         with Image.open(ROOT / "docs" / "termeh" / "samples.png") as image:
             self.assertEqual(image.size, (2100, 1120))
 
     def test_logo_matches_the_generator(self):
         with tempfile.TemporaryDirectory() as temporary:
-            generated_path = pathlib.Path(temporary) / "rang.png"
+            generated_path = pathlib.Path(temporary) / "rang_pixel_medallion_logo.png"
             make_logo.save_logo(generated_path, 1024, "transparent")
             with Image.open(generated_path) as generated_image:
                 generated = generated_image.convert("RGBA")
-            with Image.open(ROOT / "logo" / "rang.png") as tracked_image:
+            with Image.open(
+                    ROOT / "logo" / "rang_pixel_medallion_logo.png"
+            ) as tracked_image:
                 tracked = tracked_image.convert("RGBA")
             self.assertIsNone(ImageChops.difference(generated, tracked).getbbox())
             self.assertEqual(tracked.getbbox(), (41, 41, 983, 983))

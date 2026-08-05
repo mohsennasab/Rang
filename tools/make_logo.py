@@ -6,9 +6,9 @@ it stays crisp at any output size.
 
 Examples
 --------
-python rang_pixel_medallion_logo.py
-python rang_pixel_medallion_logo.py --output logo/rang.png --size 1024
-python rang_pixel_medallion_logo.py --output logo/rang_preview.png --size 1024 --background gray
+python tools/make_logo.py
+python tools/make_logo.py --output logo/rang_pixel_medallion_logo.png --size 1024
+python tools/make_logo.py --output cache/rang_logo_preview.png --size 1024 --background gray
 """
 
 from __future__ import annotations
@@ -65,7 +65,7 @@ PALETTE = {
     "C": ImageColor.getrgb("#21C1DC") + (255,),
 }
 
-DEFAULT_OUTPUT_PATH = Path(REPO_ROOT) / "logo" / "rang.png"
+DEFAULT_OUTPUT_PATH = Path(REPO_ROOT) / "logo" / "rang_pixel_medallion_logo.png"
 
 
 def validate_grid(grid: Iterable[str]) -> None:
