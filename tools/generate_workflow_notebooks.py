@@ -345,8 +345,20 @@ if not candidates:
 candidate_figure = candidate_sheet(candidates, WORK_DIR / "candidates.png")'''),
         markdown("""
 The small cell below lists the exact region IDs and candidate numbers available
-in this run. A candidate ID joins both parts, such as `central-medallion:c03`
-or `region-01:c03`. Use the candidate sheet to judge the colors.
+in this run. The region ID comes from the name saved in step 01. The candidate
+number, such as `c04`, appears below its color in the candidate sheet.
+
+A complete candidate ID joins those two parts with a colon and no space. For
+example:
+
+```python
+{"candidate": "region-01:c04", "note": "deep blue in the central tiles"}
+```
+
+Copy the region ID and candidate number exactly. The note should say where the
+color appears in the artwork. The order of the rows becomes the palette order.
+You can choose more than one candidate from a region, but do not repeat the
+same candidate ID.
 """),
         code('''for region in recipe["regions"]:
     region_candidates = [
@@ -357,15 +369,7 @@ or `region-01:c03`. Use the candidate sheet to judge the colors.
     print(f'{region["id"]} ({region["label"]}): {numbers}')'''),
         banner("YOUR DECISION", "Fill in the list with candidate IDs from above. Write where each color appears and arrange the rows in your preferred ramp order."),
         code(selections, "user-decision"),
-        code('''valid_ids = {item["id"] for item in candidates}
-unknown_ids = [item["candidate"] for item in SELECTIONS
-               if item["candidate"] not in valid_ids]
-if unknown_ids:
-    raise ValueError(
-        "Replace every unknown entry with an available candidate ID: "
-        + ", ".join(unknown_ids)
-    )
-recipe = save_curation(RECIPE_PATH, SELECTIONS)
+        code('''recipe = save_curation(RECIPE_PATH, SELECTIONS)
 colors = recipe["expected"]["colors"]
 curated_figure = before_after_sheet(colors, colors)
 for item in recipe["curation"]["colors"]:
@@ -405,8 +409,32 @@ def step_04_cells(example):
         section("04", "Adjust colors",
                 "Make deliberate LCh changes and record every reason."),
         markdown("""
-L changes lightness, C changes chroma, and H rotates hue in degrees. Leave the
-list empty when the sampled colors already feel right.
+Each selected color receives a palette ID in step 03. `p01` is the first row
+in `SELECTIONS`, `p02` is the second row, and the numbering continues in that
+order.
+
+- `L` changes lightness. Positive values make the color lighter and negative
+  values make it darker.
+- `C` changes chroma, or color intensity. Positive values make it more vivid
+  and negative values make it more muted.
+- `H` rotates the hue in degrees. Positive and negative values move around the
+  color wheel in opposite directions.
+
+To change several palette colors, add one dictionary for each target inside
+the list:
+
+```python
+ADJUSTMENTS = [
+    {"target": "p01", "delta": {"L": 8, "C": 4, "H": 0},
+     "reason": "lightened the blue to match the central tiles"},
+    {"target": "p02", "delta": {"L": 0, "C": -6, "H": 3},
+     "reason": "softened the green found in the border"},
+]
+```
+
+Every row needs `L`, `C`, and `H`, even when one of them is zero. Include only
+colors that need a change. Use `ADJUSTMENTS = []` when the sampled colors
+already feel right.
 """),
         banner("YOUR DECISION", "Add only the adjustments that improve the palette."),
         code(f'''REPLACE_SAVED_ADJUSTMENTS = True #@param {{type:"boolean"}}
@@ -437,8 +465,36 @@ for view, values in report["viewing"].items():
 print()
 for color, values in report["source_presence"].items():
     marker = "check" if values["nearest"] > 3 else ""
-    print(color, f'nearest={values["nearest"]:.1f}', marker)'''),
-        banner("YOUR DECISION", "Read the report and judge the colors against the artwork. Return to steps 03 and 04 when something does not sit right."),
+    print(color, f'nearest={values["nearest"]:.1f}',
+          f'share within 8={values["share_within_8"]:.2f}%', marker)'''),
+        markdown("""
+### How to read the report
+
+- **Minimum** is the distance between the closest pair of palette colors for
+  each viewing condition. A larger number means the closest pair is easier to
+  tell apart. Rang uses 8 as a practical separation check.
+- **Mean** describes the average separation across all pairs. It can look good
+  even when one pair is too close, so read it together with the minimum.
+- **Color vision flag** is `True` when every pair stays at or above 8 under
+  normal vision and the three simulated color vision conditions. `False`
+  points to a pair worth reviewing. It does not automatically reject a
+  palette.
+- **Nearest** is the CIEDE2000 distance from a palette color to the closest
+  sampled point in the artwork. A value of 3 or less is a close match. A value
+  above 3 asks you to check the color and explain any deliberate adjustment.
+- **Share within 8** is the percentage of sampled artwork points reasonably
+  close to that color. A small share can be valid when the color comes from a
+  tiny but important detail.
+- **Suggested pick order** says which colors enter first when someone requests
+  fewer colors. The numbers line up with `p01`, `p02`, and the remaining
+  palette positions. It does not rearrange the continuous ramp you created.
+
+The numbers help find possible problems. They cannot judge balance, mood, or
+the character of the artwork. Compare the palette with the source and trust
+your eyes. Return to step 03 to change the selection or order. Return to step
+04 to make a careful color adjustment.
+"""),
+        banner("YOUR DECISION", "Judge the report and the palette together. Continue when the colors feel true to the artwork and work well in a visualization."),
     ]
 
 

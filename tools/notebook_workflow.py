@@ -639,21 +639,68 @@ def candidate_sheet(candidates, output=None):
 def save_curation(recipe_path, selections):
     recipe = read_json(recipe_path)
     candidates = {item["id"]: item for item in recipe.get("accepted_candidates", [])}
+    if not isinstance(selections, list):
+        raise ValueError("SELECTIONS must be a list inside square brackets")
+    if not 5 <= len(selections) <= 12:
+        raise ValueError(
+            f"SELECTIONS has {len(selections)} rows. Keep between 5 and 12 rows"
+        )
     colors = []
+    used = set()
     for number, selection in enumerate(selections, start=1):
-        candidate_id = selection["candidate"]
+        if not isinstance(selection, dict):
+            raise ValueError(
+                f'SELECTIONS row {number} must look like '
+                '{"candidate": "region-01:c04", "note": "where it appears"}'
+            )
+        candidate_id = selection.get("candidate")
+        if not isinstance(candidate_id, str) or not candidate_id.strip():
+            raise ValueError(
+                f'SELECTIONS row {number} needs a candidate ID such as '
+                '"region-01:c04"'
+            )
+        if candidate_id != candidate_id.strip():
+            raise ValueError(
+                f'SELECTIONS row {number} has spaces around "{candidate_id}". '
+                'Copy the candidate ID exactly as printed'
+            )
+        if re.search(r":\s+", candidate_id):
+            raise ValueError(
+                f'SELECTIONS row {number} uses "{candidate_id}". '
+                'Remove the space after the colon, for example "region-01:c04"'
+            )
         if candidate_id not in candidates:
-            raise ValueError(f"candidate was not found: {candidate_id}")
+            available = ", ".join(candidates) or "none"
+            raise ValueError(
+                f'SELECTIONS row {number} uses unknown candidate "{candidate_id}". '
+                f"Available IDs are: {available}"
+            )
+        if candidate_id in used:
+            raise ValueError(
+                f'SELECTIONS row {number} repeats "{candidate_id}". '
+                "Choose each candidate once"
+            )
+        used.add(candidate_id)
+        note_value = selection.get("note")
+        if not isinstance(note_value, str):
+            raise ValueError(
+                f"SELECTIONS row {number} needs a note written as text"
+            )
+        note = note_value.strip()
+        if not note or note.lower() in {
+                "say where this color appears", "where this color appears"}:
+            raise ValueError(
+                f'SELECTIONS row {number} needs a specific note, such as '
+                '"deep blue in the central tiles"'
+            )
         candidate = candidates[candidate_id]
         colors.append({
             "id": f"p{number:02d}",
             "from": candidate_id,
             "source_hex": candidate["hex"],
             "current": candidate["hex"],
-            "note": str(selection.get("note", "")).strip(),
+            "note": note,
         })
-    if not 5 <= len(colors) <= 12:
-        raise ValueError("choose from 5 to 12 colors")
     recipe["curation"] = {
         "colors": colors,
         "operations": [],
@@ -670,8 +717,21 @@ def _apply_one(color, adjustment):
         if not re.fullmatch(r"#[0-9a-f]{6}", replacement):
             raise ValueError(f"bad replacement color: {replacement}")
         return replacement, "replace", {"hex": replacement}
-    delta = adjustment.get("delta", {})
-    changes = {key: float(delta.get(key, 0)) for key in ("L", "C", "H")}
+    delta = adjustment.get("delta")
+    if not isinstance(delta, dict):
+        raise ValueError('delta must look like {"L": 2, "C": 0, "H": 0}')
+    missing = [key for key in ("L", "C", "H") if key not in delta]
+    if missing:
+        raise ValueError("delta is missing: " + ", ".join(missing))
+    extra = [key for key in delta if key not in ("L", "C", "H")]
+    if extra:
+        raise ValueError("delta has unknown fields: " + ", ".join(extra))
+    try:
+        changes = {key: float(delta[key]) for key in ("L", "C", "H")}
+    except (TypeError, ValueError) as error:
+        raise ValueError("L, C, and H must be numbers") from error
+    if not any(changes.values()):
+        raise ValueError("L, C, and H are all zero. Remove this adjustment row")
     return apply_edit(color, changes), "adjust_lch", changes
 
 
@@ -686,16 +746,50 @@ def apply_adjustments(recipe_path, adjustments, output=None, reset=False):
         curation["operations"] = []
     before_palette = [item["current"] for item in curation["colors"]]
     by_id = {item["id"]: item for item in curation["colors"]}
-    for adjustment in adjustments:
-        target = adjustment["target"]
+    if not isinstance(adjustments, list):
+        raise ValueError("ADJUSTMENTS must be a list inside square brackets")
+    used = set()
+    for number, adjustment in enumerate(adjustments, start=1):
+        if not isinstance(adjustment, dict):
+            raise ValueError(f"ADJUSTMENTS row {number} must be a dictionary")
+        target = adjustment.get("target")
+        if not isinstance(target, str) or not target.strip():
+            raise ValueError(
+                f'ADJUSTMENTS row {number} needs a target such as "p01"'
+            )
         if target not in by_id:
-            raise ValueError(f"palette color was not found: {target}")
-        reason = str(adjustment.get("reason", "")).strip()
-        if not reason:
-            raise ValueError(f"{target}: give a short reason for the adjustment")
+            available = ", ".join(by_id)
+            raise ValueError(
+                f'ADJUSTMENTS row {number} uses unknown target "{target}". '
+                f"Available targets are: {available}"
+            )
+        if target in used:
+            raise ValueError(
+                f'ADJUSTMENTS row {number} repeats "{target}". '
+                "Combine its changes into one row"
+            )
+        used.add(target)
+        reason_value = adjustment.get("reason")
+        if not isinstance(reason_value, str):
+            raise ValueError(
+                f"ADJUSTMENTS row {number} for {target} needs a reason written as text"
+            )
+        reason = reason_value.strip()
+        if not reason or reason.lower() in {
+                "say what changed and where you see it in the artwork",
+                "say why this change helps"}:
+            raise ValueError(
+                f'ADJUSTMENTS row {number} for {target} needs a specific reason, '
+                'such as "lightened the blue to match the central tiles"'
+            )
         item = by_id[target]
         before = item["current"]
-        after, operation, detail = _apply_one(before, adjustment)
+        try:
+            after, operation, detail = _apply_one(before, adjustment)
+        except ValueError as error:
+            raise ValueError(
+                f"ADJUSTMENTS row {number} for {target}: {error}"
+            ) from error
         record = {
             "id": f'a{len(curation["operations"]) + 1:03d}',
             "op": operation,

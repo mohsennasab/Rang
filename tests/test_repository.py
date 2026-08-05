@@ -288,6 +288,10 @@ class OutputTests(unittest.TestCase):
             self.assertIn("Use these regions", text)
             self.assertIn('globals()["draw_regions_interactively"]', text)
             self.assertIn("candidate_figure = candidate_sheet", text)
+            self.assertIn('"region-01:c04"', text)
+            self.assertIn("`p01` is the first row", text)
+            self.assertIn("Share within 8", text)
+            self.assertIn("trust\nyour eyes", text)
             self.assertIn("make_final_zip", text)
             self.assertIn("This is the only ZIP download", text)
             self.assertEqual(text.count("files.download"), 1)
@@ -362,6 +366,52 @@ class OutputTests(unittest.TestCase):
             )
             result = notebook_workflow.verify_recipe(recipe_path, folder)
             self.assertTrue(result["verified"])
+
+    def test_notebook_decision_errors_are_specific(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            recipe_path = pathlib.Path(temporary) / "fixture-recipe.json"
+            candidates = [
+                {
+                    "id": f"region-01:c{number:02d}",
+                    "region": "region-01",
+                    "region_label": "Central tiles",
+                    "hex": f"#{number:02x}{number:02x}{number:02x}",
+                }
+                for number in range(1, 6)
+            ]
+            notebook_workflow.write_json(recipe_path, {
+                "palette": "Fixture",
+                "accepted_candidates": candidates,
+            })
+            bad_space = [
+                {"candidate": "region-01: c01", "note": "central tiles"},
+                *[
+                    {"candidate": item["id"], "note": "central tiles"}
+                    for item in candidates[1:]
+                ],
+            ]
+            with self.assertRaisesRegex(ValueError,
+                                        "Remove the space after the colon"):
+                notebook_workflow.save_curation(recipe_path, bad_space)
+
+            selections = [
+                {"candidate": item["id"], "note": "central tiles"}
+                for item in candidates
+            ]
+            notebook_workflow.save_curation(recipe_path, selections)
+            with self.assertRaisesRegex(ValueError, "delta is missing: H"):
+                notebook_workflow.apply_adjustments(recipe_path, [{
+                    "target": "p01",
+                    "delta": {"L": 2, "C": 0},
+                    "reason": "lightened the central blue",
+                }])
+            with self.assertRaisesRegex(ValueError,
+                                        'unknown target "p06"'):
+                notebook_workflow.apply_adjustments(recipe_path, [{
+                    "target": "p06",
+                    "delta": {"L": 2, "C": 0, "H": 0},
+                    "reason": "lightened the central blue",
+                }])
 
     def test_workflow_archive_keeps_one_source(self):
         with tempfile.TemporaryDirectory() as temporary:
