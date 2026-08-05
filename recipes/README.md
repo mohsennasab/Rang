@@ -5,8 +5,8 @@ palette. The seven numbered notebooks in [`tools/notebooks`](../tools/notebooks/
 create and replay the file.
 
 One accepted recipe belongs at `recipes/<palette>.json`. Working copies,
-region overlays, candidate sheets, and reports stay in Google Drive or the
-ignored `cache/` directory.
+region overlays, candidate sheets, and reports stay in the downloaded
+workflow ZIP or the ignored `cache/` directory.
 
 A recipe records:
 

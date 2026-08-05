@@ -1,4 +1,4 @@
-"""Regenerate the numbered Colab notebooks in tools/.
+"""Regenerate the numbered upload-based Colab notebooks in tools/.
 
 Created by Mohsen Tahmasebi Nasab, PhD
 https://hydromohsen.com
@@ -10,8 +10,6 @@ import json
 import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-TEMPLATE_DIR = ROOT / "tools" / "notebooks"
-EXAMPLE_DIR = ROOT / "tools" / "examole"
 
 
 def _source(text):
@@ -52,6 +50,9 @@ def title(path, number, name, summary):
 
 {summary}
 
+Files move between your computer and Colab through the upload and download
+buttons. Each step tells you which file to choose and what to save.
+
 Created by **Mohsen Tahmasebi Nasab, PhD**<br>
 [hydromohsen.com](https://hydromohsen.com)
 
@@ -64,47 +65,26 @@ rights and reuse terms.
 """)
 
 
-def common_inputs(example):
-    slug = "kashan" if example else "your-palette"
-    return [
-        banner("YOUR INPUT", "Set the Git branch, choose whether to use Google Drive, and give the palette a short filename."),
-        code(f'''
-REPO_REF = "main" #@param {{type:"string"}}
-USE_GOOGLE_DRIVE = True #@param {{type:"boolean"}}
-PALETTE_SLUG = "{slug}" #@param {{type:"string"}}
-''', "user-input"),
-        markdown("""
-Google Drive keeps the recipe available when you move to the next notebook.
-For a local Jupyter session, working files are placed under
-`cache/notebook_workflow/`. When testing a GitHub branch, replace `main` with
-the branch name above.
-"""),
-        code('''
+def embedded_runtime():
+    sources = {}
+    for name in ("colorlib", "adjust_colors", "notebook_workflow"):
+        sources[name] = (ROOT / "tools" / f"{name}.py").read_text(encoding="utf-8")
+    encoded = json.dumps(sources, ensure_ascii=False)
+    return code(f'''
+import json
 import shutil
 import subprocess
 import sys
+import types
+import zipfile
 from pathlib import Path
 
 IN_COLAB = False
 try:
-    from google.colab import drive
+    from google.colab import files
     IN_COLAB = True
 except ImportError:
     pass
-
-if IN_COLAB:
-    REPO_ROOT = Path("/content/Rang")
-    if not (REPO_ROOT / "tools" / "notebook_workflow.py").exists():
-        subprocess.run([
-            "git", "clone", "--depth", "1", "--branch", REPO_REF,
-            "https://github.com/mohsennasab/Rang.git", str(REPO_ROOT)
-        ], check=True)
-else:
-    probe = Path.cwd().resolve()
-    REPO_ROOT = next(
-        candidate for candidate in (probe, *probe.parents)
-        if (candidate / "tools" / "notebook_workflow.py").exists()
-    )
 
 try:
     import matplotlib
@@ -113,40 +93,116 @@ try:
     import sklearn
 except ImportError:
     subprocess.run([
-        sys.executable, "-m", "pip", "install", "-q", "-r",
-        str(REPO_ROOT / "tools" / "requirements.txt")
+        sys.executable, "-m", "pip", "install", "-q",
+        "numpy", "pillow", "scikit-learn", "matplotlib"
     ], check=True)
 
-sys.path.insert(0, str(REPO_ROOT / "tools"))
+MODULE_SOURCES = {encoded}
+for module_name in ("colorlib", "adjust_colors", "notebook_workflow"):
+    module = types.ModuleType(module_name)
+    module.__file__ = f"{{module_name}}.py"
+    sys.modules[module_name] = module
+    exec(compile(MODULE_SOURCES[module_name], module.__file__, "exec"),
+         module.__dict__)
 
 from notebook_workflow import *
 
-if IN_COLAB and USE_GOOGLE_DRIVE:
-    drive.mount("/content/drive")
-    WORK_DIR = Path("/content/drive/MyDrive/Rang") / PALETTE_SLUG
+PALETTE_SLUG = palette_slug(PALETTE_SLUG)
+if IN_COLAB:
+    WORK_DIR = Path("/content/rang-workflow") / PALETTE_SLUG
 else:
-    WORK_DIR = REPO_ROOT / "cache" / "notebook_workflow" / PALETTE_SLUG
-
+    WORK_DIR = Path.cwd() / "cache" / "notebook-upload" / PALETTE_SLUG
 WORK_DIR.mkdir(parents=True, exist_ok=True)
-RECIPE_PATH = WORK_DIR / f"{PALETTE_SLUG}-recipe.json"
+RECIPE_PATH = WORK_DIR / f"{{PALETTE_SLUG}}-recipe.json"
 use_arial()
-print("Repository:", REPO_ROOT)
+
+def receive_file(local_path, label):
+    if IN_COLAB:
+        print(f"Choose {{label}} from your computer")
+        uploaded = files.upload()
+        if len(uploaded) != 1:
+            raise ValueError("Upload exactly one file")
+        filename, data = next(iter(uploaded.items()))
+        output = WORK_DIR / Path(filename).name
+        output.write_bytes(data)
+        return output
+    if not local_path:
+        raise ValueError(f"Enter a local path for {{label}}")
+    path = Path(local_path).expanduser().resolve()
+    if not path.exists():
+        raise FileNotFoundError(path)
+    return path
+
+def load_workflow_zip(local_path):
+    archive = receive_file(local_path, "the workflow ZIP from the previous notebook")
+    with zipfile.ZipFile(archive) as handle:
+        total = 0
+        for item in handle.infolist():
+            member = Path(item.filename)
+            if member.is_absolute() or ".." in member.parts:
+                raise ValueError("The workflow ZIP contains an unsafe path")
+            total += item.file_size
+        if total > 200 * 1024 * 1024:
+            raise ValueError("The workflow ZIP expands beyond 200 MB")
+        handle.extractall(WORK_DIR)
+    if not RECIPE_PATH.exists():
+        raise FileNotFoundError("The uploaded ZIP does not contain the expected recipe")
+    return archive
+
+def make_workflow_zip():
+    archive = WORK_DIR / f"{{PALETTE_SLUG}}-workflow.zip"
+    members = [path for path in WORK_DIR.iterdir()
+               if path.is_file() and path.suffix.lower() != ".zip"]
+    with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as handle:
+        for member in sorted(members):
+            handle.write(member, member.name)
+    return archive
+
+def offer_download(path):
+    print("Saved:", path)
+    if IN_COLAB:
+        files.download(str(path))
+
 print("Working folder:", WORK_DIR)
-print("Recipe:", RECIPE_PATH)
 ''')
+
+
+def start_cells(example, first=False):
+    slug = "kashan" if example else "your-palette"
+    cells = [
+        banner("YOUR INPUT", "Give the palette a short filename. Use the same name in all seven notebooks."),
+        code(f'''PALETTE_SLUG = "{slug}" #@param {{type:"string"}}
+DOWNLOAD_UPDATED_ZIP = True #@param {{type:"boolean"}}''', "user-input"),
+        embedded_runtime(),
     ]
-
-
-def require_recipe():
-    return code('''
-if not RECIPE_PATH.exists():
-    raise FileNotFoundError(
-        f"Recipe not found at {RECIPE_PATH}. Run notebook 01 first and use "
-        "the same Google Drive and palette slug settings."
-    )
+    if not first:
+        local_zip = ("cache/notebook-upload/kashan/kashan-workflow.zip"
+                     if example else "")
+        cells += [
+            banner("YOUR INPUT", "Upload the workflow ZIP downloaded from the previous notebook. Local Jupyter users can enter its path."),
+            code(f'''LOCAL_WORKFLOW_ZIP = "{local_zip}" #@param {{type:"string"}}
+load_workflow_zip(LOCAL_WORKFLOW_ZIP)
 recipe = read_json(RECIPE_PATH)
-print(f'Loaded {recipe["palette"]} with {len(recipe["regions"])} regions')
-''')
+print(f'Loaded {{recipe["palette"]}} with {{len(recipe["regions"])}} regions')''',
+                 "user-input"),
+        ]
+    return cells
+
+
+def handoff_cells(final=False):
+    wording = ("Download the final workflow ZIP for your contribution files."
+               if final else
+               "Download the updated workflow ZIP. Upload it in the next notebook.")
+    return [
+        banner("SAVE YOUR WORK", wording),
+        code('''
+workflow_zip = make_workflow_zip()
+if DOWNLOAD_UPDATED_ZIP:
+    offer_download(workflow_zip)
+else:
+    print("Workflow ZIP:", workflow_zip)
+'''),
+    ]
 
 
 def notebook(path, cells):
@@ -173,7 +229,8 @@ def notebook(path, cells):
 def step_01(path, example):
     if example:
         palette_name = "Kashan"
-        source = "https://images.metmuseum.org/CRDImages/is/original/DT5450.jpg"
+        local_image = "cache/DT5450.jpg"
+        reference = "https://www.metmuseum.org/art/collection/search/451470"
         regions = '''[
     {"id": "top-border", "label": "Top border", "box": [200, 100, 2350, 650], "k": 8,
      "note": "Warm border ground and floral outlines"},
@@ -188,39 +245,45 @@ def step_01(path, example):
 ]'''
     else:
         palette_name = "Your palette name"
-        source = "PASTE AN HTTPS IMAGE URL HERE"
+        local_image = ""
+        reference = "PASTE THE OBJECT PAGE URL HERE"
         regions = '''[
     {"id": "main-detail", "label": "Main detail", "box": [100, 100, 600, 600], "k": 8,
      "note": "Say why this part of the artwork matters"},
 ]'''
-    cells = [title(path, "01", "Define regions",
-                   "Load the artwork, read its pixel coordinates, and save the regions that matter to you.")]
-    cells += common_inputs(example)
+    cells = [title(path, "01", "Upload the image and define regions",
+                   "Upload one artwork image, read its pixel coordinates, and mark the regions that matter to you.")]
+    cells += start_cells(example, first=True)
     cells += [
-        banner("YOUR INPUT", "Enter the palette name and source image. Use an HTTPS image or a local path when working outside Colab."),
+        banner("YOUR INPUT", "Upload the artwork from your computer. Local Jupyter users can enter the image path. Also enter the palette name and object page."),
         code(f'''
 PALETTE_NAME = "{palette_name}" #@param {{type:"string"}}
-SOURCE_IMAGE = "{source}" #@param {{type:"string"}}
-''', "user-input"),
-        code('''
-if SOURCE_IMAGE.startswith("PASTE "):
-    raise ValueError("Replace SOURCE_IMAGE in the yellow input cell")
-source_path = obtain_source(SOURCE_IMAGE, WORK_DIR)
+LOCAL_IMAGE_PATH = "{local_image}" #@param {{type:"string"}}
+SOURCE_REFERENCE = "{reference}" #@param {{type:"string"}}
+
+uploaded_image = receive_file(LOCAL_IMAGE_PATH, "the artwork image")
+suffix = uploaded_image.suffix.lower() or ".jpg"
+source_path = WORK_DIR / f"source{{suffix}}"
+if uploaded_image.resolve() != source_path.resolve():
+    shutil.copyfile(uploaded_image, source_path)
 source_image = open_rgb(source_path)
 print("Image size:", source_image.size)
 show_source(source_path, PALETTE_NAME)
-'''),
+''', "user-input"),
         markdown("""
 Read x from the horizontal axis and y from the vertical axis. A box is written
-as `[left, top, right, bottom]`. Start with distinct visual parts, such as a
-border, medallion, garment, flower, tile panel, or area of reflected light.
+as `[left, top, right, bottom]`. Start with visual parts such as a border,
+medallion, garment, flower, tile panel, or area of reflected light.
 """),
-        banner("YOUR DECISION", "Edit the region list. Give each region a unique ID, a readable label, a pixel box, a value of k, and a short note."),
+        banner("YOUR DECISION", "Edit the region list. Give each region a unique ID, a label, a pixel box, a value of k, and a short note."),
         code(f"REGIONS = {regions}", "user-decision"),
         code('''
 recipe = create_recipe(
-    PALETTE_NAME, SOURCE_IMAGE, source_path, REGIONS, RECIPE_PATH
+    PALETTE_NAME, source_path.name, source_path, REGIONS, RECIPE_PATH
 )
+recipe["source"]["reference"] = SOURCE_REFERENCE
+recipe["source"]["original_filename"] = uploaded_image.name
+write_json(RECIPE_PATH, recipe)
 overlay_path = WORK_DIR / "regions.png"
 region_overlay(RECIPE_PATH, WORK_DIR, overlay_path)
 print("Saved recipe:", RECIPE_PATH)
@@ -228,34 +291,30 @@ print("Saved region overlay:", overlay_path)
 '''),
         markdown("""
 Look at the overlay before moving on. If a box includes a frame, caption,
-glare, or large neutral background that you do not want, change the box and
-run the last two cells again.
+glare, or large background that you do not want, change the box and rerun the
+last two cells.
 """),
     ]
+    cells += handoff_cells()
     notebook(path, cells)
 
 
 def step_02(path, example):
     cells = [title(path, "02", "Extract colors with k-means",
-                   "Run k-means separately in every saved region and review the candidate sheet.")]
-    cells += common_inputs(example)
+                   "Upload the step 01 ZIP, run k-means in every region, and review the candidate sheet.")]
+    cells += start_cells(example)
     cells += [
-        require_recipe(),
-        region_overlay_code(),
+        code('''region_overlay(RECIPE_PATH, WORK_DIR, WORK_DIR / "regions.png")'''),
         markdown("""
 Each region is clustered in CIELAB. The candidate sheet orders clusters by
 their share within that region. A large region does not get more authority
 than a small region. The rows are evidence for your decision, not a finished
 palette.
 """),
-        banner("YOUR DECISION", "Choose whether this extraction run should become the accepted candidate snapshot in the recipe."),
+        banner("YOUR DECISION", "Choose whether this run should become the accepted candidate snapshot."),
+        code('''ACCEPT_THIS_RUN = True #@param {type:"boolean"}''', "user-decision"),
         code('''
-ACCEPT_THIS_RUN = True #@param {type:"boolean"}
-''', "user-decision"),
-        code('''
-candidates = save_candidates(
-    RECIPE_PATH, WORK_DIR, accept=ACCEPT_THIS_RUN
-)
+candidates = save_candidates(RECIPE_PATH, WORK_DIR, accept=ACCEPT_THIS_RUN)
 print(f"Extracted {len(candidates)} candidates")
 for candidate in candidates:
     print(candidate["id"], candidate["hex"],
@@ -263,13 +322,8 @@ for candidate in candidates:
 print("Candidate sheet:", WORK_DIR / "candidates.png")
 '''),
     ]
+    cells += handoff_cells()
     notebook(path, cells)
-
-
-def region_overlay_code():
-    return code('''
-region_overlay(RECIPE_PATH, WORK_DIR, WORK_DIR / "regions.png")
-''')
 
 
 def step_03(path, example):
@@ -294,10 +348,9 @@ def step_03(path, example):
     {"candidate": "main-detail:c05", "note": "where this color appears"},
 ]'''
     cells = [title(path, "03", "Curate the palette",
-                   "Choose five to twelve candidates and arrange them in a useful visual order.")]
-    cells += common_inputs(example)
+                   "Upload the step 02 ZIP, choose five to twelve candidates, and arrange the ramp.")]
+    cells += start_cells(example)
     cells += [
-        require_recipe(),
         code('''
 candidates = recipe.get("accepted_candidates", [])
 if not candidates:
@@ -309,7 +362,7 @@ Choose colors that carry the character of the artwork and can do useful work
 in a figure. A frequent color does not have to be selected. A small detail can
 be central to the palette. The order below becomes the continuous ramp order.
 """),
-        banner("YOUR DECISION", "List the candidate IDs in your chosen ramp order. Write one note per color saying where it comes from."),
+        banner("YOUR DECISION", "List candidate IDs in your chosen ramp order. Write one note per color saying where it comes from."),
         code(f"SELECTIONS = {selections}", "user-decision"),
         code('''
 recipe = save_curation(RECIPE_PATH, SELECTIONS)
@@ -317,9 +370,9 @@ colors = recipe["expected"]["colors"]
 before_after_sheet(colors, colors)
 for item in recipe["curation"]["colors"]:
     print(item["id"], item["from"], item["current"], item["note"])
-print("Saved choices in:", RECIPE_PATH)
 '''),
     ]
+    cells += handoff_cells()
     notebook(path, cells)
 
 
@@ -351,10 +404,9 @@ def step_04(path, example):
      "reason": "say what looks better and where you see it in the artwork"},
 ]'''
     cells = [title(path, "04", "Adjust colors",
-                   "Make careful LCh changes and save a readable record of every accepted adjustment.")]
-    cells += common_inputs(example)
+                   "Upload the step 03 ZIP, make careful LCh changes, and record every reason.")]
+    cells += start_cells(example)
     cells += [
-        require_recipe(),
         code('''
 if "curation" not in recipe:
     raise ValueError("Run notebook 03 and save the candidate choices first")
@@ -377,22 +429,19 @@ adjusted = apply_adjustments(
 )
 for item in adjusted["curation"]["colors"]:
     print(item["id"], item["source_hex"], "to", item["current"])
-print("Saved adjustment record:", RECIPE_PATH)
 '''),
     ]
+    cells += handoff_cells()
     notebook(path, cells)
 
 
 def step_05(path, example):
     cells = [title(path, "05", "Check the palette",
-                   "Review source distance, color separation, and the suggested categorical pick order.")]
-    cells += common_inputs(example)
+                   "Upload the step 04 ZIP and review source distance, separation, and pick order.")]
+    cells += start_cells(example)
     cells += [
-        require_recipe(),
         code('''
-report = check_recipe(
-    RECIPE_PATH, WORK_DIR, WORK_DIR / "check-report.json"
-)
+report = check_recipe(RECIPE_PATH, WORK_DIR, WORK_DIR / "check-report.json")
 print(report["palette"], *report["colors"])
 print("Suggested pick order:", report["suggested_pick_order"])
 print("Color vision flag:", report["colorblind"])
@@ -403,15 +452,15 @@ print()
 for color, values in report["source_presence"].items():
     marker = "check" if values["nearest"] > 3 else ""
     print(color, f'nearest={values["nearest"]:.1f}', marker)
-print("Saved report:", WORK_DIR / "check-report.json")
 '''),
-        banner("YOUR DECISION", "Read the report and look at real sample plots. Keep meaningful colors when they serve the artwork, and explain any large source distance in the pull request."),
+        banner("YOUR DECISION", "Read the report and look at real sample plots later. Keep meaningful colors when they serve the artwork, and explain any large source distance."),
         markdown("""
 A number can point to a problem, but it cannot decide whether a palette feels
 right. Return to notebooks 03 and 04 when two colors collapse together, a
 color drifts too far from the source, or the ramp loses the mood of the work.
 """),
     ]
+    cells += handoff_cells()
     notebook(path, cells)
 
 
@@ -438,7 +487,6 @@ def step_06(path, example):
         "public_domain": True
     }
 }'''
-        run_build = "True"
     else:
         metadata = '''{
     "name": "YourPalette",
@@ -459,48 +507,34 @@ def step_06(path, example):
         "public_domain": True
     }
 }'''
-        run_build = "False"
-    cells = [title(path, "06", "Build the palette",
-                   "Write the palette JSON, run the repository build, and inspect the generated page.")]
-    cells += common_inputs(example)
+    cells = [title(path, "06", "Prepare the palette files",
+                   "Upload the step 05 ZIP, enter the source record, and create the palette JSON.")]
+    cells += start_cells(example)
     cells += [
-        require_recipe(),
-        banner("YOUR INPUT", "Enter the artwork metadata exactly as the museum or source page gives it. Set the rights fields carefully."),
+        banner("YOUR INPUT", "Enter the artwork metadata exactly as the source page gives it. Check the rights fields carefully."),
         code(f"PALETTE_METADATA = {metadata}", "user-input"),
-        banner("YOUR DECISION", "Build inside the Colab clone after the draft is written. Leave this off until the metadata and rights are ready."),
-        code(f'''
-RUN_BUILD = {run_build} #@param {{type:"boolean"}}
-''', "user-decision"),
         code('''
 draft_path = WORK_DIR / f"{PALETTE_SLUG}-palette.json"
 draft = palette_draft(RECIPE_PATH, PALETTE_METADATA, draft_path)
-print("Palette draft:", draft_path)
+print("Palette JSON:", draft_path)
 print("Final colors:", *draft["colors"])
-
-if RUN_BUILD:
-    repository_palette = REPO_ROOT / "palettes" / f"{PALETTE_SLUG}.json"
-    shutil.copyfile(draft_path, repository_palette)
-    subprocess.run([
-        sys.executable, str(REPO_ROOT / "tools" / "build.py"), PALETTE_SLUG
-    ], cwd=REPO_ROOT, check=True)
-    print("Generated page:", REPO_ROOT / "docs" / PALETTE_SLUG / "README.md")
 '''),
         markdown("""
-The build inside Colab is a validation copy. Download the recipe and palette
-draft, then add them to your own Git branch with the generated repository
-files. Check the artwork preview and every sample plot before opening a pull
-request.
+The ZIP now contains the source image, recipe, reports, and palette JSON. Copy
+the recipe to `recipes/<name>.json` and the palette JSON to
+`palettes/<name>.json` in your local Rang checkout. Then run
+`python tools/build.py <name>` from the repository.
 """),
     ]
+    cells += handoff_cells()
     notebook(path, cells)
 
 
 def step_07(path, example):
     cells = [title(path, "07", "Replay and verify",
-                   "Rerun the accepted extraction and adjustment history without making new decisions.")]
-    cells += common_inputs(example)
+                   "Upload the step 06 ZIP and reproduce the accepted extraction and adjustments.")]
+    cells += start_cells(example)
     cells += [
-        require_recipe(),
         code('''
 result = verify_recipe(RECIPE_PATH, WORK_DIR)
 for key, value in result.items():
@@ -515,6 +549,7 @@ k-means settings, choices, and adjustments still lead to the accepted colors.
 It does not claim that another artist would make the same choices.
 """),
     ]
+    cells += handoff_cells(final=True)
     notebook(path, cells)
 
 

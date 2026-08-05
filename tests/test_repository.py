@@ -279,6 +279,12 @@ class OutputTests(unittest.TestCase):
                 self.assertIn("https://hydromohsen.com", text)
                 self.assertIn("license holder", text.lower())
                 self.assertIn("Arial", text)
+                self.assertIn("files.upload", text)
+                self.assertIn("workflow ZIP", text)
+                self.assertNotIn("drive.mount", text)
+                self.assertNotIn("git clone", text)
+                self.assertNotIn("REPO_REF", text)
+                self.assertNotIn("github.com/mohsennasab/Rang.git", text)
                 tags = {tag for cell in notebook["cells"]
                         for tag in cell.get("metadata", {}).get("tags", [])}
                 self.assertIn("user-input", tags)

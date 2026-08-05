@@ -20,24 +20,25 @@ The easiest way to learn the workflow is the completed Kashan example in
 
 [![Open Kashan step 01 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/examole/01_define_regions.ipynb)
 
-Run the notebooks in order. Keep `USE_GOOGLE_DRIVE` turned on so the saved
-recipe moves with you from one notebook to the next. Cells with a yellow
-**YOUR INPUT** box need factual information such as a URL or museum record.
-Cells with a blue **YOUR DECISION** box ask for artistic judgment.
+Run the notebooks in order. Notebook 01 asks you to upload the artwork from
+your computer. At the end of each step, download the workflow ZIP. Upload that
+ZIP at the beginning of the next notebook. No repository checkout or cloud
+storage connection is needed after the notebook opens.
 
-When testing a branch before it reaches `main`, change `REPO_REF` in the first
-yellow cell to the branch name.
+Cells with a yellow **YOUR INPUT** box need factual information such as an
+object page or museum record. Cells with a blue **YOUR DECISION** box ask for
+artistic judgment.
 
 ## The seven notebooks
 
 | step | notebook | what you do |
 |---|---|---|
-| 01 | [Define regions](notebooks/01_define_regions.ipynb) | load the artwork, enter pixel boxes, choose k for each region, and inspect the overlay |
+| 01 | [Define regions](notebooks/01_define_regions.ipynb) | upload the artwork, enter pixel boxes, choose k for each region, and inspect the overlay |
 | 02 | [Extract colors](notebooks/02_extract_colors.ipynb) | run region-by-region k-means in CIELAB and accept a candidate snapshot |
 | 03 | [Curate the palette](notebooks/03_curate_palette.ipynb) | select five to twelve candidates, write notes, and arrange the ramp |
 | 04 | [Adjust colors](notebooks/04_adjust_colors.ipynb) | change lightness, chroma, or hue and record why |
 | 05 | [Check the palette](notebooks/05_check_palette.ipynb) | review source distance, color separation, and the suggested pick order |
-| 06 | [Build the palette](notebooks/06_build_palette.ipynb) | enter source metadata, write the palette JSON, and run the repository build |
+| 06 | [Prepare the palette files](notebooks/06_build_palette.ipynb) | enter source metadata and write the palette JSON for the repository |
 | 07 | [Replay and verify](notebooks/07_replay_and_verify.ipynb) | reproduce the accepted candidates and final colors from the saved recipe |
 
 Every notebook has an **Open in Colab** button at the top. The reusable set
@@ -65,9 +66,9 @@ Keep these points in mind:
   framed.
 - Look at the saved overlay before moving on.
 
-The region overlay is a working file in `cache/` or Google Drive. The recipe
-stores the source checksum, image dimensions, pixel boxes, normalized boxes,
-labels, notes, and k values.
+The region overlay stays in the workflow ZIP or the local `cache/` directory.
+The recipe stores the source checksum, image dimensions, pixel boxes,
+normalized boxes, labels, notes, and k values.
 
 ## What k-means does
 
@@ -107,7 +108,7 @@ in the carpet.
 The recipe is a small JSON file. It records:
 
 - the creator and license holder
-- the source URL, checksum, and oriented dimensions
+- the source reference, original filename, checksum, and oriented dimensions
 - every region and k value
 - deterministic k-means settings
 - Python, NumPy, Pillow, and scikit-learn versions
@@ -116,9 +117,9 @@ The recipe is a small JSON file. It records:
 - ordered color adjustments with before and after values
 - the final expected colors
 
-Temporary images and reports stay in the working folder. When contributing a
-palette, copy the final recipe into `recipes/<palette>.json` along with the
-palette JSON and generated files.
+Temporary images and reports stay in the workflow ZIP. When contributing a
+palette, copy the final recipe into `recipes/<palette>.json` and the palette
+draft into `palettes/<palette>.json`. Then run the repository build locally.
 
 ## Command-line alternatives
 
@@ -145,22 +146,22 @@ pip install -r tools/requirements.txt
 
 ## Files created while you work
 
-With Google Drive enabled:
+The downloaded `<palette>-workflow.zip` carries these files between steps:
 
 ```text
-MyDrive/Rang/<palette>/
-  <palette>-recipe.json
-  source.jpg
-  regions.png
-  candidates.json
-  candidates.png
-  adjustments.png
-  check-report.json
-  <palette>-palette.json
+<palette>-recipe.json
+source.jpg
+regions.png
+candidates.json
+candidates.png
+adjustments.png
+check-report.json
+<palette>-palette.json
 ```
 
-In local Jupyter, the same files go under
-`cache/notebook_workflow/<palette>/`. The cache remains ignored by Git.
+The source extension matches the uploaded file. In local Jupyter, the same
+files go under `cache/notebook-upload/<palette>/`. The cache remains ignored
+by Git.
 
 ## Before opening a pull request
 
@@ -168,7 +169,10 @@ In local Jupyter, the same files go under
 - Check the region overlay and candidate sheet.
 - Read every saved adjustment and reason.
 - Run notebook 05 and inspect the complete report.
-- Run notebook 06 and open the generated palette page.
+- Run notebook 06 and inspect the palette JSON it prepares.
+- Copy the recipe and palette JSON into a local checkout and run
+  `python tools/build.py <name>`.
+- Open the generated palette page.
 - Inspect the artwork preview and every sample plot.
 - Run notebook 07 and confirm `verified: True`.
 - Add the recipe, palette JSON, and all normal generated files to the branch.

@@ -293,9 +293,10 @@ including the sample code for extracting colors from a photo and adjusting any
 color that does not sit right.
 
 The numbered [palette-making notebooks](tools/README.md) run in Google Colab
-and make every input and artistic decision easy to find. A complete
-[Kashan example](tools/examole/README.md) shows the region, k-means, curation,
-adjustment, checking, build and replay steps.
+and make every input and artistic decision easy to find. Upload the artwork
+from your computer, then carry the work between notebooks in one downloaded
+ZIP. A complete [Kashan example](tools/examole/README.md) shows the region,
+k-means, curation, adjustment, checking, file preparation and replay steps.
 
 ## Repository layout
 

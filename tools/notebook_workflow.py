@@ -86,6 +86,8 @@ def obtain_source(source, work_dir):
             path.write_bytes(data)
         return path
     path = pathlib.Path(source).expanduser()
+    if not path.is_absolute():
+        path = pathlib.Path(work_dir) / path
     if not path.exists():
         raise FileNotFoundError(f"source image was not found: {source}")
     return path.resolve()

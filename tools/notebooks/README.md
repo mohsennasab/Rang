@@ -1,11 +1,16 @@
 # Reusable Colab notebooks
 
 These seven notebooks form the guided contribution workflow. Start with
-`01_define_regions.ipynb` and continue in numerical order. Keep Google Drive
-enabled so each notebook can find the recipe saved by the previous step.
+`01_define_regions.ipynb` and continue in numerical order. Upload the artwork
+from your computer in notebook 01. Each notebook downloads a workflow ZIP
+when it finishes. Upload that ZIP in the next notebook to continue.
+
+The ZIP carries the source copy, recipe, overlays, candidates, adjustments,
+reports, and palette draft. You do not need to connect cloud storage or clone
+the repository inside Colab.
 
 Yellow **YOUR INPUT** cells collect factual information. Blue **YOUR DECISION**
-cells ask you to choose regions, candidates, adjustments, or whether to build.
+cells ask you to choose regions, candidates, and adjustments.
 All figures request Arial, with Liberation Sans as the Colab fallback when
 Arial is not installed.
 

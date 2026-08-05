@@ -5,9 +5,8 @@ a merged pull request. The tooling does the packaging for you, your judgment
 goes into picking the artwork and curating the colors.
 
 The recommended path uses seven numbered Jupyter notebooks. They run in
-Google Colab and save one recipe as you move from regions to a finished
-palette. The command-line scripts remain available for contributors who
-prefer a terminal.
+Google Colab and carry one recipe from regions to a finished palette. The
+command-line scripts remain available for contributors who prefer a terminal.
 
 ## Contents
 
@@ -49,11 +48,16 @@ Start with notebook 01 and continue in numerical order:
 
 [![Open notebook 01 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/01_define_regions.ipynb)
 
-Keep Google Drive enabled. It stores the source copy, region overlay,
-candidate sheet, adjustment preview, reports, and recipe between notebooks.
-Yellow **YOUR INPUT** cells need information such as an image URL or object
-record. Blue **YOUR DECISION** cells are where you choose regions, colors, and
-adjustments.
+Notebook 01 asks you to upload the artwork from your computer. Download the
+workflow ZIP when the notebook finishes. Each later notebook asks you to
+upload the ZIP from the preceding step and gives you an updated copy to
+download. The ZIP stores the source copy, region overlay, candidate sheet,
+adjustment preview, reports, and recipe.
+
+Yellow **YOUR INPUT** cells need factual information such as an object page.
+Blue **YOUR DECISION** cells are where you choose regions, colors, and
+adjustments. No cloud storage connection or repository checkout is needed
+inside Colab.
 
 The [Kashan example](tools/examole/README.md) contains a complete set of
 decisions and is the best place to learn the workflow.
@@ -69,15 +73,15 @@ pip install -r tools/requirements.txt
 ## Step 1, extract candidate colors
 
 Open [notebook 01](tools/notebooks/01_define_regions.ipynb). It displays the
-source with pixel coordinates. Define three to seven regions with a clear
-visual purpose, such as a border, medallion, field, garment, flower, tile
-panel, or area of reflected light. Choose k for each region and inspect the
-saved overlay.
+source you upload with pixel coordinates. Define three to seven regions with
+a clear visual purpose, such as a border, medallion, field, garment, flower,
+tile panel, or area of reflected light. Choose k for each region and inspect
+the saved overlay. Download the workflow ZIP before closing the notebook.
 
-Then open [notebook 02](tools/notebooks/02_extract_colors.ipynb). It runs
-k-means over each region in CIELAB. Large fields can dominate a whole-image
-run and pull cluster centers toward muddy averages. Separate regions help
-small details keep their voice.
+Then open [notebook 02](tools/notebooks/02_extract_colors.ipynb) and upload the
+workflow ZIP. It runs k-means over each region in CIELAB. Large fields can
+dominate a whole-image run and pull cluster centers toward muddy averages.
+Separate regions help small details keep their voice.
 
 The notebooks save the regions, source checksum, k values, extraction
 settings, and accepted candidates in the recipe. The command-line equivalent
@@ -171,12 +175,13 @@ Leave out `order` and `colorblind` if you want the build to compute them.
 Copy the final recipe to `recipes/<name>.json`. It records the source checksum,
 regions, k-means settings, accepted candidates, selected candidate IDs, and
 the complete adjustment history. Working images and exploratory reports stay
-in Google Drive or `cache/`.
+in the workflow ZIP or `cache/`.
 
 ## Step 6, build
 
-Notebook 06 can run the build in Colab after the metadata is complete. The
-same command can be run locally:
+Notebook 06 prepares the palette JSON after the metadata is complete. Download
+the updated workflow ZIP, copy the recipe into `recipes/<name>.json`, and copy
+the palette draft into `palettes/<name>.json` in a local checkout. Then run:
 
 ```
 python tools/build.py <name>

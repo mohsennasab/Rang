@@ -8,10 +8,14 @@ Start here:
 
 [![Open Kashan step 01 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/examole/01_define_regions.ipynb)
 
-Run the seven notebooks in numerical order. Keep Google Drive enabled and use
-`kashan` as the palette slug. The notebooks save one recipe as they move from
-region selection to extraction, curation, color adjustment, checking, build,
-and final replay.
+First, download the [full-resolution carpet image](https://images.metmuseum.org/CRDImages/is/original/DT5450.jpg)
+to your computer. Its [Met object page](https://www.metmuseum.org/art/collection/search/451470)
+has the source details and reuse information.
+
+Run the seven notebooks in numerical order. Upload the carpet image in step
+01. Download the Kashan workflow ZIP at the end, then upload that ZIP when
+each later notebook asks for it. The same file carries the recipe and working
+images from region selection through final replay.
 
 The example uses five regions:
 
