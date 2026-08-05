@@ -1,13 +1,12 @@
-# Reusable Colab notebooks
+# Reusable Colab notebook
 
-These seven notebooks form the guided contribution workflow. Start with
-`01_define_regions.ipynb` and continue in numerical order. Upload the artwork
-from your computer in notebook 01, then drag boxes over the parts you want to
-sample. Each notebook downloads a workflow ZIP when it finishes. Upload that
-ZIP in the next notebook to continue.
+[`rang_palette_workflow.ipynb`](rang_palette_workflow.ipynb) contains the
+complete seven-stage contribution workflow. Upload the artwork once, draw the
+sampling regions, work through the decisions, and download one final ZIP after
+the replay check succeeds.
 
-The ZIP carries the source copy, recipe, overlays, candidates, adjustments,
-reports, and palette draft. You do not need to connect cloud storage or clone
+The ZIP contains the source copy, recipe, overlays, candidates, adjustments,
+report, and palette draft. You do not need to connect cloud storage or clone
 the repository inside Colab.
 
 Yellow **YOUR INPUT** cells collect factual information. Blue **YOUR DECISION**
@@ -15,7 +14,7 @@ cells ask you to choose regions, candidates, and adjustments.
 All figures request Arial, with Liberation Sans as the Colab fallback when
 Arial is not installed.
 
-For a filled example, use the [Kashan notebook set](../examole/README.md).
+For a filled example, use the [Kashan notebook](../example/README.md).
 
 Created by **Mohsen Tahmasebi Nasab, PhD**. Visit
 [hydromohsen.com](https://hydromohsen.com).

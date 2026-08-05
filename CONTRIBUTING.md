@@ -4,9 +4,10 @@ Thanks for wanting to add to Rang. This guide takes you from a museum photo to
 a merged pull request. The tooling does the packaging for you, your judgment
 goes into picking the artwork and curating the colors.
 
-The recommended path uses seven numbered Jupyter notebooks. They run in
-Google Colab and carry one recipe from regions to a finished palette. The
-command-line scripts remain available for contributors who prefer a terminal.
+The recommended path uses one Jupyter notebook with seven numbered stages. It
+runs in Google Colab and carries one recipe from regions to a finished palette.
+The command-line scripts remain available for contributors who prefer a
+terminal.
 
 ## Contents
 
@@ -44,22 +45,21 @@ Persian.
 
 ### Google Colab
 
-Start with notebook 01 and continue in numerical order:
+Open the complete workflow notebook:
 
-[![Open notebook 01 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/01_define_regions.ipynb)
+[![Open the Rang workflow in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/rang_palette_workflow.ipynb)
 
-Notebook 01 asks you to upload the artwork from your computer. Download the
-workflow ZIP when the notebook finishes. Each later notebook asks you to
-upload the ZIP from the preceding step and gives you an updated copy to
-download. The ZIP stores the source copy, region overlay, candidate sheet,
-adjustment preview, reports, and recipe.
+Upload the artwork once and work through the seven stages from top to bottom.
+After the replay check succeeds, the notebook downloads one workflow ZIP. It
+contains the source copy, region overlay, candidate sheet, adjustment preview,
+report, recipe, and palette draft.
 
 Yellow **YOUR INPUT** cells need factual information such as an object page.
 Blue **YOUR DECISION** cells are where you choose regions, colors, and
 adjustments. No cloud storage connection or repository checkout is needed
 inside Colab.
 
-The [Kashan example](tools/examole/README.md) contains a complete set of
+The [Kashan example](tools/example/README.md) contains a complete set of
 decisions and is the best place to learn the workflow.
 
 ### Local setup
@@ -72,20 +72,20 @@ pip install -r tools/requirements.txt
 
 ## Step 1, extract candidate colors
 
-Open [notebook 01](tools/notebooks/01_define_regions.ipynb). It displays the
-source you upload in an interactive drawer. Drag three to seven boxes over
+Open [the workflow notebook](tools/notebooks/rang_palette_workflow.ipynb) and
+go to step 01. It displays the source you upload in an interactive drawer.
+Drag three to seven boxes over
 regions with a clear visual purpose, such as a border, medallion, field,
 garment, flower, tile panel, or area of reflected light. Name each region,
 choose k, and add a short note below the image. You can undo the last box,
 delete one region, or clear the drawing and begin again. Inspect the saved
-overlay and download the workflow ZIP before closing the notebook.
+overlay before moving to step 02.
 
-Then open [notebook 02](tools/notebooks/02_extract_colors.ipynb) and upload the
-workflow ZIP. It runs k-means over each region in CIELAB. Large fields can
+Step 02 runs k-means over each region in CIELAB. Large fields can
 dominate a whole-image run and pull cluster centers toward muddy averages.
 Separate regions help small details keep their voice.
 
-The notebooks save the regions, source checksum, k values, extraction
+The notebook saves the regions, source checksum, k values, extraction
 settings, and accepted candidates in the recipe. The command-line equivalent
 is:
 
@@ -103,9 +103,10 @@ Treat the extracted clusters as a starting point, not a verdict.
 
 ## Step 2, curate the ramp
 
-Open [notebook 03](tools/notebooks/03_curate_palette.ipynb). Choose five to
-twelve candidate IDs, write one source note for each color, and place them in
-the order you want for a continuous ramp.
+In step 03, run the short inventory cell to see each exact region ID and its
+available candidate numbers. Fill the selection template in the next cell with
+five to twelve complete candidate IDs. Write one source note for each color
+and place the rows in the order you want for a continuous ramp.
 
 Pick five to twelve colors and arrange them as a ramp, dark to light to dark,
 warm to cool, whatever walk through the artwork reads smoothly when
@@ -122,10 +123,9 @@ a recipe that overrides it.
 
 ## Step 3, adjust colors that miss
 
-Use [notebook 04](tools/notebooks/04_adjust_colors.ipynb) when a selected
-cluster needs a careful change. L changes lightness, C changes chroma, and H
-changes hue. Each accepted edit records its before color, after color, numeric
-change, and your reason.
+Use step 04 when a selected cluster needs a careful change. L changes
+lightness, C changes chroma, and H changes hue. Each accepted edit records its
+before color, after color, numeric change, and your reason.
 
 When a color is close but not right, nudge it in lightness, chroma or hue
 instead of hand editing hex codes:
@@ -139,8 +139,8 @@ the numbers and your eyes agree.
 
 ## Step 4, check the palette
 
-Open [notebook 05](tools/notebooks/05_check_palette.ipynb) to create the full
-report from the saved recipe. The command-line equivalent is:
+Run step 05 to create the full report from the saved recipe. The command-line
+equivalent is:
 
 ```
 python tools/check_palette.py --colors "#7f3020,#ab4a47,#c07049,#1a3b45" --image "PHOTO_URL"
@@ -161,10 +161,10 @@ The report covers three things:
 
 ## Step 5, write the palette file
 
-Open [notebook 06](tools/notebooks/06_build_palette.ipynb). Enter the artwork
-metadata exactly as the source record gives it. Pay close attention to the
-reuse status, rights statement, credit, object page, and source image URL.
-The notebook writes a palette draft from the final recipe colors and notes.
+In step 06, enter the artwork metadata exactly as the source record gives it.
+Pay close attention to the reuse status, rights statement, credit, object page,
+and source image URL. The notebook writes a palette draft from the final recipe
+colors and notes.
 
 Create `palettes/<name>.json`, all lowercase filename. Copy
 `palettes/kashan.json` as a template for a museum source, or
@@ -181,9 +181,10 @@ in the workflow ZIP or `cache/`.
 
 ## Step 6, build
 
-Notebook 06 prepares the palette JSON after the metadata is complete. Download
-the updated workflow ZIP, copy the recipe into `recipes/<name>.json`, and copy
-the palette draft into `palettes/<name>.json` in a local checkout. Then run:
+Step 06 prepares the palette JSON after the metadata is complete. Step 07
+replays the recipe and downloads the final workflow ZIP. Copy the recipe into
+`recipes/<name>.json`, copy the palette draft into `palettes/<name>.json` in a
+local checkout, and then run:
 
 ```
 python tools/build.py <name>
@@ -203,17 +204,16 @@ the palette on different terrain.
 
 ## Step 7, open the pull request
 
-Before opening the pull request, run
-[notebook 07](tools/notebooks/07_replay_and_verify.ipynb). It reruns the saved
-extraction and adjustment history without asking for a new artistic decision.
-Continue only when it reports `verified: True`.
+Before opening the pull request, run step 07. It reruns the saved extraction
+and adjustment history without asking for a new artistic decision. Download
+the ZIP only after it reports `verified: True`.
 
 Include in the description:
 
 - the object page link and one sentence on why this work
 - anything the check flagged, such as a color beyond distance 3 and why
 - the sample page image
-- confirmation that notebook 07 reproduced the accepted candidates and final
+- confirmation that step 07 reproduced the accepted candidates and final
   colors
 
 A maintainer will look at the source, the numbers and the samples. Expect

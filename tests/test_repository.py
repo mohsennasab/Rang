@@ -256,72 +256,80 @@ class OutputTests(unittest.TestCase):
                     self.assertIsNone(cell["execution_count"])
 
     def test_palette_workflow_notebooks(self):
-        filenames = [
-            "01_define_regions.ipynb",
-            "02_extract_colors.ipynb",
-            "03_curate_palette.ipynb",
-            "04_adjust_colors.ipynb",
-            "05_check_palette.ipynb",
-            "06_build_palette.ipynb",
-            "07_replay_and_verify.ipynb",
+        paths = [
+            ROOT / "tools" / "notebooks" / "rang_palette_workflow.ipynb",
+            ROOT / "tools" / "example" / "kashan_palette_workflow.ipynb",
         ]
-        for folder in ("notebooks", "examole"):
-            for filename in filenames:
-                path = ROOT / "tools" / folder / filename
-                notebook = json.loads(path.read_text(encoding="utf-8"))
-                self.assertEqual(notebook["nbformat"], 4)
-                self.assertEqual(notebook["metadata"]["kernelspec"]["name"],
-                                 "python3")
-                text = "".join("".join(cell["source"])
-                               for cell in notebook["cells"])
-                self.assertIn("colab-badge.svg", text)
-                self.assertIn(f"/tools/{folder}/{filename}", text)
-                self.assertIn("Mohsen Tahmasebi Nasab, PhD", text)
-                self.assertIn("https://hydromohsen.com", text)
-                self.assertIn("license holder", text.lower())
-                self.assertIn("Arial", text)
-                self.assertIn("files.upload", text)
-                self.assertIn("workflow ZIP", text)
-                self.assertNotIn("drive.mount", text)
-                self.assertNotIn("git clone", text)
-                self.assertNotIn("REPO_REF", text)
-                self.assertNotIn("github.com/mohsennasab/Rang.git", text)
-                if filename == "01_define_regions.ipynb":
-                    self.assertIn("draw_regions_interactively", text)
-                    self.assertIn("DRAW_REGIONS_INTERACTIVELY", text)
-                    self.assertIn("Use these regions", text)
-                    self.assertIn(
-                        'globals()["draw_regions_interactively"]', text
-                    )
-                    self.assertNotIn("json.dumps(REGIONS, indent=2", text)
-                if folder == "notebooks" and filename == "03_curate_palette.ipynb":
-                    self.assertIn("CANDIDATES_BY_REGION", text)
-                    self.assertIn("candidate_figure = candidate_sheet", text)
-                    self.assertNotIn('"candidate": "main-detail:c01"', text)
-                tags = {tag for cell in notebook["cells"]
-                        for tag in cell.get("metadata", {}).get("tags", [])}
-                self.assertIn("user-input", tags)
-                setup_cells = [
-                    cell for cell in notebook["cells"]
-                    if "setup" in cell.get("metadata", {}).get("tags", [])
-                ]
-                self.assertEqual(len(setup_cells), 1)
-                self.assertEqual(
-                    setup_cells[0]["metadata"].get("cellView"), "form"
+        self.assertEqual(
+            list((ROOT / "tools" / "notebooks").glob("*.ipynb")),
+            [paths[0]],
+        )
+        self.assertEqual(
+            list((ROOT / "tools" / "example").glob("*.ipynb")),
+            [paths[1]],
+        )
+        for path in paths:
+            notebook = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(notebook["nbformat"], 4)
+            self.assertEqual(notebook["metadata"]["kernelspec"]["name"],
+                             "python3")
+            text = "".join("".join(cell["source"])
+                           for cell in notebook["cells"])
+            self.assertIn("colab-badge.svg", text)
+            self.assertIn(path.relative_to(ROOT).as_posix(), text)
+            self.assertIn("Mohsen Tahmasebi Nasab, PhD", text)
+            self.assertIn("https://hydromohsen.com", text)
+            self.assertIn("license holder", text.lower())
+            self.assertIn("Arial", text)
+            self.assertIn("files.upload", text)
+            self.assertEqual(text.count("files.upload"), 1)
+            self.assertIn("draw_regions_interactively", text)
+            self.assertIn("DRAW_REGIONS_INTERACTIVELY", text)
+            self.assertIn("Use these regions", text)
+            self.assertIn('globals()["draw_regions_interactively"]', text)
+            self.assertIn("candidate_figure = candidate_sheet", text)
+            self.assertIn("make_final_zip", text)
+            self.assertIn("This is the only ZIP download", text)
+            self.assertEqual(text.count("files.download"), 1)
+            self.assertNotIn("load_workflow_zip", text)
+            self.assertNotIn("LOCAL_WORKFLOW_ZIP", text)
+            self.assertNotIn("drive.mount", text)
+            self.assertNotIn("git clone", text)
+            self.assertNotIn("REPO_REF", text)
+            self.assertNotIn("github.com/mohsennasab/Rang.git", text)
+            for number in range(1, 8):
+                self.assertIn(f"## {number:02d}.", text)
+            tags = {tag for cell in notebook["cells"]
+                    for tag in cell.get("metadata", {}).get("tags", [])}
+            self.assertIn("user-input", tags)
+            self.assertIn("user-decision", tags)
+            setup_cells = [
+                cell for cell in notebook["cells"]
+                if "setup" in cell.get("metadata", {}).get("tags", [])
+            ]
+            self.assertEqual(len(setup_cells), 1)
+            self.assertEqual(setup_cells[0]["metadata"].get("cellView"),
+                             "form")
+            self.assertTrue(
+                setup_cells[0]["metadata"].get("jupyter", {}).get(
+                    "source_hidden"
                 )
-                self.assertTrue(
-                    setup_cells[0]["metadata"].get("jupyter", {}).get(
-                        "source_hidden"
-                    )
-                )
-                setup_text = "".join(setup_cells[0]["source"])
-                self.assertIn("#@title Set up this notebook", setup_text)
-                self.assertIn("PACKED_MODULE_SOURCES", setup_text)
-                self.assertNotIn('MODULE_SOURCES = {"colorlib"', setup_text)
-                for cell in notebook["cells"]:
-                    if cell["cell_type"] == "code":
-                        self.assertEqual(cell["outputs"], [])
-                        self.assertIsNone(cell["execution_count"])
+            )
+            setup_text = "".join(setup_cells[0]["source"])
+            self.assertIn("#@title Set up this notebook", setup_text)
+            self.assertIn("PACKED_MODULE_SOURCES", setup_text)
+            self.assertNotIn('MODULE_SOURCES = {"colorlib"', setup_text)
+            for cell in notebook["cells"]:
+                if cell["cell_type"] == "code":
+                    self.assertEqual(cell["outputs"], [])
+                    self.assertIsNone(cell["execution_count"])
+
+        reusable_text = paths[0].read_text(encoding="utf-8")
+        self.assertIn("PASTE_ID_HERE", reusable_text)
+        self.assertNotIn("CANDIDATES_BY_REGION", reusable_text)
+        self.assertNotIn("STARTING_IDS", reusable_text)
+        example_text = paths[1].read_text(encoding="utf-8")
+        self.assertNotIn("PASTE_ID_HERE", example_text)
 
     def test_notebook_recipe_replays(self):
         with tempfile.TemporaryDirectory() as temporary:

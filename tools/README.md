@@ -1,8 +1,8 @@
 # Palette-making tools
 
-The numbered notebooks take a contributor from an artwork photo to a checked,
-reproducible palette. They run in Google Colab or a local Jupyter session.
-Nothing is chosen automatically. The notebooks handle the repeated color math
+The workflow notebook takes a contributor from an artwork photo to a checked,
+reproducible palette. It runs in Google Colab or a local Jupyter session.
+Nothing is chosen automatically. The notebook handles the repeated color math
 and record keeping, while the contributor decides what belongs in the palette.
 
 Created by **Mohsen Tahmasebi Nasab, PhD**. Visit
@@ -16,38 +16,38 @@ Source images keep their own rights and reuse terms.
 ## Start here
 
 The easiest way to learn the workflow is the completed Kashan example in
-[`tools/examole`](examole/README.md).
+[`tools/example`](example/README.md).
 
-[![Open Kashan step 01 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/examole/01_define_regions.ipynb)
+[![Open the Kashan workflow in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/example/kashan_palette_workflow.ipynb)
 
-Run the notebooks in order. Notebook 01 asks you to upload the artwork from
-your computer. At the end of each step, download the workflow ZIP. Upload that
-ZIP at the beginning of the next notebook. No repository checkout or cloud
-storage connection is needed after the notebook opens.
+The seven numbered stages run from top to bottom in one notebook. Upload the
+artwork once and download the workflow ZIP after the final replay. No
+repository checkout or cloud storage connection is needed after the notebook
+opens.
 
 Cells with a yellow **YOUR INPUT** box need factual information such as an
 object page or museum record. Cells with a blue **YOUR DECISION** box ask for
 artistic judgment.
 
-## The seven notebooks
+## The seven stages
 
-| step | notebook | what you do |
+| step | stage | what you do |
 |---|---|---|
-| 01 | [Define regions](notebooks/01_define_regions.ipynb) | upload the artwork, draw boxes over it, choose k for each region, and inspect the overlay |
-| 02 | [Extract colors](notebooks/02_extract_colors.ipynb) | run region-by-region k-means in CIELAB and accept a candidate snapshot |
-| 03 | [Curate the palette](notebooks/03_curate_palette.ipynb) | select five to twelve candidates, write notes, and arrange the ramp |
-| 04 | [Adjust colors](notebooks/04_adjust_colors.ipynb) | change lightness, chroma, or hue and record why |
-| 05 | [Check the palette](notebooks/05_check_palette.ipynb) | review source distance, color separation, and the suggested pick order |
-| 06 | [Prepare the palette files](notebooks/06_build_palette.ipynb) | enter source metadata and write the palette JSON for the repository |
-| 07 | [Replay and verify](notebooks/07_replay_and_verify.ipynb) | reproduce the accepted candidates and final colors from the saved recipe |
+| 01 | Define regions | upload the artwork, draw boxes over it, choose k for each region, and inspect the overlay |
+| 02 | Extract colors | run region-by-region k-means in CIELAB and accept a candidate snapshot |
+| 03 | Curate the palette | read the available region and candidate IDs, select five to twelve candidates, write notes, and arrange the ramp |
+| 04 | Adjust colors | change lightness, chroma, or hue and record why |
+| 05 | Check the palette | review source distance, color separation, and the suggested pick order |
+| 06 | Prepare the palette files | enter source metadata and write the palette JSON for the repository |
+| 07 | Replay, verify, and download | reproduce the accepted colors and download the complete workflow ZIP |
 
-Every notebook has an **Open in Colab** button at the top. The reusable set
-contains blank or sample inputs. The Kashan set contains complete decisions so
-you can see a real workflow before starting your own.
+The [reusable notebook](notebooks/rang_palette_workflow.ipynb) contains blank
+inputs and decision templates. The Kashan notebook contains complete decisions
+so you can see a real workflow before starting your own.
 
 ## How to choose regions
 
-Notebook 01 opens an interactive region drawer in Colab. Drag a box over each
+Step 01 opens an interactive region drawer in Colab. Drag a box over each
 part of the image you want to sample. Name the region, choose its k value, and
 add a short note below the image. Undo removes the last box. Delete removes a
 specific box. Clear all lets you start again.
@@ -73,13 +73,14 @@ Keep these points in mind:
   framed.
 - Look at the saved overlay before moving on.
 
-The region overlay stays in the workflow ZIP or the local `cache/` directory.
-The recipe stores the source checksum, image dimensions, pixel boxes,
-normalized boxes, labels, notes, and k values.
+The region overlay is included in the final workflow ZIP. In local Jupyter it
+also stays in the ignored `cache/` directory. The recipe stores the source
+checksum, image dimensions, pixel boxes, normalized boxes, labels, notes, and
+k values.
 
 ## What k-means does
 
-Notebook 02 runs k-means inside each region in CIELAB. CIELAB makes the
+Step 02 runs k-means inside each region in CIELAB. CIELAB makes the
 distance calculation closer to how people notice color differences than a
 simple RGB calculation.
 
@@ -94,12 +95,17 @@ matter more than a large background.
 
 ## Where your judgment belongs
 
-Notebook 03 is the main artistic step. Choose five to twelve candidates and
+Step 03 is the main artistic step. Choose five to twelve candidates and
 arrange them into a ramp that feels connected to the artwork and works in a
 figure. You may leave out a dominant color, keep a color from a tiny detail,
 or choose two related colors when their relationship matters.
 
-Notebook 04 lets you adjust a selected color in LCh:
+The first code cell in step 03 lists every region ID and its available
+candidate numbers. Copy five to twelve complete candidate IDs into the empty
+selection template in the next cell. The notebook does not choose them for
+you.
+
+Step 04 lets you adjust a selected color in LCh:
 
 - `L` changes lightness.
 - `C` changes chroma, which is similar to colorfulness.
@@ -124,9 +130,10 @@ The recipe is a small JSON file. It records:
 - ordered color adjustments with before and after values
 - the final expected colors
 
-Temporary images and reports stay in the workflow ZIP. When contributing a
-palette, copy the final recipe into `recipes/<palette>.json` and the palette
-draft into `palettes/<palette>.json`. Then run the repository build locally.
+Temporary images and reports stay in the working folder until step 07 creates
+the workflow ZIP. When contributing a palette, copy the final recipe into
+`recipes/<palette>.json` and the palette draft into
+`palettes/<palette>.json`. Then run the repository build locally.
 
 ## Command-line alternatives
 
@@ -142,7 +149,7 @@ The existing scripts remain useful for quick checks and maintenance.
 | `make_samples.py` | standard visualization samples and the water-map layout |
 | `make_hecras_ramp.py` | individual and combined HEC-RAS import files |
 | `make_stylx.py` | ArcGIS Pro style file |
-| `generate_workflow_notebooks.py` | regenerates the reusable and Kashan notebook sets |
+| `generate_workflow_notebooks.py` | regenerates the reusable and Kashan workflow notebooks |
 | `notebook_workflow.py` | shared recipe, extraction, curation, adjustment, and replay functions |
 
 Install the command-line dependencies with:
@@ -151,9 +158,9 @@ Install the command-line dependencies with:
 pip install -r tools/requirements.txt
 ```
 
-## Files created while you work
+## Files in the final ZIP
 
-The downloaded `<palette>-workflow.zip` carries these files between steps:
+The downloaded `<palette>-workflow.zip` contains:
 
 ```text
 <palette>-recipe.json
@@ -175,11 +182,11 @@ by Git.
 - Verify the source rights and credit against the object page.
 - Check the region overlay and candidate sheet.
 - Read every saved adjustment and reason.
-- Run notebook 05 and inspect the complete report.
-- Run notebook 06 and inspect the palette JSON it prepares.
+- Run step 05 and inspect the complete report.
+- Run step 06 and inspect the palette JSON it prepares.
 - Copy the recipe and palette JSON into a local checkout and run
   `python tools/build.py <name>`.
 - Open the generated palette page.
 - Inspect the artwork preview and every sample plot.
-- Run notebook 07 and confirm `verified: True`.
+- Run step 07 and confirm `verified: True` before downloading.
 - Add the recipe, palette JSON, and all normal generated files to the branch.
