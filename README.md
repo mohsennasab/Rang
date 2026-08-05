@@ -122,6 +122,20 @@ Rostan comes from Iran Darroudi's 1972 painting Az In Gooneh Rostan, or Growing 
 
 [Sample plots and full details](docs/rostan/README.md)
 
+***
+
+### Shahnameh
+
+![Shahnameh, the artwork and its palette](docs/shahnameh/card.png)
+
+The Wedding of Siyavush and Farangis, Folio 185v from the Shahnama of Shah Tahmasp, ca. 1525-30, painting 28.9 x 18.4 cm, page 47.3 x 32.1 cm. The Metropolitan Museum of Art, New York. [Reference](https://www.metmuseum.org/art/collection/search/452137) Persian: شاهنامه. Say it shah-nah-MEH, Persian for Book of Kings.
+
+Shahnameh comes from the wedding of Siyavush and Farangis. Deep violet and pavilion blue give the page its quiet center, while garden green, gold, parchment and red carry the celebration around it. I wanted the palette to hold both the stillness of the couple and the music outside their room.
+
+`#41356f #4b3d97 #798cb8 #6d866a #596956 #d4b96b #d5c9b7 #b0472c #a6373e`
+
+[Sample plots and full details](docs/shahnameh/README.md)
+
 <!-- gallery:end -->
 
 ## Saying the names
@@ -139,6 +153,7 @@ stress lands on the last syllable.
 | Nasir | نصیر | nah-SEER | from Nasir al-Mulk Mosque in Shiraz |
 | Mina | مینا | mee-NAH | enamel, the material used in minakari |
 | Rostan | رستن | rohs-TAN | to grow, from the painting's Persian title |
+| Shahnameh | شاهنامه | shah-nah-MEH | Book of Kings, the wedding of Siyavush and Farangis |
 
 Each palette page repeats the pronunciation beside its name.
 
@@ -310,7 +325,9 @@ copyright Mohsen Tahmasebi Nasab, with all rights reserved. The Kashan palette
 draws on the
 [Silk Kashan Carpet](https://www.metmuseum.org/art/collection/search/451470)
 at The Metropolitan Museum of Art, whose qualifying Open Access images are
-available under CC0. The Golestan palette comes from a photograph of the
+available under CC0. Shahnameh also uses a public-domain image from The Met's
+Open Access collection. Its folio shows the wedding of Siyavush and Farangis.
+The Golestan palette comes from a photograph of the
 tilework at
 [Golestan Palace](https://whc.unesco.org/en/list/1422/) in Tehran, taken by
 Mohsen Tahmasebi Nasab in 2018. The Termeh palette comes from his photograph

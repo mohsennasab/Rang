@@ -49,5 +49,11 @@ rang_palettes <- list(
     order = c(1, 9, 5, 8, 3, 7, 4, 6, 2),
     colorblind = FALSE,
     source = "Growing in thus Way, 1972, Iran Darroudi official website, https://www.irandarroudi.com/en/paints"
+  ),
+  Shahnameh = list(
+    colors = c("#41356f", "#4b3d97", "#798cb8", "#6d866a", "#596956", "#d4b96b", "#d5c9b7", "#b0472c", "#a6373e"),
+    order = c(1, 8, 4, 7, 5, 6, 2, 3, 9),
+    colorblind = FALSE,
+    source = "The Wedding of Siyavush and Farangis, Folio 185v from the Shahnama of Shah Tahmasp, ca. 1525-30, The Metropolitan Museum of Art, New York, https://www.metmuseum.org/art/collection/search/452137"
   )
 )

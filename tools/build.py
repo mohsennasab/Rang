@@ -234,6 +234,8 @@ def source_section(src):
     if not citation:
         citation = f'{src["title"]}, {src["date"]}. {src.get("geography", "")}.'
     parts = [citation]
+    if src.get("artist") and src.get("museum"):
+        parts.append(src["artist"].strip().rstrip(".") + ".")
     if src.get("medium"):
         parts.append(f'{src["medium"]}.')
     line2 = held_by(src)
@@ -252,8 +254,9 @@ def source_section(src):
     text = "\n".join(parts)
 
     if src.get("public_domain"):
+        photo_url = src.get("download_url", src["image"])
         photo_note = (f'[Object page]({src["url"]}) and '
-                      f'[full resolution photo]({src["image"]}), released by '
+                      f'[full resolution photo]({photo_url}), released by '
                       "the museum under open access.")
     else:
         rights = src.get("rights", "photo used with permission").strip().rstrip(".")
@@ -289,6 +292,16 @@ def craft_block(pal):
     if isinstance(craft, str):
         craft = [craft]
     return "\n## The craft\n\n" + "\n\n".join(craft) + "\n"
+
+
+def story_block(pal):
+    """Optional account of the scene or source text behind an artwork."""
+    story = pal.get("story")
+    if not story:
+        return ""
+    if isinstance(story, str):
+        story = [story]
+    return "\n## The story\n\n" + "\n\n".join(story) + "\n"
 
 
 def write_docs_page(pal):
@@ -358,7 +371,7 @@ def write_docs_page(pal):
 ## Source
 
 {source_section(src)}
-{context_block(pal)}{craft_block(pal)}
+{story_block(pal)}{context_block(pal)}{craft_block(pal)}
 ## Colors
 
 {chr(10).join(hex_rows)}
