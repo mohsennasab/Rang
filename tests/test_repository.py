@@ -16,6 +16,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 sys.path.insert(0, str(ROOT / "python"))
 
 import colorlib
+import make_logo
 import notebook_workflow
 import rang
 import submission_workflow
@@ -198,6 +199,20 @@ class OutputTests(unittest.TestCase):
             self.assertEqual(image.size, (1024, 1024))
         with Image.open(ROOT / "docs" / "termeh" / "samples.png") as image:
             self.assertEqual(image.size, (2100, 1120))
+
+    def test_logo_matches_the_generator(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            generated_path = pathlib.Path(temporary) / "rang.png"
+            make_logo.save_logo(generated_path, 1024, "transparent")
+            with Image.open(generated_path) as generated_image:
+                generated = generated_image.convert("RGBA")
+            with Image.open(ROOT / "logo" / "rang.png") as tracked_image:
+                tracked = tracked_image.convert("RGBA")
+            self.assertIsNone(ImageChops.difference(generated, tracked).getbbox())
+            self.assertEqual(tracked.getbbox(), (41, 41, 983, 983))
+        build_source = (ROOT / "tools" / "build.py").read_text(encoding="utf-8")
+        self.assertIn("make_logo.save_logo", build_source)
+        self.assertNotIn("make_logo.main()", build_source)
 
     def test_rostan_card_preserves_the_complete_painting(self):
         with Image.open(ROOT / "docs" / "rostan" / "card.png") as image:

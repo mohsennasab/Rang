@@ -1,172 +1,194 @@
-"""Generate a transparent 8-bit Rang logo as a PNG."""
+"""Generate the Rang repository logo as an 8-bit Persian-style central medallion.
 
-import math
+This script recreates the chunky pixel medallion logo as deterministic pixel art.
+It draws a 25x25 pixel matrix and enlarges it with nearest-neighbor scaling so
+it stays crisp at any output size.
+
+Examples
+--------
+python rang_pixel_medallion_logo.py
+python rang_pixel_medallion_logo.py --output logo/rang.png --size 1024
+python rang_pixel_medallion_logo.py --output logo/rang_preview.png --size 1024 --background gray
+"""
+
+from __future__ import annotations
+
+import argparse
 from pathlib import Path
-from PIL import Image, ImageDraw
+from typing import Iterable
 
-from colorlib import REPO_ROOT
+from PIL import Image, ImageColor, ImageDraw
 
-OUTPUT_SIZE = 1024
-PIXEL_SIZE = 128
-OUTPUT_PATH = REPO_ROOT / "logo" / "rang.png"
+try:
+    from colorlib import REPO_ROOT  # type: ignore
+except Exception:  # pragma: no cover - fallback outside the repo
+    REPO_ROOT = Path(__file__).resolve().parent
 
-TRANSPARENT = (255, 255, 255, 0)
-CREAM = "#fffaf0"
-NAVY = "#1a3b45"
-GOLD = "#c59b46"
-OUTER_COLORS = (
-    "#7f3020",
-    "#c07049",
-    "#c59b46",
-    "#cbb11c",
-    "#45939c",
-    "#333a80",
-    "#345f72",
-    "#9a9a68",
+GRID = (
+    ".........................",
+    "......KKKKKKKKKKKKK......",
+    ".....KYYYYBBBBBYYYYK.....",
+    "....KYYYYBBBOBBBYYYYK....",
+    "...KYGGGGGBOOOBGGGGGYK...",
+    "..KYGGGDDGGBOBGGDDGGGYK..",
+    ".KYYGGODDGGBPBGGDDOGGYYK.",
+    ".KYYGOOODPPPPPPPDOOOGYYK.",
+    ".KYYGGODYPPMMMPPYDOGGYYK.",
+    ".KYBGGGPPPPMCMPPPPGGGBYK.",
+    ".KBBBGGPPPMMCMMPPPGGBBBK.",
+    ".KBBOBBPMMMMYMMMMPBBOBBK.",
+    ".KBOOOPPMCCYYYCCMPPOOOBK.",
+    ".KBBOBBPMMMMYMMMMPBBOBBK.",
+    ".KBBBGGPPPMMCMMPPPGGBBBK.",
+    ".KYBGGGPPPPMCMPPPPGGGBYK.",
+    ".KYYGGODYPPMMMPPYDOGGYYK.",
+    ".KYYGOOODPPPPPPPDOOOGYYK.",
+    ".KYYGGODDGGBPBGGDDOGGYYK.",
+    "..KYGGGDDGGBOBGGDDGGGYK..",
+    "...KYGGGGGBOOOBGGGGGYK...",
+    "....KYYYYBBBOBBBYYYYK....",
+    ".....KYYYYBBBBBYYYYK.....",
+    "......KKKKKKKKKKKKK......",
+    ".........................",
 )
 
+PALETTE = {
+    ".": (0, 0, 0, 0),
+    "K": (0, 0, 0, 255),
+    "Y": ImageColor.getrgb("#F5C431") + (255,),
+    "B": ImageColor.getrgb("#243CC4") + (255,),
+    "G": ImageColor.getrgb("#159358") + (255,),
+    "D": ImageColor.getrgb("#0B6B3C") + (255,),
+    "O": ImageColor.getrgb("#F55B0E") + (255,),
+    "P": ImageColor.getrgb("#FF1E82") + (255,),
+    "M": ImageColor.getrgb("#B3004C") + (255,),
+    "C": ImageColor.getrgb("#21C1DC") + (255,),
+}
 
-def point(cx, cy, radius, angle):
-    """Return an integer point on a circle."""
-    return (
-        round(cx + radius * math.cos(angle)),
-        round(cy + radius * math.sin(angle)),
-    )
-
-
-def star_points(cx, cy, outer_radius, inner_radius,
-                count=8, rotation=-math.pi / 2):
-    """Return alternating outer and inner vertices for a star."""
-    return [
-        point(
-            cx,
-            cy,
-            outer_radius if index % 2 == 0 else inner_radius,
-            rotation + index * math.pi / count,
-        )
-        for index in range(count * 2)
-    ]
+DEFAULT_OUTPUT_PATH = Path(REPO_ROOT) / "logo" / "rang.png"
 
 
-def petal_points(cx, cy, angle):
-    """Return the five vertices of one outer petal."""
-    return [
-        point(cx, cy, 25, angle - math.pi / 8),
-        point(cx, cy, 44, angle - math.pi / 16),
-        point(cx, cy, 50, angle),
-        point(cx, cy, 44, angle + math.pi / 16),
-        point(cx, cy, 25, angle + math.pi / 8),
-    ]
+def validate_grid(grid: Iterable[str]) -> None:
+    """Validate that the pixel grid is rectangular and uses known symbols."""
+    rows = list(grid)
+    if not rows:
+        raise ValueError("GRID cannot be empty")
+
+    width = len(rows[0])
+    for row in rows:
+        if len(row) != width:
+            raise ValueError("All rows in GRID must have the same width")
+        unknown = set(row) - set(PALETTE)
+        if unknown:
+            raise ValueError(f"GRID contains unknown symbols: {sorted(unknown)}")
 
 
-def draw_polygon(draw, coordinates, fill, outline=None, width=1):
-    """Draw a filled polygon with a pixel-aligned outline."""
-    if outline and width > 0:
-        for dx in range(-width, width + 1):
-            for dy in range(-width, width + 1):
-                shifted = [(x + dx, y + dy) for x, y in coordinates]
-                draw.polygon(shifted, fill=outline)
-
-    draw.polygon(coordinates, fill=fill)
+validate_grid(GRID)
 
 
-def draw_circle(draw, cx, cy, radius, fill, outline=None, width=1):
-    """Draw a low-resolution circle with an optional outline."""
-    bounds = (cx - radius, cy - radius, cx + radius, cy + radius)
+def make_background(size: int, mode: str) -> Image.Image:
+    """Create the requested background image."""
+    if mode == "transparent":
+        return Image.new("RGBA", (size, size), (255, 255, 255, 0))
 
-    if outline and width > 0:
-        draw.ellipse(bounds, fill=outline)
-        inner = (
-            cx - radius + width,
-            cy - radius + width,
-            cx + radius - width,
-            cy + radius - width,
-        )
-        draw.ellipse(inner, fill=fill)
-    else:
-        draw.ellipse(bounds, fill=fill)
+    if mode == "gray":
+        img = Image.new("RGBA", (size, size), ImageColor.getrgb("#6E6E6E") + (255,))
+        draw = ImageDraw.Draw(img)
+        # soft vignette with concentric translucent circles
+        center = size / 2
+        max_radius = size * 0.48
+        for step in range(28, -1, -1):
+            radius = max_radius * (step / 28)
+            alpha = int(7 + (28 - step) * 2.4)
+            box = (
+                center - radius,
+                center - radius,
+                center + radius,
+                center + radius,
+            )
+            draw.ellipse(box, fill=(50, 50, 50, alpha))
+        return img
+
+    raise ValueError("background must be 'transparent' or 'gray'")
 
 
-def render_logo(output_path=OUTPUT_PATH):
-    """Render the logo at low resolution and enlarge it without smoothing."""
-    center = PIXEL_SIZE // 2
-    image = Image.new(
-        "RGBA",
-        (PIXEL_SIZE, PIXEL_SIZE),
-        TRANSPARENT,
-    )
-    draw = ImageDraw.Draw(image)
+def render_base_pixel_art() -> Image.Image:
+    """Render the medallion as a low-resolution RGBA image."""
+    height = len(GRID)
+    width = len(GRID[0])
+    image = Image.new("RGBA", (width, height), (255, 255, 255, 0))
+    pixels = image.load()
 
-    # Outer cream field with navy border.
-    draw_circle(
-        draw,
-        center,
-        center,
-        radius=52,
-        fill=CREAM,
-        outline=NAVY,
-        width=2,
-    )
+    for y, row in enumerate(GRID):
+        for x, symbol in enumerate(row):
+            pixels[x, y] = PALETTE[symbol]
 
-    # Original eight-color outer petals.
-    for index, color in enumerate(OUTER_COLORS):
-        angle = -math.pi / 2 + index * math.pi / 4
-        draw_polygon(
-            draw,
-            petal_points(center, center, angle),
-            fill=color,
-            outline=CREAM,
-            width=1,
-        )
+    return image
 
-    # Detailed navy outer prongs.
-    draw_polygon(
-        draw,
-        star_points(center, center, 33, 15),
-        fill=NAVY,
-        outline=CREAM,
-        width=1,
-    )
 
-    # Rotated gold inner star.
-    draw_polygon(
-        draw,
-        star_points(
-            center,
-            center,
-            19,
-            8,
-            rotation=-math.pi / 2 + math.pi / 8,
-        ),
-        fill=GOLD,
-        outline=CREAM,
-        width=1,
-    )
+def upscale_logo(pixel_art: Image.Image, size: int) -> Image.Image:
+    """Upscale the low-resolution pixel art while keeping crisp edges."""
+    return pixel_art.resize((size, size), Image.Resampling.NEAREST)
 
-    # Navy center circle matching the outer prongs.
-    draw_circle(
-        draw,
-        center,
-        center,
-        radius=5,
-        fill=NAVY,
-    )
 
-    # Nearest-neighbor scaling preserves the visible 8-bit pixels.
-    image = image.resize(
-        (OUTPUT_SIZE, OUTPUT_SIZE),
-        Image.Resampling.NEAREST,
-    )
+def composite_logo(background: Image.Image, logo: Image.Image) -> Image.Image:
+    """Center the logo onto the background image."""
+    out = background.copy()
+    out.alpha_composite(logo, (0, 0))
+    return out
+
+
+def save_logo(output_path: Path, size: int, background: str) -> Path:
+    """Build and save the logo PNG."""
+    pixel_art = render_base_pixel_art()
+    logo = upscale_logo(pixel_art, size)
+    canvas = make_background(size, background)
+    final = composite_logo(canvas, logo)
 
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    image.save(output_path, optimize=True, dpi=(300, 300))
-    print(f"Wrote {output_path.resolve()}")
+    final.save(output_path, optimize=True, dpi=(300, 300))
+    return output_path.resolve()
 
 
-def main():
-    """Build the repository logo through the standard tool entry point."""
-    render_logo()
+def parse_args() -> argparse.Namespace:
+    """Parse command-line arguments."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=DEFAULT_OUTPUT_PATH,
+        help=f"PNG output path. Default: {DEFAULT_OUTPUT_PATH}",
+    )
+    parser.add_argument(
+        "--size",
+        type=int,
+        default=1024,
+        help="Output width and height in pixels. Default: 1024",
+    )
+    parser.add_argument(
+        "--background",
+        choices=("transparent", "gray"),
+        default="transparent",
+        help="Background mode. Default: transparent",
+    )
+    return parser.parse_args()
+
+
+def main() -> None:
+    """CLI entry point."""
+    args = parse_args()
+    if args.size < len(GRID):
+        raise ValueError(
+            f"--size must be at least {len(GRID)} pixels for a clean upscale"
+        )
+
+    output_path = save_logo(
+        output_path=args.output,
+        size=args.size,
+        background=args.background,
+    )
+    print(f"Wrote {output_path}")
 
 
 if __name__ == "__main__":
