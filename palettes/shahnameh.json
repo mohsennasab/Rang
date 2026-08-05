@@ -1,0 +1,52 @@
+{
+  "name": "Shahnameh",
+  "persian": "شاهنامه",
+  "pronunciation": "shah-nah-MEH, Persian for Book of Kings",
+  "position": 8,
+  "about": "Shahnameh comes from the wedding of Siyavush and Farangis. Deep violet and pavilion blue give the page its quiet center, while garden green, gold, parchment and red carry the celebration around it. I wanted the palette to hold both the stillness of the couple and the music outside their room.",
+  "story": [
+    "The [Shahnameh](https://shahnameh.fitzmuseum.cam.ac.uk/literary), or Book of Kings, is Ferdowsi's great Persian epic. It gathers Iran's legendary and historical past into verse. Its lasting importance lies not only in the stories, but also in the way Ferdowsi strengthened Persian as a literary language and carried cultural memory across generations.",
+    "Siyavush is the son of the Iranian shah Kai Kavus. After trouble with his father drives him into exile in Turan, he marries Farangis, the daughter of Afrasiyab. Their son Kai Khusrau will later become shah of Iran. The miniature places the couple together inside a pavilion while musicians, attendants and guests fill the terraces and garden. The quiet embrace at the center makes the surrounding celebration feel even more alive."
+  ],
+  "colors": [
+    "#41356f",
+    "#4b3d97",
+    "#798cb8",
+    "#6d866a",
+    "#596956",
+    "#d4b96b",
+    "#d5c9b7",
+    "#b0472c",
+    "#a6373e"
+  ],
+  "notes": [
+    "deep indigo, shadows in the illuminated heading",
+    "royal violet, the floral panels and bed textiles",
+    "pavilion blue, the broad wall behind the couple",
+    "jade, the geometric tilework and clothing",
+    "garden green, trees and foliage around the guests",
+    "soft gold, the chamber floor and yellow garments",
+    "parchment, the page and pale architectural details",
+    "vermilion, robes and warm textile accents",
+    "crimson, the bedcover and flowering details"
+  ],
+  "order": [1, 8, 4, 7, 5, 6, 2, 3, 9],
+  "colorblind": false,
+  "source": {
+    "title": "The Wedding of Siyavush and Farangis, Folio 185v from the Shahnama of Shah Tahmasp",
+    "citation": "The Wedding of Siyavush and Farangis, folio 185v from the Shahnama of Shah Tahmasp, ca. 1525-30.",
+    "artist": "Painting attributed to Qasim ibn 'Ali, workshop directed by Mir Musavvir",
+    "date": "ca. 1525-30",
+    "dimensions": "painting 28.9 x 18.4 cm, page 47.3 x 32.1 cm",
+    "geography": "Made in Iran, Tabriz",
+    "medium": "Opaque watercolor, ink, silver and gold on paper",
+    "museum": "The Metropolitan Museum of Art, New York",
+    "department": "Islamic Art",
+    "accession": "1970.301.28",
+    "credit": "Gift of Arthur A. Houghton Jr., 1970",
+    "url": "https://www.metmuseum.org/art/collection/search/452137",
+    "image": "sources/shahnameh/folio.jpg",
+    "download_url": "https://images.metmuseum.org/CRDImages/is/original/DP107144.jpg",
+    "public_domain": true
+  }
+}

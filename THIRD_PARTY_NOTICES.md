@@ -15,6 +15,17 @@ Access under CC0 1.0. The Kashan gallery card and preview contain this image.
 
 Credit: The Metropolitan Museum of Art, Gift of Mrs. Douglas M. Moffat, 1958.
 
+`sources/shahnameh/folio.jpg` is the Open Access image of
+[The Wedding of Siyavush and Farangis](https://www.metmuseum.org/art/collection/search/452137),
+folio 185v from the Shahnama of Shah Tahmasp, accession 1970.301.28.
+
+The museum marks the folio image public domain and makes it available through
+its Open Access program. The copy under `sources/` retains its downloaded
+dimensions. Its gallery card and preview contain resized versions of the same
+image.
+
+Credit: The Metropolitan Museum of Art, Gift of Arthur A. Houghton Jr., 1970.
+
 ## Project photographs
 
 The following photographs are copyright Mohsen Tahmasebi Nasab. All rights

@@ -13,6 +13,9 @@ dist/
 # downloaded source images and other scratch files
 cache/
 
+# palette extraction regions kept locally while they are being refined
+docs/*/regions/
+
 # local working files
 notes/
 *.local.md
