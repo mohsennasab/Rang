@@ -302,12 +302,15 @@ if DRAW_REGIONS_INTERACTIVELY:
             "Use the interactive drawer in Colab or edit REGION_TEMPLATE locally"
         )
     starting_regions = REGION_TEMPLATE if START_WITH_TEMPLATE_BOXES else []
-    REGIONS = draw_regions_interactively(source_path, starting_regions)
+    region_drawer = globals()["draw_regions_interactively"]
+    REGIONS = region_drawer(source_path, starting_regions)
 else:
     REGIONS = REGION_TEMPLATE
     show_source(source_path, PALETTE_NAME)
 
-print(json.dumps(REGIONS, indent=2, ensure_ascii=False))''', "user-decision"),
+print(f"{{len(REGIONS)}} regions ready")
+for number, region in enumerate(REGIONS, start=1):
+    print(f'{{number}}. {{region["label"]}}, k={{region["k"]}}')''', "user-decision"),
         code('''
 recipe = create_recipe(
     PALETTE_NAME, source_path.name, source_path, REGIONS, RECIPE_PATH

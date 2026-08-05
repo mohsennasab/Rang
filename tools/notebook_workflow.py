@@ -124,6 +124,7 @@ def draw_regions_interactively(path, initial_regions=None, maximum_size=(1000, 8
     """Draw and describe rectangular regions on an image in Google Colab."""
     try:
         from google.colab.output import eval_js
+        from IPython.display import Javascript, display
     except ImportError as error:
         raise RuntimeError(
             "interactive region drawing is available in Google Colab"
@@ -156,11 +157,11 @@ def draw_regions_interactively(path, initial_regions=None, maximum_size=(1000, 8
         "regions": starting,
     }
     script = r'''
-new Promise((resolve) => {
+async function rangDrawRegions(input) {
+  return await new Promise((resolve) => {
   if (google.colab.output.setIframeHeight) {
     google.colab.output.setIframeHeight(0, true, {maxHeight: 5000})
   }
-  const input = __RANG_PAYLOAD__
   const colors = ['#d73027', '#4575b4', '#1a9850', '#984ea3', '#ff7f00',
                   '#00a6a6', '#a65628', '#f781bf', '#4d4d4d', '#66c2a5']
   const root = document.createElement('div')
@@ -391,9 +392,12 @@ new Promise((resolve) => {
     redraw()
   }
   image.src = input.image
-})
-'''.replace("__RANG_PAYLOAD__", json.dumps(payload, ensure_ascii=False))
-    result = eval_js(script)
+  })
+}
+'''
+    display(Javascript(script))
+    call = "rangDrawRegions(" + json.dumps(payload, ensure_ascii=False) + ")"
+    result = eval_js(call)
     regions = json.loads(result) if isinstance(result, str) else result
     return _validate_regions(regions, image.width, image.height)
 

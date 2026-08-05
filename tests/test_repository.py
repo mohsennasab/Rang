@@ -289,6 +289,10 @@ class OutputTests(unittest.TestCase):
                     self.assertIn("draw_regions_interactively", text)
                     self.assertIn("DRAW_REGIONS_INTERACTIVELY", text)
                     self.assertIn("Use these regions", text)
+                    self.assertIn(
+                        'globals()["draw_regions_interactively"]', text
+                    )
+                    self.assertNotIn("json.dumps(REGIONS, indent=2", text)
                 tags = {tag for cell in notebook["cells"]
                         for tag in cell.get("metadata", {}).get("tags", [])}
                 self.assertIn("user-input", tags)
