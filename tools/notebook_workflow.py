@@ -15,6 +15,7 @@ import platform
 import re
 import urllib.parse
 import urllib.request
+import zipfile
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -63,6 +64,37 @@ def write_json(path, value):
     path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n",
                     encoding="utf-8")
     return path
+
+
+def make_workflow_archive(recipe_path, work_dir, archive_path):
+    """Bundle only the source and known workflow outputs."""
+    recipe_path = pathlib.Path(recipe_path)
+    work_dir = pathlib.Path(work_dir)
+    archive_path = pathlib.Path(archive_path)
+    recipe = read_json(recipe_path)
+
+    source_name = pathlib.Path(recipe["source"]["image"]).name
+    if not source_name or source_name != recipe["source"]["image"]:
+        raise ValueError("the recipe source must be a filename in the workflow folder")
+
+    prefix = recipe_path.name.removesuffix("-recipe.json")
+    allowed_names = {
+        recipe_path.name,
+        source_name,
+        "regions.png",
+        "candidates.json",
+        "candidates.png",
+        "adjustments.png",
+        "check-report.json",
+        f"{prefix}-palette.json",
+    }
+    members = [work_dir / name for name in sorted(allowed_names)
+               if (work_dir / name).is_file()]
+    archive_path.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(archive_path, "w", zipfile.ZIP_DEFLATED) as archive:
+        for member in members:
+            archive.write(member, member.name)
+    return archive_path
 
 
 def _source_suffix(source):

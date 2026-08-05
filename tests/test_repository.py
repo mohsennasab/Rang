@@ -7,6 +7,7 @@ import sys
 import tempfile
 import unittest
 import xml.etree.ElementTree as ET
+import zipfile
 
 from PIL import Image, ImageChops
 
@@ -349,6 +350,31 @@ class OutputTests(unittest.TestCase):
             )
             result = notebook_workflow.verify_recipe(recipe_path, folder)
             self.assertTrue(result["verified"])
+
+    def test_workflow_archive_keeps_one_source(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            folder = pathlib.Path(temporary)
+            recipe_path = folder / "sample-recipe.json"
+            notebook_workflow.write_json(recipe_path, {
+                "palette": "Sample",
+                "source": {"image": "source.jpg"},
+            })
+            (folder / "source.jpg").write_bytes(b"source")
+            (folder / "source (1).jpg").write_bytes(b"duplicate")
+            (folder / "source (2).jpg").write_bytes(b"duplicate")
+            (folder / "regions.png").write_bytes(b"regions")
+            (folder / "unrelated.txt").write_text("ignore", encoding="utf-8")
+            archive_path = folder / "sample-workflow.zip"
+
+            notebook_workflow.make_workflow_archive(
+                recipe_path, folder, archive_path
+            )
+
+            with zipfile.ZipFile(archive_path) as archive:
+                self.assertEqual(
+                    sorted(archive.namelist()),
+                    ["regions.png", "sample-recipe.json", "source.jpg"],
+                )
 
     def test_no_embedded_origin_markers(self):
         words = ["cl" + "aude", "anth" + "ropic", "chat" + "g" + "pt",

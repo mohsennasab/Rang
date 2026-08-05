@@ -81,7 +81,6 @@ def embedded_runtime():
     return code(f'''#@title Set up this notebook
 import base64
 import json
-import shutil
 import subprocess
 import sys
 import types
@@ -128,25 +127,41 @@ WORK_DIR.mkdir(parents=True, exist_ok=True)
 RECIPE_PATH = WORK_DIR / f"{{PALETTE_SLUG}}-recipe.json"
 use_arial()
 
-def receive_file(local_path, label):
+def receive_file(local_path, label, canonical_stem=None):
     if IN_COLAB:
         print(f"Choose {{label}} from your computer")
         uploaded = files.upload()
         if len(uploaded) != 1:
             raise ValueError("Upload exactly one file")
         filename, data = next(iter(uploaded.items()))
-        output = WORK_DIR / Path(filename).name
+        uploaded_name = Path(filename).name
+        if canonical_stem:
+            suffix = Path(uploaded_name).suffix.lower()
+            if not suffix:
+                raise ValueError("The uploaded file needs a filename extension")
+            output = WORK_DIR / f"{{canonical_stem}}{{suffix}}"
+        else:
+            output = WORK_DIR / uploaded_name
         output.write_bytes(data)
-        return output
+        return output, uploaded_name
     if not local_path:
         raise ValueError(f"Enter a local path for {{label}}")
     path = Path(local_path).expanduser().resolve()
     if not path.exists():
         raise FileNotFoundError(path)
-    return path
+    if canonical_stem:
+        if not path.suffix:
+            raise ValueError("The source file needs a filename extension")
+        output = WORK_DIR / f"{{canonical_stem}}{{path.suffix.lower()}}"
+        if path != output.resolve():
+            output.write_bytes(path.read_bytes())
+        return output, path.name
+    return path, path.name
 
 def load_workflow_zip(local_path):
-    archive = receive_file(local_path, "the workflow ZIP from the previous notebook")
+    archive, _ = receive_file(
+        local_path, "the workflow ZIP from the previous notebook"
+    )
     with zipfile.ZipFile(archive) as handle:
         total = 0
         for item in handle.infolist():
@@ -163,12 +178,7 @@ def load_workflow_zip(local_path):
 
 def make_workflow_zip():
     archive = WORK_DIR / f"{{PALETTE_SLUG}}-workflow.zip"
-    members = [path for path in WORK_DIR.iterdir()
-               if path.is_file() and path.suffix.lower() != ".zip"]
-    with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as handle:
-        for member in sorted(members):
-            handle.write(member, member.name)
-    return archive
+    return make_workflow_archive(RECIPE_PATH, WORK_DIR, archive)
 
 def offer_download(path):
     print("Saved:", path)
@@ -277,11 +287,9 @@ PALETTE_NAME = "{palette_name}" #@param {{type:"string"}}
 LOCAL_IMAGE_PATH = "{local_image}" #@param {{type:"string"}}
 SOURCE_REFERENCE = "{reference}" #@param {{type:"string"}}
 
-uploaded_image = receive_file(LOCAL_IMAGE_PATH, "the artwork image")
-suffix = uploaded_image.suffix.lower() or ".jpg"
-source_path = WORK_DIR / f"source{{suffix}}"
-if uploaded_image.resolve() != source_path.resolve():
-    shutil.copyfile(uploaded_image, source_path)
+source_path, original_filename = receive_file(
+    LOCAL_IMAGE_PATH, "the artwork image", canonical_stem="source"
+)
 source_image = open_rgb(source_path)
 print("Image size:", source_image.size)
 ''', "user-input"),
@@ -316,7 +324,7 @@ recipe = create_recipe(
     PALETTE_NAME, source_path.name, source_path, REGIONS, RECIPE_PATH
 )
 recipe["source"]["reference"] = SOURCE_REFERENCE
-recipe["source"]["original_filename"] = uploaded_image.name
+recipe["source"]["original_filename"] = original_filename
 write_json(RECIPE_PATH, recipe)
 overlay_path = WORK_DIR / "regions.png"
 region_overlay(RECIPE_PATH, WORK_DIR, overlay_path)
