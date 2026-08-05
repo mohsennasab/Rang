@@ -18,6 +18,7 @@ sys.path.insert(0, str(ROOT / "python"))
 import colorlib
 import notebook_workflow
 import rang
+import submission_workflow
 
 
 class PaletteTests(unittest.TestCase):
@@ -256,17 +257,21 @@ class OutputTests(unittest.TestCase):
                     self.assertIsNone(cell["execution_count"])
 
     def test_palette_workflow_notebooks(self):
-        paths = [
+        workflow_paths = [
             ROOT / "tools" / "notebooks" / "rang_palette_workflow.ipynb",
             ROOT / "tools" / "example" / "kashan_palette_workflow.ipynb",
         ]
+        submission_path = (
+            ROOT / "tools" / "notebooks" / "rang_submission_builder.ipynb"
+        )
+        paths = [*workflow_paths, submission_path]
         self.assertEqual(
-            list((ROOT / "tools" / "notebooks").glob("*.ipynb")),
-            [paths[0]],
+            sorted((ROOT / "tools" / "notebooks").glob("*.ipynb")),
+            sorted([workflow_paths[0], submission_path]),
         )
         self.assertEqual(
             list((ROOT / "tools" / "example").glob("*.ipynb")),
-            [paths[1]],
+            [workflow_paths[1]],
         )
         for path in paths:
             notebook = json.loads(path.read_text(encoding="utf-8"))
@@ -283,30 +288,14 @@ class OutputTests(unittest.TestCase):
             self.assertIn("Arial", text)
             self.assertIn("files.upload", text)
             self.assertEqual(text.count("files.upload"), 1)
-            self.assertIn("draw_regions_interactively", text)
-            self.assertIn("DRAW_REGIONS_INTERACTIVELY", text)
-            self.assertIn("Use these regions", text)
-            self.assertIn('globals()["draw_regions_interactively"]', text)
-            self.assertIn("candidate_figure = candidate_sheet", text)
-            self.assertIn('"region-01:c04"', text)
-            self.assertIn("`p01` is the first row", text)
-            self.assertIn("Share within 8", text)
-            self.assertIn("trust\nyour eyes", text)
-            self.assertIn("make_final_zip", text)
-            self.assertIn("This is the only ZIP download", text)
             self.assertEqual(text.count("files.download"), 1)
-            self.assertNotIn("load_workflow_zip", text)
-            self.assertNotIn("LOCAL_WORKFLOW_ZIP", text)
             self.assertNotIn("drive.mount", text)
             self.assertNotIn("git clone", text)
             self.assertNotIn("REPO_REF", text)
             self.assertNotIn("github.com/mohsennasab/Rang.git", text)
-            for number in range(1, 8):
-                self.assertIn(f"## {number:02d}.", text)
             tags = {tag for cell in notebook["cells"]
                     for tag in cell.get("metadata", {}).get("tags", [])}
             self.assertIn("user-input", tags)
-            self.assertIn("user-decision", tags)
             setup_cells = [
                 cell for cell in notebook["cells"]
                 if "setup" in cell.get("metadata", {}).get("tags", [])
@@ -328,12 +317,45 @@ class OutputTests(unittest.TestCase):
                     self.assertEqual(cell["outputs"], [])
                     self.assertIsNone(cell["execution_count"])
 
-        reusable_text = paths[0].read_text(encoding="utf-8")
+        for path in workflow_paths:
+            notebook = json.loads(path.read_text(encoding="utf-8"))
+            text = "".join("".join(cell["source"])
+                           for cell in notebook["cells"])
+            self.assertIn("draw_regions_interactively", text)
+            self.assertIn("DRAW_REGIONS_INTERACTIVELY", text)
+            self.assertIn("Use these regions", text)
+            self.assertIn('globals()["draw_regions_interactively"]', text)
+            self.assertIn("candidate_figure = candidate_sheet", text)
+            self.assertIn('"region-01:c04"', text)
+            self.assertIn("`p01` is the first row", text)
+            self.assertIn("Share within 8", text)
+            self.assertIn("trust\nyour eyes", text)
+            self.assertIn("make_final_zip", text)
+            self.assertIn("This is the only ZIP download", text)
+            self.assertNotIn("LOCAL_WORKFLOW_ZIP", text)
+            for number in range(1, 8):
+                self.assertIn(f"## {number:02d}.", text)
+            tags = {tag for cell in notebook["cells"]
+                for tag in cell.get("metadata", {}).get("tags", [])}
+            self.assertIn("user-decision", tags)
+
+        reusable_text = workflow_paths[0].read_text(encoding="utf-8")
         self.assertIn("PASTE_ID_HERE", reusable_text)
         self.assertNotIn("CANDIDATES_BY_REGION", reusable_text)
         self.assertNotIn("STARTING_IDS", reusable_text)
-        example_text = paths[1].read_text(encoding="utf-8")
+        example_text = workflow_paths[1].read_text(encoding="utf-8")
         self.assertNotIn("PASTE_ID_HERE", example_text)
+        submission_text = submission_path.read_text(encoding="utf-8")
+        self.assertIn("This is notebook 2", submission_text)
+        self.assertIn("LOCAL_WORKFLOW_ZIP", submission_text)
+        self.assertIn("CONFIRM_SOURCE_RIGHTS", submission_text)
+        self.assertIn("CONFIRM_VISUAL_REVIEW", submission_text)
+        self.assertIn("CONFIRM_PROPOSAL_REVIEW", submission_text)
+        self.assertIn("build_submission", submission_text)
+        self.assertIn("repository-ready files", submission_text)
+        self.assertIn("ArcGIS Pro, QGIS, HEC-RAS, and GeoLibre", submission_text)
+        for number in range(1, 7):
+            self.assertIn(f"## {number:02d}.", submission_text)
 
     def test_notebook_recipe_replays(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -366,6 +388,114 @@ class OutputTests(unittest.TestCase):
             )
             result = notebook_workflow.verify_recipe(recipe_path, folder)
             self.assertTrue(result["verified"])
+
+    def test_submission_builder_packages_verified_workflow(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            folder = pathlib.Path(temporary)
+            work = folder / "workflow"
+            work.mkdir()
+            image_path = work / "source.png"
+            image = Image.new("RGB", (100, 20))
+            colors = ["#7f3020", "#ab4a47", "#c59b46", "#8a9463", "#345f72"]
+            for index, color in enumerate(colors):
+                image.paste(color, (index * 20, 0, (index + 1) * 20, 20))
+            image.save(image_path)
+            recipe_path = work / "fixture-recipe.json"
+            notebook_workflow.create_recipe(
+                "Fixture", image_path.name, image_path,
+                [{"id": "color-strip", "label": "Color strip",
+                  "box": [0, 0, 100, 20], "k": 5,
+                  "note": "Five exact color fields"}],
+                recipe_path,
+            )
+            candidates = notebook_workflow.save_candidates(
+                recipe_path, work, accept=True
+            )
+            selections = [
+                {"candidate": candidate["id"],
+                 "note": f'color field {number}'}
+                for number, candidate in enumerate(candidates, start=1)
+            ]
+            notebook_workflow.save_curation(recipe_path, selections)
+            notebook_workflow.check_recipe(
+                recipe_path, work, work / "check-report.json"
+            )
+            notebook_workflow.palette_draft(recipe_path, {
+                "name": "Fixture",
+                "persian": "آزمایش",
+                "pronunciation": "awz-MAH-yesh",
+                "source": {
+                    "title": "Color strip",
+                    "date": "2026",
+                    "geography": "Iran",
+                    "medium": "Digital image",
+                    "museum": "Fixture Museum",
+                    "accession": "1",
+                    "credit": "Fixture credit",
+                    "url": "https://example.com/object",
+                    "image": "sources/fixture/source.png",
+                    "public_domain": True,
+                },
+            }, work / "fixture-palette.json")
+            archive = notebook_workflow.make_workflow_archive(
+                recipe_path, work, folder / "fixture-workflow.zip"
+            )
+            bundle = submission_workflow.load_workflow_archive(
+                archive, folder / "loaded"
+            )
+            self.assertEqual(
+                submission_workflow.validate_submission_input(bundle), []
+            )
+            proposal = submission_workflow.build_submission(
+                bundle,
+                folder / "proposal",
+                "The image provides five clear colors for testing the workflow.",
+            )
+            self.assertTrue(proposal["verification"]["verified"])
+            with zipfile.ZipFile(proposal["archive"]) as packaged:
+                names = set(packaged.namelist())
+            expected = {
+                "README.md",
+                "PULL_REQUEST.md",
+                "repository/palettes/fixture.json",
+                "repository/recipes/fixture.json",
+                "repository/sources/fixture/card.jpg",
+                "repository/sources/fixture/source.png",
+                "repository/docs/fixture/card.png",
+                "repository/docs/fixture/preview.png",
+                "repository/docs/fixture/samples.png",
+                "software/arcgis/Rang-Fixture.stylx",
+                "software/qgis/Rang-Fixture.xml",
+                "software/hecras/Rang-Fixture.xml",
+                "software/geolibre/Rang-Fixture.json",
+            }
+            self.assertTrue(expected.issubset(names))
+            root = proposal["root"]
+            ET.parse(root / "software" / "qgis" / "Rang-Fixture.xml")
+            ET.parse(root / "software" / "hecras" / "Rang-Fixture.xml")
+            db = sqlite3.connect(
+                root / "software" / "arcgis" / "Rang-Fixture.stylx"
+            )
+            try:
+                self.assertEqual(
+                    db.execute("SELECT COUNT(*) FROM ITEMS").fetchone()[0], 7
+                )
+            finally:
+                db.close()
+            geolibre = json.loads((
+                root / "software" / "geolibre" / "Rang-Fixture.json"
+            ).read_text(encoding="utf-8"))
+            self.assertEqual(
+                geolibre["palettes"]["Fixture"]["raster_anchors"],
+                proposal["palette"]["colors"],
+            )
+            for filename in ("card.png", "preview.png", "samples.png",
+                             "swatch.png"):
+                with Image.open(
+                        root / "repository" / "docs" / "fixture" / filename
+                ) as generated:
+                    self.assertGreater(generated.width, 500)
+                    self.assertGreater(generated.height, 200)
 
     def test_notebook_decision_errors_are_specific(self):
         with tempfile.TemporaryDirectory() as temporary:

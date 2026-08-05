@@ -1,9 +1,10 @@
 # Palette-making tools
 
-The workflow notebook takes a contributor from an artwork photo to a checked,
-reproducible palette. It runs in Google Colab or a local Jupyter session.
-Nothing is chosen automatically. The notebook handles the repeated color math
-and record keeping, while the contributor decides what belongs in the palette.
+Two notebooks take a contributor from an artwork photo to a checked,
+reproducible palette proposal. They run in Google Colab or a local Jupyter
+session. Nothing is chosen automatically. Notebook 1 handles the repeated
+color math and record keeping while the contributor decides what belongs in
+the palette. Notebook 2 packages the verified work for review.
 
 Created by **Mohsen Tahmasebi Nasab, PhD**. Visit
 [hydromohsen.com](https://hydromohsen.com).
@@ -20,16 +21,29 @@ The easiest way to learn the workflow is the completed Kashan example in
 
 [![Open the Kashan workflow in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/example/kashan_palette_workflow.ipynb)
 
-The seven numbered stages run from top to bottom in one notebook. Upload the
-artwork once and download the workflow ZIP after the final replay. No
-repository checkout or cloud storage connection is needed after the notebook
-opens.
+Run the seven stages in notebook 1 from top to bottom. Upload the artwork once
+and download the workflow ZIP after the final replay. Open notebook 2, upload
+that ZIP, review the source record, and download the submission ZIP. No
+repository checkout or cloud storage connection is needed.
 
 Cells with a yellow **YOUR INPUT** box need factual information such as an
 object page or museum record. Cells with a blue **YOUR DECISION** box ask for
 artistic judgment.
 
-## The seven stages
+## The two notebooks
+
+| notebook | file | result |
+|---|---|---|
+| 1, make the palette | [`rang_palette_workflow.ipynb`](notebooks/rang_palette_workflow.ipynb) | a verified workflow ZIP with the source, recipe, decisions, report, and palette draft |
+| 2, prepare the proposal | [`rang_submission_builder.ipynb`](notebooks/rang_submission_builder.ipynb) | a submission ZIP with repository files, images, software tests, review material, and a pull request draft |
+
+Notebook 2 checks the palette metadata and rights fields, replays the recipe,
+and asks for a short explanation of why the work belongs in Rang. Its
+palette-specific ArcGIS Pro, QGIS, HEC-RAS, and GeoLibre files are for testing.
+They do not replace the combined collection files. The maintainer rebuilds
+those after adding the proposed palette to a branch.
+
+## The seven stages in notebook 1
 
 | step | stage | what you do |
 |---|---|---|
@@ -41,9 +55,9 @@ artistic judgment.
 | 06 | Prepare the palette files | enter source metadata and write the palette JSON for the repository |
 | 07 | Replay, verify, and download | reproduce the accepted colors and download the complete workflow ZIP |
 
-The [reusable notebook](notebooks/rang_palette_workflow.ipynb) contains blank
-inputs and decision templates. The Kashan notebook contains complete decisions
-so you can see a real workflow before starting your own.
+The reusable notebook contains blank inputs and decision templates. The Kashan
+notebook contains complete decisions so you can see a real workflow before
+starting your own.
 
 ## How to choose regions
 
@@ -131,9 +145,9 @@ The recipe is a small JSON file. It records:
 - the final expected colors
 
 Temporary images and reports stay in the working folder until step 07 creates
-the workflow ZIP. When contributing a palette, copy the final recipe into
-`recipes/<palette>.json` and the palette draft into
-`palettes/<palette>.json`. Then run the repository build locally.
+the workflow ZIP. Notebook 2 reads this ZIP and places the accepted recipe,
+palette JSON, source card, page, and images into their expected repository
+paths. It also prepares review copies for supported software.
 
 ## Command-line alternatives
 
@@ -149,8 +163,9 @@ The existing scripts remain useful for quick checks and maintenance.
 | `make_samples.py` | standard visualization samples and the water-map layout |
 | `make_hecras_ramp.py` | individual and combined HEC-RAS import files |
 | `make_stylx.py` | ArcGIS Pro style file |
-| `generate_workflow_notebooks.py` | regenerates the reusable and Kashan workflow notebooks |
+| `generate_workflow_notebooks.py` | regenerates both reusable notebooks and the Kashan workflow example |
 | `notebook_workflow.py` | shared recipe, extraction, curation, adjustment, and replay functions |
+| `submission_workflow.py` | validation, proposal images, software test files, and submission packaging |
 
 Install the command-line dependencies with:
 
@@ -158,7 +173,7 @@ Install the command-line dependencies with:
 pip install -r tools/requirements.txt
 ```
 
-## Files in the final ZIP
+## Files passed from notebook 1 to notebook 2
 
 The downloaded `<palette>-workflow.zip` contains:
 
@@ -177,6 +192,21 @@ The source extension matches the uploaded file. In local Jupyter, the same
 files go under `cache/notebook-upload/<palette>/`. The cache remains ignored
 by Git.
 
+## Files in the submission ZIP
+
+Notebook 2 creates four clear areas:
+
+```text
+repository/     palette, recipe, source card, documentation page, and images
+software/       palette-specific ArcGIS Pro, QGIS, HEC-RAS, and GeoLibre tests
+review/         regions, candidates, adjustments, report, and source image
+PULL_REQUEST.md prepared contribution description
+```
+
+The package README explains which files can be copied directly and which are
+only for testing. The repository build remains the final source for all
+collection-wide outputs.
+
 ## Before opening a pull request
 
 - Verify the source rights and credit against the object page.
@@ -184,9 +214,10 @@ by Git.
 - Read every saved adjustment and reason.
 - Run step 05 and inspect the complete report.
 - Run step 06 and inspect the palette JSON it prepares.
-- Copy the recipe and palette JSON into a local checkout and run
-  `python tools/build.py <name>`.
-- Open the generated palette page.
-- Inspect the artwork preview and every sample plot.
 - Run step 07 and confirm `verified: True` before downloading.
-- Add the recipe, palette JSON, and all normal generated files to the branch.
+- Upload the workflow ZIP to notebook 2.
+- Verify the source rights against the object page again.
+- Inspect the proposal gallery card and sample plots.
+- Download the submission ZIP and read its `README.md`.
+- Copy the `repository` files into a branch and run the commands given in the
+  package README.

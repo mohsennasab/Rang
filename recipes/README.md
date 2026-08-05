@@ -1,8 +1,9 @@
 # Palette recipes
 
 A recipe records how a contributor moved from an artwork image to the final
-palette. The complete workflow notebook in
-[`tools/notebooks`](../tools/notebooks/README.md) creates and replays the file.
+palette. Notebook 1 in [`tools/notebooks`](../tools/notebooks/README.md)
+creates and replays the file. Notebook 2 includes the accepted recipe in the
+repository-ready proposal folder.
 
 One accepted recipe belongs at `recipes/<palette>.json`. Working copies,
 region overlays, candidate sheets, and reports stay in the downloaded

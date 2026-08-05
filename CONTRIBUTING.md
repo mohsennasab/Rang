@@ -4,10 +4,10 @@ Thanks for wanting to add to Rang. This guide takes you from a museum photo to
 a merged pull request. The tooling does the packaging for you, your judgment
 goes into picking the artwork and curating the colors.
 
-The recommended path uses one Jupyter notebook with seven numbered stages. It
-runs in Google Colab and carries one recipe from regions to a finished palette.
-The command-line scripts remain available for contributors who prefer a
-terminal.
+The recommended path uses two Jupyter notebooks in Google Colab. Notebook 1
+carries one recipe from regions to a finished palette. Notebook 2 validates
+that work and prepares a complete proposal package. The command-line scripts
+remain available for contributors who prefer a terminal.
 
 ## Contents
 
@@ -45,7 +45,7 @@ Persian.
 
 ### Google Colab
 
-Open the complete workflow notebook:
+Start with notebook 1:
 
 [![Open the Rang workflow in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/rang_palette_workflow.ipynb)
 
@@ -53,6 +53,15 @@ Upload the artwork once and work through the seven stages from top to bottom.
 After the replay check succeeds, the notebook downloads one workflow ZIP. It
 contains the source copy, region overlay, candidate sheet, adjustment preview,
 report, recipe, and palette draft.
+
+Then open notebook 2 and upload the workflow ZIP:
+
+[![Open the Rang submission builder in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/rang_submission_builder.ipynb)
+
+Notebook 2 checks the saved recipe and metadata, asks you to confirm the source
+rights and visual review, and downloads one submission ZIP. That package
+contains repository-ready files, documentation images, palette-specific
+software test files, review evidence, and a pull request draft.
 
 Yellow **YOUR INPUT** cells need factual information such as an object page.
 Blue **YOUR DECISION** cells are where you choose regions, colors, and
@@ -166,25 +175,27 @@ Pay close attention to the reuse status, rights statement, credit, object page,
 and source image URL. The notebook writes a palette draft from the final recipe
 colors and notes.
 
-Create `palettes/<name>.json`, all lowercase filename. Copy
-`palettes/kashan.json` as a template for a museum source, or
-`palettes/golestan.json` for your own photograph. Fill in every source field.
-Write one short note per color saying where in the artwork it comes from, and
-add the pronunciation. A second photo showing the work in its setting can go
-in `source.context_image` with a caption, it appears on the palette page.
-Leave out `order` and `colorblind` if you want the build to compute them.
+Notebook 2 places the draft at `repository/palettes/<name>.json` inside the
+submission ZIP. Fill in every source field in notebook 1 before creating that
+package. Write one short note per color saying where in the artwork it comes
+from, and add the pronunciation. A second photo showing the work in its setting
+can later go in `source.context_image` with a caption, it appears on the palette
+page. Leave out `position` if you want the repository build to assign it.
 
-Copy the final recipe to `recipes/<name>.json`. It records the source checksum,
-regions, k-means settings, accepted candidates, selected candidate IDs, and
-the complete adjustment history. Working images and exploratory reports stay
-in the workflow ZIP or `cache/`.
+Notebook 2 places the final recipe at `repository/recipes/<name>.json`. It
+records the source checksum, regions, k-means settings, accepted candidates,
+selected candidate IDs, and the complete adjustment history. Working images
+and reports stay under `review` in the submission package or in `cache/`.
 
 ## Step 6, build
 
 Step 06 prepares the palette JSON after the metadata is complete. Step 07
-replays the recipe and downloads the final workflow ZIP. Copy the recipe into
-`recipes/<name>.json`, copy the palette draft into `palettes/<name>.json` in a
-local checkout, and then run:
+replays the recipe and downloads the final workflow ZIP. Upload that ZIP to
+notebook 2. Review the metadata and source rights, describe why the artwork and
+palette belong in Rang, then build and inspect the proposal.
+
+The `repository` folder in the submission ZIP follows the Rang directory
+layout. Copy its contents into a local checkout and then run:
 
 ```
 python tools/build.py <name>
@@ -202,13 +213,21 @@ NOAA AORC precipitation and a CONUS DEM. Pass your own raster with
 `python tools/make_samples.py <name> --dem your_dem.tif` if you want to see
 the palette on different terrain.
 
+Notebook 2 also creates one-palette ArcGIS Pro, QGIS, HEC-RAS, and GeoLibre
+files under `software`. They let a reviewer try the proposal before merging.
+Do not copy them over the combined Rang files. The command above recreates the
+combined collection correctly.
+
 ## Step 7, open the pull request
 
-Before opening the pull request, run step 07. It reruns the saved extraction
-and adjustment history without asking for a new artistic decision. Download
-the ZIP only after it reports `verified: True`.
+Before opening the pull request, run step 07 in notebook 1. It reruns the saved
+extraction and adjustment history without asking for a new artistic decision.
+Download the workflow ZIP only after it reports `verified: True`. Run notebook
+2 and inspect its file list, gallery card, and samples before downloading the
+submission ZIP.
 
-Include in the description:
+Notebook 2 writes `PULL_REQUEST.md` as a starting description. Check it against
+the finished branch and include:
 
 - the object page link and one sentence on why this work
 - anything the check flagged, such as a color beyond distance 3 and why

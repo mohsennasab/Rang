@@ -14,7 +14,9 @@ top of the notebook.
 The example includes five saved regions and the published Kashan curation and
 adjustments. Leave interactive drawing off to replay those decisions exactly,
 or turn it on to redraw the regions. The workflow downloads one ZIP after the
-final verification step.
+final verification step. You can upload that ZIP to
+[notebook 2](../notebooks/rang_submission_builder.ipynb) to build a Kashan
+proposal package and inspect every generated file.
 
 Created by **Mohsen Tahmasebi Nasab, PhD**. Visit
 [hydromohsen.com](https://hydromohsen.com).

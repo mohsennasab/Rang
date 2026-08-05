@@ -1,20 +1,30 @@
-# Reusable Colab notebook
+# Reusable Colab notebooks
 
-[`rang_palette_workflow.ipynb`](rang_palette_workflow.ipynb) contains the
-complete seven-stage contribution workflow. Upload the artwork once, draw the
-sampling regions, work through the decisions, and download one final ZIP after
-the replay check succeeds.
+The contribution path uses two notebooks.
 
-The ZIP contains the source copy, recipe, overlays, candidates, adjustments,
-report, and palette draft. You do not need to connect cloud storage or clone
-the repository inside Colab.
+1. [`rang_palette_workflow.ipynb`](rang_palette_workflow.ipynb) contains the
+   seven-stage artistic workflow. Upload the artwork once, draw the sampling
+   regions, curate the colors, and download a verified workflow ZIP.
+2. [`rang_submission_builder.ipynb`](rang_submission_builder.ipynb) accepts
+   that workflow ZIP and creates one submission ZIP with repository-ready
+   files, documentation images, palette-specific software files, review
+   material, and a pull request draft.
+
+[![Open notebook 1 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/rang_palette_workflow.ipynb)
+
+[![Open notebook 2 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/rang_submission_builder.ipynb)
+
+No cloud storage connection or repository checkout is needed inside Colab.
+Notebook 2 keeps its ArcGIS Pro, QGIS, HEC-RAS, and GeoLibre files separate
+from the repository-ready folder because the collection-wide files must be
+rebuilt after the palette is added.
 
 Yellow **YOUR INPUT** cells collect factual information. Blue **YOUR DECISION**
 cells ask you to choose regions, candidates, and adjustments.
 All figures request Arial, with Liberation Sans as the Colab fallback when
 Arial is not installed.
 
-For a filled example, use the [Kashan notebook](../example/README.md).
+For a filled notebook 1 example, use the [Kashan notebook](../example/README.md).
 
 Created by **Mohsen Tahmasebi Nasab, PhD**. Visit
 [hydromohsen.com](https://hydromohsen.com).

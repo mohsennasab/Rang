@@ -292,12 +292,13 @@ through the whole process, from picking an artwork to opening a pull request,
 including the sample code for extracting colors from a photo and adjusting any
 color that does not sit right.
 
-The [palette-making notebook](tools/README.md) runs in Google Colab and makes
-every input and artistic decision easy to find. Upload the artwork, draw the
-sampling regions directly over it, complete all seven stages, and download one
-final ZIP. A complete [Kashan example](tools/example/README.md) shows the
-region, k-means, curation, adjustment, checking, file preparation and replay
-steps.
+The two [palette-making notebooks](tools/README.md) run in Google Colab and
+make every input and decision easy to find. Notebook 1 takes an uploaded
+artwork through regions, k-means, curation, adjustment, checking, and replay.
+Notebook 2 turns the verified workflow ZIP into a proposal with repository
+files, documentation images, software test files, and a pull request draft.
+A complete [Kashan example](tools/example/README.md) shows the artistic
+workflow.
 
 ## Repository layout
 
