@@ -294,6 +294,10 @@ class OutputTests(unittest.TestCase):
                         'globals()["draw_regions_interactively"]', text
                     )
                     self.assertNotIn("json.dumps(REGIONS, indent=2", text)
+                if folder == "notebooks" and filename == "03_curate_palette.ipynb":
+                    self.assertIn("CANDIDATES_BY_REGION", text)
+                    self.assertIn("candidate_figure = candidate_sheet", text)
+                    self.assertNotIn('"candidate": "main-detail:c01"', text)
                 tags = {tag for cell in notebook["cells"]
                         for tag in cell.get("metadata", {}).get("tags", [])}
                 self.assertIn("user-input", tags)

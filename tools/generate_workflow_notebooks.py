@@ -370,7 +370,7 @@ print("Candidate sheet:", WORK_DIR / "candidates.png")
 
 def step_03(path, example):
     if example:
-        selections = '''[
+        selection_cell = '''SELECTIONS = [
     {"candidate": "lower-inner-field:c03", "note": "dark red, corner cartouche outlines"},
     {"candidate": "upper-inner-field:c01", "note": "rose red of the field"},
     {"candidate": "upper-inner-field:c03", "note": "terracotta"},
@@ -382,13 +382,33 @@ def step_03(path, example):
     {"candidate": "central-medallion:c04", "note": "indigo, medallion ground"},
 ]'''
     else:
-        selections = '''[
-    {"candidate": "main-detail:c01", "note": "where this color appears"},
-    {"candidate": "main-detail:c02", "note": "where this color appears"},
-    {"candidate": "main-detail:c03", "note": "where this color appears"},
-    {"candidate": "main-detail:c04", "note": "where this color appears"},
-    {"candidate": "main-detail:c05", "note": "where this color appears"},
-]'''
+        selection_cell = '''CANDIDATES_BY_REGION = {}
+for candidate in candidates:
+    CANDIDATES_BY_REGION.setdefault(candidate["region"], []).append(candidate)
+
+STARTING_IDS = []
+largest_region = max(len(items) for items in CANDIDATES_BY_REGION.values())
+for rank in range(largest_region):
+    for items in CANDIDATES_BY_REGION.values():
+        if rank < len(items):
+            STARTING_IDS.append(items[rank]["id"])
+
+# Replace IDs or change their order after looking at the candidate sheet.
+SELECTED_IDS = STARTING_IDS[:5]
+
+candidate_lookup = {item["id"]: item for item in candidates}
+SELECTIONS = [
+    {
+        "candidate": candidate_id,
+        "note": f'write where this color appears in {candidate_lookup[candidate_id]["region_label"]}',
+    }
+    for candidate_id in SELECTED_IDS
+]
+
+print("Starting selection")
+for selection in SELECTIONS:
+    item = candidate_lookup[selection["candidate"]]
+    print(item["id"], item["hex"], item["region_label"])'''
     cells = [title(path, "03", "Curate the palette",
                    "Upload the step 02 ZIP, choose five to twelve candidates, and arrange the ramp.")]
     cells += start_cells(example)
@@ -397,7 +417,7 @@ def step_03(path, example):
 candidates = recipe.get("accepted_candidates", [])
 if not candidates:
     raise ValueError("Run notebook 02 and accept the extraction first")
-candidate_sheet(candidates, WORK_DIR / "candidates.png")
+candidate_figure = candidate_sheet(candidates, WORK_DIR / "candidates.png")
 '''),
         markdown("""
 Choose colors that carry the character of the artwork and can do useful work
@@ -405,7 +425,7 @@ in a figure. A frequent color does not have to be selected. A small detail can
 be central to the palette. The order below becomes the continuous ramp order.
 """),
         banner("YOUR DECISION", "List candidate IDs in your chosen ramp order. Write one note per color saying where it comes from."),
-        code(f"SELECTIONS = {selections}", "user-decision"),
+        code(selection_cell, "user-decision"),
         code('''
 recipe = save_curation(RECIPE_PATH, SELECTIONS)
 colors = recipe["expected"]["colors"]
