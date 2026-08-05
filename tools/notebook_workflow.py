@@ -6,7 +6,9 @@ https://hydromohsen.com
 Copyright (c) 2026 Mohsen Tahmasebi Nasab
 Licensed under the MIT License in the repository root.
 """
+import base64
 import hashlib
+import io
 import json
 import pathlib
 import platform
@@ -116,6 +118,284 @@ def show_source(path, title="Source image"):
     ax.grid(color="white", linewidth=0.5, alpha=0.35)
     fig.tight_layout()
     return fig
+
+
+def draw_regions_interactively(path, initial_regions=None, maximum_size=(1000, 850)):
+    """Draw and describe rectangular regions on an image in Google Colab."""
+    try:
+        from google.colab.output import eval_js
+    except ImportError as error:
+        raise RuntimeError(
+            "interactive region drawing is available in Google Colab"
+        ) from error
+
+    image = open_rgb(path)
+    preview = image.copy()
+    preview.thumbnail(maximum_size, Image.Resampling.LANCZOS)
+    stream = io.BytesIO()
+    preview.save(stream, format="JPEG", quality=90, optimize=True)
+    data_url = "data:image/jpeg;base64," + base64.b64encode(
+        stream.getvalue()).decode("ascii")
+
+    starting = []
+    for number, region in enumerate(initial_regions or [], start=1):
+        starting.append({
+            "id": str(region.get("id", f"region-{number:02d}")),
+            "label": str(region.get("label", f"Region {number}")),
+            "box": [int(value) for value in region["box"]],
+            "k": int(region.get("k", 8)),
+            "note": str(region.get("note", "")),
+        })
+
+    payload = {
+        "image": data_url,
+        "imageWidth": image.width,
+        "imageHeight": image.height,
+        "previewWidth": preview.width,
+        "previewHeight": preview.height,
+        "regions": starting,
+    }
+    script = r'''
+new Promise((resolve) => {
+  if (google.colab.output.setIframeHeight) {
+    google.colab.output.setIframeHeight(0, true, {maxHeight: 5000})
+  }
+  const input = __RANG_PAYLOAD__
+  const colors = ['#d73027', '#4575b4', '#1a9850', '#984ea3', '#ff7f00',
+                  '#00a6a6', '#a65628', '#f781bf', '#4d4d4d', '#66c2a5']
+  const root = document.createElement('div')
+  root.style.cssText = 'font-family:Arial,sans-serif;max-width:1050px;padding:12px;background:white;border:1px solid #d5d5d5;border-radius:8px'
+  const help = document.createElement('p')
+  help.textContent = 'Drag across the image to draw a region. Use the fields below the image to name it and choose k.'
+  root.appendChild(help)
+
+  const canvas = document.createElement('canvas')
+  canvas.width = input.previewWidth
+  canvas.height = input.previewHeight
+  canvas.style.cssText = 'display:block;max-width:100%;height:auto;border:1px solid #777;cursor:crosshair;touch-action:none'
+  root.appendChild(canvas)
+  const context = canvas.getContext('2d')
+
+  const controls = document.createElement('div')
+  controls.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin:10px 0'
+  const undo = document.createElement('button')
+  undo.textContent = 'Undo last box'
+  const clear = document.createElement('button')
+  clear.textContent = 'Clear all'
+  const finish = document.createElement('button')
+  finish.textContent = 'Use these regions'
+  finish.style.cssText = 'background:#146c43;color:white;border:0;border-radius:4px;padding:7px 12px;font-weight:bold'
+  controls.append(undo, clear, finish)
+  root.appendChild(controls)
+
+  const status = document.createElement('div')
+  status.style.cssText = 'min-height:24px;color:#8b1a1a;font-weight:bold'
+  root.appendChild(status)
+  const list = document.createElement('div')
+  root.appendChild(list)
+  document.body.appendChild(root)
+
+  const image = new Image()
+  let drawing = false
+  let start = null
+  let current = null
+  let regions = input.regions.map((region) => ({
+    id: region.id,
+    label: region.label,
+    k: region.k,
+    note: region.note,
+    box: [
+      region.box[0] * input.previewWidth / input.imageWidth,
+      region.box[1] * input.previewHeight / input.imageHeight,
+      region.box[2] * input.previewWidth / input.imageWidth,
+      region.box[3] * input.previewHeight / input.imageHeight
+    ]
+  }))
+
+  function point(event) {
+    const bounds = canvas.getBoundingClientRect()
+    return [
+      (event.clientX - bounds.left) * canvas.width / bounds.width,
+      (event.clientY - bounds.top) * canvas.height / bounds.height
+    ]
+  }
+
+  function redraw() {
+    context.clearRect(0, 0, canvas.width, canvas.height)
+    context.drawImage(image, 0, 0, canvas.width, canvas.height)
+    regions.forEach((region, index) => {
+      const box = region.box
+      const color = colors[index % colors.length]
+      context.strokeStyle = color
+      context.lineWidth = 3
+      context.strokeRect(box[0], box[1], box[2] - box[0], box[3] - box[1])
+      context.fillStyle = color
+      context.fillRect(box[0], box[1], 28, 24)
+      context.fillStyle = 'white'
+      context.font = 'bold 15px Arial'
+      context.fillText(String(index + 1), box[0] + 8, box[1] + 17)
+    })
+    if (drawing && start && current) {
+      context.strokeStyle = '#111'
+      context.lineWidth = 2
+      context.setLineDash([7, 5])
+      context.strokeRect(start[0], start[1], current[0] - start[0], current[1] - start[1])
+      context.setLineDash([])
+    }
+  }
+
+  function field(value, width, type='text') {
+    const element = document.createElement('input')
+    element.type = type
+    element.value = value
+    element.style.width = width
+    element.style.padding = '5px'
+    return element
+  }
+
+  function refreshList() {
+    list.innerHTML = ''
+    regions.forEach((region, index) => {
+      const row = document.createElement('div')
+      row.style.cssText = 'display:grid;grid-template-columns:28px minmax(110px,1fr) minmax(130px,1.5fr) 65px minmax(150px,2fr) auto;gap:7px;align-items:center;margin:7px 0'
+      const number = document.createElement('strong')
+      number.textContent = String(index + 1)
+      number.style.color = colors[index % colors.length]
+      const id = field(region.id, '100%')
+      const label = field(region.label, '100%')
+      const k = field(region.k, '100%', 'number')
+      k.min = 2
+      k.max = 20
+      const note = field(region.note, '100%')
+      const remove = document.createElement('button')
+      remove.textContent = 'Delete'
+      id.setAttribute('aria-label', `Region ${index + 1} ID`)
+      label.setAttribute('aria-label', `Region ${index + 1} name`)
+      k.setAttribute('aria-label', `Region ${index + 1} k value`)
+      note.setAttribute('aria-label', `Region ${index + 1} note`)
+      id.oninput = () => { region.id = id.value }
+      label.oninput = () => { region.label = label.value }
+      k.oninput = () => { region.k = Number(k.value) }
+      note.oninput = () => { region.note = note.value }
+      remove.onclick = () => {
+        regions.splice(index, 1)
+        refreshList()
+        redraw()
+      }
+      row.append(number, id, label, k, note, remove)
+      list.appendChild(row)
+    })
+    if (regions.length) {
+      const headings = document.createElement('div')
+      headings.style.cssText = 'display:grid;grid-template-columns:28px minmax(110px,1fr) minmax(130px,1.5fr) 65px minmax(150px,2fr) auto;gap:7px;font-size:12px;color:#555;margin-top:10px'
+      ;['', 'ID', 'Name', 'k', 'Note', ''].forEach((value) => {
+        const item = document.createElement('span')
+        item.textContent = value
+        headings.appendChild(item)
+      })
+      list.prepend(headings)
+    }
+  }
+
+  canvas.onpointerdown = (event) => {
+    event.preventDefault()
+    drawing = true
+    start = point(event)
+    current = start
+    canvas.setPointerCapture(event.pointerId)
+    redraw()
+  }
+  canvas.onpointermove = (event) => {
+    if (!drawing) return
+    current = point(event)
+    redraw()
+  }
+  canvas.onpointerup = (event) => {
+    if (!drawing) return
+    current = point(event)
+    drawing = false
+    const x0 = Math.max(0, Math.min(start[0], current[0]))
+    const y0 = Math.max(0, Math.min(start[1], current[1]))
+    const x1 = Math.min(canvas.width, Math.max(start[0], current[0]))
+    const y1 = Math.min(canvas.height, Math.max(start[1], current[1]))
+    if (x1 - x0 >= 6 && y1 - y0 >= 6) {
+      const number = regions.length + 1
+      regions.push({
+        id: `region-${String(number).padStart(2, '0')}`,
+        label: `Region ${number}`,
+        k: 8,
+        note: '',
+        box: [x0, y0, x1, y1]
+      })
+      status.textContent = ''
+      refreshList()
+    }
+    start = null
+    current = null
+    redraw()
+  }
+  undo.onclick = () => {
+    regions.pop()
+    refreshList()
+    redraw()
+  }
+  clear.onclick = () => {
+    regions = []
+    refreshList()
+    redraw()
+  }
+  finish.onclick = () => {
+    status.textContent = ''
+    if (!regions.length) {
+      status.textContent = 'Draw at least one region.'
+      return
+    }
+    const ids = new Set()
+    for (const region of regions) {
+      if (!/^[a-z][a-z0-9-]*$/.test(region.id)) {
+        status.textContent = `Use lowercase letters, numbers, and hyphens for the ID: ${region.id}`
+        return
+      }
+      if (ids.has(region.id)) {
+        status.textContent = `Each region needs a different ID: ${region.id}`
+        return
+      }
+      ids.add(region.id)
+      if (!region.label.trim()) {
+        status.textContent = `Give ${region.id} a name.`
+        return
+      }
+      if (!Number.isInteger(region.k) || region.k < 2 || region.k > 20) {
+        status.textContent = `Choose a whole k value from 2 to 20 for ${region.id}.`
+        return
+      }
+    }
+    const output = regions.map((region) => ({
+      id: region.id,
+      label: region.label.trim(),
+      box: [
+        Math.round(region.box[0] * input.imageWidth / input.previewWidth),
+        Math.round(region.box[1] * input.imageHeight / input.previewHeight),
+        Math.round(region.box[2] * input.imageWidth / input.previewWidth),
+        Math.round(region.box[3] * input.imageHeight / input.previewHeight)
+      ],
+      k: region.k,
+      note: region.note.trim()
+    }))
+    finish.disabled = true
+    finish.textContent = 'Regions saved'
+    resolve(JSON.stringify(output))
+  }
+  image.onload = () => {
+    refreshList()
+    redraw()
+  }
+  image.src = input.image
+})
+'''.replace("__RANG_PAYLOAD__", json.dumps(payload, ensure_ascii=False))
+    result = eval_js(script)
+    regions = json.loads(result) if isinstance(result, str) else result
+    return _validate_regions(regions, image.width, image.height)
 
 
 def _validate_regions(regions, width, height):

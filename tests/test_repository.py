@@ -285,6 +285,10 @@ class OutputTests(unittest.TestCase):
                 self.assertNotIn("git clone", text)
                 self.assertNotIn("REPO_REF", text)
                 self.assertNotIn("github.com/mohsennasab/Rang.git", text)
+                if filename == "01_define_regions.ipynb":
+                    self.assertIn("draw_regions_interactively", text)
+                    self.assertIn("DRAW_REGIONS_INTERACTIVELY", text)
+                    self.assertIn("Use these regions", text)
                 tags = {tag for cell in notebook["cells"]
                         for tag in cell.get("metadata", {}).get("tags", [])}
                 self.assertIn("user-input", tags)

@@ -231,6 +231,8 @@ def step_01(path, example):
         palette_name = "Kashan"
         local_image = "cache/DT5450.jpg"
         reference = "https://www.metmuseum.org/art/collection/search/451470"
+        interactive_default = "False"
+        starting_default = "True"
         regions = '''[
     {"id": "top-border", "label": "Top border", "box": [200, 100, 2350, 650], "k": 8,
      "note": "Warm border ground and floral outlines"},
@@ -247,6 +249,8 @@ def step_01(path, example):
         palette_name = "Your palette name"
         local_image = ""
         reference = "PASTE THE OBJECT PAGE URL HERE"
+        interactive_default = "True"
+        starting_default = "False"
         regions = '''[
     {"id": "main-detail", "label": "Main detail", "box": [100, 100, 600, 600], "k": 8,
      "note": "Say why this part of the artwork matters"},
@@ -268,15 +272,30 @@ if uploaded_image.resolve() != source_path.resolve():
     shutil.copyfile(uploaded_image, source_path)
 source_image = open_rgb(source_path)
 print("Image size:", source_image.size)
-show_source(source_path, PALETTE_NAME)
 ''', "user-input"),
         markdown("""
-Read x from the horizontal axis and y from the vertical axis. A box is written
-as `[left, top, right, bottom]`. Start with visual parts such as a border,
-medallion, garment, flower, tile panel, or area of reflected light.
+In Colab, drag boxes directly over the image. Each box gets an ID, name, k
+value, and note. Use Undo or Delete when a box does not feel right, then click
+**Use these regions**. The drawer converts the boxes to original image pixels.
 """),
-        banner("YOUR DECISION", "Edit the region list. Give each region a unique ID, a label, a pixel box, a value of k, and a short note."),
-        code(f"REGIONS = {regions}", "user-decision"),
+        banner("YOUR DECISION", "Draw the regions over the artwork. The Kashan example can also use its saved boxes for an exact replay."),
+        code(f'''DRAW_REGIONS_INTERACTIVELY = {interactive_default} #@param {{type:"boolean"}}
+START_WITH_TEMPLATE_BOXES = {starting_default} #@param {{type:"boolean"}}
+
+REGION_TEMPLATE = {regions}
+
+if DRAW_REGIONS_INTERACTIVELY:
+    if not IN_COLAB:
+        raise RuntimeError(
+            "Use the interactive drawer in Colab or edit REGION_TEMPLATE locally"
+        )
+    starting_regions = REGION_TEMPLATE if START_WITH_TEMPLATE_BOXES else []
+    REGIONS = draw_regions_interactively(source_path, starting_regions)
+else:
+    REGIONS = REGION_TEMPLATE
+    show_source(source_path, PALETTE_NAME)
+
+print(json.dumps(REGIONS, indent=2, ensure_ascii=False))''', "user-decision"),
         code('''
 recipe = create_recipe(
     PALETTE_NAME, source_path.name, source_path, REGIONS, RECIPE_PATH

@@ -33,7 +33,7 @@ artistic judgment.
 
 | step | notebook | what you do |
 |---|---|---|
-| 01 | [Define regions](notebooks/01_define_regions.ipynb) | upload the artwork, enter pixel boxes, choose k for each region, and inspect the overlay |
+| 01 | [Define regions](notebooks/01_define_regions.ipynb) | upload the artwork, draw boxes over it, choose k for each region, and inspect the overlay |
 | 02 | [Extract colors](notebooks/02_extract_colors.ipynb) | run region-by-region k-means in CIELAB and accept a candidate snapshot |
 | 03 | [Curate the palette](notebooks/03_curate_palette.ipynb) | select five to twelve candidates, write notes, and arrange the ramp |
 | 04 | [Adjust colors](notebooks/04_adjust_colors.ipynb) | change lightness, chroma, or hue and record why |
@@ -47,8 +47,15 @@ you can see a real workflow before starting your own.
 
 ## How to choose regions
 
-Notebook 01 displays the full-resolution source with pixel coordinates. A
-region is written as `[left, top, right, bottom]`.
+Notebook 01 opens an interactive region drawer in Colab. Drag a box over each
+part of the image you want to sample. Name the region, choose its k value, and
+add a short note below the image. Undo removes the last box. Delete removes a
+specific box. Clear all lets you start again.
+
+When you click **Use these regions**, the drawer converts every box to exact
+coordinates in the original image. The saved form is
+`[left, top, right, bottom]`. Local Jupyter users can edit those coordinates
+in `REGION_TEMPLATE` when the Colab drawer is not available.
 
 Good regions have a visual purpose. A carpet might have separate regions for
 the border, field, medallion, and guard bands. A miniature might use the sky,

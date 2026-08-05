@@ -13,9 +13,11 @@ to your computer. Its [Met object page](https://www.metmuseum.org/art/collection
 has the source details and reuse information.
 
 Run the seven notebooks in numerical order. Upload the carpet image in step
-01. Download the Kashan workflow ZIP at the end, then upload that ZIP when
-each later notebook asks for it. The same file carries the recipe and working
-images from region selection through final replay.
+01. Turn on the interactive drawer if you want to redraw or adjust the five
+example regions. Leave it off to replay the saved boxes exactly. Download the
+Kashan workflow ZIP at the end, then upload that ZIP when each later notebook
+asks for it. The same file carries the recipe and working images from region
+selection through final replay.
 
 The example uses five regions:
 

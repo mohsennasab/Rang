@@ -73,10 +73,12 @@ pip install -r tools/requirements.txt
 ## Step 1, extract candidate colors
 
 Open [notebook 01](tools/notebooks/01_define_regions.ipynb). It displays the
-source you upload with pixel coordinates. Define three to seven regions with
-a clear visual purpose, such as a border, medallion, field, garment, flower,
-tile panel, or area of reflected light. Choose k for each region and inspect
-the saved overlay. Download the workflow ZIP before closing the notebook.
+source you upload in an interactive drawer. Drag three to seven boxes over
+regions with a clear visual purpose, such as a border, medallion, field,
+garment, flower, tile panel, or area of reflected light. Name each region,
+choose k, and add a short note below the image. You can undo the last box,
+delete one region, or clear the drawing and begin again. Inspect the saved
+overlay and download the workflow ZIP before closing the notebook.
 
 Then open [notebook 02](tools/notebooks/02_extract_colors.ipynb) and upload the
 workflow ZIP. It runs k-means over each region in CIELAB. Large fields can
