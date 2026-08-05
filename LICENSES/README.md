@@ -7,8 +7,10 @@ datasets. This file defines which terms apply to each part of the repository.
 
 Original source code and documentation are licensed under the MIT License in
 [`LICENSE`](../LICENSE). This includes the build tools, tests, Python package
-code, R package code, and supporting configuration unless another section
-below applies.
+code, R package code, numbered contribution notebooks, recipe structure, and
+supporting configuration unless another section below applies. Mohsen
+Tahmasebi Nasab is the creator and copyright holder. His website is
+[hydromohsen.com](https://hydromohsen.com).
 
 The Python and R distributions remain MIT licensed. A copy of the MIT License
 is included with each package distribution.

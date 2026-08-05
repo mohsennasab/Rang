@@ -292,10 +292,16 @@ through the whole process, from picking an artwork to opening a pull request,
 including the sample code for extracting colors from a photo and adjusting any
 color that does not sit right.
 
+The numbered [palette-making notebooks](tools/README.md) run in Google Colab
+and make every input and artistic decision easy to find. A complete
+[Kashan example](tools/examole/README.md) shows the region, k-means, curation,
+adjustment, checking, build and replay steps.
+
 ## Repository layout
 
 ```
 palettes/    one json per palette, the single source of truth
+recipes/     saved regions, k-means settings and adjustment history
 sources/     contributor photographs referenced by the palette files
 python/      pip installable package, reads generated _palettes.py
 r/           R package, reads generated palettes_data.R
@@ -303,7 +309,7 @@ arcgis/      Rang.stylx style file and the ArcGIS Pro guide
 qgis/        style file, .gpl swatches and the QGIS guide
 geolibre/    copy-ready and machine-readable color lists plus a usage guide
 hecras/      HEC-RAS custom color-ramp imports and the interface guide
-tools/       contributor scripts, extraction to build
+tools/       numbered Colab notebooks and command-line tools
 docs/        one page per palette with previews and sample plots
 data/        small real rainfall and elevation grids for the sample plots
 examples/    Colab-ready Python and R notebooks using public online data

@@ -4,6 +4,7 @@ import pathlib
 import re
 import sqlite3
 import sys
+import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 
@@ -14,6 +15,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 sys.path.insert(0, str(ROOT / "python"))
 
 import colorlib
+import notebook_workflow
 import rang
 
 
@@ -251,6 +253,71 @@ class OutputTests(unittest.TestCase):
                 if cell["cell_type"] == "code":
                     self.assertEqual(cell["outputs"], [])
                     self.assertIsNone(cell["execution_count"])
+
+    def test_palette_workflow_notebooks(self):
+        filenames = [
+            "01_define_regions.ipynb",
+            "02_extract_colors.ipynb",
+            "03_curate_palette.ipynb",
+            "04_adjust_colors.ipynb",
+            "05_check_palette.ipynb",
+            "06_build_palette.ipynb",
+            "07_replay_and_verify.ipynb",
+        ]
+        for folder in ("notebooks", "examole"):
+            for filename in filenames:
+                path = ROOT / "tools" / folder / filename
+                notebook = json.loads(path.read_text(encoding="utf-8"))
+                self.assertEqual(notebook["nbformat"], 4)
+                self.assertEqual(notebook["metadata"]["kernelspec"]["name"],
+                                 "python3")
+                text = "".join("".join(cell["source"])
+                               for cell in notebook["cells"])
+                self.assertIn("colab-badge.svg", text)
+                self.assertIn(f"/tools/{folder}/{filename}", text)
+                self.assertIn("Mohsen Tahmasebi Nasab, PhD", text)
+                self.assertIn("https://hydromohsen.com", text)
+                self.assertIn("license holder", text.lower())
+                self.assertIn("Arial", text)
+                tags = {tag for cell in notebook["cells"]
+                        for tag in cell.get("metadata", {}).get("tags", [])}
+                self.assertIn("user-input", tags)
+                for cell in notebook["cells"]:
+                    if cell["cell_type"] == "code":
+                        self.assertEqual(cell["outputs"], [])
+                        self.assertIsNone(cell["execution_count"])
+
+    def test_notebook_recipe_replays(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            folder = pathlib.Path(temporary)
+            image_path = folder / "fixture.png"
+            image = Image.new("RGB", (100, 20))
+            colors = ["#7f3020", "#ab4a47", "#c59b46", "#8a9463", "#345f72"]
+            for index, color in enumerate(colors):
+                image.paste(color, (index * 20, 0, (index + 1) * 20, 20))
+            image.save(image_path)
+            recipe_path = folder / "fixture-recipe.json"
+            notebook_workflow.create_recipe(
+                "Fixture", image_path, image_path,
+                [{"id": "color-strip", "label": "Color strip",
+                  "box": [0, 0, 100, 20], "k": 5,
+                  "note": "Five exact color fields"}],
+                recipe_path,
+            )
+            candidates = notebook_workflow.save_candidates(
+                recipe_path, folder, accept=True)
+            selections = [
+                {"candidate": candidate["id"], "note": candidate["region_label"]}
+                for candidate in candidates
+            ]
+            notebook_workflow.save_curation(recipe_path, selections)
+            notebook_workflow.apply_adjustments(
+                recipe_path,
+                [{"target": "p01", "delta": {"L": 1, "C": 0, "H": 0},
+                  "reason": "fixture replay check"}],
+            )
+            result = notebook_workflow.verify_recipe(recipe_path, folder)
+            self.assertTrue(result["verified"])
 
     def test_no_embedded_origin_markers(self):
         words = ["cl" + "aude", "anth" + "ropic", "chat" + "g" + "pt",

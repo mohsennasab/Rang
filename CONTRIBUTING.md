@@ -4,14 +4,19 @@ Thanks for wanting to add to Rang. This guide takes you from a museum photo to
 a merged pull request. The tooling does the packaging for you, your judgment
 goes into picking the artwork and curating the colors.
 
+The recommended path uses seven numbered Jupyter notebooks. They run in
+Google Colab and save one recipe as you move from regions to a finished
+palette. The command-line scripts remain available for contributors who
+prefer a terminal.
+
 ## Contents
 
 - [What makes a good source](#what-makes-a-good-source)
 - [Setup](#setup)
 - [Step 1, extract candidate colors](#step-1-extract-candidate-colors)
 - [Step 2, curate the ramp](#step-2-curate-the-ramp)
-- [Step 3, check the palette](#step-3-check-the-palette)
-- [Step 4, adjust colors that miss](#step-4-adjust-colors-that-miss)
+- [Step 3, adjust colors that miss](#step-3-adjust-colors-that-miss)
+- [Step 4, check the palette](#step-4-check-the-palette)
 - [Step 5, write the palette file](#step-5-write-the-palette-file)
 - [Step 6, build](#step-6-build)
 - [Step 7, open the pull request](#step-7-open-the-pull-request)
@@ -38,6 +43,23 @@ Persian.
 
 ## Setup
 
+### Google Colab
+
+Start with notebook 01 and continue in numerical order:
+
+[![Open notebook 01 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/01_define_regions.ipynb)
+
+Keep Google Drive enabled. It stores the source copy, region overlay,
+candidate sheet, adjustment preview, reports, and recipe between notebooks.
+Yellow **YOUR INPUT** cells need information such as an image URL or object
+record. Blue **YOUR DECISION** cells are where you choose regions, colors, and
+adjustments.
+
+The [Kashan example](tools/examole/README.md) contains a complete set of
+decisions and is the best place to learn the workflow.
+
+### Local setup
+
 ```
 git clone https://github.com/mohsennasab/Rang.git
 cd Rang
@@ -46,10 +68,20 @@ pip install -r tools/requirements.txt
 
 ## Step 1, extract candidate colors
 
-Run k-means over the photo in CIELAB. Cluster region by region, not the whole
-image at once. Large fields dominate a whole-image run and the centers drift
-toward muddy averages. Read pixel coordinates for regions off any image viewer
-that shows cursor position.
+Open [notebook 01](tools/notebooks/01_define_regions.ipynb). It displays the
+source with pixel coordinates. Define three to seven regions with a clear
+visual purpose, such as a border, medallion, field, garment, flower, tile
+panel, or area of reflected light. Choose k for each region and inspect the
+saved overlay.
+
+Then open [notebook 02](tools/notebooks/02_extract_colors.ipynb). It runs
+k-means over each region in CIELAB. Large fields can dominate a whole-image
+run and pull cluster centers toward muddy averages. Separate regions help
+small details keep their voice.
+
+The notebooks save the regions, source checksum, k values, extraction
+settings, and accepted candidates in the recipe. The command-line equivalent
+is:
 
 ```
 python tools/extract_colors.py --image "PHOTO_URL" -k 8 --region 900,1400,1700,2200,medallion --region 700,700,1900,1300,field --swatches cache/clusters.png
@@ -65,6 +97,10 @@ Treat the extracted clusters as a starting point, not a verdict.
 
 ## Step 2, curate the ramp
 
+Open [notebook 03](tools/notebooks/03_curate_palette.ipynb). Choose five to
+twelve candidate IDs, write one source note for each color, and place them in
+the order you want for a continuous ramp.
+
 Pick five to twelve colors and arrange them as a ramp, dark to light to dark,
 warm to cool, whatever walk through the artwork reads smoothly when
 interpolated. Look at the artwork while you do this. The clusters are
@@ -78,7 +114,27 @@ belong to the artwork, feel good together and work clearly in real
 visualizations. The checks in the next steps are guides for that judgment, not
 a recipe that overrides it.
 
-## Step 3, check the palette
+## Step 3, adjust colors that miss
+
+Use [notebook 04](tools/notebooks/04_adjust_colors.ipynb) when a selected
+cluster needs a careful change. L changes lightness, C changes chroma, and H
+changes hue. Each accepted edit records its before color, after color, numeric
+change, and your reason.
+
+When a color is close but not right, nudge it in lightness, chroma or hue
+instead of hand editing hex codes:
+
+```
+python tools/adjust_colors.py --colors "#8a9463,#345f72" --edit "1:L+4,C-2" --png cache/before_after.png
+```
+
+Rerun the check after adjusting. The two scripts are meant to be cycled until
+the numbers and your eyes agree.
+
+## Step 4, check the palette
+
+Open [notebook 05](tools/notebooks/05_check_palette.ipynb) to create the full
+report from the saved recipe. The command-line equivalent is:
 
 ```
 python tools/check_palette.py --colors "#7f3020,#ab4a47,#c07049,#1a3b45" --image "PHOTO_URL"
@@ -97,19 +153,12 @@ The report covers three things:
   or say in the pull request why it needs to drift, for example lifting a
   color slightly so neighbors stay separable.
 
-## Step 4, adjust colors that miss
-
-When a color is close but not right, nudge it in lightness, chroma or hue
-instead of hand editing hex codes:
-
-```
-python tools/adjust_colors.py --colors "#8a9463,#345f72" --edit "1:L+4,C-2" --png cache/before_after.png
-```
-
-Rerun the check after adjusting. The two scripts are meant to be cycled until
-the numbers and your eyes agree.
-
 ## Step 5, write the palette file
+
+Open [notebook 06](tools/notebooks/06_build_palette.ipynb). Enter the artwork
+metadata exactly as the source record gives it. Pay close attention to the
+reuse status, rights statement, credit, object page, and source image URL.
+The notebook writes a palette draft from the final recipe colors and notes.
 
 Create `palettes/<name>.json`, all lowercase filename. Copy
 `palettes/kashan.json` as a template for a museum source, or
@@ -119,7 +168,15 @@ add the pronunciation. A second photo showing the work in its setting can go
 in `source.context_image` with a caption, it appears on the palette page.
 Leave out `order` and `colorblind` if you want the build to compute them.
 
+Copy the final recipe to `recipes/<name>.json`. It records the source checksum,
+regions, k-means settings, accepted candidates, selected candidate IDs, and
+the complete adjustment history. Working images and exploratory reports stay
+in Google Drive or `cache/`.
+
 ## Step 6, build
+
+Notebook 06 can run the build in Colab after the metadata is complete. The
+same command can be run locally:
 
 ```
 python tools/build.py <name>
@@ -139,11 +196,18 @@ the palette on different terrain.
 
 ## Step 7, open the pull request
 
+Before opening the pull request, run
+[notebook 07](tools/notebooks/07_replay_and_verify.ipynb). It reruns the saved
+extraction and adjustment history without asking for a new artistic decision.
+Continue only when it reports `verified: True`.
+
 Include in the description:
 
 - the object page link and one sentence on why this work
 - anything the check flagged, such as a color beyond distance 3 and why
 - the sample page image
+- confirmation that notebook 07 reproduced the accepted candidates and final
+  colors
 
 A maintainer will look at the source, the numbers and the samples. Expect
 small requests about ramp order or a color that reads poorly in a plot.
