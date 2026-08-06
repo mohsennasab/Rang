@@ -177,3 +177,21 @@ Shahnameh
   categorical 7: #41356f, #798cb8, #6d866a, #596956, #d4b96b, #d5c9b7, #b0472c
   categorical 8: #41356f, #4b3d97, #798cb8, #6d866a, #596956, #d4b96b, #d5c9b7, #b0472c
   categorical 9: #41356f, #4b3d97, #798cb8, #6d866a, #596956, #d4b96b, #d5c9b7, #b0472c, #a6373e
+
+Cherry
+  raster anchors: #58463f, #598fb6, #964765, #b8715b, #d8c723
+  graduated 2: #58463f, #d8c723
+  graduated 3: #58463f, #964765, #d8c723
+  graduated 4: #58463f, #6d779b, #ad635e, #d8c723
+  graduated 5: #58463f, #598fb6, #964765, #b8715b, #d8c723
+  graduated 6: #58463f, #59809e, #7e6485, #a45861, #be8250, #d8c723
+  graduated 7: #58463f, #59778e, #6d779b, #964765, #ad635e, #c38e48, #d8c723
+  graduated 8: #58463f, #597083, #6285aa, #855c7c, #a05362, #b36b5c, #c69643, #d8c723
+  graduated 9: #58463f, #586a7a, #598fb6, #786b8e, #964765, #a75c60, #b8715b, #c89c3f, #d8c723
+  graduated 10: #58463f, #586674, #5987a9, #6d779b, #885777, #9e5063, #ad635e, #bc7b55, #caa13c, #d8c723
+  graduated 11: #58463f, #58636f, #59809e, #6581a6, #7e6485, #964765, #a45861, #b1695d, #be8250, #cba539, #d8c723
+  graduated 12: #58463f, #58616a, #597b96, #5f88af, #756e91, #8b5474, #9c4f63, #a95e60, #b56d5c, #c1884c, #cca837, #d8c723
+  categorical 2: #58463f, #d8c723
+  categorical 3: #58463f, #598fb6, #d8c723
+  categorical 4: #58463f, #598fb6, #b8715b, #d8c723
+  categorical 5: #58463f, #598fb6, #964765, #b8715b, #d8c723

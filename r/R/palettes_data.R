@@ -55,5 +55,11 @@ rang_palettes <- list(
     order = c(1, 8, 4, 7, 5, 6, 2, 3, 9),
     colorblind = FALSE,
     source = "The Wedding of Siyavush and Farangis, Folio 185v from the Shahnama of Shah Tahmasp, ca. 1525-30, The Metropolitan Museum of Art, New York, https://www.metmuseum.org/art/collection/search/452137"
+  ),
+  Cherry = list(
+    colors = c("#58463f", "#598fb6", "#964765", "#b8715b", "#d8c723"),
+    order = c(1, 3, 5, 4, 2),
+    colorblind = TRUE,
+    source = "Taste of Cherry promotional poster, 1997, Wikipedia, https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg"
   )
 )

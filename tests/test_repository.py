@@ -30,7 +30,7 @@ class PaletteTests(unittest.TestCase):
     def test_schema_order_and_flag(self):
         self.assertEqual([p["name"] for p in self.palettes],
                          ["Kashan", "Golestan", "Termeh", "Khatam", "Nasir",
-                          "Mina", "Rostan", "Shahnameh"])
+                          "Mina", "Rostan", "Shahnameh", "Cherry"])
         for palette in self.palettes:
             colors = palette["colors"]
             self.assertEqual(palette["order"], colorlib.greedy_order(colors))
@@ -47,6 +47,7 @@ class PaletteTests(unittest.TestCase):
             "Mina": "مینا",
             "Rostan": "رستن",
             "Shahnameh": "شاهنامه",
+            "Cherry": "طعم گیلاس",
         }
         self.assertEqual({p["name"]: p["persian"] for p in self.palettes}, expected)
 

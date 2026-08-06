@@ -84,6 +84,22 @@ commentary only. It is not licensed under MIT or CC0, and no permission to
 reuse it is granted here. The Rostan gallery card and artwork preview contain
 reduced versions of the same image and carry the same restriction.
 
+## Taste of Cherry poster
+
+`sources/cherry/poster.jpg` is a 220-pixel-wide reference copy of the
+promotional poster for Abbas Kiarostami's 1997 film *Taste of Cherry*. The
+[Wikipedia file page](https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg)
+states that the poster copyright is believed to belong to Zeitgeist Films, the
+publisher, or the studio that produced the film.
+
+Wikipedia uses its copy under a non-free fair-use rationale that applies to
+its own article. It does not grant a license for other reuse. The small copy in
+this repository is included only to identify and discuss the poster and the
+palette drawn from it. It is not covered by the Rang MIT License or CC0
+dedication, and no permission to reuse it is granted here. The Cherry gallery
+card and artwork preview contain resized versions of the same poster and carry
+the same restriction.
+
 ## NOAA AORC precipitation
 
 `data/aorc_precip.png` and `data/aorc_precip.json` contain a reduced and
