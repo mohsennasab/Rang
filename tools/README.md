@@ -2,9 +2,9 @@
 
 Two notebooks take a contributor from an artwork photo to a checked,
 reproducible palette proposal. They run in Google Colab or a local Jupyter
-session. Nothing is chosen automatically. Notebook 1 handles the repeated
-color math and record keeping while the contributor decides what belongs in
-the palette. Notebook 2 packages the verified work for review.
+session. The notebooks handle color math and record keeping, while the
+contributor decides what belongs in the palette. Notebook 2 packages the
+verified work for review.
 
 Created by **Mohsen Tahmasebi Nasab, PhD**. Visit
 [hydromohsen.com](https://hydromohsen.com).
@@ -16,15 +16,15 @@ Source images keep their own rights and reuse terms.
 
 ## Start here
 
-The easiest way to learn the workflow is the completed Kashan example in
-[`tools/example`](example/README.md).
+[![Open notebook 1 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/rang_palette_workflow.ipynb)
 
-[![Open the Kashan workflow in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/example/kashan_palette_workflow.ipynb)
+[![Open notebook 2 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/rang_submission_builder.ipynb)
 
 Run the seven stages in notebook 1 from top to bottom. Upload the artwork once
 and download the workflow ZIP after the final replay. Open notebook 2, upload
-that ZIP, complete or correct the source record, and download the submission
-ZIP. No repository checkout or cloud storage connection is needed.
+that ZIP, review any metadata warnings, and download the submission ZIP. Leave
+the optional update dictionary empty when the recovered values are correct.
+No repository checkout or cloud storage connection is needed.
 
 Cells with a yellow **YOUR INPUT** box need factual information such as an
 object page or museum record. Cells with a blue **YOUR DECISION** box ask for
@@ -42,10 +42,9 @@ metadata as warnings, and gives you one optional input cell for additions or
 corrections. Leave that dictionary empty to keep every recovered value. Missing
 descriptive metadata does not stop the proposal from being built. It then
 replays the recipe and asks for a short explanation of why the work belongs in
-Rang. Its
-palette-specific ArcGIS Pro, QGIS, HEC-RAS, and GeoLibre files are for testing.
-They do not replace the combined collection files. The maintainer rebuilds
-those after adding the proposed palette to a branch.
+Rang. It also creates palette-specific ArcGIS Pro, QGIS, HEC-RAS, and GeoLibre
+files for testing. These do not replace the combined collection files. The
+maintainer rebuilds those after adding the proposed palette to a branch.
 
 ## The seven stages in notebook 1
 
@@ -59,9 +58,8 @@ those after adding the proposed palette to a branch.
 | 06 | Prepare the palette files | enter source metadata and write the palette JSON for the repository |
 | 07 | Replay, verify, and download | reproduce the accepted colors and download the complete workflow ZIP |
 
-The reusable notebook contains blank inputs and decision templates. The Kashan
-notebook contains complete decisions so you can see a real workflow before
-starting your own.
+The workflow notebook places a format example beside every input that needs
+one. Start with your own artwork and make each decision while viewing the image.
 
 ## How to choose regions
 
@@ -131,8 +129,7 @@ Step 04 lets you adjust a selected color in LCh:
 
 Keep changes deliberate. Each accepted adjustment stores the color before the
 change, the color after the change, the numeric change, and your reason. The
-Kashan example shows how sampled clusters were brought back toward colors seen
-in the carpet.
+saved before-and-after figure makes those choices easy to review later.
 
 ## What the recipe saves
 
@@ -167,7 +164,7 @@ The existing scripts remain useful for quick checks and maintenance.
 | `make_samples.py` | standard visualization samples and the water-map layout |
 | `make_hecras_ramp.py` | individual and combined HEC-RAS import files |
 | `make_stylx.py` | ArcGIS Pro style file |
-| `generate_workflow_notebooks.py` | regenerates both reusable notebooks and the Kashan workflow example |
+| `generate_workflow_notebooks.py` | regenerates the two reusable notebooks |
 | `notebook_workflow.py` | shared recipe, extraction, curation, adjustment, and replay functions |
 | `submission_workflow.py` | validation, proposal images, software test files, and submission packaging |
 

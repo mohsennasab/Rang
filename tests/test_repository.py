@@ -275,22 +275,18 @@ class OutputTests(unittest.TestCase):
                     self.assertIsNone(cell["execution_count"])
 
     def test_palette_workflow_notebooks(self):
-        workflow_paths = [
-            ROOT / "tools" / "notebooks" / "rang_palette_workflow.ipynb",
-            ROOT / "tools" / "example" / "kashan_palette_workflow.ipynb",
-        ]
+        workflow_path = (
+            ROOT / "tools" / "notebooks" / "rang_palette_workflow.ipynb"
+        )
         submission_path = (
             ROOT / "tools" / "notebooks" / "rang_submission_builder.ipynb"
         )
-        paths = [*workflow_paths, submission_path]
+        paths = [workflow_path, submission_path]
         self.assertEqual(
             sorted((ROOT / "tools" / "notebooks").glob("*.ipynb")),
-            sorted([workflow_paths[0], submission_path]),
+            sorted(paths),
         )
-        self.assertEqual(
-            list((ROOT / "tools" / "example").glob("*.ipynb")),
-            [workflow_paths[1]],
-        )
+        self.assertFalse((ROOT / "tools" / "example").exists())
         for path in paths:
             notebook = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(notebook["nbformat"], 4)
@@ -335,34 +331,31 @@ class OutputTests(unittest.TestCase):
                     self.assertEqual(cell["outputs"], [])
                     self.assertIsNone(cell["execution_count"])
 
-        for path in workflow_paths:
-            notebook = json.loads(path.read_text(encoding="utf-8"))
-            text = "".join("".join(cell["source"])
-                           for cell in notebook["cells"])
-            self.assertIn("draw_regions_interactively", text)
-            self.assertIn("DRAW_REGIONS_INTERACTIVELY", text)
-            self.assertIn("Use these regions", text)
-            self.assertIn('globals()["draw_regions_interactively"]', text)
-            self.assertIn("candidate_figure = candidate_sheet", text)
-            self.assertIn('"region-01:c04"', text)
-            self.assertIn("`p01` is the first row", text)
-            self.assertIn("Share within 8", text)
-            self.assertIn("trust\nyour eyes", text)
-            self.assertIn("make_final_zip", text)
-            self.assertIn("This is the only ZIP download", text)
-            self.assertNotIn("LOCAL_WORKFLOW_ZIP", text)
-            for number in range(1, 8):
-                self.assertIn(f"## {number:02d}.", text)
-            tags = {tag for cell in notebook["cells"]
+        notebook = json.loads(workflow_path.read_text(encoding="utf-8"))
+        text = "".join("".join(cell["source"])
+                       for cell in notebook["cells"])
+        self.assertIn("draw_regions_interactively", text)
+        self.assertIn("DRAW_REGIONS_INTERACTIVELY", text)
+        self.assertIn("Use these regions", text)
+        self.assertIn('globals()["draw_regions_interactively"]', text)
+        self.assertIn("candidate_figure = candidate_sheet", text)
+        self.assertIn('"region-01:c04"', text)
+        self.assertIn("`p01` is the first row", text)
+        self.assertIn("Share within 8", text)
+        self.assertIn("trust\nyour eyes", text)
+        self.assertIn("make_final_zip", text)
+        self.assertIn("This is the only ZIP download", text)
+        self.assertNotIn("LOCAL_WORKFLOW_ZIP", text)
+        for number in range(1, 8):
+            self.assertIn(f"## {number:02d}.", text)
+        tags = {tag for cell in notebook["cells"]
                 for tag in cell.get("metadata", {}).get("tags", [])}
-            self.assertIn("user-decision", tags)
+        self.assertIn("user-decision", tags)
 
-        reusable_text = workflow_paths[0].read_text(encoding="utf-8")
+        reusable_text = workflow_path.read_text(encoding="utf-8")
         self.assertIn("PASTE_ID_HERE", reusable_text)
         self.assertNotIn("CANDIDATES_BY_REGION", reusable_text)
         self.assertNotIn("STARTING_IDS", reusable_text)
-        example_text = workflow_paths[1].read_text(encoding="utf-8")
-        self.assertNotIn("PASTE_ID_HERE", example_text)
         submission_text = submission_path.read_text(encoding="utf-8")
         self.assertIn("This is notebook 2", submission_text)
         self.assertIn("LOCAL_WORKFLOW_ZIP", submission_text)

@@ -1,17 +1,18 @@
-# Rang | رنگ <img align="right" src="logo/rang_pixel_medallion_logo.png" width="200">
+# Rang | رنگ <img src="logo/rang_pixel_medallion_logo.png" width="200">
 
 Rang is a collection of color palettes drawn from the visual traditions of
-Persian art. Drawing from carpets, miniature
-paintings, tilework, manuscripts, ceramics and architecture, each palette
-turns the character of an artwork into a practical color scheme.
+Persian art and culture. Carpets, miniature paintings, tilework, manuscripts,
+ceramics, and architecture become practical color schemes for maps, figures,
+and creative work.
 
-The name Rang (Persian: رنگ) means "color" in Persian. My goal is to
-preserve the character of these works while adapting them for data
-visualization, cartography and creative coding.
+The name Rang (Persian: رنگ) means "color" in Persian. I created this
+collection to carry the character of these artworks into data visualization,
+cartography, and creative coding.
 
-Every palette traces to a documented source photograph. Each record explains
-where its colors came from and reports the nearest match in a sampled. The description pages also report pairwise separation under four
-viewing simulations. Sample plots are also included to show how the colors look like when vizualized. 
+Every palette traces to a documented source photograph. Its page explains the
+artwork, records where each color appears, and reports the nearest match found
+in the sampled image. It also shows pairwise color separation under four
+viewing simulations and includes sample plots for a practical visual check.
 
 Use Rang with Python, R, ArcGIS Pro, QGIS, GeoLibre and HEC-RAS. The same
 palette can move easily from code to maps and hydraulic models.
@@ -143,17 +144,17 @@ Shahnameh comes from the wedding of Siyavush and Farangis. Deep violet and pavil
 The names are Persian, and they are easy once you see them spelled out. The
 stress lands on the last syllable.
 
-| name | Persian | say it | meaning |
-|---|---|---|---|
-| Rang | رنگ | rahng, close to the English word rung | color |
-| Kashan | کاشان | kah-SHAHN | a city famous for its carpets and silks |
-| Golestan | گلستان | goh-leh-STAHN | rose garden, the Qajar palace in Tehran |
-| Termeh | ترمه | tehr-MEH | a patterned textile associated with Yazd |
-| Khatam | خاتم | khaw-TAM | marquetry of star patterns in wood, bone and brass |
-| Nasir | نصیر | nah-SEER | from Nasir al-Mulk Mosque in Shiraz |
-| Mina | مینا | mee-NAH | enamel, the material used in minakari |
-| Rostan | رستن | rohs-TAN | to grow, from the painting's Persian title |
-| Shahnameh | شاهنامه | shah-nah-MEH | Book of Kings, the wedding of Siyavush and Farangis |
+| name      | Persian | say it                                | meaning                                             |
+| --------- | ------- | ------------------------------------- | --------------------------------------------------- |
+| Rang      | رنگ     | rahng, close to the English word rung | color                                               |
+| Kashan    | کاشان   | kah-SHAHN                             | a city famous for its carpets and silks             |
+| Golestan  | گلستان  | goh-leh-STAHN                         | rose garden, the Qajar palace in Tehran             |
+| Termeh    | ترمه    | tehr-MEH                              | a patterned textile associated with Yazd            |
+| Khatam    | خاتم    | khaw-TAM                              | marquetry of star patterns in wood, bone and brass  |
+| Nasir     | نصیر    | nah-SEER                              | from Nasir al-Mulk Mosque in Shiraz                 |
+| Mina      | مینا    | mee-NAH                               | enamel, the material used in minakari               |
+| Rostan    | رستن    | rohs-TAN                              | to grow, from the painting's Persian title          |
+| Shahnameh | شاهنامه | shah-nah-MEH                          | Book of Kings, the wedding of Siyavush and Farangis |
 
 Each palette page repeats the pronunciation beside its name.
 
@@ -299,8 +300,6 @@ Notebook 2 shows incomplete source details as warnings and lets you add or
 correct only the fields you choose. It then turns the verified workflow ZIP
 into a proposal with repository files, documentation images, software test
 files, and a pull request draft.
-A complete [Kashan example](tools/example/README.md) shows the artistic
-workflow.
 
 ## Repository layout
 
@@ -357,13 +356,13 @@ by MohammadReza Domiri Ganji, 2013. Both are licensed under
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 The Mina palette comes from Mohsen Tahmasebi Nasab's photograph of a
 lidded enamel vessel, taken in 2026. Its setting photograph,
-[Iranian vitreous enamel, cropped](https://commons.wikimedia.org/wiki/File:Iranian_vitreous_enamel_(cropped).JPG),
+[Iranian vitreous enamel, cropped](https://commons.wikimedia.org/wiki/File:Iranian_vitreous_enamel_\(cropped\).JPG),
 was made by Wikimedia Commons user مانفی in 2012 and cropped by Joalbertine in
-2020. It is licensed under
+2020\. It is licensed under
 [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 
 The Rostan palette comes from Iran Darroudi's 1972 painting
-[*Growing in thus Way*](https://www.irandarroudi.com/en/paints). The
+*[Growing in thus Way](https://www.irandarroudi.com/en/paints)*. The
 low-resolution reference image is all rights reserved and is included only
 to identify and discuss the source work.
 

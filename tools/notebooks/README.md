@@ -21,11 +21,10 @@ from the repository-ready folder because the collection-wide files must be
 rebuilt after the palette is added.
 
 Yellow **YOUR INPUT** cells collect factual information. Blue **YOUR DECISION**
-cells ask you to choose regions, candidates, and adjustments.
-All figures request Arial, with Liberation Sans as the Colab fallback when
-Arial is not installed.
-
-For a filled notebook 1 example, use the [Kashan notebook](../example/README.md).
+cells ask you to choose regions, candidates, and adjustments. Each decision
+cell includes its own format example and a specific error when an entry cannot
+be read. All figures request Arial, with Liberation Sans as the Colab fallback
+when Arial is not installed.
 
 Created by **Mohsen Tahmasebi Nasab, PhD**. Visit
 [hydromohsen.com](https://hydromohsen.com).

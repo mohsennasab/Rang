@@ -14,7 +14,6 @@ import zlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 MAIN_NOTEBOOK = pathlib.Path("tools/notebooks/rang_palette_workflow.ipynb")
 SUBMISSION_NOTEBOOK = pathlib.Path("tools/notebooks/rang_submission_builder.ipynb")
-EXAMPLE_NOTEBOOK = pathlib.Path("tools/example/kashan_palette_workflow.ipynb")
 
 
 def _source(text):
@@ -49,28 +48,17 @@ def banner(kind, text):
     )
 
 
-def title(path, example):
+def title(path):
     url_path = path.as_posix()
-    heading = (
-        "Kashan palette workflow, notebook 1"
-        if example else "Rang palette workflow, notebook 1"
-    )
-    introduction = (
-        "This completed example reproduces the published Kashan palette. "
-        "You can keep the saved decisions or change them as you work."
-        if example else
-        "This notebook takes one artwork image through region drawing, "
-        "color extraction, curation, adjustment, checking, file preparation, "
-        "and replay."
-    )
     return markdown(f"""
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/{url_path})
 
 <div style="font-family:Arial,sans-serif">
 
-# {heading}
+# Rang palette workflow, notebook 1
 
-{introduction}
+This notebook takes one artwork image through region drawing, color extraction,
+curation, adjustment, checking, file preparation, and replay.
 
 Upload the artwork once. All seven stages run in this notebook, and the final
 workflow ZIP downloads after verification. Upload that ZIP to notebook 2 to
@@ -603,10 +591,9 @@ else:
     print(f"wrote {output}")
 
 
-def setup_cells(path, example):
-    slug = "kashan" if example else "your-palette"
+def setup_cells(path):
     return [
-        title(path, example),
+        title(path),
         markdown("""
 ### Contents
 
@@ -619,38 +606,14 @@ def setup_cells(path, example):
 07. Replay, verify, and download
 """),
         banner("YOUR INPUT", "Give the palette a short filename. You enter it once for the complete workflow."),
-        code(f'''PALETTE_SLUG = "{slug}" #@param {{type:"string"}}
-DOWNLOAD_FINAL_ZIP = True #@param {{type:"boolean"}}''', "user-input"),
+        code('''PALETTE_SLUG = "your-palette" #@param {type:"string"}
+DOWNLOAD_FINAL_ZIP = True #@param {type:"boolean"}''', "user-input"),
         embedded_runtime(),
     ]
 
 
-def step_01_cells(example):
-    if example:
-        palette_name = "Kashan"
-        local_image = "cache/DT5450.jpg"
-        reference = "https://www.metmuseum.org/art/collection/search/451470"
-        interactive_default = "False"
-        starting_default = "True"
-        regions = '''[
-    {"id": "top-border", "label": "Top border", "box": [200, 100, 2350, 650], "k": 8,
-     "note": "Warm border ground and floral outlines"},
-    {"id": "upper-inner-field", "label": "Upper inner field", "box": [550, 600, 2000, 1350], "k": 8,
-     "note": "Rose field and surrounding motifs"},
-    {"id": "central-medallion", "label": "Central medallion", "box": [650, 1650, 1900, 2700], "k": 8,
-     "note": "Indigo, blue, ivory, gold, and red details"},
-    {"id": "lower-inner-field", "label": "Lower inner field", "box": [550, 2700, 2000, 3300], "k": 8,
-     "note": "Field colors away from the medallion"},
-    {"id": "left-guard-borders", "label": "Left guard borders", "box": [40, 650, 500, 3150], "k": 8,
-     "note": "Sage, blue, and warm border colors"},
-]'''
-    else:
-        palette_name = "Your palette name"
-        local_image = ""
-        reference = "PASTE THE OBJECT PAGE URL HERE"
-        interactive_default = "True"
-        starting_default = "False"
-        regions = '''[
+def step_01_cells():
+    regions = '''[
     {"id": "main-detail", "label": "Main detail", "box": [100, 100, 600, 600], "k": 8,
      "note": "Say why this part of the artwork matters"},
 ]'''
@@ -658,9 +621,9 @@ def step_01_cells(example):
         section("01", "Upload the image and define regions",
                 "Upload one artwork image and draw the regions that matter to you."),
         banner("YOUR INPUT", "Upload the artwork. Also enter its name and object page."),
-        code(f'''PALETTE_NAME = "{palette_name}" #@param {{type:"string"}}
-LOCAL_IMAGE_PATH = "{local_image}" #@param {{type:"string"}}
-SOURCE_REFERENCE = "{reference}" #@param {{type:"string"}}
+        code('''PALETTE_NAME = "Your palette name" #@param {type:"string"}
+LOCAL_IMAGE_PATH = "" #@param {type:"string"}
+SOURCE_REFERENCE = "PASTE THE OBJECT PAGE URL HERE" #@param {type:"string"}
 
 source_path, original_filename = receive_source(LOCAL_IMAGE_PATH)
 source_image = open_rgb(source_path)
@@ -670,9 +633,9 @@ Drag boxes directly over the image in Colab. Each box gets an ID, name, k
 value, and note. Use Undo or Delete when a box does not feel right, then click
 **Use these regions**. The drawer converts each box to original image pixels.
 """),
-        banner("YOUR DECISION", "Draw the sampling regions. The Kashan example can use its saved boxes for an exact replay."),
-        code(f'''DRAW_REGIONS_INTERACTIVELY = {interactive_default} #@param {{type:"boolean"}}
-START_WITH_TEMPLATE_BOXES = {starting_default} #@param {{type:"boolean"}}
+        banner("YOUR DECISION", "Draw the sampling regions, then check that each box covers the part of the artwork you meant to sample."),
+        code(f'''DRAW_REGIONS_INTERACTIVELY = True #@param {{type:"boolean"}}
+START_WITH_TEMPLATE_BOXES = False #@param {{type:"boolean"}}
 
 REGION_TEMPLATE = {regions}
 
@@ -728,21 +691,8 @@ for candidate in candidates:
     ]
 
 
-def step_03_cells(example):
-    if example:
-        selections = '''SELECTIONS = [
-    {"candidate": "lower-inner-field:c03", "note": "dark red, corner cartouche outlines"},
-    {"candidate": "upper-inner-field:c01", "note": "rose red of the field"},
-    {"candidate": "upper-inner-field:c03", "note": "terracotta"},
-    {"candidate": "central-medallion:c06", "note": "golden ochre, medallion palmettes"},
-    {"candidate": "upper-inner-field:c02", "note": "tan of the border ground"},
-    {"candidate": "left-guard-borders:c07", "note": "ivory, medallion star and cartouches"},
-    {"candidate": "top-border:c03", "note": "sage green, guard border"},
-    {"candidate": "upper-inner-field:c08", "note": "mid blue, medallion lobes"},
-    {"candidate": "central-medallion:c04", "note": "indigo, medallion ground"},
-]'''
-    else:
-        selections = '''# Copy candidate IDs from the list above. Keep 5 to 12 rows.
+def step_03_cells():
+    selections = '''# Copy candidate IDs from the list above. Keep 5 to 12 rows.
 # The row order becomes the continuous palette order.
 SELECTIONS = [
     {"candidate": "PASTE_ID_HERE", "note": "say where this color appears"},
@@ -792,33 +742,11 @@ for item in recipe["curation"]["colors"]:
     ]
 
 
-def step_04_cells(example):
-    if example:
-        adjustments = '''[
-    {"target": "p01", "delta": {"L": -9.74945, "C": -8.81872, "H": 7.53507},
-     "reason": "brings the red back to the dark cartouche outlines"},
-    {"target": "p02", "delta": {"L": -1.40996, "C": -2.34678, "H": 3.58930},
-     "reason": "keeps the rose close to the woven field"},
-    {"target": "p03", "delta": {"L": 6.24557, "C": 6.05730, "H": 18.64681},
-     "reason": "recovers the warmer terracotta details"},
-    {"target": "p04", "delta": {"L": 1.94535, "C": -2.98656, "H": 1.00765},
-     "reason": "softens the medallion gold"},
-    {"target": "p05", "delta": {"L": -0.76169, "C": 2.65010, "H": -5.67352},
-     "reason": "matches the tan border ground"},
-    {"target": "p06", "delta": {"L": -6.84131, "C": 0.77734, "H": -3.80701},
-     "reason": "moves the pale cluster toward the carpet ivory"},
-    {"target": "p07", "delta": {"L": 9.11474, "C": 6.13820, "H": 13.36896},
-     "reason": "lifts the muted guard-border green"},
-    {"target": "p08", "delta": {"L": 2.79122, "C": 8.50177, "H": 3.67200},
-     "reason": "restores the blue in the medallion lobes"},
-    {"target": "p09", "delta": {"L": -3.80180, "C": 0.86484, "H": -5.66345},
-     "reason": "deepens the indigo medallion ground"},
-]'''
-    else:
-        adjustments = '''[
+def step_04_cells():
+    adjustments = '''[
     # Example:
     # {"target": "p01", "delta": {"L": 2, "C": 0, "H": 0},
-    #  "reason": "say what changed and where you see it in the artwork"},
+     #  "reason": "say what changed and where you see it in the artwork"},
 ]'''
     return [
         section("04", "Adjust colors",
@@ -913,31 +841,8 @@ your eyes. Return to step 03 to change the selection or order. Return to step
     ]
 
 
-def step_06_cells(example):
-    if example:
-        metadata = '''{
-    "name": "Kashan",
-    "persian": "کاشان",
-    "pronunciation": "kah-SHAHN",
-    "position": 1,
-    "source": {
-        "title": "Silk Kashan Carpet",
-        "artist": "",
-        "date": "16th century",
-        "geography": "Made in Iran, probably Kashan",
-        "medium": "Silk (warp, weft and pile), asymmetrically knotted pile",
-        "museum": "The Metropolitan Museum of Art, New York",
-        "department": "Islamic Art",
-        "accession": "58.46",
-        "credit": "Gift of Mrs. Douglas M. Moffat, 1958",
-        "url": "https://www.metmuseum.org/art/collection/search/451470",
-        "image": "https://images.metmuseum.org/CRDImages/is/original/DT5450.jpg",
-        "card_image": "sources/kashan/card.jpg",
-        "public_domain": True
-    }
-}'''
-    else:
-        metadata = '''{
+def step_06_cells():
+    metadata = '''{
     "name": "YourPalette",
     "persian": "نام فارسی",
     "pronunciation": "how to say it",
@@ -967,9 +872,10 @@ print("Palette JSON:", draft_path)
 print("Final colors:", *draft["colors"])'''),
         markdown("""
 The final ZIP contains the source image, recipe, working figures, report, and
-palette JSON. Notebook 2 reads this ZIP, validates the source fields, and
-places the accepted files in their expected repository paths. It also creates
-documentation images and palette-specific software files for review.
+palette JSON. Notebook 2 reads this ZIP, reports incomplete source fields as
+warnings, and places the accepted files in their expected repository paths.
+It also creates documentation images and palette-specific software files for
+review.
 """),
     ]
 
@@ -997,14 +903,14 @@ Upload the workflow ZIP there without changing any files inside it.
     ]
 
 
-def notebook(path, example):
-    cells = setup_cells(path, example)
-    cells += step_01_cells(example)
+def notebook(path):
+    cells = setup_cells(path)
+    cells += step_01_cells()
     cells += step_02_cells()
-    cells += step_03_cells(example)
-    cells += step_04_cells(example)
+    cells += step_03_cells()
+    cells += step_04_cells()
     cells += step_05_cells()
-    cells += step_06_cells(example)
+    cells += step_06_cells()
     cells += step_07_cells()
     value = {
         "cells": cells,
@@ -1028,9 +934,8 @@ def notebook(path, example):
 
 
 def main():
-    notebook(MAIN_NOTEBOOK, example=False)
+    notebook(MAIN_NOTEBOOK)
     submission_notebook(SUBMISSION_NOTEBOOK)
-    notebook(EXAMPLE_NOTEBOOK, example=True)
 
 
 if __name__ == "__main__":
