@@ -47,7 +47,7 @@ class PaletteTests(unittest.TestCase):
             "Mina": "مینا",
             "Rostan": "رستن",
             "Shahnameh": "شاهنامه",
-            "Cherry": "طعم گیلاس",
+            "Cherry": "گیلاس",
         }
         self.assertEqual({p["name"]: p["persian"] for p in self.palettes}, expected)
 

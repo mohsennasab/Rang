@@ -143,7 +143,7 @@ Shahnameh comes from the wedding of Siyavush and Farangis. Deep violet and pavil
 
 ![Cherry, the artwork and its palette](docs/cherry/card.png)
 
-Taste of Cherry promotional poster, 1997. Wikipedia. Promotional poster for Taste of Cherry. [Reference](https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg) Persian: طعم گیلاس. Say it tahm-e gee-LAAS, Persian for Taste of Cherry.
+Taste of Cherry promotional poster, 1997. Wikipedia. Promotional poster for Taste of Cherry. [Reference](https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg) Persian: گیلاس. Say it gee-LAAS, Persian for cherry.
 
 Cherry takes its five colors from the promotional poster for Abbas Kiarostami's Taste of Cherry. Charcoal and muted blue hold the film's stillness, while mauve, dusty coral, and mustard yellow carry the poster's face, tree, and sunlit field. I kept the set small to match the film's spare visual language.
 
@@ -169,7 +169,7 @@ stress lands on the last syllable.
 | Mina      | مینا    | mee-NAH                               | enamel, the material used in minakari               |
 | Rostan    | رستن    | rohs-TAN                              | to grow, from the painting's Persian title          |
 | Shahnameh | شاهنامه | shah-nah-MEH                          | Book of Kings, the wedding of Siyavush and Farangis |
-| Cherry    | طعم گیلاس | tahm-e gee-LAAS                     | Taste of Cherry, the film by Abbas Kiarostami       |
+| Cherry    | گیلاس     | gee-LAAS                            | Cherry, the fruit                                   |
 
 Each palette page repeats the pronunciation beside its name.
 
