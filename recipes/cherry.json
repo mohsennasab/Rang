@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "palette": "Cherry",
+  "creator": "Mohsen Tahmasebi Nasab, PhD",
+  "website": "https://hydromohsen.com",
+  "license_holder": "Mohsen Tahmasebi Nasab",
+  "source": {
+    "image": "sources/cherry/poster.jpg",
+    "sha256": "9995addb8405833ca6f03098a79c1bd8623116b4e66dd3be1918a0d750b2e830",
+    "oriented_width": 220,
+    "oriented_height": 324,
+    "color_handling": "EXIF orientation followed by RGB conversion",
+    "reference": "https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg",
+    "original_filename": "taste-of-cherry-md-web.jpg"
+  },
+  "regions": [
+    {
+      "id": "region-01",
+      "label": "Upper poster",
+      "box": [2, 2, 217, 114],
+      "normalized": [0.009091, 0.006173, 0.986364, 0.351852],
+      "k": 3,
+      "note": "Yellow field and review lettering"
+    },
+    {
+      "id": "region-02",
+      "label": "Portrait and tree",
+      "box": [8, 114, 211, 257],
+      "normalized": [0.036364, 0.351852, 0.959091, 0.79321],
+      "k": 3,
+      "note": "Faces, tree, shadows, and red halftone"
+    },
+    {
+      "id": "region-03",
+      "label": "Title band",
+      "box": [6, 259, 217, 313],
+      "normalized": [0.027273, 0.799383, 0.986364, 0.966049],
+      "k": 3,
+      "note": "Blue band, red title, and pale lettering"
+    }
+  ],
+  "extraction": {
+    "color_space": "CIELAB",
+    "white_point": "D65",
+    "algorithm": "sklearn.cluster.KMeans",
+    "random_state": 0,
+    "n_init": 20,
+    "algorithm_mode": "lloyd",
+    "maximum_region_size": 400
+  },
+  "environment": {
+    "python": "3.12.9",
+    "numpy": "2.3.2",
+    "pillow": "11.3.0",
+    "scikit_learn": "1.8.0"
+  },
+  "accepted_candidates": [
+    {
+      "lab": [79.3, -9.9781, 74.8427],
+      "hex": "#d8c723",
+      "share": 80.9759,
+      "id": "region-01:c01",
+      "region": "region-01",
+      "region_label": "Upper poster"
+    },
+    {
+      "lab": [70.4386, 0.5315, 61.4976],
+      "hex": "#cba934",
+      "share": 12.0432,
+      "id": "region-01:c02",
+      "region": "region-01",
+      "region_label": "Upper poster"
+    },
+    {
+      "lab": [47.5796, 11.6427, 49.6145],
+      "hex": "#966815",
+      "share": 6.9809,
+      "id": "region-01:c03",
+      "region": "region-01",
+      "region_label": "Upper poster"
+    },
+    {
+      "lab": [79.3113, -10.8241, 69.5927],
+      "hex": "#d5c736",
+      "share": 55.5892,
+      "id": "region-02:c01",
+      "region": "region-02",
+      "region_label": "Portrait and tree"
+    },
+    {
+      "lab": [54.9705, 25.5334, 24.2124],
+      "hex": "#b8715b",
+      "share": 31.937,
+      "id": "region-02:c02",
+      "region": "region-02",
+      "region_label": "Portrait and tree"
+    },
+    {
+      "lab": [31.3112, 6.6771, 6.8518],
+      "hex": "#58463f",
+      "share": 12.4737,
+      "id": "region-02:c03",
+      "region": "region-02",
+      "region_label": "Portrait and tree"
+    },
+    {
+      "lab": [57.2335, -6.731, -26.1072],
+      "hex": "#598fb6",
+      "share": 81.1831,
+      "id": "region-03:c01",
+      "region": "region-03",
+      "region_label": "Title band"
+    },
+    {
+      "lab": [48.2568, 13.005, -18.6381],
+      "hex": "#796c92",
+      "share": 11.1989,
+      "id": "region-03:c02",
+      "region": "region-03",
+      "region_label": "Title band"
+    },
+    {
+      "lab": [41.2201, 36.3358, -1.5348],
+      "hex": "#964765",
+      "share": 7.618,
+      "id": "region-03:c03",
+      "region": "region-03",
+      "region_label": "Title band"
+    }
+  ],
+  "curation": {
+    "colors": [
+      {
+        "id": "p01",
+        "from": "region-02:c03",
+        "source_hex": "#58463f",
+        "current": "#58463f",
+        "note": "charcoal brown, the face and deepest tree shadows"
+      },
+      {
+        "id": "p02",
+        "from": "region-03:c01",
+        "source_hex": "#598fb6",
+        "current": "#598fb6",
+        "note": "muted blue, the title band"
+      },
+      {
+        "id": "p03",
+        "from": "region-03:c03",
+        "source_hex": "#964765",
+        "current": "#964765",
+        "note": "cherry red, the title lettering against blue"
+      },
+      {
+        "id": "p04",
+        "from": "region-02:c02",
+        "source_hex": "#b8715b",
+        "current": "#b8715b",
+        "note": "dusty coral, the portrait and tree canopy"
+      },
+      {
+        "id": "p05",
+        "from": "region-01:c01",
+        "source_hex": "#d8c723",
+        "current": "#d8c723",
+        "note": "mustard yellow, the broad poster field"
+      }
+    ],
+    "operations": [],
+    "final_order": ["p01", "p02", "p03", "p04", "p05"]
+  },
+  "expected": {
+    "colors": ["#58463f", "#598fb6", "#964765", "#b8715b", "#d8c723"]
+  }
+}

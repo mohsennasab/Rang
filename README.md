@@ -137,6 +137,20 @@ Shahnameh comes from the wedding of Siyavush and Farangis. Deep violet and pavil
 
 [Sample plots and full details](docs/shahnameh/README.md)
 
+***
+
+### Cherry
+
+![Cherry, the artwork and its palette](docs/cherry/card.png)
+
+Taste of Cherry promotional poster, 1997. Wikipedia. Promotional poster for Taste of Cherry. [Reference](https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg) Persian: طعم گیلاس. Say it tahm-e gee-LAAS, Persian for Taste of Cherry.
+
+Cherry takes its five colors from the promotional poster for Abbas Kiarostami's Taste of Cherry. Charcoal and muted blue hold the film's stillness, while mauve, dusty coral, and mustard yellow carry the poster's face, tree, and sunlit field. I kept the set small to match the film's spare visual language.
+
+`#58463f #598fb6 #964765 #b8715b #d8c723`
+
+[Sample plots and full details](docs/cherry/README.md)
+
 <!-- gallery:end -->
 
 ## Saying the names
@@ -155,6 +169,7 @@ stress lands on the last syllable.
 | Mina      | مینا    | mee-NAH                               | enamel, the material used in minakari               |
 | Rostan    | رستن    | rohs-TAN                              | to grow, from the painting's Persian title          |
 | Shahnameh | شاهنامه | shah-nah-MEH                          | Book of Kings, the wedding of Siyavush and Farangis |
+| Cherry    | طعم گیلاس | tahm-e gee-LAAS                     | Taste of Cherry, the film by Abbas Kiarostami       |
 
 Each palette page repeats the pronunciation beside its name.
 
@@ -365,6 +380,12 @@ The Rostan palette comes from Iran Darroudi's 1972 painting
 *[Growing in thus Way](https://www.irandarroudi.com/en/paints)*. The
 low-resolution reference image is all rights reserved and is included only
 to identify and discuss the source work.
+
+The Cherry palette comes from the promotional poster for Abbas Kiarostami's
+1997 film *Taste of Cherry*. The
+[Wikipedia file page](https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg)
+identifies the poster as copyrighted and non-free. The 220-pixel reference is
+included only to identify and discuss the poster and the palette drawn from it.
 
 The sample plots use public data: rainfall from the
 [NOAA Analysis of Record for Calibration](https://registry.opendata.aws/noaa-nws-aorc/),
