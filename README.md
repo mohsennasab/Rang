@@ -1,4 +1,4 @@
-# Rang | رنگ <img src="logo/rang_pixel_medallion_logo.png" width="200">
+# Rang | رنگ <img align="right" src="logo/rang_pixel_medallion_logo.png" width="200">
 
 Rang is a collection of color palettes drawn from the visual traditions of
 Persian art and culture. Carpets, miniature paintings, tilework, manuscripts,
