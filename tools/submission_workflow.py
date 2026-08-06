@@ -36,6 +36,26 @@ KNOWN_REVIEW_FILES = (
     "check-report.json",
 )
 
+PALETTE_PLACEHOLDERS = {
+    "name": "YourPalette",
+    "persian": "نام فارسی",
+    "pronunciation": "how to say it",
+    "about": "A short, personal description of the palette",
+}
+
+SOURCE_PLACEHOLDERS = {
+    "title": "Artwork title",
+    "artist": "Artist when known",
+    "date": "Date",
+    "geography": "Place",
+    "medium": "Materials",
+    "museum": "Museum or collection",
+    "accession": "Accession number",
+    "credit": "Credit line",
+    "url": "OBJECT PAGE URL",
+    "image": "SOURCE IMAGE URL",
+}
+
 
 def _safe_extract(archive_path, output_dir):
     """Extract a workflow ZIP without accepting nested or unsafe paths."""
@@ -99,24 +119,102 @@ def load_workflow_archive(archive_path, output_dir):
     }
 
 
+def apply_metadata_updates(bundle, updates):
+    """Apply builder edits while recovering values already known by the recipe."""
+    if not isinstance(updates, dict):
+        raise ValueError("METADATA_UPDATES must be a dictionary")
+    allowed_palette = {"name", "persian", "pronunciation", "about"}
+    allowed_source = {
+        "title", "artist", "date", "geography", "medium", "museum", "site",
+        "department", "accession", "credit", "url", "image", "download_url",
+        "reference_label", "rights", "public_domain", "preserve_aspect",
+    }
+    unknown_palette = set(updates) - allowed_palette - {"source"}
+    if unknown_palette:
+        raise ValueError(
+            "METADATA_UPDATES has unknown palette fields: "
+            + ", ".join(sorted(unknown_palette))
+        )
+    source_updates = updates.get("source", {})
+    if not isinstance(source_updates, dict):
+        raise ValueError('METADATA_UPDATES["source"] must be a dictionary')
+    unknown_source = set(source_updates) - allowed_source
+    if unknown_source:
+        raise ValueError(
+            "METADATA_UPDATES source has unknown fields: "
+            + ", ".join(sorted(unknown_source))
+        )
+
+    palette = json.loads(json.dumps(bundle["palette"]))
+    source = palette.setdefault("source", {})
+    recipe = bundle["recipe"]
+
+    if (not palette.get("name")
+            or palette.get("name") == PALETTE_PLACEHOLDERS["name"]):
+        palette["name"] = recipe.get("palette", "")
+    reference = recipe.get("source", {}).get("reference", "")
+    if (not source.get("url") or source.get("url") == SOURCE_PLACEHOLDERS["url"]):
+        if isinstance(reference, str) and reference.startswith("https://"):
+            source["url"] = reference
+    if (not source.get("image")
+            or source.get("image") == SOURCE_PLACEHOLDERS["image"]):
+        slug = palette_slug(palette.get("name", recipe.get("palette", "palette")))
+        suffix = bundle["source_path"].suffix.lower() or ".jpg"
+        source["image"] = f"sources/{slug}/source{suffix}"
+
+    for key, value in updates.items():
+        if key == "source":
+            continue
+        if value is None:
+            continue
+        if not isinstance(value, str):
+            raise ValueError(f"METADATA_UPDATES {key} must be text")
+        if value.strip():
+            palette[key] = value.strip()
+    for key, value in source_updates.items():
+        if value is None:
+            continue
+        if key in {"public_domain", "preserve_aspect"}:
+            if not isinstance(value, bool):
+                raise ValueError(f"source.{key} must be True, False, or None")
+            source[key] = value
+        else:
+            if not isinstance(value, str):
+                raise ValueError(f"source.{key} must be text")
+            if value.strip():
+                source[key] = value.strip()
+
+    for key, placeholder in PALETTE_PLACEHOLDERS.items():
+        if palette.get(key) == placeholder:
+            palette.pop(key)
+    for key, placeholder in SOURCE_PLACEHOLDERS.items():
+        if source.get(key) == placeholder:
+            source.pop(key)
+
+    write_json(bundle["palette_path"], palette)
+    bundle["palette"] = palette
+    return bundle
+
+
 def validate_submission_input(bundle):
     """Return clear problems that must be fixed before packaging."""
     recipe = bundle["recipe"]
     palette = bundle["palette"]
     problems = []
     name = palette.get("name")
-    if not isinstance(name, str) or not name.strip() or name == "YourPalette":
+    if (not isinstance(name, str) or not name.strip()
+            or name == PALETTE_PLACEHOLDERS["name"]):
         problems.append("Palette name is missing or still uses YourPalette")
     elif not re.fullmatch(r"[A-Z][A-Za-z]*", name):
         problems.append("Palette name must be one capitalized ASCII word")
-    for field, placeholder in (
-            ("persian", "نام فارسی"), ("pronunciation", "how to say it")):
+    for field in ("persian", "pronunciation"):
         value = palette.get(field)
-        if not isinstance(value, str) or not value.strip() or value == placeholder:
+        if (not isinstance(value, str) or not value.strip()
+                or value == PALETTE_PLACEHOLDERS[field]):
             problems.append(f"Palette field {field} is missing or still uses placeholder text")
     if recipe.get("palette") != name:
         problems.append("The palette name does not match PALETTE_NAME from notebook 1")
-    if palette.get("about") == "A short, personal description of the palette":
+    if palette.get("about") == PALETTE_PLACEHOLDERS["about"]:
         problems.append("Palette field about still uses placeholder text")
     colors = palette.get("colors")
     if not isinstance(colors, list) or not 5 <= len(colors) <= 12:
@@ -141,22 +239,11 @@ def validate_submission_input(bundle):
     if not isinstance(source, dict):
         problems.append("Palette metadata is missing the source record")
         source = {}
-    placeholders = {
-        "title": "Artwork title",
-        "date": "Date",
-        "geography": "Place",
-        "medium": "Materials",
-        "museum": "Museum or collection",
-        "accession": "Accession number",
-        "credit": "Credit line",
-        "url": "OBJECT PAGE URL",
-        "image": "SOURCE IMAGE URL",
-    }
     for field in ("title", "date", "geography", "medium", "url", "image"):
         value = source.get(field)
         if not isinstance(value, str) or not value.strip():
             problems.append(f"Source field {field} is missing")
-        elif value == placeholders[field]:
+        elif value == SOURCE_PLACEHOLDERS[field]:
             problems.append(f"Source field {field} still uses placeholder text")
     url = str(source.get("url", ""))
     if url and not url.startswith("https://"):
@@ -172,13 +259,13 @@ def validate_submission_input(bundle):
         for field in ("credit", "rights"):
             value = source.get(field)
             if (not isinstance(value, str) or not value.strip()
-                    or value == placeholders.get(field)):
+                    or value == SOURCE_PLACEHOLDERS.get(field)):
                 problems.append(f"A non-public-domain source needs source.{field}")
     elif source.get("public_domain") is True:
         for field in ("museum", "accession"):
             value = source.get(field)
             if (not isinstance(value, str) or not value.strip()
-                    or value == placeholders[field]):
+                    or value == SOURCE_PLACEHOLDERS[field]):
                 problems.append(f"A public-domain museum source needs source.{field}")
     if not (bundle["work_dir"] / "check-report.json").is_file():
         problems.append("The workflow ZIP is missing check-report.json from step 05")

@@ -366,6 +366,9 @@ class OutputTests(unittest.TestCase):
         submission_text = submission_path.read_text(encoding="utf-8")
         self.assertIn("This is notebook 2", submission_text)
         self.assertIn("LOCAL_WORKFLOW_ZIP", submission_text)
+        self.assertIn("METADATA_UPDATES", submission_text)
+        self.assertIn("apply_metadata_updates", submission_text)
+        self.assertIn("Complete and validate the metadata", submission_text)
         self.assertIn("CONFIRM_SOURCE_RIGHTS", submission_text)
         self.assertIn("CONFIRM_VISUAL_REVIEW", submission_text)
         self.assertIn("CONFIRM_PROPOSAL_REVIEW", submission_text)
@@ -406,6 +409,77 @@ class OutputTests(unittest.TestCase):
             )
             result = notebook_workflow.verify_recipe(recipe_path, folder)
             self.assertTrue(result["verified"])
+
+    def test_submission_builder_completes_placeholder_metadata(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            folder = pathlib.Path(temporary)
+            source_path = folder / "source.jpg"
+            Image.new("RGB", (20, 20), "#8b3a33").save(source_path)
+            palette_path = folder / "cherry-palette.json"
+            colors = ["#d7c722", "#b58633", "#8b3a33", "#544441", "#aab791"]
+            palette = {
+                "name": "YourPalette",
+                "persian": "نام فارسی",
+                "pronunciation": "how to say it",
+                "about": "A short, personal description of the palette",
+                "colors": colors,
+                "order": [1, 2, 3, 4, 5],
+                "notes": [f"source color {number}" for number in range(1, 6)],
+                "source": {
+                    "title": "Artwork title",
+                    "artist": "Artist when known",
+                    "date": "Date",
+                    "geography": "Place",
+                    "medium": "Materials",
+                    "url": "OBJECT PAGE URL",
+                    "image": "SOURCE IMAGE URL",
+                    "public_domain": True,
+                },
+            }
+            notebook_workflow.write_json(palette_path, palette)
+            (folder / "check-report.json").write_text("{}\n", encoding="utf-8")
+            reference = "https://example.com/cherry"
+            recipe = {
+                "palette": "Cherry",
+                "source": {"image": source_path.name, "reference": reference},
+                "expected": {"colors": colors},
+            }
+            bundle = {
+                "work_dir": folder,
+                "source_path": source_path,
+                "palette_path": palette_path,
+                "palette": palette,
+                "recipe": recipe,
+            }
+
+            bundle = submission_workflow.apply_metadata_updates(bundle, {
+                "persian": "گیلاس",
+                "pronunciation": "gee-LAAS",
+                "about": "Colors drawn from a cherry study.",
+                "source": {
+                    "title": "Cherry study",
+                    "date": "2026",
+                    "geography": "Iran",
+                    "medium": "Photograph",
+                    "credit": "Photograph by the contributor",
+                    "rights": "CC BY 4.0",
+                    "public_domain": False,
+                },
+            })
+
+            self.assertEqual(bundle["palette"]["name"], "Cherry")
+            self.assertEqual(bundle["palette"]["source"]["url"], reference)
+            self.assertEqual(
+                bundle["palette"]["source"]["image"],
+                "sources/cherry/source.jpg",
+            )
+            self.assertNotIn("artist", bundle["palette"]["source"])
+            self.assertEqual(
+                submission_workflow.validate_submission_input(bundle), []
+            )
+            self.assertEqual(
+                notebook_workflow.read_json(palette_path), bundle["palette"]
+            )
 
     def test_submission_builder_packages_verified_workflow(self):
         with tempfile.TemporaryDirectory() as temporary:

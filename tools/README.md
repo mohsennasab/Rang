@@ -23,8 +23,8 @@ The easiest way to learn the workflow is the completed Kashan example in
 
 Run the seven stages in notebook 1 from top to bottom. Upload the artwork once
 and download the workflow ZIP after the final replay. Open notebook 2, upload
-that ZIP, review the source record, and download the submission ZIP. No
-repository checkout or cloud storage connection is needed.
+that ZIP, complete or correct the source record, and download the submission
+ZIP. No repository checkout or cloud storage connection is needed.
 
 Cells with a yellow **YOUR INPUT** box need factual information such as an
 object page or museum record. Cells with a blue **YOUR DECISION** box ask for
@@ -37,8 +37,10 @@ artistic judgment.
 | 1, make the palette | [`rang_palette_workflow.ipynb`](notebooks/rang_palette_workflow.ipynb) | a verified workflow ZIP with the source, recipe, decisions, report, and palette draft |
 | 2, prepare the proposal | [`rang_submission_builder.ipynb`](notebooks/rang_submission_builder.ipynb) | a submission ZIP with repository files, images, software tests, review material, and a pull request draft |
 
-Notebook 2 checks the palette metadata and rights fields, replays the recipe,
-and asks for a short explanation of why the work belongs in Rang. Its
+Notebook 2 recovers values already known from the recipe, shows any missing
+metadata, and gives you one input cell to complete or correct it. It then
+checks the rights fields, replays the recipe, and asks for a short explanation
+of why the work belongs in Rang. Its
 palette-specific ArcGIS Pro, QGIS, HEC-RAS, and GeoLibre files are for testing.
 They do not replace the combined collection files. The maintainer rebuilds
 those after adding the proposed palette to a branch.

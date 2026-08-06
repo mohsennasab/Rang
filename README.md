@@ -295,8 +295,9 @@ color that does not sit right.
 The two [palette-making notebooks](tools/README.md) run in Google Colab and
 make every input and decision easy to find. Notebook 1 takes an uploaded
 artwork through regions, k-means, curation, adjustment, checking, and replay.
-Notebook 2 turns the verified workflow ZIP into a proposal with repository
-files, documentation images, software test files, and a pull request draft.
+Notebook 2 lets you complete or correct the source record, then turns the
+verified workflow ZIP into a proposal with repository files, documentation
+images, software test files, and a pull request draft.
 A complete [Kashan example](tools/example/README.md) shows the artistic
 workflow.
 

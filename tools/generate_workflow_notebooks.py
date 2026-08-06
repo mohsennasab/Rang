@@ -326,7 +326,7 @@ def submission_notebook(path):
 ### Contents
 
 01. Upload the verified workflow ZIP
-02. Review and validate the saved work
+02. Complete and validate the metadata
 03. Describe the proposal and confirm the source rights
 04. Build the submission package
 05. Review the generated files and images
@@ -351,18 +351,91 @@ print("Palette:", bundle["palette"].get("name", "missing"))
 print("Recipe:", bundle["recipe_path"].name)
 print("Palette draft:", bundle["palette_path"].name)
 print("Source image:", bundle["source_path"].name)''', "user-input"),
-        section("02", "Review and validate the saved work",
-                "Confirm that the ZIP is complete and the recipe still reproduces."),
+        section("02", "Complete and validate the metadata",
+                "Review what was saved and fill any gaps before building the proposal."),
         markdown("""
-This check compares the palette draft with the recipe, checks the palette name,
-colors, order, notes, Persian name, pronunciation, source fields, and reuse
-information, then replays the extraction and adjustments. An error names the
-field that needs attention. Return to notebook 1, correct it, and download a
-new workflow ZIP when a problem appears here.
+Notebook 2 recovers the palette name and object-page link from the recipe when
+it can. It also prepares a repository path for the uploaded source image. The
+list below shows anything that still needs attention. Complete or correct those
+values in the input cell that follows. You do not need to repeat the color work.
 """),
-        code('''problems = validate_submission_input(bundle)
+        code('''bundle = apply_metadata_updates(bundle, {})
+palette = bundle["palette"]
+source = palette.get("source", {})
+
+print("Saved palette metadata")
+for field in ("name", "persian", "pronunciation", "about"):
+    print(f"{field}: {palette.get(field, 'missing')}")
+print()
+print("Saved source metadata")
+for field in (
+    "title", "artist", "date", "geography", "medium", "museum",
+    "accession", "credit", "url", "image", "rights", "public_domain",
+):
+    print(f"{field}: {source.get(field, 'missing')}")
+
+problems = validate_submission_input(bundle)
 if problems:
-    raise ValueError("Fix these fields in notebook 1:\\n- " + "\\n- ".join(problems))
+    print("\\nNEEDS ATTENTION")
+    for problem in problems:
+        print("-", problem)
+else:
+    print("\\nThe saved metadata is complete")'''),
+        markdown("""
+Use the exact wording from the artwork or collection page whenever it is
+available.
+
+- `name` is one capitalized English word, such as `Cherry`. It must match the
+  name used in notebook 1. The builder normally recovers it for you.
+- `persian` is the Persian name. `pronunciation` explains how to say it in
+  English. `about` is a short description in your own words.
+- `title`, `date`, `geography`, and `medium` describe the artwork.
+- `url` is the HTTPS page where a reviewer can confirm the artwork and rights.
+- `image` is either a direct HTTPS image address or its future repository path.
+  The builder normally proposes a path such as `sources/cherry/source.jpg`.
+- Set `public_domain` to `True` only when the source page explicitly says the
+  image is public domain or open access. A museum source also needs `museum`
+  and `accession`.
+- Set `public_domain` to `False` for your own photo or a licensed image. Then
+  enter the exact `credit` and `rights` wording.
+- Set `preserve_aspect` to `True` when the complete artwork should retain its
+  original proportions. Leave it as `None` to keep the saved value.
+
+An empty entry keeps a valid saved value. It does not erase it.
+"""),
+        banner("YOUR INPUT", "Complete the missing fields and correct anything that was saved incorrectly."),
+        code('''METADATA_UPDATES = {
+    "name": "",
+    "persian": "",
+    "pronunciation": "",
+    "about": "",
+    "source": {
+        "title": "",
+        "artist": "",
+        "date": "",
+        "geography": "",
+        "medium": "",
+        "museum": "",
+        "site": "",
+        "department": "",
+        "accession": "",
+        "credit": "",
+        "url": "",
+        "image": "",
+        "download_url": "",
+        "reference_label": "",
+        "rights": "",
+        "public_domain": None,
+        "preserve_aspect": None,
+    },
+}''', "user-input"),
+        code('''bundle = apply_metadata_updates(bundle, METADATA_UPDATES)
+problems = validate_submission_input(bundle)
+if problems:
+    raise ValueError(
+        "Complete or correct these metadata fields above:\\n- "
+        + "\\n- ".join(problems)
+    )
 
 verification = verify_recipe(bundle["recipe_path"], bundle["work_dir"])
 for key, value in verification.items():
