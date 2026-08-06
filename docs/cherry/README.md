@@ -1,4 +1,4 @@
-# Cherry (Persian: طعم گیلاس, say it tahm-e gee-LAAS, Persian for Taste of Cherry)
+# Cherry (Persian: گیلاس, say it gee-LAAS, Persian for cherry)
 
 ![Cherry swatch](swatch.png)
 
