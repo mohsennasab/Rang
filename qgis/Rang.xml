@@ -114,19 +114,33 @@
       <prop k="rampType" v="gradient"/>
       <prop k="stops" v="0.111111;75,61,151,255:0.222222;121,140,184,255:0.333333;109,134,106,255:0.444444;89,105,86,255:0.555556;212,185,107,255:0.666667;213,201,183,255:0.777778;176,71,44,255:0.888889;166,55,62,255"/>
     </colorramp>
-    <colorramp type="gradient" name="Cherry" tags="Rang">
+    <colorramp type="gradient" name="Gilâs" tags="Rang">
       <prop k="color1" v="88,70,63,255"/>
       <prop k="color2" v="216,199,35,255"/>
       <prop k="discrete" v="0"/>
       <prop k="rampType" v="gradient"/>
       <prop k="stops" v="0.25;89,143,182,255:0.5;150,71,101,255:0.75;184,113,91,255"/>
     </colorramp>
-    <colorramp type="gradient" name="Cherry discrete" tags="Rang">
+    <colorramp type="gradient" name="Gilâs discrete" tags="Rang">
       <prop k="color1" v="88,70,63,255"/>
       <prop k="color2" v="216,199,35,255"/>
       <prop k="discrete" v="1"/>
       <prop k="rampType" v="gradient"/>
       <prop k="stops" v="0.2;89,143,182,255:0.4;150,71,101,255:0.6;184,113,91,255:0.8;216,199,35,255"/>
+    </colorramp>
+    <colorramp type="gradient" name="Iwan" tags="Rang">
+      <prop k="color1" v="239,191,21,255"/>
+      <prop k="color2" v="6,5,90,255"/>
+      <prop k="discrete" v="0"/>
+      <prop k="rampType" v="gradient"/>
+      <prop k="stops" v="0.125;185,146,65,255:0.25;104,151,183,255:0.375;46,137,171,255:0.5;50,99,172,255:0.625;14,55,174,255:0.75;4,18,204,255:0.875;21,12,125,255"/>
+    </colorramp>
+    <colorramp type="gradient" name="Iwan discrete" tags="Rang">
+      <prop k="color1" v="239,191,21,255"/>
+      <prop k="color2" v="6,5,90,255"/>
+      <prop k="discrete" v="1"/>
+      <prop k="rampType" v="gradient"/>
+      <prop k="stops" v="0.111111;185,146,65,255:0.222222;104,151,183,255:0.333333;46,137,171,255:0.444444;50,99,172,255:0.555556;14,55,174,255:0.666667;4,18,204,255:0.777778;21,12,125,255:0.888889;6,5,90,255"/>
     </colorramp>
   </colorramps>
 </qgis_style>

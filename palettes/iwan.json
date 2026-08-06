@@ -1,0 +1,57 @@
+{
+  "name": "Iwan",
+  "persian": "ایوان",
+  "pronunciation": "ee-VAHN, Persian for a vaulted hall open on one side",
+  "position": 10,
+  "about": "Iwan moves from sunlit yellow into a long run of blues drawn from the tiled entrance iwan of Isfahan's Shah Mosque. Ochre and pale blue form a short threshold before turquoise, lapis, cobalt, ultramarine, indigo and midnight blue take over. I made it for maps that need a clear light-to-dark sequence with most of the visual weight carried by blue.",
+  "story": [
+    "An iwan, or ایوان in Persian, is a vaulted space that opens on one side to a courtyard. The form developed in pre-Islamic Iran and became closely tied to Persian architecture. In a four-iwan mosque, one rises from the center of each side of the courtyard. [Smarthistory's guide to mosque architecture](https://smarthistory.org/common-types-of-mosque-architecture/) follows this form from its Iranian roots into later Islamic buildings.",
+    "The Shah Mosque stands on the south side of Naqsh-e Jahan Square and was built for Shah Abbas I in the early seventeenth century. Its entrance faces the square, while the prayer hall turns toward Mecca. A passage through the entrance iwan handles that change in direction. [UNESCO's Meidan Emam record](https://whc.unesco.org/en/list/115/) describes the deep portal, its tiled half-dome and the angled route into the courtyard.",
+    "The blue surface is not a single blue. Turquoise, lapis, white, green and yellow meet in floral scrolls, calligraphy and the small cells of the muqarnas vault. Safavid builders used haft-rangi, or seven-color tilework, to paint several colors on one tile before firing it. [Smarthistory's introduction to Safavid art](https://smarthistory.org/safavids-intro/) explains how this method gave the Shah Mosque its layered, light-catching color. I kept the yellow at one end of the palette, then let the many blues carry the rest of the ramp."
+  ],
+  "colors": [
+    "#efbf15",
+    "#b99241",
+    "#6897b7",
+    "#2e89ab",
+    "#3263ac",
+    "#0e37ae",
+    "#0412cc",
+    "#150c7d",
+    "#06055a"
+  ],
+  "notes": [
+    "tile yellow, the curling floral vines in the upper panel",
+    "golden ochre, shaded yellow leaves and outlines",
+    "pale blue, weathered tile and floral highlights",
+    "turquoise, bright glazed ribs around the lower vault",
+    "lapis blue, the broad floral tile ground",
+    "cobalt, darker outlines around the upper arabesques",
+    "ultramarine, the most saturated blue tiles",
+    "indigo, shadowed geometry in the central muqarnas",
+    "midnight blue, the deepest recess of the half-dome"
+  ],
+  "order": [1, 5, 3, 7, 4, 9, 6, 8, 2],
+  "colorblind": false,
+  "source": {
+    "title": "Entrance iwan of the Shah Mosque",
+    "citation": "Entrance of the Shah Mosque of Isfahan, 2020.",
+    "artist": "Farzan95, Farzan Dehbashi",
+    "date": "2020",
+    "geography": "Isfahan, Iran",
+    "medium": "Digital photograph",
+    "site": "Wikimedia Commons",
+    "reference_label": "Photograph and license record",
+    "url": "https://commons.wikimedia.org/wiki/File:Shah_mosque_of_isfahan.jpg",
+    "image": "sources/iwan/entrance.jpg",
+    "context_image": "sources/iwan/iwan.jpg",
+    "context_caption": "Looking up into the tiled entrance iwan of the Shah Mosque",
+    "context_url": "https://commons.wikimedia.org/wiki/File:Mezquita_Shah,_Isfah%C3%A1n,_Ir%C3%A1n,_2016-09-20,_DD_64.jpg",
+    "context_credit": "Photograph by Diego Delso, 2016",
+    "context_rights": "Licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)",
+    "credit": "Photograph by Farzan95, 2020",
+    "public_domain": false,
+    "rights": "Licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Rang gallery images use resized adaptations",
+    "preserve_aspect": true
+  }
+}

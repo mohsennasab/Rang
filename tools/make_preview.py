@@ -18,7 +18,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 from colorlib import (REPO_ROOT, VISION_LABELS, VISION_TYPES, fetch_image,
-                      hex_to_rgb, load_palette, simulate)
+                      hex_to_rgb, load_palette, palette_slug, simulate)
 
 
 def get_font(size):
@@ -142,7 +142,7 @@ def make_preview(pal, out):
 
 def main(name):
     pal = load_palette(name)
-    out_dir = REPO_ROOT / "docs" / pal["name"].lower()
+    out_dir = REPO_ROOT / "docs" / palette_slug(pal["name"])
     out_dir.mkdir(parents=True, exist_ok=True)
     make_swatch(pal, out_dir / "swatch.png")
     make_card(pal, out_dir / "card.png")

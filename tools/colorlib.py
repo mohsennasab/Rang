@@ -9,6 +9,7 @@ import itertools
 import json
 import pathlib
 import re
+import unicodedata
 import urllib.request
 
 import numpy as np
@@ -259,11 +260,29 @@ def presence_in_image(hexes, image_path, step=17):
 
 # ------------------------------------------------------------ palette loading
 
+def capitalized_word(value):
+    """True for one Unicode word with an uppercase first letter."""
+    return (isinstance(value, str) and bool(value) and value.isalpha()
+            and value[0].isupper()
+            and (len(value) == 1 or value[1:].islower()))
+
+
+def palette_slug(value):
+    """Return an ASCII filename slug while preserving accented letters."""
+    plain = "".join(
+        character for character in unicodedata.normalize("NFKD", str(value))
+        if not unicodedata.combining(character)
+    )
+    slug = re.sub(r"[^a-z0-9]+", "-", plain.lower()).strip("-")
+    if not slug:
+        raise ValueError("palette name must contain a Latin letter or number")
+    return slug
+
 def load_palette(name):
     """Read palettes/<name>.json. Accepts 'Kashan', 'kashan' or a file path."""
     p = pathlib.Path(name)
     if not p.suffix == ".json":
-        p = PALETTE_DIR / f"{str(name).lower()}.json"
+        p = PALETTE_DIR / f"{palette_slug(name)}.json"
     if not p.exists():
         options = ", ".join(sorted(f.stem for f in PALETTE_DIR.glob("*.json")))
         raise FileNotFoundError(f"No palette file {p}. Available: {options}")
@@ -271,9 +290,9 @@ def load_palette(name):
     for key in ("name", "persian", "pronunciation", "colors", "notes", "source"):
         if key not in pal:
             raise KeyError(f"{p} is missing the required key '{key}'")
-    if not isinstance(pal["name"], str) or not re.fullmatch(r"[A-Z][A-Za-z]*", pal["name"]):
-        raise ValueError(f"{p}: name must be one capitalized ASCII word")
-    if pal["name"].lower() != p.stem.lower():
+    if not capitalized_word(pal["name"]):
+        raise ValueError(f"{p}: name must be one capitalized word")
+    if palette_slug(pal["name"]) != p.stem.lower():
         raise ValueError(f"{p}: name must match the filename")
     colors = pal["colors"]
     if not isinstance(colors, list) or not 5 <= len(colors) <= 12:

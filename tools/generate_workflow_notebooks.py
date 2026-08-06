@@ -404,7 +404,7 @@ Use exact wording from the artwork or collection page. Do not type filler such
 as `f`, `test`, or `unknown` into a field. Leave the field out instead. Missing
 metadata will be listed in the proposal for later review.
 
-- `name` is one capitalized English word, such as `Cherry`. It must match the
+- `name` is one capitalized word, such as `Saffron`. It must match the
   name used in notebook 1. This is the only required metadata field, and the
   builder normally recovers it for you.
 - `persian` is the Persian name. `pronunciation` explains how to say it in
@@ -412,7 +412,7 @@ metadata will be listed in the proposal for later review.
 - `title`, `date`, `geography`, and `medium` describe the artwork.
 - `url` is the HTTPS page where a reviewer can confirm the artwork and rights.
 - `image` is either a direct HTTPS image address or its future repository path.
-  The builder normally proposes a path such as `sources/cherry/source.jpg`.
+  The builder normally proposes a path such as `sources/saffron/source.jpg`.
 - Set `public_domain` to `True` only when the source page explicitly says the
   image is public domain or open access. A museum source should also include
   `museum` and `accession`.

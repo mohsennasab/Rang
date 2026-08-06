@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "palette": "Cherry",
+  "palette": "Gilâs",
   "creator": "Mohsen Tahmasebi Nasab, PhD",
   "website": "https://hydromohsen.com",
   "license_holder": "Mohsen Tahmasebi Nasab",
   "source": {
-    "image": "sources/cherry/poster.jpg",
+    "image": "sources/gilas/poster.jpg",
     "sha256": "9995addb8405833ca6f03098a79c1bd8623116b4e66dd3be1918a0d750b2e830",
     "oriented_width": 220,
     "oriented_height": 324,

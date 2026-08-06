@@ -41,7 +41,8 @@ import make_stylx
 from colorlib import (COLORBLIND_THRESHOLD, PALETTE_DIR, REPO_ROOT,
                       VISION_LABELS, VISION_TYPES, all_palettes, fetch_image,
                       greedy_order, hex_to_rgb, interpolate, load_palette,
-                      pairwise_min_mean, presence_in_image, worst_case)
+                      pairwise_min_mean, palette_slug, presence_in_image,
+                      worst_case)
 
 GALLERY_START = "<!-- gallery:start -->"
 GALLERY_END = "<!-- gallery:end -->"
@@ -357,11 +358,11 @@ def write_docs_page(pal):
             "profile for the creeks at Ithaca, New York. The second follows Fall\n"
             "Creek, with stream widths drawn from NHDPlusV2 order in USGS Fabric.\n"
             "The watershed interior has no fill.\n"
-            f"Run `python tools/make_samples.py {name.lower()}` to remake them.")
+            f"Run `python tools/make_samples.py {palette_slug(name)}` to remake them.")
     else:
         samples_note = (
             "The rainfall map uses one day of NOAA AORC precipitation on a roughly 1 km grid.\n"
-            f"Run `python tools/make_samples.py {name.lower()}` to remake the plots. Add\n"
+            f"Run `python tools/make_samples.py {palette_slug(name)}` to remake the plots. Add\n"
             "`--dem your_dem.tif` to use your own elevation raster.")
 
     body = f"""# {name}{say}
@@ -423,7 +424,7 @@ ArcGIS Pro users get every palette by importing
 [geolibre/Rang.txt](../../geolibre/Rang.txt), with steps for raster and vector
 layers in the [GeoLibre guide](../../geolibre/README.md).
 """
-    out = REPO_ROOT / "docs" / name.lower() / "README.md"
+    out = REPO_ROOT / "docs" / palette_slug(name) / "README.md"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(body, encoding="utf-8")
     print(f"wrote {out}")
@@ -449,13 +450,13 @@ def gallery_entry(pal):
     about = f'\n{pal["about"]}\n' if pal.get("about") else ""
     return f"""### {name}
 
-![{name}, the artwork and its palette](docs/{name.lower()}/card.png)
+![{name}, the artwork and its palette](docs/{palette_slug(name)}/card.png)
 
 {line} [Reference]({src["url"]}){say}
 {about}
 `{" ".join(pal["colors"])}`
 
-[Sample plots and full details](docs/{name.lower()}/README.md)
+[Sample plots and full details](docs/{palette_slug(name)}/README.md)
 """
 
 
@@ -475,7 +476,7 @@ def update_readme(pals):
 
 def ensure_order(name):
     """Fill in the order vector when a palette file does not have one."""
-    path = PALETTE_DIR / f"{name.lower()}.json"
+    path = PALETTE_DIR / f"{palette_slug(name)}.json"
     pal = json.loads(path.read_text(encoding="utf-8"))
     changed = False
     if "order" not in pal or len(pal["order"]) != len(pal["colors"]):
@@ -529,9 +530,9 @@ def main():
 
     for name in targets:
         if not args.skip_images:
-            make_preview.main(name.lower())
-            make_samples.main(name.lower())
-        write_docs_page(load_palette(name.lower()))
+            make_preview.main(palette_slug(name))
+            make_samples.main(palette_slug(name))
+        write_docs_page(load_palette(palette_slug(name)))
 
     update_readme(pals)
     if not stylx_written:

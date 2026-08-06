@@ -1,0 +1,583 @@
+{
+  "schema_version": 1,
+  "palette": "Iwan",
+  "creator": "Mohsen Tahmasebi Nasab, PhD",
+  "website": "https://hydromohsen.com",
+  "license_holder": "Mohsen Tahmasebi Nasab",
+  "source": {
+    "image": "sources/iwan/entrance.jpg",
+    "sha256": "7bb5ef7c79e078a25a62530e0fff095a5ef5f43f2d0318c31da8ee8e39119e26",
+    "oriented_width": 2048,
+    "oriented_height": 1707,
+    "color_handling": "EXIF orientation followed by RGB conversion",
+    "reference": "https://commons.wikimedia.org/wiki/File:Shah_mosque_of_isfahan.jpg",
+    "original_filename": "Shah-Mosque-of-Isfahan-Iran-1.jpg"
+  },
+  "regions": [
+    {
+      "id": "region-01",
+      "label": "Upper floral tiles",
+      "box": [
+        47,
+        42,
+        470,
+        465
+      ],
+      "normalized": [
+        0.022949,
+        0.024605,
+        0.229492,
+        0.272408
+      ],
+      "k": 8,
+      "note": "Yellow arabesques and blue tile ground at the upper left"
+    },
+    {
+      "id": "region-02",
+      "label": "Lower muqarnas",
+      "box": [
+        76,
+        1119,
+        1969,
+        1702
+      ],
+      "normalized": [
+        0.037109,
+        0.655536,
+        0.961426,
+        0.997071
+      ],
+      "k": 8,
+      "note": "Deep blue, turquoise, and shaded tilework across the lower vault"
+    },
+    {
+      "id": "region-03",
+      "label": "Turquoise arch",
+      "box": [
+        880,
+        404,
+        1153,
+        683
+      ],
+      "normalized": [
+        0.429688,
+        0.236673,
+        0.562988,
+        0.400117
+      ],
+      "k": 8,
+      "note": "Turquoise ribs and neighboring blue tilework at the crown"
+    },
+    {
+      "id": "region-04",
+      "label": "Central vault",
+      "box": [
+        764,
+        688,
+        1250,
+        890
+      ],
+      "normalized": [
+        0.373047,
+        0.403046,
+        0.610352,
+        0.521383
+      ],
+      "k": 8,
+      "note": "Dense blue and gold pattern in the central half-dome"
+    }
+  ],
+  "extraction": {
+    "color_space": "CIELAB",
+    "white_point": "D65",
+    "algorithm": "sklearn.cluster.KMeans",
+    "random_state": 0,
+    "n_init": 20,
+    "algorithm_mode": "lloyd",
+    "maximum_region_size": 400
+  },
+  "environment": {
+    "python": "3.12.9",
+    "numpy": "2.3.2",
+    "pillow": "11.3.0",
+    "scikit_learn": "1.8.0"
+  },
+  "accepted_candidates": [
+    {
+      "lab": [
+        79.6915,
+        2.4081,
+        -3.7052
+      ],
+      "hex": "#c7c4cc",
+      "share": 18.0888,
+      "id": "region-01:c01",
+      "region": "region-01",
+      "region_label": "Upper floral tiles"
+    },
+    {
+      "lab": [
+        26.2206,
+        62.9733,
+        -88.9208
+      ],
+      "hex": "#0412cc",
+      "share": 15.0913,
+      "id": "region-01:c02",
+      "region": "region-01",
+      "region_label": "Upper floral tiles"
+    },
+    {
+      "lab": [
+        79.3824,
+        3.521,
+        78.7623
+      ],
+      "hex": "#efbf15",
+      "share": 13.6069,
+      "id": "region-01:c03",
+      "region": "region-01",
+      "region_label": "Upper floral tiles"
+    },
+    {
+      "lab": [
+        60.2451,
+        -7.1234,
+        -21.8096
+      ],
+      "hex": "#6897b7",
+      "share": 13.4369,
+      "id": "region-01:c04",
+      "region": "region-01",
+      "region_label": "Upper floral tiles"
+    },
+    {
+      "lab": [
+        41.9847,
+        8.8601,
+        -44.3003
+      ],
+      "hex": "#3263ac",
+      "share": 12.865,
+      "id": "region-01:c05",
+      "region": "region-01",
+      "region_label": "Upper floral tiles"
+    },
+    {
+      "lab": [
+        29.2002,
+        34.9352,
+        -66.3284
+      ],
+      "hex": "#0e37ae",
+      "share": 11.6494,
+      "id": "region-01:c06",
+      "region": "region-01",
+      "region_label": "Upper floral tiles"
+    },
+    {
+      "lab": [
+        62.8447,
+        5.4954,
+        47.694
+      ],
+      "hex": "#b99241",
+      "share": 8.0187,
+      "id": "region-01:c07",
+      "region": "region-01",
+      "region_label": "Upper floral tiles"
+    },
+    {
+      "lab": [
+        32.8746,
+        3.4496,
+        22.3636
+      ],
+      "hex": "#5e4a2a",
+      "share": 7.2431,
+      "id": "region-01:c08",
+      "region": "region-01",
+      "region_label": "Upper floral tiles"
+    },
+    {
+      "lab": [
+        14.3735,
+        9.4033,
+        -13.6228
+      ],
+      "hex": "#282137",
+      "share": 17.0264,
+      "id": "region-02:c01",
+      "region": "region-02",
+      "region_label": "Lower muqarnas"
+    },
+    {
+      "lab": [
+        32.2721,
+        -4.0663,
+        -8.4841
+      ],
+      "hex": "#3d4e59",
+      "share": 16.6138,
+      "id": "region-02:c02",
+      "region": "region-02",
+      "region_label": "Lower muqarnas"
+    },
+    {
+      "lab": [
+        40.3068,
+        9.7875,
+        -33.729
+      ],
+      "hex": "#4a5d96",
+      "share": 14.9472,
+      "id": "region-02:c03",
+      "region": "region-02",
+      "region_label": "Lower muqarnas"
+    },
+    {
+      "lab": [
+        53.3526,
+        -14.9982,
+        -25.8621
+      ],
+      "hex": "#2e89ab",
+      "share": 13.2541,
+      "id": "region-02:c04",
+      "region": "region-02",
+      "region_label": "Lower muqarnas"
+    },
+    {
+      "lab": [
+        16.6777,
+        20.6638,
+        -35.0101
+      ],
+      "hex": "#24215c",
+      "share": 11.9207,
+      "id": "region-02:c05",
+      "region": "region-02",
+      "region_label": "Lower muqarnas"
+    },
+    {
+      "lab": [
+        53.938,
+        -6.2191,
+        -2.902
+      ],
+      "hex": "#728486",
+      "share": 11.315,
+      "id": "region-02:c06",
+      "region": "region-02",
+      "region_label": "Lower muqarnas"
+    },
+    {
+      "lab": [
+        28.7087,
+        31.6512,
+        -58.4974
+      ],
+      "hex": "#2837a0",
+      "share": 10.2398,
+      "id": "region-02:c07",
+      "region": "region-02",
+      "region_label": "Lower muqarnas"
+    },
+    {
+      "lab": [
+        40.1204,
+        11.6481,
+        32.1924
+      ],
+      "hex": "#7e5629",
+      "share": 4.6829,
+      "id": "region-02:c08",
+      "region": "region-02",
+      "region_label": "Lower muqarnas"
+    },
+    {
+      "lab": [
+        7.922,
+        33.9923,
+        -47.9092
+      ],
+      "hex": "#06055a",
+      "share": 22.7631,
+      "id": "region-03:c01",
+      "region": "region-03",
+      "region_label": "Turquoise arch"
+    },
+    {
+      "lab": [
+        8.0602,
+        18.8047,
+        -28.3348
+      ],
+      "hex": "#17103e",
+      "share": 19.4756,
+      "id": "region-03:c02",
+      "region": "region-03",
+      "region_label": "Turquoise arch"
+    },
+    {
+      "lab": [
+        28.9026,
+        28.0574,
+        37.3577
+      ],
+      "hex": "#742f07",
+      "share": 14.9422,
+      "id": "region-03:c03",
+      "region": "region-03",
+      "region_label": "Turquoise arch"
+    },
+    {
+      "lab": [
+        14.6117,
+        20.8433,
+        5.9865
+      ],
+      "hex": "#41171d",
+      "share": 11.1256,
+      "id": "region-03:c04",
+      "region": "region-03",
+      "region_label": "Turquoise arch"
+    },
+    {
+      "lab": [
+        44.1498,
+        7.2755,
+        35.8784
+      ],
+      "hex": "#84632b",
+      "share": 9.0485,
+      "id": "region-03:c05",
+      "region": "region-03",
+      "region_label": "Turquoise arch"
+    },
+    {
+      "lab": [
+        40.1278,
+        9.3677,
+        -45.072
+      ],
+      "hex": "#2a5ea9",
+      "share": 8.6849,
+      "id": "region-03:c06",
+      "region": "region-03",
+      "region_label": "Turquoise arch"
+    },
+    {
+      "lab": [
+        36.1068,
+        -5.8436,
+        -19.6781
+      ],
+      "hex": "#305974",
+      "share": 7.5256,
+      "id": "region-03:c07",
+      "region": "region-03",
+      "region_label": "Turquoise arch"
+    },
+    {
+      "lab": [
+        58.5278,
+        6.9875,
+        -2.8265
+      ],
+      "hex": "#978992",
+      "share": 6.4345,
+      "id": "region-03:c08",
+      "region": "region-03",
+      "region_label": "Turquoise arch"
+    },
+    {
+      "lab": [
+        64.7706,
+        5.1795,
+        11.6395
+      ],
+      "hex": "#af9989",
+      "share": 17.8283,
+      "id": "region-04:c01",
+      "region": "region-04",
+      "region_label": "Central vault"
+    },
+    {
+      "lab": [
+        10.2869,
+        23.9554,
+        -32.5329
+      ],
+      "hex": "#1f1149",
+      "share": 16.2364,
+      "id": "region-04:c02",
+      "region": "region-04",
+      "region_label": "Central vault"
+    },
+    {
+      "lab": [
+        21.3462,
+        -4.0155,
+        0.8808
+      ],
+      "hex": "#2d3532",
+      "share": 15.0256,
+      "id": "region-04:c03",
+      "region": "region-04",
+      "region_label": "Central vault"
+    },
+    {
+      "lab": [
+        14.8862,
+        42.5796,
+        -59.3994
+      ],
+      "hex": "#150c7d",
+      "share": 14.6325,
+      "id": "region-04:c04",
+      "region": "region-04",
+      "region_label": "Central vault"
+    },
+    {
+      "lab": [
+        53.3656,
+        -17.5333,
+        -12.4635
+      ],
+      "hex": "#488994",
+      "share": 10.8253,
+      "id": "region-04:c05",
+      "region": "region-04",
+      "region_label": "Central vault"
+    },
+    {
+      "lab": [
+        44.1163,
+        10.586,
+        -27.9573
+      ],
+      "hex": "#5f6597",
+      "share": 8.5813,
+      "id": "region-04:c06",
+      "region": "region-04",
+      "region_label": "Central vault"
+    },
+    {
+      "lab": [
+        42.5051,
+        20.8869,
+        44.021
+      ],
+      "hex": "#935518",
+      "share": 8.491,
+      "id": "region-04:c07",
+      "region": "region-04",
+      "region_label": "Central vault"
+    },
+    {
+      "lab": [
+        22.6786,
+        28.5258,
+        12.0363
+      ],
+      "hex": "#5f2226",
+      "share": 8.3795,
+      "id": "region-04:c08",
+      "region": "region-04",
+      "region_label": "Central vault"
+    }
+  ],
+  "curation": {
+    "colors": [
+      {
+        "id": "p01",
+        "from": "region-01:c03",
+        "source_hex": "#efbf15",
+        "current": "#efbf15",
+        "note": "tile yellow, the curling floral vines in the upper panel"
+      },
+      {
+        "id": "p02",
+        "from": "region-01:c07",
+        "source_hex": "#b99241",
+        "current": "#b99241",
+        "note": "golden ochre, shaded yellow leaves and outlines"
+      },
+      {
+        "id": "p03",
+        "from": "region-01:c04",
+        "source_hex": "#6897b7",
+        "current": "#6897b7",
+        "note": "pale blue, weathered tile and floral highlights"
+      },
+      {
+        "id": "p04",
+        "from": "region-02:c04",
+        "source_hex": "#2e89ab",
+        "current": "#2e89ab",
+        "note": "turquoise, bright glazed ribs around the lower vault"
+      },
+      {
+        "id": "p05",
+        "from": "region-01:c05",
+        "source_hex": "#3263ac",
+        "current": "#3263ac",
+        "note": "lapis blue, the broad floral tile ground"
+      },
+      {
+        "id": "p06",
+        "from": "region-01:c06",
+        "source_hex": "#0e37ae",
+        "current": "#0e37ae",
+        "note": "cobalt, darker outlines around the upper arabesques"
+      },
+      {
+        "id": "p07",
+        "from": "region-01:c02",
+        "source_hex": "#0412cc",
+        "current": "#0412cc",
+        "note": "ultramarine, the most saturated blue tiles"
+      },
+      {
+        "id": "p08",
+        "from": "region-04:c04",
+        "source_hex": "#150c7d",
+        "current": "#150c7d",
+        "note": "indigo, shadowed geometry in the central muqarnas"
+      },
+      {
+        "id": "p09",
+        "from": "region-03:c01",
+        "source_hex": "#06055a",
+        "current": "#06055a",
+        "note": "midnight blue, the deepest recess of the half-dome"
+      }
+    ],
+    "operations": [],
+    "final_order": [
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p08",
+      "p09"
+    ]
+  },
+  "expected": {
+    "colors": [
+      "#efbf15",
+      "#b99241",
+      "#6897b7",
+      "#2e89ab",
+      "#3263ac",
+      "#0e37ae",
+      "#0412cc",
+      "#150c7d",
+      "#06055a"
+    ]
+  }
+}

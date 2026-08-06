@@ -30,7 +30,7 @@ class PaletteTests(unittest.TestCase):
     def test_schema_order_and_flag(self):
         self.assertEqual([p["name"] for p in self.palettes],
                          ["Kashan", "Golestan", "Termeh", "Khatam", "Nasir",
-                          "Mina", "Rostan", "Shahnameh", "Cherry"])
+                          "Mina", "Rostan", "Shahnameh", "Gilâs", "Iwan"])
         for palette in self.palettes:
             colors = palette["colors"]
             self.assertEqual(palette["order"], colorlib.greedy_order(colors))
@@ -47,9 +47,16 @@ class PaletteTests(unittest.TestCase):
             "Mina": "مینا",
             "Rostan": "رستن",
             "Shahnameh": "شاهنامه",
-            "Cherry": "گیلاس",
+            "Gilâs": "گیلاس",
+            "Iwan": "ایوان",
         }
         self.assertEqual({p["name"]: p["persian"] for p in self.palettes}, expected)
+
+    def test_accented_palette_name_and_slug(self):
+        name = "Gil\u00e2s"
+        self.assertEqual(colorlib.load_palette(name)["name"], name)
+        self.assertEqual(colorlib.palette_slug(name), "gilas")
+        self.assertTrue(colorlib.capitalized_word(name))
 
     def test_ciede2000_reference_pairs(self):
         cases = [
@@ -192,7 +199,7 @@ class OutputTests(unittest.TestCase):
         expected = {"swatch.png": (1600, 360), "card.png": (1600, 450),
                     "preview.png": (1600, 1000)}
         for palette in self.palettes:
-            folder = ROOT / "docs" / palette["name"].lower()
+            folder = ROOT / "docs" / colorlib.palette_slug(palette["name"])
             for filename, size in expected.items():
                 with Image.open(folder / filename) as image:
                     self.assertEqual(image.size, size)
@@ -412,7 +419,7 @@ class OutputTests(unittest.TestCase):
             folder = pathlib.Path(temporary)
             source_path = folder / "source.jpg"
             Image.new("RGB", (20, 20), "#8b3a33").save(source_path)
-            palette_path = folder / "cherry-palette.json"
+            palette_path = folder / "fixture-palette.json"
             colors = ["#d7c722", "#b58633", "#8b3a33", "#544441", "#aab791"]
             palette = {
                 "name": "YourPalette",
@@ -435,9 +442,9 @@ class OutputTests(unittest.TestCase):
             }
             notebook_workflow.write_json(palette_path, palette)
             (folder / "check-report.json").write_text("{}\n", encoding="utf-8")
-            reference = "https://example.com/cherry"
+            reference = "https://example.com/fixture"
             recipe = {
-                "palette": "Cherry",
+                "palette": "Fixture",
                 "source": {"image": source_path.name, "reference": reference},
                 "expected": {"colors": colors},
             }
@@ -458,11 +465,11 @@ class OutputTests(unittest.TestCase):
             self.assertIn("Source field title is missing", warnings)
 
             bundle = submission_workflow.apply_metadata_updates(bundle, {
-                "persian": "گیلاس",
-                "pronunciation": "gee-LAAS",
-                "about": "Colors drawn from a cherry study.",
+                "persian": "نمونه",
+                "pronunciation": "neh-MOO-neh",
+                "about": "Colors drawn from a fixture study.",
                 "source": {
-                    "title": "Cherry study",
+                    "title": "Fixture study",
                     "date": "2026",
                     "geography": "Iran",
                     "medium": "Photograph",
@@ -472,11 +479,11 @@ class OutputTests(unittest.TestCase):
                 },
             })
 
-            self.assertEqual(bundle["palette"]["name"], "Cherry")
+            self.assertEqual(bundle["palette"]["name"], "Fixture")
             self.assertEqual(bundle["palette"]["source"]["url"], reference)
             self.assertEqual(
                 bundle["palette"]["source"]["image"],
-                "sources/cherry/source.jpg",
+                "sources/fixture/source.jpg",
             )
             self.assertNotIn("artist", bundle["palette"]["source"])
             self.assertEqual(

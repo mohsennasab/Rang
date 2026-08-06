@@ -22,7 +22,7 @@ import make_preview
 import make_samples
 import make_stylx
 from colorlib import (COLORBLIND_THRESHOLD, VISION_LABELS, VISION_TYPES,
-                      discrete_subset, hex_to_rgb, interpolate,
+                      capitalized_word, discrete_subset, hex_to_rgb, interpolate,
                       pairwise_min_mean, worst_case)
 from notebook_workflow import (palette_slug, read_json, verify_recipe,
                                write_json)
@@ -205,8 +205,8 @@ def validate_submission_input(bundle):
     if (not isinstance(name, str) or not name.strip()
             or name == PALETTE_PLACEHOLDERS["name"]):
         problems.append("Palette name is missing or still uses YourPalette")
-    elif not re.fullmatch(r"[A-Z][A-Za-z]*", name):
-        problems.append("Palette name must be one capitalized ASCII word")
+    elif not capitalized_word(name):
+        problems.append("Palette name must be one capitalized word")
     if recipe.get("palette") != name:
         problems.append("The palette name does not match PALETTE_NAME from notebook 1")
     colors = palette.get("colors")

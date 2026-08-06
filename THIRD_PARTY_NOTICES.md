@@ -70,6 +70,21 @@ The photograph is licensed under
 The copy in `sources/mina/` retains the cropped file's original resolution
 and has not been modified.
 
+`sources/iwan/entrance.jpg` is the photograph
+[Entrance of the Shah Mosque of Isfahan](https://commons.wikimedia.org/wiki/File:Shah_mosque_of_isfahan.jpg)
+by Farzan95, also identified in the file metadata as Farzan Dehbashi. It was
+photographed on 8 February 2020.
+
+`sources/iwan/iwan.jpg` is a 1,280-pixel copy of
+[the entrance iwan of the Shah Mosque](https://commons.wikimedia.org/wiki/File:Mezquita_Shah,_Isfah%C3%A1n,_Ir%C3%A1n,_2016-09-20,_DD_64.jpg)
+by Diego Delso, photographed on 20 September 2016. The author's requested
+attribution is "Diego Delso, delso.photo, License CC BY-SA."
+
+Both Iwan photographs are licensed under
+[Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
+The Iwan gallery card and artwork preview resize the extraction photograph
+without cropping it. Those adaptations are distributed under the same license.
+
 ## Iran Darroudi painting
 
 `sources/rostan/growing-in-thus-way.jpg` is a low-resolution reference image
@@ -86,7 +101,7 @@ reduced versions of the same image and carry the same restriction.
 
 ## Taste of Cherry poster
 
-`sources/cherry/poster.jpg` is a 220-pixel-wide reference copy of the
+`sources/gilas/poster.jpg` is a 220-pixel-wide reference copy of the
 promotional poster for Abbas Kiarostami's 1997 film *Taste of Cherry*. The
 [Wikipedia file page](https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg)
 states that the poster copyright is believed to belong to Zeitgeist Films, the
@@ -96,7 +111,7 @@ Wikipedia uses its copy under a non-free fair-use rationale that applies to
 its own article. It does not grant a license for other reuse. The small copy in
 this repository is included only to identify and discuss the poster and the
 palette drawn from it. It is not covered by the Rang MIT License or CC0
-dedication, and no permission to reuse it is granted here. The Cherry gallery
+dedication, and no permission to reuse it is granted here. The Gilâs gallery
 card and artwork preview contain resized versions of the same poster and carry
 the same restriction.
 

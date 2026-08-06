@@ -24,7 +24,7 @@ from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.lines import Line2D
 from PIL import Image
 
-from colorlib import REPO_ROOT, discrete_subset, load_palette
+from colorlib import REPO_ROOT, discrete_subset, load_palette, palette_slug
 
 SEED = 42
 
@@ -325,7 +325,7 @@ def main(name, dem_path=None):
     else:
         fig = standard_page(pal, rng, dem_path)
 
-    out_dir = REPO_ROOT / "docs" / pal["name"].lower()
+    out_dir = REPO_ROOT / "docs" / palette_slug(pal["name"])
     out_dir.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_dir / "samples.png", metadata={"Software": "Rang"})
     plt.close(fig)
