@@ -3,6 +3,9 @@
 These notebooks install Rang directly from GitHub and load the Palmer Penguins
 dataset from its public online source. No local files are needed.
 
+These examples show how to use finished palettes. To create and document a new
+palette, use the numbered [palette-making notebooks](../tools/README.md).
+
 [![Open Python notebook in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/examples/rang_python_colab.ipynb)
 
 [![Open R notebook in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/examples/rang_r_colab.ipynb)

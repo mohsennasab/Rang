@@ -516,7 +516,10 @@ def main():
         ensure_order(name)
 
     pals = all_palettes()
-    make_logo.main()
+    logo_path = make_logo.save_logo(
+        make_logo.DEFAULT_OUTPUT_PATH, 1024, "transparent"
+    )
+    print(f"wrote {logo_path}")
     write_python(pals)
     write_r(pals)
     write_qgis(pals)

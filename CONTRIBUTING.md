@@ -1,8 +1,13 @@
 # Contributing a palette
 
 Thanks for wanting to add to Rang. This guide takes you from a museum photo to
-a merged pull request. The tooling does the packaging for you, your judgment
-goes into picking the artwork and curating the colors.
+a merged pull request. The notebooks handle the repeated calculations and
+packaging. You choose the artwork, regions, colors, order, and adjustments.
+
+The recommended path uses two Jupyter notebooks in Google Colab. Notebook 1
+carries one recipe from regions to a finished palette. Notebook 2 validates
+that work and prepares a complete proposal package. The command-line scripts
+remain available for contributors who prefer a terminal.
 
 ## Contents
 
@@ -10,8 +15,8 @@ goes into picking the artwork and curating the colors.
 - [Setup](#setup)
 - [Step 1, extract candidate colors](#step-1-extract-candidate-colors)
 - [Step 2, curate the ramp](#step-2-curate-the-ramp)
-- [Step 3, check the palette](#step-3-check-the-palette)
-- [Step 4, adjust colors that miss](#step-4-adjust-colors-that-miss)
+- [Step 3, adjust colors that miss](#step-3-adjust-colors-that-miss)
+- [Step 4, check the palette](#step-4-check-the-palette)
 - [Step 5, write the palette file](#step-5-write-the-palette-file)
 - [Step 6, build](#step-6-build)
 - [Step 7, open the pull request](#step-7-open-the-pull-request)
@@ -20,23 +25,54 @@ goes into picking the artwork and curating the colors.
 ## What makes a good source
 
 - Persian art in a broad sense. Carpets, miniatures, tilework, manuscripts,
-  ceramics, metalwork, architecture. Works from the wider Persianate world
+  ceramics, metalwork, and architecture. Works from the wider Persianate world
   fit when the visual tradition is Persian.
 - A photograph you have the rights to share. Two paths work. Use a museum
   image whose object page states a suitable reuse license, or your own photo of
   tilework, a building or an object. New contributed photographs must use CC
   BY 4.0 or CC0, with the exact license and credit line recorded in the palette
-  file. Either way keep a reference URL, an object page or something like the
-  UNESCO listing for a site.
+  file. In either case, keep a reference URL. Use an object page for a museum
+  work or an authoritative page for a photographed site.
 - Strong, varied color. A good source usually offers a warm side and a cool
   side so the ramp can carry both discrete classes and continuous data.
 
-Name the palette after the place, the art form or the work itself. One word,
+Name the palette after the place, art form, or work itself. Use one word,
 capitalized, no spaces. Kashan, Isfahan, Tabriz, Shiraz, Mina, Zarrin. Add a
-pronunciation so readers can say it, stress goes on the last syllable in
-Persian.
+pronunciation so readers can say it. Stress usually falls on the last syllable
+in Persian.
 
 ## Setup
+
+### Google Colab
+
+Start with notebook 1:
+
+[![Open the Rang workflow in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/rang_palette_workflow.ipynb)
+
+Upload the artwork once and work through the seven stages from top to bottom.
+After the replay check succeeds, the notebook downloads one workflow ZIP. It
+contains the source copy, region overlay, candidate sheet, adjustment preview,
+report, recipe, and palette draft.
+
+Then open notebook 2 and upload the workflow ZIP:
+
+[![Open the Rang submission builder in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/rang_submission_builder.ipynb)
+
+Notebook 2 recovers known values from the recipe and shows any missing source
+metadata as warnings. Its update dictionary is optional and starts empty, so
+running it unchanged keeps every recovered value. Missing descriptive metadata
+does not stop the proposal package. The notebook then checks the saved recipe,
+asks you to review the source rights and visuals, and downloads one submission
+ZIP. That package contains repository-ready files, documentation images,
+palette-specific software test files, review evidence, and a pull request
+draft.
+
+Yellow **YOUR INPUT** cells need factual information such as an object page.
+Blue **YOUR DECISION** cells are where you choose regions, colors, and
+adjustments. No cloud storage connection or repository checkout is needed
+inside Colab.
+
+### Local setup
 
 ```
 git clone https://github.com/mohsennasab/Rang.git
@@ -46,10 +82,21 @@ pip install -r tools/requirements.txt
 
 ## Step 1, extract candidate colors
 
-Run k-means over the photo in CIELAB. Cluster region by region, not the whole
-image at once. Large fields dominate a whole-image run and the centers drift
-toward muddy averages. Read pixel coordinates for regions off any image viewer
-that shows cursor position.
+Open [the workflow notebook](tools/notebooks/rang_palette_workflow.ipynb) and
+go to step 01. It displays the source you upload in an interactive drawer.
+Drag three to seven boxes over regions with a clear visual purpose, such as a
+border, medallion, field, garment, flower, tile panel, or area of reflected
+light. Name each region, choose k, and add a short note below the image. You can
+undo the last box, delete one region, or clear the drawing and begin again.
+Inspect the saved overlay before moving to step 02.
+
+Step 02 runs k-means over each region in CIELAB. Large fields can
+dominate a whole-image run and pull cluster centers toward muddy averages.
+Separate regions help small details keep their voice.
+
+The notebook saves the regions, source checksum, k values, extraction
+settings, and accepted candidates in the recipe. The command-line equivalent
+is:
 
 ```
 python tools/extract_colors.py --image "PHOTO_URL" -k 8 --region 900,1400,1700,2200,medallion --region 700,700,1900,1300,field --swatches cache/clusters.png
@@ -65,11 +112,15 @@ Treat the extracted clusters as a starting point, not a verdict.
 
 ## Step 2, curate the ramp
 
-Pick five to twelve colors and arrange them as a ramp, dark to light to dark,
-warm to cool, whatever walk through the artwork reads smoothly when
-interpolated. Look at the artwork while you do this. The clusters are
-candidates, the palette is a judgment call about what the work actually looks
-like.
+In step 03, run the short inventory cell to see each exact region ID and its
+available candidate numbers. Fill the selection template in the next cell with
+five to twelve complete candidate IDs. Write one source note for each color
+and place the rows in the order you want for a continuous ramp.
+
+Pick five to twelve colors and arrange them as a ramp. It might move from dark
+to light to dark, or from warm to cool. Choose a path through the artwork that
+reads smoothly when interpolated. Look at the image while you do this. The
+clusters are candidates. The palette is your judgment of what belongs.
 
 Trust your eyes here. You are welcome to move away from an extracted center,
 replace it with a color you find more beautiful or leave out a dominant color
@@ -78,7 +129,26 @@ belong to the artwork, feel good together and work clearly in real
 visualizations. The checks in the next steps are guides for that judgment, not
 a recipe that overrides it.
 
-## Step 3, check the palette
+## Step 3, adjust colors that miss
+
+Use step 04 when a selected cluster needs a careful change. L changes
+lightness, C changes chroma, and H changes hue. Each accepted edit records its
+before color, after color, numeric change, and your reason.
+
+When a color is close but not right, nudge it in lightness, chroma or hue
+instead of hand editing hex codes:
+
+```
+python tools/adjust_colors.py --colors "#8a9463,#345f72" --edit "1:L+4,C-2" --png cache/before_after.png
+```
+
+Rerun the check after adjusting. The two scripts are meant to be cycled until
+the numbers and your eyes agree.
+
+## Step 4, check the palette
+
+Run step 05 to create the full report from the saved recipe. The command-line
+equivalent is:
 
 ```
 python tools/check_palette.py --colors "#7f3020,#ab4a47,#c07049,#1a3b45" --image "PHOTO_URL"
@@ -97,29 +167,37 @@ The report covers three things:
   or say in the pull request why it needs to drift, for example lifting a
   color slightly so neighbors stay separable.
 
-## Step 4, adjust colors that miss
-
-When a color is close but not right, nudge it in lightness, chroma or hue
-instead of hand editing hex codes:
-
-```
-python tools/adjust_colors.py --colors "#8a9463,#345f72" --edit "1:L+4,C-2" --png cache/before_after.png
-```
-
-Rerun the check after adjusting. The two scripts are meant to be cycled until
-the numbers and your eyes agree.
-
 ## Step 5, write the palette file
 
-Create `palettes/<name>.json`, all lowercase filename. Copy
-`palettes/kashan.json` as a template for a museum source, or
-`palettes/golestan.json` for your own photograph. Fill in every source field.
-Write one short note per color saying where in the artwork it comes from, and
-add the pronunciation. A second photo showing the work in its setting can go
-in `source.context_image` with a caption, it appears on the palette page.
-Leave out `order` and `colorblind` if you want the build to compute them.
+In step 06, enter the artwork metadata exactly as the source record gives it.
+Pay close attention to the reuse status, rights statement, credit, object page,
+and source image URL. The notebook writes a palette draft from the final recipe
+colors and notes.
+
+Notebook 2 places the draft at `repository/palettes/<name>.json` inside the
+submission ZIP. Complete as much of the source record as you can in notebook 1.
+Notebook 2 lets you add or correct selected fields. Any remaining gaps appear
+as warnings and do not stop the proposal ZIP. They must still be resolved
+before the palette is merged. Write one short note per color saying where it
+appears in the artwork, and add the pronunciation. A second photo showing the
+work in its setting can later go in `source.context_image` with a caption. It
+appears on the palette page. Leave out `position` if you want the repository
+build to assign it.
+
+Notebook 2 places the final recipe at `repository/recipes/<name>.json`. It
+records the source checksum, regions, k-means settings, accepted candidates,
+selected candidate IDs, and the complete adjustment history. Working images
+and reports stay under `review` in the submission package or in `cache/`.
 
 ## Step 6, build
+
+Step 06 writes the current metadata to the palette draft. Step 07 replays the
+recipe and downloads the final workflow ZIP. Upload that ZIP to notebook 2.
+Review the metadata warnings and source rights, describe why the artwork and
+palette belong in Rang, then build and inspect the proposal.
+
+The `repository` folder in the submission ZIP follows the Rang directory
+layout. Copy its contents into a local checkout and then run:
 
 ```
 python tools/build.py <name>
@@ -137,18 +215,36 @@ NOAA AORC precipitation and a CONUS DEM. Pass your own raster with
 `python tools/make_samples.py <name> --dem your_dem.tif` if you want to see
 the palette on different terrain.
 
+Notebook 2 also creates one-palette ArcGIS Pro, QGIS, HEC-RAS, and GeoLibre
+files under `software`. They let a reviewer try the proposal before merging.
+Do not copy them over the combined Rang files. The command above recreates the
+combined collection correctly.
+
 ## Step 7, open the pull request
 
-Include in the description:
+Before opening the pull request, run step 07 in notebook 1. It reruns the saved
+extraction and adjustment history without asking for a new artistic decision.
+Download the workflow ZIP only after it reports `verified: True`. Run notebook
+2 and inspect its file list, gallery card, and samples before downloading the
+submission ZIP.
+
+Notebook 2 writes `PULL_REQUEST.md` as a starting description. Check it against
+the finished branch and include:
 
 - the object page link and one sentence on why this work
 - anything the check flagged, such as a color beyond distance 3 and why
 - the sample page image
+- confirmation that step 07 reproduced the accepted candidates and final
+  colors
 
 A maintainer will look at the source, the numbers and the samples. Expect
 small requests about ramp order or a color that reads poorly in a plot.
 
 ## Palette file reference
+
+Notebook 2 can package a proposal while some descriptive fields are missing.
+That makes it easier to share work for review. It does not change the final
+requirements below. Resolve every required field before merge.
 
 | key | required | meaning |
 |---|---|---|
