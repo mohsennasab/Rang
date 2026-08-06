@@ -56,10 +56,16 @@ rang_palettes <- list(
     colorblind = FALSE,
     source = "The Wedding of Siyavush and Farangis, Folio 185v from the Shahnama of Shah Tahmasp, ca. 1525-30, The Metropolitan Museum of Art, New York, https://www.metmuseum.org/art/collection/search/452137"
   ),
-  Cherry = list(
+  Gilâs = list(
     colors = c("#58463f", "#598fb6", "#964765", "#b8715b", "#d8c723"),
     order = c(1, 3, 5, 4, 2),
     colorblind = TRUE,
     source = "Taste of Cherry promotional poster, 1997, Wikipedia, https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg"
+  ),
+  Iwan = list(
+    colors = c("#efbf15", "#b99241", "#6897b7", "#2e89ab", "#3263ac", "#0e37ae", "#0412cc", "#150c7d", "#06055a"),
+    order = c(1, 5, 3, 7, 4, 9, 6, 8, 2),
+    colorblind = FALSE,
+    source = "Entrance iwan of the Shah Mosque, 2020, Wikimedia Commons, https://commons.wikimedia.org/wiki/File:Shah_mosque_of_isfahan.jpg"
   )
 )

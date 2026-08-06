@@ -1,8 +1,8 @@
-# Cherry (Persian: گیلاس, say it gee-LAAS, Persian for cherry)
+# Gilâs (Persian: گیلاس, say it gee-LAAS, Persian for cherry)
 
-![Cherry swatch](swatch.png)
+![Gilâs swatch](swatch.png)
 
-Cherry takes its five colors from the promotional poster for Abbas Kiarostami's Taste of Cherry. Charcoal and muted blue hold the film's stillness, while mauve, dusty coral, and mustard yellow carry the poster's face, tree, and sunlit field. I kept the set small to match the film's spare visual language.
+Gilâs takes its five colors from the promotional poster for Abbas Kiarostami's Taste of Cherry. Charcoal and muted blue hold the film's stillness, while mauve, dusty coral, and mustard yellow carry the poster's face, tree, and sunlit field. I kept the set small to match the film's spare visual language.
 
 ## Source
 
@@ -37,14 +37,14 @@ the source photo. Lower numbers mean a closer match.
 
 ## The palette beside the artwork
 
-![Cherry preview](preview.png)
+![Gilâs preview](preview.png)
 
 ## Sample plots
 
-![Cherry samples](samples.png)
+![Gilâs samples](samples.png)
 
 The rainfall map uses one day of NOAA AORC precipitation on a roughly 1 km grid.
-Run `python tools/make_samples.py cherry` to remake the plots. Add
+Run `python tools/make_samples.py gilas` to remake the plots. Add
 `--dem your_dem.tif` to use your own elevation raster.
 
 ## Separation and color vision
@@ -66,24 +66,24 @@ Python
 
 ```python
 import rang
-rang.rang("Cherry", 5)
-rang.cmap("Cherry")
+rang.rang("Gilâs", 5)
+rang.cmap("Gilâs")
 ```
 
 R
 
 ```r
 library(Rang)
-rang("Cherry", 5)
+rang("Gilâs", 5)
 ```
 
 ArcGIS Pro users get every palette by importing
 [arcgis/Rang.stylx](../../arcgis/Rang.stylx) once, with steps in the
 [ArcGIS guide](../../arcgis/README.md). QGIS users can import
 [qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
-[qgis/Cherry.gpl](../../qgis/Cherry.gpl) for swatches, see the
+[qgis/Gilâs.gpl](../../qgis/Gilâs.gpl) for swatches, see the
 [QGIS guide](../../qgis/README.md). HEC-RAS users can import
-[hecras/Rang-Cherry.xml](../../hecras/Rang-Cherry.xml), see the
+[hecras/Rang-Gilâs.xml](../../hecras/Rang-Gilâs.xml), see the
 [HEC-RAS guide](../../hecras/README.md). GeoLibre users can copy colors from
 [geolibre/Rang.txt](../../geolibre/Rang.txt), with steps for raster and vector
 layers in the [GeoLibre guide](../../geolibre/README.md).

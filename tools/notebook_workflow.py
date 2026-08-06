@@ -28,7 +28,8 @@ from sklearn.cluster import KMeans
 from adjust_colors import apply_edit
 from colorlib import (COLORBLIND_THRESHOLD, VISION_LABELS, VISION_TYPES,
                       greedy_order, hex_to_rgb, lab_to_rgb, pairwise_min_mean,
-                      presence_in_image, rgb_to_hex, rgb_to_lab, worst_case)
+                      palette_slug, presence_in_image, rgb_to_hex, rgb_to_lab,
+                      worst_case)
 
 CREATOR = "Mohsen Tahmasebi Nasab, PhD"
 WEBSITE = "https://hydromohsen.com"
@@ -45,13 +46,6 @@ def use_arial():
         "axes.spines.top": False,
         "axes.spines.right": False,
     })
-
-
-def palette_slug(name):
-    slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
-    if not slug:
-        raise ValueError("palette name must contain a letter or number")
-    return slug
 
 
 def read_json(path):

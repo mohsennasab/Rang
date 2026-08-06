@@ -139,17 +139,31 @@ Shahnameh comes from the wedding of Siyavush and Farangis. Deep violet and pavil
 
 ***
 
-### Cherry
+### Gilâs
 
-![Cherry, the artwork and its palette](docs/cherry/card.png)
+![Gilâs, the artwork and its palette](docs/gilas/card.png)
 
 Taste of Cherry promotional poster, 1997. Wikipedia. Promotional poster for Taste of Cherry. [Reference](https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg) Persian: گیلاس. Say it gee-LAAS, Persian for cherry.
 
-Cherry takes its five colors from the promotional poster for Abbas Kiarostami's Taste of Cherry. Charcoal and muted blue hold the film's stillness, while mauve, dusty coral, and mustard yellow carry the poster's face, tree, and sunlit field. I kept the set small to match the film's spare visual language.
+Gilâs takes its five colors from the promotional poster for Abbas Kiarostami's Taste of Cherry. Charcoal and muted blue hold the film's stillness, while mauve, dusty coral, and mustard yellow carry the poster's face, tree, and sunlit field. I kept the set small to match the film's spare visual language.
 
 `#58463f #598fb6 #964765 #b8715b #d8c723`
 
-[Sample plots and full details](docs/cherry/README.md)
+[Sample plots and full details](docs/gilas/README.md)
+
+***
+
+### Iwan
+
+![Iwan, the artwork and its palette](docs/iwan/card.png)
+
+Entrance iwan of the Shah Mosque, 2020. Wikimedia Commons. Photograph by Farzan95, 2020. [Reference](https://commons.wikimedia.org/wiki/File:Shah_mosque_of_isfahan.jpg) Persian: ایوان. Say it ee-VAHN, Persian for a vaulted hall open on one side.
+
+Iwan moves from sunlit yellow into a long run of blues drawn from the tiled entrance iwan of Isfahan's Shah Mosque. Ochre and pale blue form a short threshold before turquoise, lapis, cobalt, ultramarine, indigo and midnight blue take over. I made it for maps that need a clear light-to-dark sequence with most of the visual weight carried by blue.
+
+`#efbf15 #b99241 #6897b7 #2e89ab #3263ac #0e37ae #0412cc #150c7d #06055a`
+
+[Sample plots and full details](docs/iwan/README.md)
 
 <!-- gallery:end -->
 
@@ -169,7 +183,8 @@ stress lands on the last syllable.
 | Mina      | مینا    | mee-NAH                               | enamel, the material used in minakari               |
 | Rostan    | رستن    | rohs-TAN                              | to grow, from the painting's Persian title          |
 | Shahnameh | شاهنامه | shah-nah-MEH                          | Book of Kings, the wedding of Siyavush and Farangis |
-| Cherry    | گیلاس     | gee-LAAS                            | Cherry, the fruit                                   |
+| Gilâs     | گیلاس     | gee-LAAS                            | cherry, the fruit                                   |
+| Iwan      | ایوان     | ee-VAHN                             | a vaulted hall open on one side                     |
 
 Each palette page repeats the pronunciation beside its name.
 
@@ -381,11 +396,18 @@ The Rostan palette comes from Iran Darroudi's 1972 painting
 low-resolution reference image is all rights reserved and is included only
 to identify and discuss the source work.
 
-The Cherry palette comes from the promotional poster for Abbas Kiarostami's
+The Gilâs palette comes from the promotional poster for Abbas Kiarostami's
 1997 film *Taste of Cherry*. The
 [Wikipedia file page](https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg)
 identifies the poster as copyrighted and non-free. The 220-pixel reference is
 included only to identify and discuss the poster and the palette drawn from it.
+
+The Iwan palette uses two photographs of the Shah Mosque in Isfahan. The
+[extraction photograph](https://commons.wikimedia.org/wiki/File:Shah_mosque_of_isfahan.jpg)
+is by Farzan95, 2020. The
+[page photograph](https://commons.wikimedia.org/wiki/File:Mezquita_Shah,_Isfah%C3%A1n,_Ir%C3%A1n,_2016-09-20,_DD_64.jpg)
+is by Diego Delso, 2016. Both are licensed under
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 The sample plots use public data: rainfall from the
 [NOAA Analysis of Record for Calibration](https://registry.opendata.aws/noaa-nws-aorc/),
