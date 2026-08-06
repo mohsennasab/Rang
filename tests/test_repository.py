@@ -368,6 +368,9 @@ class OutputTests(unittest.TestCase):
         self.assertIn("LOCAL_WORKFLOW_ZIP", submission_text)
         self.assertIn("METADATA_UPDATES", submission_text)
         self.assertIn("apply_metadata_updates", submission_text)
+        self.assertIn("submission_metadata_warnings", submission_text)
+        self.assertIn("Warnings do not stop", submission_text)
+        self.assertNotIn('"name": "",', submission_text)
         self.assertIn("Complete and validate the metadata", submission_text)
         self.assertIn("CONFIRM_SOURCE_RIGHTS", submission_text)
         self.assertIn("CONFIRM_VISUAL_REVIEW", submission_text)
@@ -452,6 +455,14 @@ class OutputTests(unittest.TestCase):
                 "recipe": recipe,
             }
 
+            bundle = submission_workflow.apply_metadata_updates(bundle, {})
+            self.assertEqual(
+                submission_workflow.validate_submission_input(bundle), []
+            )
+            warnings = submission_workflow.submission_metadata_warnings(bundle)
+            self.assertIn("Palette field persian is missing", warnings)
+            self.assertIn("Source field title is missing", warnings)
+
             bundle = submission_workflow.apply_metadata_updates(bundle, {
                 "persian": "گیلاس",
                 "pronunciation": "gee-LAAS",
@@ -476,6 +487,9 @@ class OutputTests(unittest.TestCase):
             self.assertNotIn("artist", bundle["palette"]["source"])
             self.assertEqual(
                 submission_workflow.validate_submission_input(bundle), []
+            )
+            self.assertEqual(
+                submission_workflow.submission_metadata_warnings(bundle), []
             )
             self.assertEqual(
                 notebook_workflow.read_json(palette_path), bundle["palette"]

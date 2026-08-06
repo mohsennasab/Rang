@@ -38,9 +38,11 @@ artistic judgment.
 | 2, prepare the proposal | [`rang_submission_builder.ipynb`](notebooks/rang_submission_builder.ipynb) | a submission ZIP with repository files, images, software tests, review material, and a pull request draft |
 
 Notebook 2 recovers values already known from the recipe, shows any missing
-metadata, and gives you one input cell to complete or correct it. It then
-checks the rights fields, replays the recipe, and asks for a short explanation
-of why the work belongs in Rang. Its
+metadata as warnings, and gives you one optional input cell for additions or
+corrections. Leave that dictionary empty to keep every recovered value. Missing
+descriptive metadata does not stop the proposal from being built. It then
+replays the recipe and asks for a short explanation of why the work belongs in
+Rang. Its
 palette-specific ArcGIS Pro, QGIS, HEC-RAS, and GeoLibre files are for testing.
 They do not replace the combined collection files. The maintainer rebuilds
 those after adding the proposed palette to a branch.

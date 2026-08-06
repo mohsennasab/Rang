@@ -6,10 +6,10 @@ The contribution path uses two notebooks.
    seven-stage artistic workflow. Upload the artwork once, draw the sampling
    regions, curate the colors, and download a verified workflow ZIP.
 2. [`rang_submission_builder.ipynb`](rang_submission_builder.ipynb) accepts
-   that workflow ZIP, lets you complete or correct the artwork metadata, and
-   creates one submission ZIP with repository-ready files, documentation
-   images, palette-specific software files, review material, and a pull request
-   draft.
+   that workflow ZIP, shows missing artwork metadata as warnings, and creates
+   one submission ZIP with repository-ready files, documentation images,
+   palette-specific software files, review material, and a pull request draft.
+   Its optional update dictionary starts empty, which keeps recovered values.
 
 [![Open notebook 1 in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/rang_palette_workflow.ipynb)
 

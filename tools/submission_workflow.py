@@ -197,7 +197,7 @@ def apply_metadata_updates(bundle, updates):
 
 
 def validate_submission_input(bundle):
-    """Return clear problems that must be fixed before packaging."""
+    """Return workflow problems that must be fixed before packaging."""
     recipe = bundle["recipe"]
     palette = bundle["palette"]
     problems = []
@@ -207,15 +207,8 @@ def validate_submission_input(bundle):
         problems.append("Palette name is missing or still uses YourPalette")
     elif not re.fullmatch(r"[A-Z][A-Za-z]*", name):
         problems.append("Palette name must be one capitalized ASCII word")
-    for field in ("persian", "pronunciation"):
-        value = palette.get(field)
-        if (not isinstance(value, str) or not value.strip()
-                or value == PALETTE_PLACEHOLDERS[field]):
-            problems.append(f"Palette field {field} is missing or still uses placeholder text")
     if recipe.get("palette") != name:
         problems.append("The palette name does not match PALETTE_NAME from notebook 1")
-    if palette.get("about") == PALETTE_PLACEHOLDERS["about"]:
-        problems.append("Palette field about still uses placeholder text")
     colors = palette.get("colors")
     if not isinstance(colors, list) or not 5 <= len(colors) <= 12:
         problems.append("Palette colors must contain between 5 and 12 entries")
@@ -237,39 +230,54 @@ def validate_submission_input(bundle):
         problems.append("Palette order must use every number from 1 to the color count")
     source = palette.get("source")
     if not isinstance(source, dict):
-        problems.append("Palette metadata is missing the source record")
+        problems.append("Palette source metadata must be a dictionary")
         source = {}
-    for field in ("title", "date", "geography", "medium", "url", "image"):
-        value = source.get(field)
-        if not isinstance(value, str) or not value.strip():
-            problems.append(f"Source field {field} is missing")
-        elif value == SOURCE_PLACEHOLDERS[field]:
-            problems.append(f"Source field {field} still uses placeholder text")
-    url = str(source.get("url", ""))
-    if url and not url.startswith("https://"):
-        problems.append("Source field url must use an HTTPS address")
     image_value = str(source.get("image", ""))
     image_path = pathlib.PurePosixPath(image_value.replace("\\", "/"))
     if (image_value and not image_value.startswith("https://")
             and (image_path.is_absolute() or ".." in image_path.parts)):
         problems.append("Source field image must use HTTPS or a safe relative path")
+    if not (bundle["work_dir"] / "check-report.json").is_file():
+        problems.append("The workflow ZIP is missing check-report.json from step 05")
+    return problems
+
+
+def submission_metadata_warnings(bundle):
+    """Return metadata items that need review without stopping packaging."""
+    palette = bundle.get("palette", {})
+    source = palette.get("source", {})
+    warnings = []
+    for field in ("persian", "pronunciation", "about"):
+        value = palette.get(field)
+        if (not isinstance(value, str) or not value.strip()
+                or value == PALETTE_PLACEHOLDERS[field]):
+            warnings.append(f"Palette field {field} is missing")
+    if not isinstance(source, dict):
+        warnings.append("Source metadata is missing")
+        return warnings
+    for field in ("title", "date", "geography", "medium", "url", "image"):
+        value = source.get(field)
+        if (not isinstance(value, str) or not value.strip()
+                or value == SOURCE_PLACEHOLDERS[field]):
+            warnings.append(f"Source field {field} is missing")
+    url = str(source.get("url", ""))
+    if url and url != SOURCE_PLACEHOLDERS["url"] and not url.startswith("https://"):
+        warnings.append("Source field url should use a complete HTTPS address")
     if not isinstance(source.get("public_domain"), bool):
-        problems.append("source.public_domain must be true or false")
-    if source.get("public_domain") is False:
+        warnings.append("source.public_domain has not been confirmed as true or false")
+    elif source.get("public_domain") is False:
         for field in ("credit", "rights"):
             value = source.get(field)
             if (not isinstance(value, str) or not value.strip()
                     or value == SOURCE_PLACEHOLDERS.get(field)):
-                problems.append(f"A non-public-domain source needs source.{field}")
+                warnings.append(f"A licensed source should include source.{field}")
     elif source.get("public_domain") is True:
         for field in ("museum", "accession"):
             value = source.get(field)
             if (not isinstance(value, str) or not value.strip()
                     or value == SOURCE_PLACEHOLDERS[field]):
-                problems.append(f"A public-domain museum source needs source.{field}")
-    if not (bundle["work_dir"] / "check-report.json").is_file():
-        problems.append("The workflow ZIP is missing check-report.json from step 05")
-    return problems
+                warnings.append(f"A public-domain museum source should include source.{field}")
+    return warnings
 
 
 def validate_proposal_details(why_this_work, maintainer_notes):
@@ -398,8 +406,11 @@ def _save_source_card(source_path, output):
 
 def _write_images(palette, source_path, docs_dir, source_card):
     render_palette = json.loads(json.dumps(palette))
-    render_palette["source"]["image"] = str(source_path)
-    render_palette["source"]["card_image"] = str(source_card)
+    render_source = render_palette.setdefault("source", {})
+    render_source["image"] = str(source_path)
+    render_source["card_image"] = str(source_card)
+    render_source.setdefault("title", "Title not provided")
+    render_source.setdefault("date", "Date not provided")
     docs_dir.mkdir(parents=True, exist_ok=True)
     make_preview.make_swatch(render_palette, docs_dir / "swatch.png")
     make_preview.make_card(render_palette, docs_dir / "card.png")
@@ -413,7 +424,9 @@ def _write_images(palette, source_path, docs_dir, source_card):
 
 
 def _source_text(source):
-    parts = [f'{source["title"]}, {source["date"]}.']
+    title = source.get("title") or "Artwork title not provided"
+    date = source.get("date")
+    parts = [f"{title}, {date}." if date else f"{title}."]
     if source.get("artist"):
         parts.append(f'{source["artist"]}.')
     if source.get("geography"):
@@ -425,13 +438,26 @@ def _source_text(source):
         parts.append(f"{holder}.")
     if source.get("credit"):
         parts.append(f'{source["credit"]}.')
-    if source.get("public_domain"):
-        parts.append(
-            f'[Object page]({source["url"]}) and '
-            f'[source image]({source["image"]}), listed as public domain or open access.'
-        )
+    url = source.get("url")
+    image = source.get("image")
+    if source.get("public_domain") is True:
+        links = []
+        if url:
+            links.append(f"[Object page]({url})")
+        if image:
+            links.append(f"[source image]({image})")
+        if links:
+            parts.append(" and ".join(links) + ", listed as public domain or open access.")
+        else:
+            parts.append("Public-domain source links were not provided.")
+    elif source.get("public_domain") is False:
+        if url:
+            parts.append(f"[Object page]({url}).")
+        parts.append(source.get("rights") or "Reuse terms were not provided.")
     else:
-        parts.append(f'[Object page]({source["url"]}). {source["rights"]}')
+        if url:
+            parts.append(f"[Object page]({url}).")
+        parts.append("Reuse status has not been confirmed.")
     return "\n\n".join(parts)
 
 
@@ -554,17 +580,24 @@ def _pull_request_text(palette, report, why_this_work, maintainer_notes):
         f'{values["share_within_8"]:.2f}% within 8'
         for color, values in report["source_presence"].items()
     ]
+    metadata_warnings = submission_metadata_warnings({"palette": palette})
+    warning_text = "\n".join(f"- {item}" for item in metadata_warnings)
+    if warning_text:
+        warning_text = "Metadata still to review:\n\n" + warning_text
     notes = maintainer_notes.strip() or "No additional notes."
+    if warning_text:
+        notes = warning_text + "\n\n" + notes
+    rights_mark = " " if metadata_warnings else "x"
     return f"""# New palette
 
 - Palette name: {name}
-- Object page: {source["url"]}
+- Object page: {source.get("url") or "Not provided"}
 - Why this work: {why_this_work.strip()}
 
 ## Checklist
 
-- [x] Photo reuse status and exact license are recorded in `source.public_domain` and `source.rights` when needed
-- [x] `palettes/{palette_slug(name)}.json` has the required fields and one note per color
+- [{rights_mark}] Photo reuse status and exact license are recorded in `source.public_domain` and `source.rights` when needed
+- [{rights_mark}] `palettes/{palette_slug(name)}.json` has the required metadata and one note per color
 - [x] The saved recipe replayed successfully
 - [ ] Run `python tools/check_palette.py --palette {palette_slug(name)}` after copying the proposal into the repository
 - [ ] Run `python tools/build.py {palette_slug(name)}` and commit the combined generated files
@@ -587,6 +620,10 @@ color vision flag: {report["colorblind"]}
 def _manifest_text(palette):
     name = palette["name"]
     slug = palette_slug(name)
+    metadata_warnings = submission_metadata_warnings({"palette": palette})
+    warning_text = "\n".join(f"- {item}" for item in metadata_warnings)
+    if not warning_text:
+        warning_text = "No metadata warnings were recorded."
     return f"""# {name} submission package
 
 This package was prepared from the verified Rang notebook workflow.
@@ -595,6 +632,10 @@ Workflow created by Mohsen Tahmasebi Nasab, PhD,
 [hydromohsen.com](https://hydromohsen.com). Notebook and tool code follow the
 Rang MIT License. Palette data follows the Rang CC0 dedication. The source
 image keeps the rights recorded in the palette file.
+
+## Metadata review
+
+{warning_text}
 
 ## Repository-ready files
 
@@ -643,6 +684,7 @@ def _zip_tree(folder, archive_path):
 def build_submission(bundle, output_base, why_this_work, maintainer_notes=""):
     """Create repository files, review files, software tests, and one ZIP."""
     validate_proposal_details(why_this_work, maintainer_notes)
+    bundle = apply_metadata_updates(bundle, {})
     problems = validate_submission_input(bundle)
     if problems:
         raise ValueError("Fix these workflow fields:\n- " + "\n- ".join(problems))

@@ -347,7 +347,8 @@ workflow_archive = receive_workflow_zip(LOCAL_WORKFLOW_ZIP)
 bundle = load_workflow_archive(
     workflow_archive, SUBMISSION_BASE / "verified-workflow"
 )
-print("Palette:", bundle["palette"].get("name", "missing"))
+print("Palette name in recipe:", bundle["recipe"].get("palette", "missing"))
+print("Palette name in draft:", bundle["palette"].get("name", "missing"))
 print("Recipe:", bundle["recipe_path"].name)
 print("Palette draft:", bundle["palette_path"].name)
 print("Source image:", bundle["source_path"].name)''', "user-input"),
@@ -355,9 +356,12 @@ print("Source image:", bundle["source_path"].name)''', "user-input"),
                 "Review what was saved and fill any gaps before building the proposal."),
         markdown("""
 Notebook 2 recovers the palette name and object-page link from the recipe when
-it can. It also prepares a repository path for the uploaded source image. The
-list below shows anything that still needs attention. Complete or correct those
-values in the input cell that follows. You do not need to repeat the color work.
+it can. It also prepares a repository path for the uploaded source image.
+
+The report below separates two kinds of messages. A **STOP** message means the
+saved color workflow cannot be built. A **WARNING** identifies incomplete
+descriptive metadata. Warnings do not stop you from creating the proposal ZIP.
+You can finish those fields now or leave them for later review.
 """),
         code('''bundle = apply_metadata_updates(bundle, {})
 palette = bundle["palette"]
@@ -374,19 +378,47 @@ for field in (
 ):
     print(f"{field}: {source.get(field, 'missing')}")
 
-problems = validate_submission_input(bundle)
-if problems:
-    print("\\nNEEDS ATTENTION")
-    for problem in problems:
+blocking_problems = validate_submission_input(bundle)
+metadata_warnings = submission_metadata_warnings(bundle)
+if blocking_problems:
+    print("\\nSTOP")
+    for problem in blocking_problems:
         print("-", problem)
 else:
-    print("\\nThe saved metadata is complete")'''),
+    print("\\nThe saved color workflow can be built")
+if metadata_warnings:
+    print("\\nWARNINGS")
+    for warning in metadata_warnings:
+        print("-", warning)
+    print("You may continue and complete these fields later")
+else:
+    print("\\nThe metadata has no warnings")'''),
         markdown("""
-Use the exact wording from the artwork or collection page whenever it is
-available.
+The next cell is optional. It starts as an empty dictionary, so running it as
+shown keeps every recovered value and continues. Add only the fields you want
+to enter or correct. Do not copy saved values into this cell.
+
+For example, this changes three palette fields and two source fields:
+
+```python
+METADATA_UPDATES = {
+    "persian": "گیلاس",
+    "pronunciation": "gee-LAAS",
+    "about": "A short description in your own words",
+    "source": {
+        "title": "The artwork title",
+        "date": "The date shown by the source",
+    },
+}
+```
+
+Use exact wording from the artwork or collection page. Do not type filler such
+as `f`, `test`, or `unknown` into a field. Leave the field out instead. Missing
+metadata will be listed in the proposal for later review.
 
 - `name` is one capitalized English word, such as `Cherry`. It must match the
-  name used in notebook 1. The builder normally recovers it for you.
+  name used in notebook 1. This is the only required metadata field, and the
+  builder normally recovers it for you.
 - `persian` is the Persian name. `pronunciation` explains how to say it in
   English. `about` is a short description in your own words.
 - `title`, `date`, `geography`, and `medium` describe the artwork.
@@ -394,48 +426,32 @@ available.
 - `image` is either a direct HTTPS image address or its future repository path.
   The builder normally proposes a path such as `sources/cherry/source.jpg`.
 - Set `public_domain` to `True` only when the source page explicitly says the
-  image is public domain or open access. A museum source also needs `museum`
-  and `accession`.
+  image is public domain or open access. A museum source should also include
+  `museum` and `accession`.
 - Set `public_domain` to `False` for your own photo or a licensed image. Then
   enter the exact `credit` and `rights` wording.
 - Set `preserve_aspect` to `True` when the complete artwork should retain its
   original proportions. Leave it as `None` to keep the saved value.
 
-An empty entry keeps a valid saved value. It does not erase it.
+If a recovered value is correct, do not mention it in `METADATA_UPDATES`.
 """),
-        banner("YOUR INPUT", "Complete the missing fields and correct anything that was saved incorrectly."),
+        banner("OPTIONAL INPUT", "Leave this dictionary empty to keep the saved values, or add only the fields you want to change."),
         code('''METADATA_UPDATES = {
-    "name": "",
-    "persian": "",
-    "pronunciation": "",
-    "about": "",
-    "source": {
-        "title": "",
-        "artist": "",
-        "date": "",
-        "geography": "",
-        "medium": "",
-        "museum": "",
-        "site": "",
-        "department": "",
-        "accession": "",
-        "credit": "",
-        "url": "",
-        "image": "",
-        "download_url": "",
-        "reference_label": "",
-        "rights": "",
-        "public_domain": None,
-        "preserve_aspect": None,
-    },
 }''', "user-input"),
         code('''bundle = apply_metadata_updates(bundle, METADATA_UPDATES)
-problems = validate_submission_input(bundle)
-if problems:
+blocking_problems = validate_submission_input(bundle)
+if blocking_problems:
     raise ValueError(
-        "Complete or correct these metadata fields above:\\n- "
-        + "\\n- ".join(problems)
+        "The saved color workflow cannot be built:\\n- "
+        + "\\n- ".join(blocking_problems)
     )
+
+metadata_warnings = submission_metadata_warnings(bundle)
+if metadata_warnings:
+    print("Metadata warnings")
+    for warning in metadata_warnings:
+        print("-", warning)
+    print("These warnings will be included in the proposal for later review")
 
 verification = verify_recipe(bundle["recipe_path"], bundle["work_dir"])
 for key, value in verification.items():
@@ -447,14 +463,14 @@ palette = bundle["palette"]
 source = palette["source"]
 print()
 print("Name:", palette["name"])
-print("Persian:", palette["persian"])
-print("Pronunciation:", palette["pronunciation"])
+print("Persian:", palette.get("persian", "not provided"))
+print("Pronunciation:", palette.get("pronunciation", "not provided"))
 print("Colors:", *palette["colors"])
-print("Artwork:", source["title"])
-print("Object page:", source["url"])
-print("Public domain:", source["public_domain"])
-if not source["public_domain"]:
-    print("Rights:", source["rights"])'''),
+print("Artwork:", source.get("title", "not provided"))
+print("Object page:", source.get("url", "not provided"))
+print("Public domain:", source.get("public_domain", "not confirmed"))
+if source.get("public_domain") is False:
+    print("Rights:", source.get("rights", "not provided"))'''),
         markdown("""
 The three saved figures below show the regions, k-means candidates, and color
 adjustments. A missing adjustment image is normal when no colors were changed.
@@ -485,6 +501,10 @@ credit, reuse status, and exact license against the source record. Also inspect
 the four viewing rows and source distances from notebook 1. The checks support
 your judgment, but the palette should still feel true to the artwork and work
 well as a visualization.
+
+If metadata warnings remain, checking the source box means you reviewed the
+object page and understand that those warnings must be resolved before the
+palette is merged. The warnings do not prevent you from building the proposal.
 """),
         banner("YOUR INPUT", "Describe why the work belongs in Rang and add any review notes."),
         code('''WHY_THIS_WORK = "" #@param {type:"string"}
@@ -933,7 +953,7 @@ def step_06_cells(example):
         "credit": "Credit line",
         "url": "OBJECT PAGE URL",
         "image": "SOURCE IMAGE URL",
-        "public_domain": True
+        "public_domain": None
     }
 }'''
     return [

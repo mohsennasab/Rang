@@ -59,9 +59,11 @@ Then open notebook 2 and upload the workflow ZIP:
 [![Open the Rang submission builder in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mohsennasab/Rang/blob/main/tools/notebooks/rang_submission_builder.ipynb)
 
 Notebook 2 recovers known values from the recipe and shows any missing source
-metadata. Complete or correct those fields in its marked input cell. It then
-checks the saved recipe, asks you to confirm the source rights and visual
-review, and downloads one submission ZIP. That package contains
+metadata as warnings. Its update dictionary is optional and starts empty, so
+running it unchanged keeps every recovered value. Missing descriptive metadata
+does not stop the proposal package. The notebook then checks the saved recipe,
+asks you to review the source rights and visuals, and downloads one submission
+ZIP. That package contains
 repository-ready files, documentation images, palette-specific software test
 files, review evidence, and a pull request draft.
 
