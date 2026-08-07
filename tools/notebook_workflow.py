@@ -130,7 +130,8 @@ def image_sha256(path):
 
 
 def open_rgb(path):
-    return ImageOps.exif_transpose(Image.open(path)).convert("RGB")
+    with Image.open(path) as image:
+        return ImageOps.exif_transpose(image).convert("RGB")
 
 
 def show_source(path, title="Source image"):

@@ -9,4 +9,5 @@
 *.gpl text eol=lf
 *.png binary
 *.jpg binary
+*.tif binary
 *.stylx binary

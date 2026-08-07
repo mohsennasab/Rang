@@ -46,6 +46,16 @@ the source photo. Lower numbers mean a closer match.
 
 ![Khatam preview](preview.png)
 
+## Extraction regions
+
+![Khatam extraction regions](regions.png)
+
+These are the saved sampling areas used for CIELAB k-means. The exact pixel
+coordinates, normalized coordinates and k values are recorded in the
+[Khatam recipe](../../recipes/khatam.json). The regions make the
+extraction repeatable. Choosing and refining the final colors still depends
+on the artwork and the contributor's eye.
+
 ## Sample plots
 
 ![Khatam samples](samples.png)

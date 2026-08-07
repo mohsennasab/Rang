@@ -1,0 +1,556 @@
+{
+  "schema_version": 1,
+  "palette": "Kashan",
+  "creator": "Mohsen Tahmasebi Nasab, PhD",
+  "website": "https://hydromohsen.com",
+  "license_holder": "Mohsen Tahmasebi Nasab",
+  "source": {
+    "image": "sources/kashan/extraction.jpg",
+    "sha256": "3cd50267137b557ecaaf64058c88c35f782117a031c2972565ee701dd47a7aa6",
+    "oriented_width": 2562,
+    "oriented_height": 3701,
+    "color_handling": "EXIF orientation followed by RGB conversion",
+    "reference": "https://www.metmuseum.org/art/collection/search/451470",
+    "original_filename": "DT5450.jpg"
+  },
+  "regions": [
+    {
+      "id": "region-01",
+      "label": "Region 1",
+      "box": [
+        769,
+        1319,
+        1824,
+        2375
+      ],
+      "normalized": [
+        0.300156,
+        0.35639,
+        0.711944,
+        0.641718
+      ],
+      "k": 8,
+      "note": ""
+    },
+    {
+      "id": "region-02",
+      "label": "Region 2",
+      "box": [
+        508,
+        507,
+        2067,
+        1367
+      ],
+      "normalized": [
+        0.198283,
+        0.13699,
+        0.806792,
+        0.36936
+      ],
+      "k": 8,
+      "note": ""
+    },
+    {
+      "id": "region-03",
+      "label": "Region 3",
+      "box": [
+        2054,
+        190,
+        2380,
+        3582
+      ],
+      "normalized": [
+        0.801717,
+        0.051337,
+        0.928962,
+        0.967847
+      ],
+      "k": 8,
+      "note": ""
+    }
+  ],
+  "extraction": {
+    "color_space": "CIELAB",
+    "white_point": "D65",
+    "algorithm": "sklearn.cluster.KMeans",
+    "random_state": 0,
+    "n_init": 20,
+    "algorithm_mode": "lloyd",
+    "maximum_region_size": 400
+  },
+  "environment": {
+    "python": "3.12.9",
+    "numpy": "2.3.2",
+    "pillow": "11.3.0",
+    "scikit_learn": "1.8.0"
+  },
+  "region_record": {
+    "status": "regions added to an established palette",
+    "palette_colors_changed": false,
+    "note": "The saved boxes were added after the palette was published. The established colors and their order were kept unchanged."
+  },
+  "accepted_candidates": [
+    {
+      "lab": [
+        46.5316,
+        40.2951,
+        20.7344
+      ],
+      "hex": "#b24f4e",
+      "share": 19.9812,
+      "id": "region-01:c01",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        58.9522,
+        8.1754,
+        32.0893
+      ],
+      "hex": "#ad8756",
+      "share": 14.7606,
+      "id": "region-01:c02",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        23.8432,
+        -7.7261,
+        -7.5223
+      ],
+      "hex": "#223d44",
+      "share": 13.8725,
+      "id": "region-01:c03",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        75.3073,
+        3.0572,
+        24.0024
+      ],
+      "hex": "#cfb68e",
+      "share": 13.7456,
+      "id": "region-01:c04",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        51.6797,
+        26.0922,
+        27.7918
+      ],
+      "hex": "#b1694d",
+      "share": 12.32,
+      "id": "region-01:c05",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        67.625,
+        6.1665,
+        47.0925
+      ],
+      "hex": "#c89f4e",
+      "share": 12.2781,
+      "id": "region-01:c06",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        36.2235,
+        -7.4427,
+        -16.5152
+      ],
+      "hex": "#325a6f",
+      "share": 6.9212,
+      "id": "region-01:c07",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        41.715,
+        5.344,
+        7.5014
+      ],
+      "hex": "#705f56",
+      "share": 6.1206,
+      "id": "region-01:c08",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        72.6292,
+        2.0576,
+        24.9825
+      ],
+      "hex": "#c7af85",
+      "share": 22.6165,
+      "id": "region-02:c01",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        45.9309,
+        42.1382,
+        20.2479
+      ],
+      "hex": "#b34c4d",
+      "share": 21.2059,
+      "id": "region-02:c02",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        49.4022,
+        30.9824,
+        21.0105
+      ],
+      "hex": "#af5f53",
+      "share": 12.8167,
+      "id": "region-02:c03",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        65.0776,
+        5.4419,
+        35.112
+      ],
+      "hex": "#bb995f",
+      "share": 12.5633,
+      "id": "region-02:c04",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        55.217,
+        15.1828,
+        23.4207
+      ],
+      "hex": "#aa7a5c",
+      "share": 9.293,
+      "id": "region-02:c05",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        59.8164,
+        9.4859,
+        51.3473
+      ],
+      "hex": "#b78831",
+      "share": 8.9525,
+      "id": "region-02:c06",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        48.9505,
+        -0.3541,
+        13.005
+      ],
+      "hex": "#7c745e",
+      "share": 7.4548,
+      "id": "region-02:c07",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        34.8844,
+        -4.7654,
+        -6.3214
+      ],
+      "hex": "#44555c",
+      "share": 5.0973,
+      "id": "region-02:c08",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        59.9008,
+        2.8445,
+        29.0762
+      ],
+      "hex": "#a68d5d",
+      "share": 17.1184,
+      "id": "region-03:c01",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        46.9647,
+        -0.7108,
+        29.0393
+      ],
+      "hex": "#7e6e3e",
+      "share": 15.1316,
+      "id": "region-03:c02",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        65.9043,
+        5.9981,
+        36.3981
+      ],
+      "hex": "#bf9b5f",
+      "share": 14.4079,
+      "id": "region-03:c03",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        52.7651,
+        15.0162,
+        31.4589
+      ],
+      "hex": "#a67348",
+      "share": 14.3816,
+      "id": "region-03:c04",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        42.9199,
+        -6.3182,
+        15.7237
+      ],
+      "hex": "#65684b",
+      "share": 13.9474,
+      "id": "region-03:c05",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        43.3303,
+        11.1906,
+        20.343
+      ],
+      "hex": "#835f45",
+      "share": 8.6316,
+      "id": "region-03:c06",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        58.9664,
+        9.1256,
+        47.592
+      ],
+      "hex": "#b38637",
+      "share": 8.6184,
+      "id": "region-03:c07",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        43.1547,
+        30.5531,
+        25.512
+      ],
+      "hex": "#9d503d",
+      "share": 7.7632,
+      "id": "region-03:c08",
+      "region": "region-03",
+      "region_label": "Region 3"
+    }
+  ],
+  "curation": {
+    "colors": [
+      {
+        "id": "p01",
+        "from": "region-03:c08",
+        "source_hex": "#9d503d",
+        "current": "#7f3020",
+        "note": "dark red, corner cartouche outlines"
+      },
+      {
+        "id": "p02",
+        "from": "region-02:c02",
+        "source_hex": "#b34c4d",
+        "current": "#ab4a47",
+        "note": "rose red of the field"
+      },
+      {
+        "id": "p03",
+        "from": "region-01:c05",
+        "source_hex": "#b1694d",
+        "current": "#c07049",
+        "note": "terracotta"
+      },
+      {
+        "id": "p04",
+        "from": "region-01:c06",
+        "source_hex": "#c89f4e",
+        "current": "#c59b46",
+        "note": "golden ochre, medallion palmettes"
+      },
+      {
+        "id": "p05",
+        "from": "region-02:c01",
+        "source_hex": "#c7af85",
+        "current": "#ccac7e",
+        "note": "tan of the border ground"
+      },
+      {
+        "id": "p06",
+        "from": "region-01:c04",
+        "source_hex": "#cfb68e",
+        "current": "#e2cfb1",
+        "note": "ivory, medallion star and cartouches"
+      },
+      {
+        "id": "p07",
+        "from": "region-03:c01",
+        "source_hex": "#a68d5d",
+        "current": "#8a9463",
+        "note": "sage green, guard border"
+      },
+      {
+        "id": "p08",
+        "from": "region-01:c07",
+        "source_hex": "#325a6f",
+        "current": "#345f72",
+        "note": "mid blue, medallion lobes"
+      },
+      {
+        "id": "p09",
+        "from": "region-01:c03",
+        "source_hex": "#223d44",
+        "current": "#1a3b45",
+        "note": "indigo, medallion ground"
+      }
+    ],
+    "operations": [
+      {
+        "id": "a001",
+        "op": "replace",
+        "target": "p01",
+        "before": "#9d503d",
+        "after": "#7f3020",
+        "reason": "Kept the established Kashan color while adding the saved extraction regions.",
+        "hex": "#7f3020"
+      },
+      {
+        "id": "a002",
+        "op": "replace",
+        "target": "p02",
+        "before": "#b34c4d",
+        "after": "#ab4a47",
+        "reason": "Kept the established Kashan color while adding the saved extraction regions.",
+        "hex": "#ab4a47"
+      },
+      {
+        "id": "a003",
+        "op": "replace",
+        "target": "p03",
+        "before": "#b1694d",
+        "after": "#c07049",
+        "reason": "Kept the established Kashan color while adding the saved extraction regions.",
+        "hex": "#c07049"
+      },
+      {
+        "id": "a004",
+        "op": "replace",
+        "target": "p04",
+        "before": "#c89f4e",
+        "after": "#c59b46",
+        "reason": "Kept the established Kashan color while adding the saved extraction regions.",
+        "hex": "#c59b46"
+      },
+      {
+        "id": "a005",
+        "op": "replace",
+        "target": "p05",
+        "before": "#c7af85",
+        "after": "#ccac7e",
+        "reason": "Kept the established Kashan color while adding the saved extraction regions.",
+        "hex": "#ccac7e"
+      },
+      {
+        "id": "a006",
+        "op": "replace",
+        "target": "p06",
+        "before": "#cfb68e",
+        "after": "#e2cfb1",
+        "reason": "Kept the established Kashan color while adding the saved extraction regions.",
+        "hex": "#e2cfb1"
+      },
+      {
+        "id": "a007",
+        "op": "replace",
+        "target": "p07",
+        "before": "#a68d5d",
+        "after": "#8a9463",
+        "reason": "Kept the established Kashan color while adding the saved extraction regions.",
+        "hex": "#8a9463"
+      },
+      {
+        "id": "a008",
+        "op": "replace",
+        "target": "p08",
+        "before": "#325a6f",
+        "after": "#345f72",
+        "reason": "Kept the established Kashan color while adding the saved extraction regions.",
+        "hex": "#345f72"
+      },
+      {
+        "id": "a009",
+        "op": "replace",
+        "target": "p09",
+        "before": "#223d44",
+        "after": "#1a3b45",
+        "reason": "Kept the established Kashan color while adding the saved extraction regions.",
+        "hex": "#1a3b45"
+      }
+    ],
+    "final_order": [
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p08",
+      "p09"
+    ]
+  },
+  "expected": {
+    "colors": [
+      "#7f3020",
+      "#ab4a47",
+      "#c07049",
+      "#c59b46",
+      "#ccac7e",
+      "#e2cfb1",
+      "#8a9463",
+      "#345f72",
+      "#1a3b45"
+    ]
+  }
+}

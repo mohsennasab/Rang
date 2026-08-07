@@ -5,9 +5,15 @@ palette. Notebook 1 in [`tools/notebooks`](../tools/notebooks/README.md)
 creates and replays the file. Notebook 2 includes the accepted recipe in the
 repository-ready proposal folder.
 
-One accepted recipe belongs at `recipes/<palette>.json`. Working copies,
+One accepted recipe belongs at `recipes/<palette>.json`. Every published Rang
+palette has one. Working copies,
 region overlays, candidate sheets, and reports stay in the downloaded
 workflow ZIP or the ignored `cache/` directory.
+
+Some palettes were published before the notebook workflow existed. Their
+recipes record the regions later supplied by the creator and preserve the
+already published colors through explicit replacement steps. This keeps the
+region history honest without silently changing an established palette.
 
 A recipe records:
 

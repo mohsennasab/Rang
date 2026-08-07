@@ -16,6 +16,7 @@ Reads palettes/*.json, the single source of truth, and regenerates
   docs/<name>/swatch.png         color strip
   docs/<name>/card.png           artwork beside the strip, for the gallery
   docs/<name>/preview.png        artwork plus vision simulations
+  docs/<name>/regions.png        saved extraction regions on the source photo
   docs/<name>/samples.png        the six standard sample plots
   docs/<name>/README.md          the palette page
   README.md                      the gallery section between the markers
@@ -36,6 +37,7 @@ import re
 import make_hecras_ramp
 import make_logo
 import make_preview
+import make_region_overlay
 import make_samples
 import make_stylx
 from colorlib import (COLORBLIND_THRESHOLD, PALETTE_DIR, REPO_ROOT,
@@ -384,6 +386,16 @@ the source photo. Lower numbers mean a closer match.
 
 ![{name} preview](preview.png)
 
+## Extraction regions
+
+![{name} extraction regions](regions.png)
+
+These are the saved sampling areas used for CIELAB k-means. The exact pixel
+coordinates, normalized coordinates and k values are recorded in the
+[{name} recipe](../../recipes/{palette_slug(name)}.json). The regions make the
+extraction repeatable. Choosing and refining the final colors still depends
+on the artwork and the contributor's eye.
+
 ## Sample plots
 
 ![{name} samples](samples.png)
@@ -531,6 +543,7 @@ def main():
     for name in targets:
         if not args.skip_images:
             make_preview.main(palette_slug(name))
+            make_region_overlay.render_palette(palette_slug(name))
             make_samples.main(palette_slug(name))
         write_docs_page(load_palette(palette_slug(name)))
 

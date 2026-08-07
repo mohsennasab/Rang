@@ -38,6 +38,16 @@ the source photo. Lower numbers mean a closer match.
 
 ![Termeh preview](preview.png)
 
+## Extraction regions
+
+![Termeh extraction regions](regions.png)
+
+These are the saved sampling areas used for CIELAB k-means. The exact pixel
+coordinates, normalized coordinates and k values are recorded in the
+[Termeh recipe](../../recipes/termeh.json). The regions make the
+extraction repeatable. Choosing and refining the final colors still depends
+on the artwork and the contributor's eye.
+
 ## Sample plots
 
 ![Termeh samples](samples.png)

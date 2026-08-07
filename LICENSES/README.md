@@ -68,8 +68,8 @@ The Iwan source and context photographs come from Wikimedia Commons and are
 licensed under CC BY-SA 4.0. Their authors, source pages and reuse terms are
 identified in [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md).
 
-Generated gallery cards and artwork previews follow the rights status of the
-source image they contain.
+Generated gallery cards, artwork previews and extraction-region images follow
+the rights status of the source image they contain.
 
 ## Third-party material
 

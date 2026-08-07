@@ -1,0 +1,442 @@
+{
+  "schema_version": 1,
+  "palette": "Golestan",
+  "creator": "Mohsen Tahmasebi Nasab, PhD",
+  "website": "https://hydromohsen.com",
+  "license_holder": "Mohsen Tahmasebi Nasab",
+  "source": {
+    "image": "sources/golestan/extraction.jpg",
+    "sha256": "aee6fdc139e7234d4f52e3b165c0ab52d3ae3782b9462819ed98494116fa6a74",
+    "oriented_width": 2976,
+    "oriented_height": 2976,
+    "color_handling": "EXIF orientation followed by RGB conversion",
+    "reference": "https://whc.unesco.org/en/list/1422/",
+    "original_filename": "20180716_102434.jpg"
+  },
+  "regions": [
+    {
+      "id": "region-01",
+      "label": "Region 1",
+      "box": [
+        425,
+        375,
+        2644,
+        2663
+      ],
+      "normalized": [
+        0.142809,
+        0.126008,
+        0.888441,
+        0.894825
+      ],
+      "k": 8,
+      "note": ""
+    },
+    {
+      "id": "region-02",
+      "label": "Region 2",
+      "box": [
+        17,
+        18,
+        2976,
+        377
+      ],
+      "normalized": [
+        0.005712,
+        0.006048,
+        1.0,
+        0.12668
+      ],
+      "k": 8,
+      "note": ""
+    }
+  ],
+  "extraction": {
+    "color_space": "CIELAB",
+    "white_point": "D65",
+    "algorithm": "sklearn.cluster.KMeans",
+    "random_state": 0,
+    "n_init": 20,
+    "algorithm_mode": "lloyd",
+    "maximum_region_size": 400
+  },
+  "environment": {
+    "python": "3.12.9",
+    "numpy": "2.3.2",
+    "pillow": "11.3.0",
+    "scikit_learn": "1.8.0"
+  },
+  "region_record": {
+    "status": "regions added to an established palette",
+    "palette_colors_changed": false,
+    "note": "The saved boxes were added after the palette was published. The established colors and their order were kept unchanged."
+  },
+  "accepted_candidates": [
+    {
+      "lab": [
+        71.5177,
+        -5.0794,
+        61.7555
+      ],
+      "hex": "#c6af35",
+      "share": 16.5187,
+      "id": "region-01:c01",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        71.8723,
+        -2.1771,
+        2.4228
+      ],
+      "hex": "#aeb1ac",
+      "share": 15.9736,
+      "id": "region-01:c02",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        63.5986,
+        -7.7735,
+        33.9268
+      ],
+      "hex": "#a19c5d",
+      "share": 14.8834,
+      "id": "region-01:c03",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        31.6514,
+        18.5466,
+        -42.6729
+      ],
+      "hex": "#37448e",
+      "share": 11.8228,
+      "id": "region-01:c04",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        56.2032,
+        -19.9281,
+        -5.7157
+      ],
+      "hex": "#549190",
+      "share": 11.6501,
+      "id": "region-01:c05",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        46.227,
+        4.3671,
+        -27.2391
+      ],
+      "hex": "#586d9b",
+      "share": 10.3756,
+      "id": "region-01:c06",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        47.6789,
+        10.1435,
+        12.0671
+      ],
+      "hex": "#896b5d",
+      "share": 9.962,
+      "id": "region-01:c07",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        28.8711,
+        2.883,
+        0.7508
+      ],
+      "hex": "#494343",
+      "share": 8.8138,
+      "id": "region-01:c08",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        72.4574,
+        -4.722,
+        59.64
+      ],
+      "hex": "#c8b23d",
+      "share": 36.0867,
+      "id": "region-02:c01",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        55.57,
+        21.6925,
+        7.8121
+      ],
+      "hex": "#ae7779",
+      "share": 12.6939,
+      "id": "region-02:c02",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        31.6756,
+        17.384,
+        -42.2979
+      ],
+      "hex": "#35458d",
+      "share": 11.3878,
+      "id": "region-02:c03",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        45.1795,
+        4.3118,
+        -28.1915
+      ],
+      "hex": "#536b9a",
+      "share": 10.0306,
+      "id": "region-02:c04",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        57.8356,
+        -3.0639,
+        32.7645
+      ],
+      "hex": "#998b51",
+      "share": 8.6429,
+      "id": "region-02:c05",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        36.0929,
+        1.7268,
+        2.5402
+      ],
+      "hex": "#5a5451",
+      "share": 8.2092,
+      "id": "region-02:c06",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        69.8621,
+        3.3799,
+        2.5052
+      ],
+      "hex": "#b3a9a6",
+      "share": 6.7602,
+      "id": "region-02:c07",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        55.3107,
+        -20.4078,
+        1.1725
+      ],
+      "hex": "#5a8e82",
+      "share": 6.1888,
+      "id": "region-02:c08",
+      "region": "region-02",
+      "region_label": "Region 2"
+    }
+  ],
+  "curation": {
+    "colors": [
+      {
+        "id": "p01",
+        "from": "region-01:c08",
+        "source_hex": "#494343",
+        "current": "#432f2c",
+        "note": "dark umber, outlines and the hunter's horse"
+      },
+      {
+        "id": "p02",
+        "from": "region-01:c07",
+        "source_hex": "#896b5d",
+        "current": "#ae6259",
+        "note": "coral red, blossoms and the rider's coat"
+      },
+      {
+        "id": "p03",
+        "from": "region-02:c02",
+        "source_hex": "#ae7779",
+        "current": "#b57f86",
+        "note": "rose pink, flowers among the scrollwork"
+      },
+      {
+        "id": "p04",
+        "from": "region-01:c02",
+        "source_hex": "#aeb1ac",
+        "current": "#b5b5ac",
+        "note": "ivory, tile ground of the medallion"
+      },
+      {
+        "id": "p05",
+        "from": "region-01:c01",
+        "source_hex": "#c6af35",
+        "current": "#cbb11c",
+        "note": "golden yellow, the field"
+      },
+      {
+        "id": "p06",
+        "from": "region-01:c03",
+        "source_hex": "#a19c5d",
+        "current": "#9a9a68",
+        "note": "pale olive, the hunting ground"
+      },
+      {
+        "id": "p07",
+        "from": "region-01:c05",
+        "source_hex": "#549190",
+        "current": "#45939c",
+        "note": "turquoise, the medallion ring"
+      },
+      {
+        "id": "p08",
+        "from": "region-01:c06",
+        "source_hex": "#586d9b",
+        "current": "#577ab1",
+        "note": "azure, lit edges of the scrollwork"
+      },
+      {
+        "id": "p09",
+        "from": "region-01:c04",
+        "source_hex": "#37448e",
+        "current": "#333a80",
+        "note": "cobalt, the arabesque scrolls"
+      }
+    ],
+    "operations": [
+      {
+        "id": "a001",
+        "op": "replace",
+        "target": "p01",
+        "before": "#494343",
+        "after": "#432f2c",
+        "reason": "Kept the established Golestan color while adding the saved extraction regions.",
+        "hex": "#432f2c"
+      },
+      {
+        "id": "a002",
+        "op": "replace",
+        "target": "p02",
+        "before": "#896b5d",
+        "after": "#ae6259",
+        "reason": "Kept the established Golestan color while adding the saved extraction regions.",
+        "hex": "#ae6259"
+      },
+      {
+        "id": "a003",
+        "op": "replace",
+        "target": "p03",
+        "before": "#ae7779",
+        "after": "#b57f86",
+        "reason": "Kept the established Golestan color while adding the saved extraction regions.",
+        "hex": "#b57f86"
+      },
+      {
+        "id": "a004",
+        "op": "replace",
+        "target": "p04",
+        "before": "#aeb1ac",
+        "after": "#b5b5ac",
+        "reason": "Kept the established Golestan color while adding the saved extraction regions.",
+        "hex": "#b5b5ac"
+      },
+      {
+        "id": "a005",
+        "op": "replace",
+        "target": "p05",
+        "before": "#c6af35",
+        "after": "#cbb11c",
+        "reason": "Kept the established Golestan color while adding the saved extraction regions.",
+        "hex": "#cbb11c"
+      },
+      {
+        "id": "a006",
+        "op": "replace",
+        "target": "p06",
+        "before": "#a19c5d",
+        "after": "#9a9a68",
+        "reason": "Kept the established Golestan color while adding the saved extraction regions.",
+        "hex": "#9a9a68"
+      },
+      {
+        "id": "a007",
+        "op": "replace",
+        "target": "p07",
+        "before": "#549190",
+        "after": "#45939c",
+        "reason": "Kept the established Golestan color while adding the saved extraction regions.",
+        "hex": "#45939c"
+      },
+      {
+        "id": "a008",
+        "op": "replace",
+        "target": "p08",
+        "before": "#586d9b",
+        "after": "#577ab1",
+        "reason": "Kept the established Golestan color while adding the saved extraction regions.",
+        "hex": "#577ab1"
+      },
+      {
+        "id": "a009",
+        "op": "replace",
+        "target": "p09",
+        "before": "#37448e",
+        "after": "#333a80",
+        "reason": "Kept the established Golestan color while adding the saved extraction regions.",
+        "hex": "#333a80"
+      }
+    ],
+    "final_order": [
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p08",
+      "p09"
+    ]
+  },
+  "expected": {
+    "colors": [
+      "#432f2c",
+      "#ae6259",
+      "#b57f86",
+      "#b5b5ac",
+      "#cbb11c",
+      "#9a9a68",
+      "#45939c",
+      "#577ab1",
+      "#333a80"
+    ]
+  }
+}

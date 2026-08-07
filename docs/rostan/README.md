@@ -36,6 +36,16 @@ the source photo. Lower numbers mean a closer match.
 
 ![Rostan preview](preview.png)
 
+## Extraction regions
+
+![Rostan extraction regions](regions.png)
+
+These are the saved sampling areas used for CIELAB k-means. The exact pixel
+coordinates, normalized coordinates and k values are recorded in the
+[Rostan recipe](../../recipes/rostan.json). The regions make the
+extraction repeatable. Choosing and refining the final colors still depends
+on the artwork and the contributor's eye.
+
 ## Sample plots
 
 ![Rostan samples](samples.png)

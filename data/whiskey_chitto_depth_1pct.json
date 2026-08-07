@@ -1,0 +1,15 @@
+{
+  "title": "Whiskey Chitto 1% annual-chance flood depth",
+  "location": "Louisiana, United States",
+  "source_layer": "BLE_DEP01PCT",
+  "source_format": "Esri file geodatabase raster",
+  "file": "whiskey_chitto_depth_1pct.tif",
+  "crs": "EPSG:3451",
+  "horizontal_units": "US survey feet",
+  "depth_units": "feet",
+  "resampling": "Bilinear resampling to 25 percent of the original width and height",
+  "original_cell_size_feet": 9.99915293865582,
+  "stored_cell_size_feet": 39.99661175462328,
+  "nodata": 3.3999999521443642e+38,
+  "note": "This reduced raster is included for visualization examples. It is not intended for engineering decisions. Confirm the source and publication terms before reuse."
+}

@@ -10,8 +10,12 @@ terms or legal status of this material.
 [Silk Kashan Carpet](https://www.metmuseum.org/art/collection/search/451470),
 accession 58.46, at The Metropolitan Museum of Art.
 
+`sources/kashan/extraction.jpg` is the full-resolution Open Access image used
+by the saved extraction recipe.
+
 The museum identifies qualifying images of public-domain artworks as Open
-Access under CC0 1.0. The Kashan gallery card and preview contain this image.
+Access under CC0 1.0. The Kashan gallery card, preview and extraction-region
+image contain this image.
 
 Credit: The Metropolitan Museum of Art, Gift of Mrs. Douglas M. Moffat, 1958.
 
@@ -21,8 +25,8 @@ folio 185v from the Shahnama of Shah Tahmasp, accession 1970.301.28.
 
 The museum marks the folio image public domain and makes it available through
 its Open Access program. The copy under `sources/` retains its downloaded
-dimensions. Its gallery card and preview contain resized versions of the same
-image.
+dimensions. Its gallery card, preview and extraction-region image contain
+resized versions of the same image.
 
 Credit: The Metropolitan Museum of Art, Gift of Arthur A. Houghton Jr., 1970.
 
@@ -33,15 +37,18 @@ are reserved. They are included as documented sources for the palettes and
 are not covered by the repository's MIT License or CC0 dedication.
 
 - `sources/golestan/tilework.jpg`, photographed 2018
+- `sources/golestan/extraction.jpg`, the full-resolution extraction photograph
 - `sources/golestan/palace.jpg`, photographed 2018
 - `sources/termeh/cloth.jpg`, photographed 2026
+- `sources/termeh/extraction.jpg`, the full-resolution extraction photograph
 - `sources/termeh/setting.jpg`, photographed 2026
 - `sources/khatam/inlay.jpg`, photographed 2026
+- `sources/khatam/extraction.jpg`, the full-resolution extraction photograph
 - `sources/khatam/bazaar.jpg`, photographed 2018
 - `sources/mina/piece.jpg`, photographed 2026
 
-The corresponding gallery cards and artwork previews contain these
-photographs and have the same restriction.
+The corresponding gallery cards, artwork previews and extraction-region
+images contain these photographs and have the same restriction.
 
 ## Wikimedia Commons photographs
 
@@ -56,9 +63,9 @@ by MohammadReza Domiri Ganji, photographed 6 September 2013.
 Both photographs are licensed under
 [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
 The copies under `sources/nasir/` retain their original resolution and have
-not been modified. The Nasir gallery card and artwork preview crop and resize
-the source photograph. Those adaptations are distributed under the same
-CC BY-SA 4.0 license.
+not been modified. The Nasir gallery card, artwork preview and
+extraction-region image crop or resize the source photograph. Those
+adaptations are distributed under the same CC BY-SA 4.0 license.
 
 `sources/mina/context.jpg` is the photograph
 [Iranian vitreous enamel, cropped](https://commons.wikimedia.org/wiki/File:Iranian_vitreous_enamel_(cropped).JPG).
@@ -82,8 +89,9 @@ attribution is "Diego Delso, delso.photo, License CC BY-SA."
 
 Both Iwan photographs are licensed under
 [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
-The Iwan gallery card and artwork preview resize the extraction photograph
-without cropping it. Those adaptations are distributed under the same license.
+The Iwan gallery card, artwork preview and extraction-region image resize the
+extraction photograph. Those adaptations are distributed under the same
+license.
 
 ## Iran Darroudi painting
 
@@ -96,8 +104,9 @@ The [official artwork page](https://www.irandarroudi.com/en/paints) identifies
 the work and marks the website content copyright Iran Darroudi, all rights
 reserved. The copy in this repository is included for identification and
 commentary only. It is not licensed under MIT or CC0, and no permission to
-reuse it is granted here. The Rostan gallery card and artwork preview contain
-reduced versions of the same image and carry the same restriction.
+reuse it is granted here. The Rostan gallery card, artwork preview and
+extraction-region image contain reduced versions of the same image and carry
+the same restriction.
 
 ## Taste of Cherry poster
 
@@ -112,8 +121,8 @@ its own article. It does not grant a license for other reuse. The small copy in
 this repository is included only to identify and discuss the poster and the
 palette drawn from it. It is not covered by the Rang MIT License or CC0
 dedication, and no permission to reuse it is granted here. The Gilâs gallery
-card and artwork preview contain resized versions of the same poster and carry
-the same restriction.
+card, artwork preview and extraction-region image contain resized versions of
+the same poster and carry the same restriction.
 
 ## NOAA AORC precipitation
 
@@ -164,3 +173,16 @@ Credits:
 
 The terrain data are supplied without warranty and must not be represented as
 an official or endorsed government product.
+
+## Whiskey Chitto BLE flood depth
+
+`data/whiskey_chitto_depth_1pct.tif` is a reduced copy of the `BLE_DEP01PCT`
+raster from a locally downloaded base level engineering geodatabase. The
+stored GeoTIFF is intended only for the visual example in this repository. It
+must not be used for engineering or regulatory decisions. Its source layer,
+resampling and coordinate information are recorded in
+`data/whiskey_chitto_depth_1pct.json`.
+
+The repository does not claim that this reduced file is an authoritative
+product. Users should confirm the original source, vertical datum and reuse
+terms before publishing or redistributing it.

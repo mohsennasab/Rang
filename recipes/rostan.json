@@ -1,0 +1,547 @@
+{
+  "schema_version": 1,
+  "palette": "Rostan",
+  "creator": "Mohsen Tahmasebi Nasab, PhD",
+  "website": "https://hydromohsen.com",
+  "license_holder": "Mohsen Tahmasebi Nasab",
+  "source": {
+    "image": "sources/rostan/growing-in-thus-way.jpg",
+    "sha256": "f51c5a2600af731c047f3470d531698d57b9c64d122151c9fe68cda78a193420",
+    "oriented_width": 800,
+    "oriented_height": 793,
+    "color_handling": "EXIF orientation followed by RGB conversion",
+    "reference": "https://www.irandarroudi.com/en/paints",
+    "original_filename": "iran-darroudi-paintings-az-in-gooneh-rostan.jpg"
+  },
+  "regions": [
+    {
+      "id": "region-01",
+      "label": "Region 1",
+      "box": [
+        6,
+        557,
+        798,
+        789
+      ],
+      "normalized": [
+        0.0075,
+        0.702396,
+        0.9975,
+        0.994956
+      ],
+      "k": 8,
+      "note": ""
+    },
+    {
+      "id": "region-02",
+      "label": "Region 2",
+      "box": [
+        6,
+        167,
+        797,
+        546
+      ],
+      "normalized": [
+        0.0075,
+        0.210593,
+        0.99625,
+        0.688525
+      ],
+      "k": 8,
+      "note": ""
+    },
+    {
+      "id": "region-03",
+      "label": "Region 3",
+      "box": [
+        6,
+        3,
+        796,
+        161
+      ],
+      "normalized": [
+        0.0075,
+        0.003783,
+        0.995,
+        0.203026
+      ],
+      "k": 8,
+      "note": ""
+    }
+  ],
+  "extraction": {
+    "color_space": "CIELAB",
+    "white_point": "D65",
+    "algorithm": "sklearn.cluster.KMeans",
+    "random_state": 0,
+    "n_init": 20,
+    "algorithm_mode": "lloyd",
+    "maximum_region_size": 400
+  },
+  "environment": {
+    "python": "3.12.9",
+    "numpy": "2.3.2",
+    "pillow": "11.3.0",
+    "scikit_learn": "1.8.0"
+  },
+  "region_record": {
+    "status": "regions added to an established palette",
+    "palette_colors_changed": false,
+    "note": "The saved boxes were added after the palette was published. The established colors and their order were kept unchanged."
+  },
+  "accepted_candidates": [
+    {
+      "lab": [
+        34.7705,
+        30.0441,
+        14.2387
+      ],
+      "hex": "#823c3d",
+      "share": 18.1709,
+      "id": "region-01:c01",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        22.0965,
+        13.1729,
+        12.154
+      ],
+      "hex": "#4c2d23",
+      "share": 15.8547,
+      "id": "region-01:c02",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        29.1817,
+        19.6505,
+        13.1426
+      ],
+      "hex": "#663831",
+      "share": 15.8248,
+      "id": "region-01:c03",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        39.1619,
+        21.3251,
+        13.8411
+      ],
+      "hex": "#834e47",
+      "share": 13.7415,
+      "id": "region-01:c04",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        38.5161,
+        40.361,
+        17.3279
+      ],
+      "hex": "#9a3b41",
+      "share": 11.9872,
+      "id": "region-01:c05",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        43.3398,
+        48.7215,
+        24.1767
+      ],
+      "hex": "#b43c41",
+      "share": 9.485,
+      "id": "region-01:c06",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        48.2295,
+        57.1681,
+        34.0056
+      ],
+      "hex": "#cf3d3d",
+      "share": 8.4509,
+      "id": "region-01:c07",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        47.587,
+        29.8249,
+        18.897
+      ],
+      "hex": "#a75c53",
+      "share": 6.485,
+      "id": "region-01:c08",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        68.1186,
+        9.2094,
+        15.1382
+      ],
+      "hex": "#c19f8b",
+      "share": 30.0104,
+      "id": "region-02:c01",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        62.8832,
+        14.5216,
+        16.8301
+      ],
+      "hex": "#bb8e7b",
+      "share": 25.6354,
+      "id": "region-02:c02",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        76.5572,
+        6.8497,
+        15.5258
+      ],
+      "hex": "#d5b8a1",
+      "share": 14.0534,
+      "id": "region-02:c03",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        58.8888,
+        22.8502,
+        22.2331
+      ],
+      "hex": "#bf7e68",
+      "share": 10.349,
+      "id": "region-02:c04",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        42.3908,
+        28.3156,
+        16.5926
+      ],
+      "hex": "#96504a",
+      "share": 7.5312,
+      "id": "region-02:c05",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        47.5623,
+        16.4682,
+        12.7403
+      ],
+      "hex": "#92665c",
+      "share": 5.974,
+      "id": "region-02:c06",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        30.0959,
+        17.5382,
+        13.0496
+      ],
+      "hex": "#663c33",
+      "share": 4.7786,
+      "id": "region-02:c07",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        44.4338,
+        43.3986,
+        22.6531
+      ],
+      "hex": "#b14646",
+      "share": 1.668,
+      "id": "region-02:c08",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        36.76,
+        15.8538,
+        12.547
+      ],
+      "hex": "#754c43",
+      "share": 16.4281,
+      "id": "region-03:c01",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        44.5533,
+        13.1748,
+        10.4093
+      ],
+      "hex": "#856159",
+      "share": 15.9625,
+      "id": "region-03:c02",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        29.0552,
+        13.9283,
+        12.0614
+      ],
+      "hex": "#5e3c33",
+      "share": 14.3969,
+      "id": "region-03:c03",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        52.6803,
+        8.7595,
+        6.9048
+      ],
+      "hex": "#917872",
+      "share": 14.275,
+      "id": "region-03:c04",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        55.9015,
+        12.418,
+        10.9995
+      ],
+      "hex": "#a27e73",
+      "share": 13.0563,
+      "id": "region-03:c05",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        61.4628,
+        7.5004,
+        9.2881
+      ],
+      "hex": "#a88f84",
+      "share": 12.6719,
+      "id": "region-03:c06",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        64.7827,
+        13.366,
+        18.2409
+      ],
+      "hex": "#c0947d",
+      "share": 6.6187,
+      "id": "region-03:c07",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        42.3882,
+        24.6378,
+        16.6543
+      ],
+      "hex": "#91534a",
+      "share": 6.5906,
+      "id": "region-03:c08",
+      "region": "region-03",
+      "region_label": "Region 3"
+    }
+  ],
+  "curation": {
+    "colors": [
+      {
+        "id": "p01",
+        "from": "region-01:c02",
+        "source_hex": "#4c2d23",
+        "current": "#4b241e",
+        "note": "near-black umber, the deepest marks and scorched ground"
+      },
+      {
+        "id": "p02",
+        "from": "region-03:c03",
+        "source_hex": "#5e3c33",
+        "current": "#603d34",
+        "note": "smoked brown, the horizontal bands across the upper sky"
+      },
+      {
+        "id": "p03",
+        "from": "region-01:c01",
+        "source_hex": "#823c3d",
+        "current": "#883c3e",
+        "note": "wine red, shadowed growth along the lower edge"
+      },
+      {
+        "id": "p04",
+        "from": "region-01:c06",
+        "source_hex": "#b43c41",
+        "current": "#aa3a41",
+        "note": "crimson, the tangled forms rising from the earth"
+      },
+      {
+        "id": "p05",
+        "from": "region-01:c07",
+        "source_hex": "#cf3d3d",
+        "current": "#d63d3b",
+        "note": "scarlet, the brightest and most insistent red"
+      },
+      {
+        "id": "p06",
+        "from": "region-02:c04",
+        "source_hex": "#bf7e68",
+        "current": "#d26c55",
+        "note": "warm coral, light caught along the red forms"
+      },
+      {
+        "id": "p07",
+        "from": "region-02:c02",
+        "source_hex": "#bb8e7b",
+        "current": "#d98665",
+        "note": "bloom coral, the flower above the central structure"
+      },
+      {
+        "id": "p08",
+        "from": "region-03:c07",
+        "source_hex": "#c0947d",
+        "current": "#c0947d",
+        "note": "dusty rose, the softened bands of distant haze"
+      },
+      {
+        "id": "p09",
+        "from": "region-02:c03",
+        "source_hex": "#d5b8a1",
+        "current": "#d2b6a1",
+        "note": "pale sand, the quiet light across the open sky"
+      }
+    ],
+    "operations": [
+      {
+        "id": "a001",
+        "op": "replace",
+        "target": "p01",
+        "before": "#4c2d23",
+        "after": "#4b241e",
+        "reason": "Kept the established Rostan color while adding the saved extraction regions.",
+        "hex": "#4b241e"
+      },
+      {
+        "id": "a002",
+        "op": "replace",
+        "target": "p02",
+        "before": "#5e3c33",
+        "after": "#603d34",
+        "reason": "Kept the established Rostan color while adding the saved extraction regions.",
+        "hex": "#603d34"
+      },
+      {
+        "id": "a003",
+        "op": "replace",
+        "target": "p03",
+        "before": "#823c3d",
+        "after": "#883c3e",
+        "reason": "Kept the established Rostan color while adding the saved extraction regions.",
+        "hex": "#883c3e"
+      },
+      {
+        "id": "a004",
+        "op": "replace",
+        "target": "p04",
+        "before": "#b43c41",
+        "after": "#aa3a41",
+        "reason": "Kept the established Rostan color while adding the saved extraction regions.",
+        "hex": "#aa3a41"
+      },
+      {
+        "id": "a005",
+        "op": "replace",
+        "target": "p05",
+        "before": "#cf3d3d",
+        "after": "#d63d3b",
+        "reason": "Kept the established Rostan color while adding the saved extraction regions.",
+        "hex": "#d63d3b"
+      },
+      {
+        "id": "a006",
+        "op": "replace",
+        "target": "p06",
+        "before": "#bf7e68",
+        "after": "#d26c55",
+        "reason": "Kept the established Rostan color while adding the saved extraction regions.",
+        "hex": "#d26c55"
+      },
+      {
+        "id": "a007",
+        "op": "replace",
+        "target": "p07",
+        "before": "#bb8e7b",
+        "after": "#d98665",
+        "reason": "Kept the established Rostan color while adding the saved extraction regions.",
+        "hex": "#d98665"
+      },
+      {
+        "id": "a008",
+        "op": "replace",
+        "target": "p09",
+        "before": "#d5b8a1",
+        "after": "#d2b6a1",
+        "reason": "Kept the established Rostan color while adding the saved extraction regions.",
+        "hex": "#d2b6a1"
+      }
+    ],
+    "final_order": [
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p08",
+      "p09"
+    ]
+  },
+  "expected": {
+    "colors": [
+      "#4b241e",
+      "#603d34",
+      "#883c3e",
+      "#aa3a41",
+      "#d63d3b",
+      "#d26c55",
+      "#d98665",
+      "#c0947d",
+      "#d2b6a1"
+    ]
+  }
+}
