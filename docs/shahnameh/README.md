@@ -41,6 +41,16 @@ the source photo. Lower numbers mean a closer match.
 
 ![Shahnameh preview](preview.png)
 
+## Extraction regions
+
+![Shahnameh extraction regions](regions.png)
+
+These are the saved sampling areas used for CIELAB k-means. The exact pixel
+coordinates, normalized coordinates and k values are recorded in the
+[Shahnameh recipe](../../recipes/shahnameh.json). The regions make the
+extraction repeatable. Choosing and refining the final colors still depends
+on the artwork and the contributor's eye.
+
 ## Sample plots
 
 ![Shahnameh samples](samples.png)

@@ -32,6 +32,16 @@ the source photo. Lower numbers mean a closer match.
 
 ![Kashan preview](preview.png)
 
+## Extraction regions
+
+![Kashan extraction regions](regions.png)
+
+These are the saved sampling areas used for CIELAB k-means. The exact pixel
+coordinates, normalized coordinates and k values are recorded in the
+[Kashan recipe](../../recipes/kashan.json). The regions make the
+extraction repeatable. Choosing and refining the final colors still depends
+on the artwork and the contributor's eye.
+
 ## Sample plots
 
 ![Kashan samples](samples.png)

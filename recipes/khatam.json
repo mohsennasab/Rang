@@ -1,0 +1,442 @@
+{
+  "schema_version": 1,
+  "palette": "Khatam",
+  "creator": "Mohsen Tahmasebi Nasab, PhD",
+  "website": "https://hydromohsen.com",
+  "license_holder": "Mohsen Tahmasebi Nasab",
+  "source": {
+    "image": "sources/khatam/extraction.jpg",
+    "sha256": "c657026eaadc1a43780e65383b150b08d4205f835672fcc6162e6035c29533b0",
+    "oriented_width": 2317,
+    "oriented_height": 3090,
+    "color_handling": "EXIF orientation followed by RGB conversion",
+    "reference": "https://www.iranicaonline.org/articles/isfahan-xiii-crafts/",
+    "original_filename": "20260802_224137.jpg"
+  },
+  "regions": [
+    {
+      "id": "region-01",
+      "label": "Region 1",
+      "box": [
+        643,
+        27,
+        1786,
+        3078
+      ],
+      "normalized": [
+        0.277514,
+        0.008738,
+        0.770824,
+        0.996117
+      ],
+      "k": 8,
+      "note": ""
+    },
+    {
+      "id": "region-02",
+      "label": "Region 2",
+      "box": [
+        24,
+        18,
+        624,
+        3087
+      ],
+      "normalized": [
+        0.010358,
+        0.005825,
+        0.269314,
+        0.999029
+      ],
+      "k": 8,
+      "note": ""
+    }
+  ],
+  "extraction": {
+    "color_space": "CIELAB",
+    "white_point": "D65",
+    "algorithm": "sklearn.cluster.KMeans",
+    "random_state": 0,
+    "n_init": 20,
+    "algorithm_mode": "lloyd",
+    "maximum_region_size": 400
+  },
+  "environment": {
+    "python": "3.12.9",
+    "numpy": "2.3.2",
+    "pillow": "11.3.0",
+    "scikit_learn": "1.8.0"
+  },
+  "region_record": {
+    "status": "regions added to an established palette",
+    "palette_colors_changed": false,
+    "note": "The saved boxes were added after the palette was published. The established colors and their order were kept unchanged."
+  },
+  "accepted_candidates": [
+    {
+      "lab": [
+        77.6096,
+        6.0598,
+        23.3254
+      ],
+      "hex": "#dbbb95",
+      "share": 24.9433,
+      "id": "region-01:c01",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        70.7059,
+        11.2081,
+        55.8704
+      ],
+      "hex": "#dba344",
+      "share": 19.9467,
+      "id": "region-01:c02",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        75.8367,
+        6.1041,
+        37.9504
+      ],
+      "hex": "#dcb575",
+      "share": 15.3033,
+      "id": "region-01:c03",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        4.2546,
+        3.4233,
+        2.5699
+      ],
+      "hex": "#170c09",
+      "share": 14.0317,
+      "id": "region-01:c04",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        54.4652,
+        15.3443,
+        41.7148
+      ],
+      "hex": "#ae7739",
+      "share": 8.3717,
+      "id": "region-01:c05",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        46.8878,
+        45.3099,
+        54.4337
+      ],
+      "hex": "#c0490c",
+      "share": 7.7433,
+      "id": "region-01:c06",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        32.9442,
+        38.5038,
+        40.5591
+      ],
+      "hex": "#8c2e0b",
+      "share": 5.1867,
+      "id": "region-01:c07",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        30.9825,
+        11.0684,
+        19.4785
+      ],
+      "hex": "#62422b",
+      "share": 4.4733,
+      "id": "region-01:c08",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        3.8808,
+        3.4224,
+        1.1518
+      ],
+      "hex": "#150b0b",
+      "share": 24.9199,
+      "id": "region-02:c01",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        10.3698,
+        17.2904,
+        8.1547
+      ],
+      "hex": "#341111",
+      "share": 17.4038,
+      "id": "region-02:c02",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        24.3529,
+        21.7217,
+        12.9155
+      ],
+      "hex": "#5c2c28",
+      "share": 16.1026,
+      "id": "region-02:c03",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        64.4838,
+        14.3801,
+        43.6223
+      ],
+      "hex": "#ca914e",
+      "share": 12.1635,
+      "id": "region-02:c04",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        20.6768,
+        4.5508,
+        2.2279
+      ],
+      "hex": "#3a2f2f",
+      "share": 8.9487,
+      "id": "region-02:c05",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        75.809,
+        7.0104,
+        30.9503
+      ],
+      "hex": "#dbb582",
+      "share": 8.5417,
+      "id": "region-02:c06",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        43.9437,
+        12.9668,
+        16.2132
+      ],
+      "hex": "#855f4e",
+      "share": 7.6026,
+      "id": "region-02:c07",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        40.5582,
+        33.2226,
+        37.4666
+      ],
+      "hex": "#9c4623",
+      "share": 4.3173,
+      "id": "region-02:c08",
+      "region": "region-02",
+      "region_label": "Region 2"
+    }
+  ],
+  "curation": {
+    "colors": [
+      {
+        "id": "p01",
+        "from": "region-01:c04",
+        "source_hex": "#170c09",
+        "current": "#1c110b",
+        "note": "ebony dark, the stained triangles around each star"
+      },
+      {
+        "id": "p02",
+        "from": "region-02:c03",
+        "source_hex": "#5c2c28",
+        "current": "#542020",
+        "note": "maroon, the dyed divider rails"
+      },
+      {
+        "id": "p03",
+        "from": "region-01:c07",
+        "source_hex": "#8c2e0b",
+        "current": "#8d310e",
+        "note": "russet, orange rods in shadow"
+      },
+      {
+        "id": "p04",
+        "from": "region-01:c06",
+        "source_hex": "#c0490c",
+        "current": "#bf480d",
+        "note": "burnt orange, the brightest rods"
+      },
+      {
+        "id": "p05",
+        "from": "region-01:c05",
+        "source_hex": "#ae7739",
+        "current": "#b27a3c",
+        "note": "oak brown, framing strips"
+      },
+      {
+        "id": "p06",
+        "from": "region-02:c04",
+        "source_hex": "#ca914e",
+        "current": "#c58c51",
+        "note": "light oak, sanded frame edges"
+      },
+      {
+        "id": "p07",
+        "from": "region-01:c02",
+        "source_hex": "#dba344",
+        "current": "#d9a545",
+        "note": "straw gold, the hexagon field"
+      },
+      {
+        "id": "p08",
+        "from": "region-01:c01",
+        "source_hex": "#dbbb95",
+        "current": "#dbba94",
+        "note": "bone, the pale triangles"
+      },
+      {
+        "id": "p09",
+        "from": "region-01:c03",
+        "source_hex": "#dcb575",
+        "current": "#e5c870",
+        "note": "brass, the six point stars"
+      }
+    ],
+    "operations": [
+      {
+        "id": "a001",
+        "op": "replace",
+        "target": "p01",
+        "before": "#170c09",
+        "after": "#1c110b",
+        "reason": "Kept the established Khatam color while adding the saved extraction regions.",
+        "hex": "#1c110b"
+      },
+      {
+        "id": "a002",
+        "op": "replace",
+        "target": "p02",
+        "before": "#5c2c28",
+        "after": "#542020",
+        "reason": "Kept the established Khatam color while adding the saved extraction regions.",
+        "hex": "#542020"
+      },
+      {
+        "id": "a003",
+        "op": "replace",
+        "target": "p03",
+        "before": "#8c2e0b",
+        "after": "#8d310e",
+        "reason": "Kept the established Khatam color while adding the saved extraction regions.",
+        "hex": "#8d310e"
+      },
+      {
+        "id": "a004",
+        "op": "replace",
+        "target": "p04",
+        "before": "#c0490c",
+        "after": "#bf480d",
+        "reason": "Kept the established Khatam color while adding the saved extraction regions.",
+        "hex": "#bf480d"
+      },
+      {
+        "id": "a005",
+        "op": "replace",
+        "target": "p05",
+        "before": "#ae7739",
+        "after": "#b27a3c",
+        "reason": "Kept the established Khatam color while adding the saved extraction regions.",
+        "hex": "#b27a3c"
+      },
+      {
+        "id": "a006",
+        "op": "replace",
+        "target": "p06",
+        "before": "#ca914e",
+        "after": "#c58c51",
+        "reason": "Kept the established Khatam color while adding the saved extraction regions.",
+        "hex": "#c58c51"
+      },
+      {
+        "id": "a007",
+        "op": "replace",
+        "target": "p07",
+        "before": "#dba344",
+        "after": "#d9a545",
+        "reason": "Kept the established Khatam color while adding the saved extraction regions.",
+        "hex": "#d9a545"
+      },
+      {
+        "id": "a008",
+        "op": "replace",
+        "target": "p08",
+        "before": "#dbbb95",
+        "after": "#dbba94",
+        "reason": "Kept the established Khatam color while adding the saved extraction regions.",
+        "hex": "#dbba94"
+      },
+      {
+        "id": "a009",
+        "op": "replace",
+        "target": "p09",
+        "before": "#dcb575",
+        "after": "#e5c870",
+        "reason": "Kept the established Khatam color while adding the saved extraction regions.",
+        "hex": "#e5c870"
+      }
+    ],
+    "final_order": [
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p08",
+      "p09"
+    ]
+  },
+  "expected": {
+    "colors": [
+      "#1c110b",
+      "#542020",
+      "#8d310e",
+      "#bf480d",
+      "#b27a3c",
+      "#c58c51",
+      "#d9a545",
+      "#dbba94",
+      "#e5c870"
+    ]
+  }
+}

@@ -1,0 +1,520 @@
+{
+  "schema_version": 1,
+  "palette": "Termeh",
+  "creator": "Mohsen Tahmasebi Nasab, PhD",
+  "website": "https://hydromohsen.com",
+  "license_holder": "Mohsen Tahmasebi Nasab",
+  "source": {
+    "image": "sources/termeh/extraction.jpg",
+    "sha256": "a97dc3cb27647a23471eb8192c54e34da13631e907eacf2dabea49231e657f2c",
+    "oriented_width": 3000,
+    "oriented_height": 4000,
+    "color_handling": "EXIF orientation followed by RGB conversion",
+    "reference": "https://asia-archive.si.edu/object/S2017.14/",
+    "original_filename": "20260801_180420.jpg"
+  },
+  "regions": [
+    {
+      "id": "region-01",
+      "label": "Region 1",
+      "box": [
+        474,
+        1648,
+        2618,
+        2741
+      ],
+      "normalized": [
+        0.158,
+        0.412,
+        0.872667,
+        0.68525
+      ],
+      "k": 8,
+      "note": ""
+    },
+    {
+      "id": "region-02",
+      "label": "Region 2",
+      "box": [
+        17,
+        2774,
+        2981,
+        3984
+      ],
+      "normalized": [
+        0.005667,
+        0.6935,
+        0.993667,
+        0.996
+      ],
+      "k": 8,
+      "note": ""
+    },
+    {
+      "id": "region-03",
+      "label": "Region 3",
+      "box": [
+        34,
+        0,
+        2981,
+        1627
+      ],
+      "normalized": [
+        0.011333,
+        0.0,
+        0.993667,
+        0.40675
+      ],
+      "k": 8,
+      "note": ""
+    }
+  ],
+  "extraction": {
+    "color_space": "CIELAB",
+    "white_point": "D65",
+    "algorithm": "sklearn.cluster.KMeans",
+    "random_state": 0,
+    "n_init": 20,
+    "algorithm_mode": "lloyd",
+    "maximum_region_size": 400
+  },
+  "environment": {
+    "python": "3.12.9",
+    "numpy": "2.3.2",
+    "pillow": "11.3.0",
+    "scikit_learn": "1.8.0"
+  },
+  "region_record": {
+    "status": "regions added to an established palette",
+    "palette_colors_changed": false,
+    "note": "The saved boxes were added after the palette was published. The established colors and their order were kept unchanged."
+  },
+  "accepted_candidates": [
+    {
+      "lab": [
+        60.7312,
+        -5.9394,
+        -6.4523
+      ],
+      "hex": "#81969e",
+      "share": 19.8137,
+      "id": "region-01:c01",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        17.3922,
+        -0.6523,
+        2.3842
+      ],
+      "hex": "#2b2b27",
+      "share": 19.0074,
+      "id": "region-01:c02",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        81.48,
+        -7.287,
+        -2.2946
+      ],
+      "hex": "#b9cfce",
+      "share": 16.5846,
+      "id": "region-01:c03",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        39.1775,
+        -4.8465,
+        -3.9674
+      ],
+      "hex": "#505f62",
+      "share": 16.4767,
+      "id": "region-01:c04",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        63.8882,
+        15.5685,
+        35.4068
+      ],
+      "hex": "#c78f5c",
+      "share": 8.402,
+      "id": "region-01:c05",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        41.2872,
+        25.4723,
+        20.0814
+      ],
+      "hex": "#905042",
+      "share": 8.1716,
+      "id": "region-01:c06",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        79.3765,
+        -5.9928,
+        40.8983
+      ],
+      "hex": "#d4c677",
+      "share": 7.326,
+      "id": "region-01:c07",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        49.3242,
+        -28.0482,
+        12.5338
+      ],
+      "hex": "#45815f",
+      "share": 4.2181,
+      "id": "region-01:c08",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        77.16,
+        -4.7358,
+        1.5565
+      ],
+      "hex": "#b6c1bb",
+      "share": 18.638,
+      "id": "region-02:c01",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        15.619,
+        0.6924,
+        3.1701
+      ],
+      "hex": "#2a2623",
+      "share": 16.8037,
+      "id": "region-02:c02",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        61.1901,
+        -1.2844,
+        -10.7116
+      ],
+      "hex": "#8795a6",
+      "share": 15.4785,
+      "id": "region-02:c03",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        51.8063,
+        -8.2153,
+        6.2249
+      ],
+      "hex": "#717f71",
+      "share": 13.8589,
+      "id": "region-02:c04",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        37.4464,
+        -0.6065,
+        -6.7384
+      ],
+      "hex": "#515963",
+      "share": 13.3267,
+      "id": "region-02:c05",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        36.6116,
+        26.0167,
+        21.7512
+      ],
+      "hex": "#844435",
+      "share": 9.8113,
+      "id": "region-02:c06",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        60.9235,
+        22.6812,
+        35.2566
+      ],
+      "hex": "#c98256",
+      "share": 8.2132,
+      "id": "region-02:c07",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        73.5554,
+        -4.6398,
+        35.3809
+      ],
+      "hex": "#c3b573",
+      "share": 3.8696,
+      "id": "region-02:c08",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        59.7373,
+        -6.838,
+        -4.1474
+      ],
+      "hex": "#7f9497",
+      "share": 20.914,
+      "id": "region-03:c01",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        76.8591,
+        -5.5244,
+        2.3615
+      ],
+      "hex": "#b5c1b9",
+      "share": 18.8303,
+      "id": "region-03:c02",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        40.992,
+        -4.8648,
+        -3.6571
+      ],
+      "hex": "#556366",
+      "share": 15.9548,
+      "id": "region-03:c03",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        17.3924,
+        3.2487,
+        5.4871
+      ],
+      "hex": "#322923",
+      "share": 12.6527,
+      "id": "region-03:c04",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        58.2625,
+        19.4825,
+        28.1782
+      ],
+      "hex": "#ba7e5c",
+      "share": 10.3812,
+      "id": "region-03:c05",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        37.7154,
+        34.0031,
+        21.1013
+      ],
+      "hex": "#913f39",
+      "share": 10.0848,
+      "id": "region-03:c06",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        43.4642,
+        -23.5261,
+        14.1315
+      ],
+      "hex": "#43714f",
+      "share": 7.4446,
+      "id": "region-03:c07",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        72.9064,
+        -5.4947,
+        36.2815
+      ],
+      "hex": "#c0b470",
+      "share": 3.7376,
+      "id": "region-03:c08",
+      "region": "region-03",
+      "region_label": "Region 3"
+    }
+  ],
+  "curation": {
+    "colors": [
+      {
+        "id": "p01",
+        "from": "region-03:c02",
+        "source_hex": "#b5c1b9",
+        "current": "#e5f0ee",
+        "note": "Foam Mist, white thread highlights"
+      },
+      {
+        "id": "p02",
+        "from": "region-01:c03",
+        "source_hex": "#b9cfce",
+        "current": "#c8dfe3",
+        "note": "Glacial Blue, pale silk detailing"
+      },
+      {
+        "id": "p03",
+        "from": "region-02:c01",
+        "source_hex": "#b6c1bb",
+        "current": "#a9ccd7",
+        "note": "Powder Aqua, light ground between motifs"
+      },
+      {
+        "id": "p04",
+        "from": "region-03:c01",
+        "source_hex": "#7f9497",
+        "current": "#7fb5c1",
+        "note": "River Teal, the twill ground itself"
+      },
+      {
+        "id": "p05",
+        "from": "region-01:c01",
+        "source_hex": "#81969e",
+        "current": "#5d95a8",
+        "note": "Slate Blue, shaded folds of the ground"
+      },
+      {
+        "id": "p06",
+        "from": "region-03:c03",
+        "source_hex": "#556366",
+        "current": "#3e738e",
+        "note": "Deep Channel, blue fill of the boteh"
+      },
+      {
+        "id": "p07",
+        "from": "region-02:c05",
+        "source_hex": "#515963",
+        "current": "#274e68",
+        "note": "Night Current, the darkest indigo threads"
+      }
+    ],
+    "operations": [
+      {
+        "id": "a001",
+        "op": "replace",
+        "target": "p01",
+        "before": "#b5c1b9",
+        "after": "#e5f0ee",
+        "reason": "Kept the established Termeh color while adding the saved extraction regions.",
+        "hex": "#e5f0ee"
+      },
+      {
+        "id": "a002",
+        "op": "replace",
+        "target": "p02",
+        "before": "#b9cfce",
+        "after": "#c8dfe3",
+        "reason": "Kept the established Termeh color while adding the saved extraction regions.",
+        "hex": "#c8dfe3"
+      },
+      {
+        "id": "a003",
+        "op": "replace",
+        "target": "p03",
+        "before": "#b6c1bb",
+        "after": "#a9ccd7",
+        "reason": "Kept the established Termeh color while adding the saved extraction regions.",
+        "hex": "#a9ccd7"
+      },
+      {
+        "id": "a004",
+        "op": "replace",
+        "target": "p04",
+        "before": "#7f9497",
+        "after": "#7fb5c1",
+        "reason": "Kept the established Termeh color while adding the saved extraction regions.",
+        "hex": "#7fb5c1"
+      },
+      {
+        "id": "a005",
+        "op": "replace",
+        "target": "p05",
+        "before": "#81969e",
+        "after": "#5d95a8",
+        "reason": "Kept the established Termeh color while adding the saved extraction regions.",
+        "hex": "#5d95a8"
+      },
+      {
+        "id": "a006",
+        "op": "replace",
+        "target": "p06",
+        "before": "#556366",
+        "after": "#3e738e",
+        "reason": "Kept the established Termeh color while adding the saved extraction regions.",
+        "hex": "#3e738e"
+      },
+      {
+        "id": "a007",
+        "op": "replace",
+        "target": "p07",
+        "before": "#515963",
+        "after": "#274e68",
+        "reason": "Kept the established Termeh color while adding the saved extraction regions.",
+        "hex": "#274e68"
+      }
+    ],
+    "final_order": [
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07"
+    ]
+  },
+  "expected": {
+    "colors": [
+      "#e5f0ee",
+      "#c8dfe3",
+      "#a9ccd7",
+      "#7fb5c1",
+      "#5d95a8",
+      "#3e738e",
+      "#274e68"
+    ]
+  }
+}

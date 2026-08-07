@@ -1,0 +1,556 @@
+{
+  "schema_version": 1,
+  "palette": "Shahnameh",
+  "creator": "Mohsen Tahmasebi Nasab, PhD",
+  "website": "https://hydromohsen.com",
+  "license_holder": "Mohsen Tahmasebi Nasab",
+  "source": {
+    "image": "sources/shahnameh/folio.jpg",
+    "sha256": "8cc60fb714101eaf0c97477427d475b0203023b8b6486244def6ba8daa7138f3",
+    "oriented_width": 1437,
+    "oriented_height": 2266,
+    "color_handling": "EXIF orientation followed by RGB conversion",
+    "reference": "https://www.metmuseum.org/art/collection/search/452137",
+    "original_filename": "DP107144.jpg"
+  },
+  "regions": [
+    {
+      "id": "region-01",
+      "label": "Region 1",
+      "box": [
+        401,
+        565,
+        1066,
+        2035
+      ],
+      "normalized": [
+        0.279054,
+        0.249338,
+        0.741823,
+        0.898058
+      ],
+      "k": 8,
+      "note": ""
+    },
+    {
+      "id": "region-02",
+      "label": "Region 2",
+      "box": [
+        19,
+        562,
+        373,
+        2035
+      ],
+      "normalized": [
+        0.013222,
+        0.248014,
+        0.259569,
+        0.898058
+      ],
+      "k": 8,
+      "note": ""
+    },
+    {
+      "id": "region-03",
+      "label": "Region 3",
+      "box": [
+        1068,
+        562,
+        1415,
+        2038
+      ],
+      "normalized": [
+        0.743215,
+        0.248014,
+        0.98469,
+        0.899382
+      ],
+      "k": 8,
+      "note": ""
+    }
+  ],
+  "extraction": {
+    "color_space": "CIELAB",
+    "white_point": "D65",
+    "algorithm": "sklearn.cluster.KMeans",
+    "random_state": 0,
+    "n_init": 20,
+    "algorithm_mode": "lloyd",
+    "maximum_region_size": 400
+  },
+  "environment": {
+    "python": "3.12.9",
+    "numpy": "2.3.2",
+    "pillow": "11.3.0",
+    "scikit_learn": "1.8.0"
+  },
+  "region_record": {
+    "status": "regions added to an established palette",
+    "palette_colors_changed": false,
+    "note": "The saved boxes were added after the palette was published. The established colors and their order were kept unchanged."
+  },
+  "accepted_candidates": [
+    {
+      "lab": [
+        65.9817,
+        5.8897,
+        28.2732
+      ],
+      "hex": "#bc9b6e",
+      "share": 26.3315,
+      "id": "region-01:c01",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        57.7776,
+        3.9129,
+        -24.9423
+      ],
+      "hex": "#788bb6",
+      "share": 14.4448,
+      "id": "region-01:c02",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        65.0557,
+        9.471,
+        14.7092
+      ],
+      "hex": "#b89784",
+      "share": 13.0249,
+      "id": "region-01:c03",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        42.9575,
+        5.2966,
+        18.5132
+      ],
+      "hex": "#786247",
+      "share": 11.3191,
+      "id": "region-01:c04",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        33.7862,
+        22.9768,
+        -35.9551
+      ],
+      "hex": "#534589",
+      "share": 10.4475,
+      "id": "region-01:c05",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        51.3025,
+        -10.5426,
+        11.6484
+      ],
+      "hex": "#707f66",
+      "share": 10.0028,
+      "id": "region-01:c06",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        34.1431,
+        11.8693,
+        -6.3189
+      ],
+      "hex": "#5f4a5b",
+      "share": 9.8494,
+      "id": "region-01:c07",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        40.1702,
+        38.7542,
+        28.6569
+      ],
+      "hex": "#a04032",
+      "share": 4.5801,
+      "id": "region-01:c08",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        51.6394,
+        6.1232,
+        18.9067
+      ],
+      "hex": "#91765b",
+      "share": 28.3464,
+      "id": "region-02:c01",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        65.2154,
+        8.5167,
+        24.4228
+      ],
+      "hex": "#bc9873",
+      "share": 20.5729,
+      "id": "region-02:c02",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        48.8254,
+        -9.5782,
+        9.3176
+      ],
+      "hex": "#6a7864",
+      "share": 15.2448,
+      "id": "region-02:c03",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        31.4671,
+        9.0824,
+        -1.4919
+      ],
+      "hex": "#57454d",
+      "share": 11.263,
+      "id": "region-02:c04",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        34.8357,
+        22.9736,
+        -36.2966
+      ],
+      "hex": "#55488c",
+      "share": 6.9401,
+      "id": "region-02:c05",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        72.7832,
+        5.0055,
+        9.1413
+      ],
+      "hex": "#c3afa2",
+      "share": 6.9271,
+      "id": "region-02:c06",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        52.9161,
+        5.5547,
+        -18.6627
+      ],
+      "hex": "#777d9e",
+      "share": 5.6927,
+      "id": "region-02:c07",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        44.7193,
+        38.4119,
+        27.4363
+      ],
+      "hex": "#ac4c3e",
+      "share": 5.013,
+      "id": "region-02:c08",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        40.021,
+        -8.7994,
+        8.1375
+      ],
+      "hex": "#556251",
+      "share": 25.0612,
+      "id": "region-03:c01",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        46.731,
+        2.7391,
+        24.2839
+      ],
+      "hex": "#816c46",
+      "share": 22.8218,
+      "id": "region-03:c02",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        54.1296,
+        -6.426,
+        10.7291
+      ],
+      "hex": "#7e846f",
+      "share": 17.7633,
+      "id": "region-03:c03",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        29.814,
+        9.7118,
+        -0.572
+      ],
+      "hex": "#554147",
+      "share": 11.6463,
+      "id": "region-03:c04",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        75.7506,
+        5.1161,
+        9.4019
+      ],
+      "hex": "#cbb7aa",
+      "share": 9.7633,
+      "id": "region-03:c05",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        54.2464,
+        7.6947,
+        -15.4332
+      ],
+      "hex": "#827e9c",
+      "share": 4.9255,
+      "id": "region-03:c06",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        40.7007,
+        45.8022,
+        21.6416
+      ],
+      "hex": "#a8393f",
+      "share": 4.1995,
+      "id": "region-03:c07",
+      "region": "region-03",
+      "region_label": "Region 3"
+    },
+    {
+      "lab": [
+        74.9414,
+        0.2756,
+        45.5274
+      ],
+      "hex": "#d3b663",
+      "share": 3.8191,
+      "id": "region-03:c08",
+      "region": "region-03",
+      "region_label": "Region 3"
+    }
+  ],
+  "curation": {
+    "colors": [
+      {
+        "id": "p01",
+        "from": "region-01:c05",
+        "source_hex": "#534589",
+        "current": "#41356f",
+        "note": "deep indigo, shadows in the illuminated heading"
+      },
+      {
+        "id": "p02",
+        "from": "region-02:c05",
+        "source_hex": "#55488c",
+        "current": "#4b3d97",
+        "note": "royal violet, the floral panels and bed textiles"
+      },
+      {
+        "id": "p03",
+        "from": "region-01:c02",
+        "source_hex": "#788bb6",
+        "current": "#798cb8",
+        "note": "pavilion blue, the broad wall behind the couple"
+      },
+      {
+        "id": "p04",
+        "from": "region-01:c06",
+        "source_hex": "#707f66",
+        "current": "#6d866a",
+        "note": "jade, the geometric tilework and clothing"
+      },
+      {
+        "id": "p05",
+        "from": "region-03:c01",
+        "source_hex": "#556251",
+        "current": "#596956",
+        "note": "garden green, trees and foliage around the guests"
+      },
+      {
+        "id": "p06",
+        "from": "region-03:c08",
+        "source_hex": "#d3b663",
+        "current": "#d4b96b",
+        "note": "soft gold, the chamber floor and yellow garments"
+      },
+      {
+        "id": "p07",
+        "from": "region-03:c05",
+        "source_hex": "#cbb7aa",
+        "current": "#d5c9b7",
+        "note": "parchment, the page and pale architectural details"
+      },
+      {
+        "id": "p08",
+        "from": "region-02:c08",
+        "source_hex": "#ac4c3e",
+        "current": "#b0472c",
+        "note": "vermilion, robes and warm textile accents"
+      },
+      {
+        "id": "p09",
+        "from": "region-03:c07",
+        "source_hex": "#a8393f",
+        "current": "#a6373e",
+        "note": "crimson, the bedcover and flowering details"
+      }
+    ],
+    "operations": [
+      {
+        "id": "a001",
+        "op": "replace",
+        "target": "p01",
+        "before": "#534589",
+        "after": "#41356f",
+        "reason": "Kept the established Shahnameh color while adding the saved extraction regions.",
+        "hex": "#41356f"
+      },
+      {
+        "id": "a002",
+        "op": "replace",
+        "target": "p02",
+        "before": "#55488c",
+        "after": "#4b3d97",
+        "reason": "Kept the established Shahnameh color while adding the saved extraction regions.",
+        "hex": "#4b3d97"
+      },
+      {
+        "id": "a003",
+        "op": "replace",
+        "target": "p03",
+        "before": "#788bb6",
+        "after": "#798cb8",
+        "reason": "Kept the established Shahnameh color while adding the saved extraction regions.",
+        "hex": "#798cb8"
+      },
+      {
+        "id": "a004",
+        "op": "replace",
+        "target": "p04",
+        "before": "#707f66",
+        "after": "#6d866a",
+        "reason": "Kept the established Shahnameh color while adding the saved extraction regions.",
+        "hex": "#6d866a"
+      },
+      {
+        "id": "a005",
+        "op": "replace",
+        "target": "p05",
+        "before": "#556251",
+        "after": "#596956",
+        "reason": "Kept the established Shahnameh color while adding the saved extraction regions.",
+        "hex": "#596956"
+      },
+      {
+        "id": "a006",
+        "op": "replace",
+        "target": "p06",
+        "before": "#d3b663",
+        "after": "#d4b96b",
+        "reason": "Kept the established Shahnameh color while adding the saved extraction regions.",
+        "hex": "#d4b96b"
+      },
+      {
+        "id": "a007",
+        "op": "replace",
+        "target": "p07",
+        "before": "#cbb7aa",
+        "after": "#d5c9b7",
+        "reason": "Kept the established Shahnameh color while adding the saved extraction regions.",
+        "hex": "#d5c9b7"
+      },
+      {
+        "id": "a008",
+        "op": "replace",
+        "target": "p08",
+        "before": "#ac4c3e",
+        "after": "#b0472c",
+        "reason": "Kept the established Shahnameh color while adding the saved extraction regions.",
+        "hex": "#b0472c"
+      },
+      {
+        "id": "a009",
+        "op": "replace",
+        "target": "p09",
+        "before": "#a8393f",
+        "after": "#a6373e",
+        "reason": "Kept the established Shahnameh color while adding the saved extraction regions.",
+        "hex": "#a6373e"
+      }
+    ],
+    "final_order": [
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p08",
+      "p09"
+    ]
+  },
+  "expected": {
+    "colors": [
+      "#41356f",
+      "#4b3d97",
+      "#798cb8",
+      "#6d866a",
+      "#596956",
+      "#d4b96b",
+      "#d5c9b7",
+      "#b0472c",
+      "#a6373e"
+    ]
+  }
+}

@@ -1,0 +1,442 @@
+{
+  "schema_version": 1,
+  "palette": "Nasir",
+  "creator": "Mohsen Tahmasebi Nasab, PhD",
+  "website": "https://hydromohsen.com",
+  "license_holder": "Mohsen Tahmasebi Nasab",
+  "source": {
+    "image": "sources/nasir/window.jpg",
+    "sha256": "67fbdd2583dd75e721a95c4a92c01755e36a5dc844db54a51f04334cc0ecde9a",
+    "oriented_width": 4000,
+    "oriented_height": 6000,
+    "color_handling": "EXIF orientation followed by RGB conversion",
+    "reference": "https://commons.wikimedia.org/wiki/File:DSC_0277-%D9%85%D8%B3%D8%AC%D8%AF_%D9%86%D8%B5%DB%8C%D8%B1%D8%A7%D9%84%D9%85%D9%84%DA%A9.jpg",
+    "original_filename": "DSC_0277-مسجد_نصیرالملک.jpg"
+  },
+  "regions": [
+    {
+      "id": "region-01",
+      "label": "Region 1",
+      "box": [
+        631,
+        651,
+        3691,
+        2660
+      ],
+      "normalized": [
+        0.15775,
+        0.1085,
+        0.92275,
+        0.443333
+      ],
+      "k": 8,
+      "note": ""
+    },
+    {
+      "id": "region-02",
+      "label": "Region 2",
+      "box": [
+        1527,
+        2780,
+        2049,
+        4147
+      ],
+      "normalized": [
+        0.38175,
+        0.463333,
+        0.51225,
+        0.691167
+      ],
+      "k": 8,
+      "note": ""
+    }
+  ],
+  "extraction": {
+    "color_space": "CIELAB",
+    "white_point": "D65",
+    "algorithm": "sklearn.cluster.KMeans",
+    "random_state": 0,
+    "n_init": 20,
+    "algorithm_mode": "lloyd",
+    "maximum_region_size": 400
+  },
+  "environment": {
+    "python": "3.12.9",
+    "numpy": "2.3.2",
+    "pillow": "11.3.0",
+    "scikit_learn": "1.8.0"
+  },
+  "region_record": {
+    "status": "regions added to an established palette",
+    "palette_colors_changed": false,
+    "note": "The saved boxes were added after the palette was published. The established colors and their order were kept unchanged."
+  },
+  "accepted_candidates": [
+    {
+      "lab": [
+        8.7941,
+        8.8103,
+        5.0472
+      ],
+      "hex": "#261412",
+      "share": 30.6625,
+      "id": "region-01:c01",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        30.1775,
+        26.0194,
+        20.0453
+      ],
+      "hex": "#723529",
+      "share": 24.1141,
+      "id": "region-01:c02",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        55.8899,
+        61.599,
+        57.6446
+      ],
+      "hex": "#f14b21",
+      "share": 10.4886,
+      "id": "region-01:c03",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        97.3215,
+        -1.6075,
+        3.6243
+      ],
+      "hex": "#f7f8f0",
+      "share": 8.8859,
+      "id": "region-01:c04",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        82.879,
+        -27.9278,
+        -18.5009
+      ],
+      "hex": "#6bdff0",
+      "share": 8.7034,
+      "id": "region-01:c05",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        35.8211,
+        53.272,
+        -78.9137
+      ],
+      "hex": "#4637d7",
+      "share": 8.2804,
+      "id": "region-01:c06",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        78.9329,
+        3.911,
+        49.8907
+      ],
+      "hex": "#e6be65",
+      "share": 5.5038,
+      "id": "region-01:c07",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        77.2859,
+        -46.6139,
+        35.3022
+      ],
+      "hex": "#74d47b",
+      "share": 3.3612,
+      "id": "region-01:c08",
+      "region": "region-01",
+      "region_label": "Region 1"
+    },
+    {
+      "lab": [
+        6.6498,
+        7.8528,
+        5.981
+      ],
+      "hex": "#22100a",
+      "share": 36.2647,
+      "id": "region-02:c01",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        68.2549,
+        -51.429,
+        44.5212
+      ],
+      "hex": "#54bc51",
+      "share": 13.951,
+      "id": "region-02:c02",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        53.3584,
+        62.7721,
+        61.9835
+      ],
+      "hex": "#ea410d",
+      "share": 12.2778,
+      "id": "region-02:c03",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        75.1427,
+        7.0208,
+        58.0486
+      ],
+      "hex": "#e2b24a",
+      "share": 9.3513,
+      "id": "region-02:c04",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        26.1017,
+        28.4078,
+        34.5712
+      ],
+      "hex": "#6c2906",
+      "share": 9.1209,
+      "id": "region-02:c05",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        31.6529,
+        72.6504,
+        -94.6285
+      ],
+      "hex": "#3e09e6",
+      "share": 8.7435,
+      "id": "region-02:c06",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        95.9987,
+        -16.6995,
+        26.4085
+      ],
+      "hex": "#e7fbc0",
+      "share": 5.2974,
+      "id": "region-02:c07",
+      "region": "region-02",
+      "region_label": "Region 2"
+    },
+    {
+      "lab": [
+        13.1169,
+        43.1356,
+        -55.8861
+      ],
+      "hex": "#1e0473",
+      "share": 4.9935,
+      "id": "region-02:c08",
+      "region": "region-02",
+      "region_label": "Region 2"
+    }
+  ],
+  "curation": {
+    "colors": [
+      {
+        "id": "p01",
+        "from": "region-01:c01",
+        "source_hex": "#261412",
+        "current": "#261410",
+        "note": "deep shadow, the wooden frame and dark interior"
+      },
+      {
+        "id": "p02",
+        "from": "region-02:c08",
+        "source_hex": "#1e0473",
+        "current": "#3b1261",
+        "note": "violet, the smallest rosettes"
+      },
+      {
+        "id": "p03",
+        "from": "region-02:c06",
+        "source_hex": "#3e09e6",
+        "current": "#4027e1",
+        "note": "cobalt, pointed panes and flower centers"
+      },
+      {
+        "id": "p04",
+        "from": "region-01:c06",
+        "source_hex": "#4637d7",
+        "current": "#518ffd",
+        "note": "azure, blue glass around the upper fans"
+      },
+      {
+        "id": "p05",
+        "from": "region-01:c05",
+        "source_hex": "#6bdff0",
+        "current": "#74ecf9",
+        "note": "cyan, the brightest upper panes"
+      },
+      {
+        "id": "p06",
+        "from": "region-02:c02",
+        "source_hex": "#54bc51",
+        "current": "#50a877",
+        "note": "jade, green rings in the rose windows"
+      },
+      {
+        "id": "p07",
+        "from": "region-01:c08",
+        "source_hex": "#74d47b",
+        "current": "#6dd96f",
+        "note": "spring green, the lower floral panels"
+      },
+      {
+        "id": "p08",
+        "from": "region-01:c07",
+        "source_hex": "#e6be65",
+        "current": "#ebc05c",
+        "note": "gold, the glowing quatrefoils"
+      },
+      {
+        "id": "p09",
+        "from": "region-01:c03",
+        "source_hex": "#f14b21",
+        "current": "#f04a23",
+        "note": "vermilion, red petals and floor reflections"
+      }
+    ],
+    "operations": [
+      {
+        "id": "a001",
+        "op": "replace",
+        "target": "p01",
+        "before": "#261412",
+        "after": "#261410",
+        "reason": "Kept the established Nasir color while adding the saved extraction regions.",
+        "hex": "#261410"
+      },
+      {
+        "id": "a002",
+        "op": "replace",
+        "target": "p02",
+        "before": "#1e0473",
+        "after": "#3b1261",
+        "reason": "Kept the established Nasir color while adding the saved extraction regions.",
+        "hex": "#3b1261"
+      },
+      {
+        "id": "a003",
+        "op": "replace",
+        "target": "p03",
+        "before": "#3e09e6",
+        "after": "#4027e1",
+        "reason": "Kept the established Nasir color while adding the saved extraction regions.",
+        "hex": "#4027e1"
+      },
+      {
+        "id": "a004",
+        "op": "replace",
+        "target": "p04",
+        "before": "#4637d7",
+        "after": "#518ffd",
+        "reason": "Kept the established Nasir color while adding the saved extraction regions.",
+        "hex": "#518ffd"
+      },
+      {
+        "id": "a005",
+        "op": "replace",
+        "target": "p05",
+        "before": "#6bdff0",
+        "after": "#74ecf9",
+        "reason": "Kept the established Nasir color while adding the saved extraction regions.",
+        "hex": "#74ecf9"
+      },
+      {
+        "id": "a006",
+        "op": "replace",
+        "target": "p06",
+        "before": "#54bc51",
+        "after": "#50a877",
+        "reason": "Kept the established Nasir color while adding the saved extraction regions.",
+        "hex": "#50a877"
+      },
+      {
+        "id": "a007",
+        "op": "replace",
+        "target": "p07",
+        "before": "#74d47b",
+        "after": "#6dd96f",
+        "reason": "Kept the established Nasir color while adding the saved extraction regions.",
+        "hex": "#6dd96f"
+      },
+      {
+        "id": "a008",
+        "op": "replace",
+        "target": "p08",
+        "before": "#e6be65",
+        "after": "#ebc05c",
+        "reason": "Kept the established Nasir color while adding the saved extraction regions.",
+        "hex": "#ebc05c"
+      },
+      {
+        "id": "a009",
+        "op": "replace",
+        "target": "p09",
+        "before": "#f14b21",
+        "after": "#f04a23",
+        "reason": "Kept the established Nasir color while adding the saved extraction regions.",
+        "hex": "#f04a23"
+      }
+    ],
+    "final_order": [
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p08",
+      "p09"
+    ]
+  },
+  "expected": {
+    "colors": [
+      "#261410",
+      "#3b1261",
+      "#4027e1",
+      "#518ffd",
+      "#74ecf9",
+      "#50a877",
+      "#6dd96f",
+      "#ebc05c",
+      "#f04a23"
+    ]
+  }
+}

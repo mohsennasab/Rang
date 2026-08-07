@@ -1,3 +1,4 @@
+import hashlib
 import importlib
 import json
 import pathlib
@@ -209,6 +210,41 @@ class OutputTests(unittest.TestCase):
         with Image.open(ROOT / "docs" / "termeh" / "samples.png") as image:
             self.assertEqual(image.size, (2100, 1120))
 
+    def test_saved_regions_match_sources_and_palette_colors(self):
+        for palette in self.palettes:
+            slug = colorlib.palette_slug(palette["name"])
+            recipe = json.loads(
+                (ROOT / "recipes" / f"{slug}.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(recipe["expected"]["colors"], palette["colors"])
+            self.assertGreater(len(recipe["regions"]), 0)
+            source = ROOT / recipe["source"]["image"]
+            self.assertTrue(source.is_file())
+            self.assertEqual(
+                hashlib.sha256(source.read_bytes()).hexdigest(),
+                recipe["source"]["sha256"],
+            )
+            image = notebook_workflow.open_rgb(source)
+            width, height = image.size
+            self.assertEqual(
+                (width, height),
+                (recipe["source"]["oriented_width"],
+                 recipe["source"]["oriented_height"]),
+            )
+            for region in recipe["regions"]:
+                x0, y0, x1, y1 = region["box"]
+                self.assertTrue(0 <= x0 < x1 <= width)
+                self.assertTrue(0 <= y0 < y1 <= height)
+                expected = [
+                    round(x0 / width, 6),
+                    round(y0 / height, 6),
+                    round(x1 / width, 6),
+                    round(y1 / height, 6),
+                ]
+                self.assertEqual(region["normalized"], expected)
+            with Image.open(ROOT / "docs" / slug / "regions.png") as image:
+                self.assertEqual(image.width, 1600)
+
     def test_logo_matches_the_generator(self):
         with tempfile.TemporaryDirectory() as temporary:
             generated_path = pathlib.Path(temporary) / "rang_pixel_medallion_logo.png"
@@ -267,6 +303,7 @@ class OutputTests(unittest.TestCase):
         notebooks = {
             "rang_python_colab.ipynb": ("python", "python3"),
             "rang_r_colab.ipynb": ("R", "ir"),
+            "rang_hydrology_maps_colab.ipynb": ("python", "python3"),
         }
         for filename, (language, kernel) in notebooks.items():
             path = ROOT / "examples" / filename
@@ -281,6 +318,40 @@ class OutputTests(unittest.TestCase):
                 if cell["cell_type"] == "code":
                     self.assertEqual(cell["outputs"], [])
                     self.assertIsNone(cell["execution_count"])
+
+    def test_hydrology_example_depth(self):
+        raster_path = ROOT / "data" / "whiskey_chitto_depth_1pct.tif"
+        metadata_path = ROOT / "data" / "whiskey_chitto_depth_1pct.json"
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        self.assertEqual(metadata["source_layer"], "BLE_DEP01PCT")
+        self.assertEqual(metadata["location"], "Louisiana, United States")
+        self.assertEqual(metadata["crs"], "EPSG:3451")
+        with Image.open(raster_path) as image:
+            self.assertEqual(image.format, "TIFF")
+            self.assertEqual(image.mode, "F")
+            self.assertEqual(image.size, (4422, 5785))
+
+    def test_hydrology_notebook_sources_and_times(self):
+        path = ROOT / "examples" / "rang_hydrology_maps_colab.ipynb"
+        notebook = json.loads(path.read_text(encoding="utf-8"))
+        text = "".join("".join(cell["source"]) for cell in notebook["cells"])
+        self.assertIn("cop-dem-glo-90", text)
+        self.assertIn('temperature_item.assets["tavg"]', text)
+        self.assertIn('precipitation_item.assets["prcp"]', text)
+        self.assertIn('rang.cmap("Rostan", direction=-1)', text)
+        self.assertIn('monthly_norm = PowerNorm', text)
+        self.assertIn('gamma=0.45', text)
+        self.assertIn('rang.cmap("Mina")', text)
+        self.assertIn('FIGURE_DPI = 1000', text)
+        self.assertIn('HYBAS_ID"].eq(7030047060)', text)
+        self.assertIn('MISSISSIPPI_MAP_BBOX = (-125.0, 24.0, -66.5, 51.5)', text)
+        self.assertIn('2.8 * (0.55 ** (order - major_order))', text)
+        self.assertIn('LinearSegmentedColormap.from_list("Termeh depth"', text)
+        self.assertIn('add_rang_signature(fig, palette_name)', text)
+        for hour in ("04", "06", "08", "10", "12", "14"):
+            self.assertIn(f'2024-09-27T{hour}:00:00', text)
+        self.assertNotIn("EDT", text)
+        self.assertNotIn("contextily", text)
 
     def test_palette_workflow_notebooks(self):
         workflow_path = (

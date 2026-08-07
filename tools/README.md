@@ -161,6 +161,7 @@ The existing scripts remain useful for quick checks and maintenance.
 | `check_palette.py` | source distance, separation scores, and suggested pick order |
 | `build.py` | all generated packages, integration files, images, and pages |
 | `make_preview.py` | swatch, gallery card, and artwork preview |
+| `make_region_overlay.py` | saved extraction boxes on the verified source photograph |
 | `make_samples.py` | standard visualization samples and the water-map layout |
 | `make_hecras_ramp.py` | individual and combined HEC-RAS import files |
 | `make_stylx.py` | ArcGIS Pro style file |

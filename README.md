@@ -215,7 +215,7 @@ matching guide, [ArcGIS](arcgis/README.md), [QGIS](qgis/README.md),
 ## Use the palettes
 
 Want to try Rang without setting anything up locally? Start with the
-[Colab-ready Python and R examples](examples/).
+[Colab-ready Python, R and hydrologic mapping examples](examples/).
 
 A palette stores its ramp and a pick order. Ask for a few colors and Rang
 selects a well-separated subset. Ask for more than the palette contains and
@@ -331,6 +331,10 @@ correct only the fields you choose. It then turns the verified workflow ZIP
 into a proposal with repository files, documentation images, software test
 files, and a pull request draft.
 
+Each palette page also shows its saved extraction regions on the source
+photograph. The matching recipe keeps the pixel coordinates, normalized
+coordinates, k-means settings and color decisions together.
+
 ## Repository layout
 
 ```
@@ -344,9 +348,9 @@ qgis/        style file, .gpl swatches and the QGIS guide
 geolibre/    copy-ready and machine-readable color lists plus a usage guide
 hecras/      HEC-RAS custom color-ramp imports and the interface guide
 tools/       complete Colab workflow notebooks and command-line tools
-docs/        one page per palette with previews and sample plots
-data/        small real rainfall and elevation grids for the sample plots
-examples/    Colab-ready Python and R notebooks using public online data
+docs/        one page per palette with regions, previews and sample plots
+data/        small rainfall, elevation and flood-depth grids used by the examples
+examples/    Colab-ready palette and hydrologic mapping notebooks
 ```
 
 ## Credits and license
