@@ -240,6 +240,10 @@ the finished branch and include:
 A maintainer will look at the source, the numbers and the samples. Expect
 small requests about ramp order or a color that reads poorly in a plot.
 
+Once a palette is merged it reaches people on the next release.
+[RELEASING.md](RELEASING.md) covers how that happens, which is a maintainer
+task and nothing a contributor needs to do.
+
 ## Palette file reference
 
 Notebook 2 can package a proposal while some descriptive fields are missing.
