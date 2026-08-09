@@ -1,0 +1,91 @@
+name: publish
+
+# Publishes the Python package to PyPI when a version tag is pushed.
+#
+# There is no API token anywhere. PyPI trusts this repository through its
+# trusted publisher settings, and GitHub hands the publish job a short lived
+# identity token instead. Setting it up is described in RELEASING.md.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: build and check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install the build and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r tools/requirements.txt
+          pip install build twine pytest
+
+      - name: Check the tag matches the package version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version=$(python -c "import re, pathlib; \
+            print(re.search(r'__version__ = \"([^\"]+)\"', \
+            pathlib.Path('python/rang/__init__.py').read_text()).group(1))")
+          echo "tag $tag, package version $version"
+          if [ "$tag" != "$version" ]; then
+            echo "::error::Tag v$tag does not match rang.__version__ of $version."
+            echo "::error::Bump the version in python/rang/__init__.py, r/DESCRIPTION"
+            echo "::error::and CITATION.cff, then retag."
+            exit 1
+          fi
+
+      - name: Run the test suite
+        run: python -m pytest tests/ -q
+
+      - name: Build the wheel and sdist
+        run: |
+          cd python
+          rm -rf dist build ./*.egg-info
+          python -m build
+
+      - name: Check the artifacts the way PyPI will
+        run: python -m twine check python/dist/*
+
+      - name: Confirm the wheel imports on its own
+        run: |
+          python -m venv /tmp/check
+          /tmp/check/bin/pip install --quiet python/dist/*.whl
+          cd /tmp
+          /tmp/check/bin/python -c "import rang; print(rang.__version__, len(rang.list_palettes()))"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: distributions
+          path: python/dist/
+
+  publish:
+    name: publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    # Only a real tag publishes. A manual run builds and checks, then stops.
+    if: startsWith(github.ref, 'refs/tags/')
+    environment:
+      name: pypi
+      url: https://pypi.org/project/rang/
+    permissions:
+      # This is what lets PyPI verify the job without a stored token.
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: distributions
+          path: dist/
+
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
