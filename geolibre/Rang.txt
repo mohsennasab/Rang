@@ -178,7 +178,7 @@ Shahnameh
   categorical 8: #41356f, #4b3d97, #798cb8, #6d866a, #596956, #d4b96b, #d5c9b7, #b0472c
   categorical 9: #41356f, #4b3d97, #798cb8, #6d866a, #596956, #d4b96b, #d5c9b7, #b0472c, #a6373e
 
-Gilâs
+Gilas
   raster anchors: #58463f, #598fb6, #964765, #b8715b, #d8c723
   graduated 2: #58463f, #d8c723
   graduated 3: #58463f, #964765, #d8c723

@@ -22,6 +22,22 @@ import notebook_workflow
 import rang
 import submission_workflow
 
+# Directories that hold working files rather than repository content. cache/
+# is where contributors keep notebooks and scratch notes, so a stray semicolon
+# in a personal note should never fail the suite.
+UNTRACKED_DIRS = {ROOT / ".git", ROOT / "cache", ROOT / "notes"}
+
+
+def repository_files(pattern):
+    """Files matching a glob, skipping working directories and build output."""
+    for path in ROOT.rglob(pattern):
+        if (not path.is_file() or path.suffix == ".pyc"
+                or "__pycache__" in path.parts
+                or "build" in path.parts
+                or any(parent in UNTRACKED_DIRS for parent in path.parents)):
+            continue
+        yield path
+
 
 class PaletteTests(unittest.TestCase):
     @classmethod
@@ -31,7 +47,7 @@ class PaletteTests(unittest.TestCase):
     def test_schema_order_and_flag(self):
         self.assertEqual([p["name"] for p in self.palettes],
                          ["Kashan", "Golestan", "Termeh", "Khatam", "Nasir",
-                          "Mina", "Rostan", "Shahnameh", "Gilâs", "Iwan"])
+                          "Mina", "Rostan", "Shahnameh", "Gilas", "Iwan"])
         for palette in self.palettes:
             colors = palette["colors"]
             self.assertEqual(palette["order"], colorlib.greedy_order(colors))
@@ -48,16 +64,25 @@ class PaletteTests(unittest.TestCase):
             "Mina": "مینا",
             "Rostan": "رستن",
             "Shahnameh": "شاهنامه",
-            "Gilâs": "گیلاس",
+            "Gilas": "گیلاس",
             "Iwan": "ایوان",
         }
         self.assertEqual({p["name"]: p["persian"] for p in self.palettes}, expected)
 
-    def test_accented_palette_name_and_slug(self):
-        name = "Gil\u00e2s"
-        self.assertEqual(colorlib.load_palette(name)["name"], name)
-        self.assertEqual(colorlib.palette_slug(name), "gilas")
-        self.assertTrue(colorlib.capitalized_word(name))
+    def test_palette_names_stay_ascii(self):
+        # Names become dictionary keys in Python, list names in R and file
+        # names in the QGIS and HEC-RAS folders. An accented letter there is a
+        # CRAN check failure and something nobody can type from a plain
+        # keyboard, so the Persian spelling lives in the persian field instead.
+        for palette in self.palettes:
+            name = palette["name"]
+            self.assertTrue(name.isascii(), f"{name} must use plain ASCII")
+            self.assertTrue(colorlib.capitalized_word(name))
+            self.assertEqual(colorlib.load_palette(name)["name"], name)
+
+    def test_slug_strips_accents(self):
+        self.assertEqual(colorlib.palette_slug("Gil\u00e2s"), "gilas")
+        self.assertEqual(colorlib.palette_slug("Kashan"), "kashan")
 
     def test_ciede2000_reference_pairs(self):
         cases = [
@@ -84,6 +109,54 @@ class PaletteTests(unittest.TestCase):
                 rang.rang("Kashan", value)
         with self.assertRaises(ValueError):
             rang.cmap("Kashan", direction=0)
+
+    def test_python_version_matches_the_r_package(self):
+        description = (ROOT / "r" / "DESCRIPTION").read_text(encoding="utf-8")
+        r_version = re.search(r"^Version:\s*(\S+)", description, re.M).group(1)
+        self.assertEqual(rang.__version__, r_version)
+        citation = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
+        self.assertIn(f"version: {rang.__version__}", citation)
+
+    def test_matplotlib_helpers(self):
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        from matplotlib.colors import LinearSegmentedColormap, ListedColormap
+
+        self.assertIsInstance(rang.cmap("Termeh"), LinearSegmentedColormap)
+
+        stepped = rang.cmap("Termeh", 6)
+        self.assertIsInstance(stepped, ListedColormap)
+        self.assertEqual(stepped.N, 6)
+
+        # n colors sample the ramp evenly unless discrete is asked for
+        self.assertEqual(list(rang.cmap("Termeh", 3).colors),
+                         rang.rang("Termeh", 3, "continuous"))
+        self.assertEqual(list(rang.cmap("Termeh", 3, "discrete").colors),
+                         rang.rang("Termeh", 3, "discrete"))
+        with self.assertRaises(ValueError):
+            rang.cmap("Kashan", 50, "discrete")
+
+        names = rang.register()
+        self.assertEqual(len(names), 2 * len(rang.list_palettes()))
+        for name in ("rang:Termeh", "rang:Termeh_r", "rang:Gilas"):
+            self.assertIn(name, names)
+            self.assertEqual(plt.get_cmap(name).name, name)
+
+        # the reversed entry really is the mirror of the forward one
+        forward, reverse = plt.get_cmap("rang:Iwan"), plt.get_cmap("rang:Iwan_r")
+        self.assertEqual(forward(0.0), reverse(1.0))
+
+        # calling it again is quiet and returns the same names
+        self.assertEqual(rang.register(), names)
+        self.assertEqual(rang.registered_name("Iwan", reverse=True), "rang:Iwan_r")
+        with self.assertRaises(KeyError):
+            rang.registered_name("NotAPalette")
+
+        chosen = rang.set_palette("Golestan", 3)
+        self.assertEqual(chosen, rang.rang("Golestan", 3))
+        self.assertEqual(plt.rcParams["axes.prop_cycle"].by_key()["color"],
+                         chosen)
 
     def test_python_and_r_data_match_json(self):
         importlib.reload(rang)
@@ -750,18 +823,15 @@ class OutputTests(unittest.TestCase):
         words = ["cl" + "aude", "anth" + "ropic", "chat" + "g" + "pt",
                  "open" + "ai", "ge" + "mini", "co" + "pilot",
                  "trainedAlgorithmic" + "Media", "g" + "pt" + "-image"]
-        ignored = {ROOT / ".git", ROOT / "cache"}
-        for path in ROOT.rglob("*"):
-            if (not path.is_file() or path.suffix == ".pyc"
-                    or "__pycache__" in path.parts
-                    or any(parent in ignored for parent in path.parents)):
-                continue
+        for path in repository_files("*"):
             data = path.read_bytes().lower()
             for word in words:
                 self.assertNotIn(word.lower().encode(), data, str(path))
 
     def test_human_documents_use_plain_punctuation(self):
-        paths = list(ROOT.rglob("*.md")) + list((ROOT / "r" / "man").glob("*.Rd"))
+        paths = (list(repository_files("*.md"))
+                 + list((ROOT / "r" / "man").glob("*.Rd")))
+        self.assertGreater(len(paths), 20)
         for path in paths:
             text = path.read_text(encoding="utf-8")
             for codepoint in (0x2014, 0x2013, 0x3B):
@@ -769,7 +839,7 @@ class OutputTests(unittest.TestCase):
 
     def test_readmes_avoid_canned_copy(self):
         banned = ["project " + "cvd separation", "screening rule " + "is not"]
-        for path in ROOT.rglob("README.md"):
+        for path in repository_files("README.md"):
             text = path.read_text(encoding="utf-8").lower()
             for phrase in banned:
                 self.assertNotIn(phrase, text, str(path))

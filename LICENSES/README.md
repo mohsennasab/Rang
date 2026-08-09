@@ -57,7 +57,7 @@ included only to identify and discuss the source artwork. It is not covered by
 the MIT License or CC0 dedication. See
 [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) for the source record.
 
-The Gilâs source image reproduces the promotional poster for Abbas
+The Gilas source image reproduces the promotional poster for Abbas
 Kiarostami's film *Taste of Cherry*. The poster is copyrighted and all rights
 are reserved. The 220-pixel reference is included only to identify and discuss
 the poster and the palette drawn from it. It is not covered by the MIT License

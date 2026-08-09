@@ -1,14 +1,17 @@
 Package: Rang
 Type: Package
 Title: Color Palettes from Persian Art
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: person("Mohsen", "Tahmasebi Nasab",
     email = "mohsen.tahmasebi.n@gmail.com", role = c("aut", "cre"))
 Description: Color palettes drawn from Persian art and documented source
-    photographs. Includes discrete and continuous palettes for plots and maps.
+    photographs. Includes discrete and continuous palettes for plots and maps,
+    with ggplot2 scales for categorical and numeric variables.
 License: MIT + file LICENSE
 URL: https://github.com/mohsennasab/Rang
 BugReports: https://github.com/mohsennasab/Rang/issues
 Encoding: UTF-8
+Depends: R (>= 3.5.0)
 Imports: grDevices, graphics
+Suggests: ggplot2 (>= 3.5.0)
 RoxygenNote: 7.3.0

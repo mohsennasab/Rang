@@ -120,7 +120,7 @@ Wikipedia uses its copy under a non-free fair-use rationale that applies to
 its own article. It does not grant a license for other reuse. The small copy in
 this repository is included only to identify and discuss the poster and the
 palette drawn from it. It is not covered by the Rang MIT License or CC0
-dedication, and no permission to reuse it is granted here. The Gilâs gallery
+dedication, and no permission to reuse it is granted here. The Gilas gallery
 card, artwork preview and extraction-region image contain resized versions of
 the same poster and carry the same restriction.
 

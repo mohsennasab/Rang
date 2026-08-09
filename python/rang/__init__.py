@@ -9,8 +9,9 @@ import operator
 
 from ._palettes import PALETTES
 
-__version__ = "0.1.0"
-__all__ = ["rang", "cmap", "list_palettes", "source", "colorblind_friendly", "PALETTES"]
+__version__ = "0.2.0"
+__all__ = ["rang", "cmap", "list_palettes", "source", "colorblind_friendly",
+           "register", "registered_name", "set_palette", "PALETTES"]
 
 
 def list_palettes(colorblind_only=False):
@@ -98,14 +99,87 @@ def rang(name, n=None, kind=None, direction=1, override_order=False):
     return out[::-1] if direction == -1 else out
 
 
-def cmap(name, direction=1):
-    """A matplotlib colormap built from the palette ramp."""
+def cmap(name, n=None, kind="continuous", direction=1):
+    """A matplotlib colormap built from the palette.
+
+    Parameters
+    ----------
+    name : palette name, see list_palettes()
+    n : leave empty for a smooth colormap. Give a number to get that many
+        fixed steps instead, which suits classified rasters and choropleths.
+    kind : how the n steps are chosen. "continuous" samples evenly along the
+        ramp and is what ordered data usually wants. "discrete" follows the
+        stored pick order, which is meant for categories.
+    direction : 1 for the stored order, -1 to reverse
+
+    Needs matplotlib, which installs with `pip install rang-palettes[plots]`.
+    """
     _check_direction(direction)
-    from matplotlib.colors import LinearSegmentedColormap
-    colors = list(_get(name)["colors"])
-    if direction == -1:
-        colors = colors[::-1]
-    return LinearSegmentedColormap.from_list(name, colors)
+    from matplotlib.colors import LinearSegmentedColormap, ListedColormap
+
+    if n is None:
+        colors = list(_get(name)["colors"])
+        if direction == -1:
+            colors = colors[::-1]
+        return LinearSegmentedColormap.from_list(name, colors)
+
+    colors = rang(name, n, kind, direction=direction)
+    return ListedColormap(colors, name=f"{name}_{len(colors)}")
+
+
+def registered_name(name, reverse=False):
+    """The matplotlib lookup name for a palette, such as 'rang:Kashan'."""
+    _get(name)
+    return f"rang:{name}{'_r' if reverse else ''}"
+
+
+def register(force=False):
+    """Add every palette to matplotlib's colormap registry.
+
+    After calling this, any library that accepts a colormap name works with
+    Rang without knowing Rang exists. That covers xarray, geopandas,
+    rioxarray, seaborn and plain matplotlib.
+
+        import rang
+        rang.register()
+        data.plot(cmap="rang:Termeh")
+
+    Each palette registers twice, once forward and once reversed with an
+    "_r" suffix, matching the matplotlib convention.
+
+    Calling this again is safe and quiet. Names already in the registry are
+    left alone unless force is True, which replaces them.
+
+    Returns the list of Rang names in the registry.
+    """
+    import matplotlib
+
+    names = []
+    for key in PALETTES:
+        for reverse in (False, True):
+            lookup = registered_name(key, reverse)
+            names.append(lookup)
+            if lookup in matplotlib.colormaps:
+                if not force:
+                    continue
+                matplotlib.colormaps.unregister(lookup)
+            matplotlib.colormaps.register(
+                cmap(key, direction=-1 if reverse else 1), name=lookup
+            )
+    return names
+
+
+def set_palette(name, n=None, direction=1):
+    """Use a palette for the default line and patch colors in matplotlib.
+
+    Sets the axes property cycle, so plots drawn afterwards pick up the
+    palette without naming a color on every call. Returns the colors used.
+    """
+    import matplotlib.pyplot as plt
+
+    colors = rang(name, n, direction=direction)
+    plt.rcParams["axes.prop_cycle"] = plt.cycler(color=colors)
+    return colors
 
 
 def source(name):

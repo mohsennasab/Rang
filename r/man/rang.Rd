@@ -18,6 +18,10 @@ Returns discrete selections from the stored pick order or an interpolated
 continuous ramp. If \code{type} is omitted, requests larger than the source
 palette use continuous interpolation.
 }
+\seealso{
+\code{\link{scale_fill_rang_d}} and \code{\link{scale_fill_rang_c}} for the
+ggplot2 scales, which build these colors for you.
+}
 \examples{
 rang("Kashan")
 rang("Kashan", 4)

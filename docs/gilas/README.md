@@ -1,8 +1,8 @@
-# Gilâs (Persian: گیلاس, say it gee-LAAS, Persian for cherry)
+# Gilas (Persian: گیلاس, say it gee-LAAS, Persian for cherry)
 
-![Gilâs swatch](swatch.png)
+![Gilas swatch](swatch.png)
 
-Gilâs takes its five colors from the promotional poster for Abbas Kiarostami's Taste of Cherry. Charcoal and muted blue hold the film's stillness, while mauve, dusty coral, and mustard yellow carry the poster's face, tree, and sunlit field. I kept the set small to match the film's spare visual language.
+Gilas takes its five colors from the promotional poster for Abbas Kiarostami's Taste of Cherry. Charcoal and muted blue hold the film's stillness, while mauve, dusty coral, and mustard yellow carry the poster's face, tree, and sunlit field. I kept the set small to match the film's spare visual language.
 
 ## Source
 
@@ -37,21 +37,21 @@ the source photo. Lower numbers mean a closer match.
 
 ## The palette beside the artwork
 
-![Gilâs preview](preview.png)
+![Gilas preview](preview.png)
 
 ## Extraction regions
 
-![Gilâs extraction regions](regions.png)
+![Gilas extraction regions](regions.png)
 
 These are the saved sampling areas used for CIELAB k-means. The exact pixel
 coordinates, normalized coordinates and k values are recorded in the
-[Gilâs recipe](../../recipes/gilas.json). The regions make the
+[Gilas recipe](../../recipes/gilas.json). The regions make the
 extraction repeatable. Choosing and refining the final colors still depends
 on the artwork and the contributor's eye.
 
 ## Sample plots
 
-![Gilâs samples](samples.png)
+![Gilas samples](samples.png)
 
 The rainfall map uses one day of NOAA AORC precipitation on a roughly 1 km grid.
 Run `python tools/make_samples.py gilas` to remake the plots. Add
@@ -76,24 +76,41 @@ Python
 
 ```python
 import rang
-rang.rang("Gilâs", 5)
-rang.cmap("Gilâs")
+
+rang.rang("Gilas", 5)              # five well separated colors
+rang.cmap("Gilas")                 # smooth matplotlib colormap
+rang.cmap("Gilas", 6)              # six fixed steps for classified data
+
+rang.register()                     # then use it anywhere by name
+data.plot(cmap="rang:Gilas")
 ```
 
 R
 
 ```r
 library(Rang)
-rang("Gilâs", 5)
+library(ggplot2)
+
+rang("Gilas", 5)                   # five well separated colors
+
+# categories
+ggplot(df, aes(group, value, fill = group)) +
+  geom_col() +
+  scale_fill_rang_d("Gilas")
+
+# a numeric variable
+ggplot(df, aes(x, y, color = value)) +
+  geom_point() +
+  scale_color_rang_c("Gilas")
 ```
 
 ArcGIS Pro users get every palette by importing
 [arcgis/Rang.stylx](../../arcgis/Rang.stylx) once, with steps in the
 [ArcGIS guide](../../arcgis/README.md). QGIS users can import
 [qgis/Rang.xml](../../qgis/Rang.xml) for the ramps or
-[qgis/Gilâs.gpl](../../qgis/Gilâs.gpl) for swatches, see the
+[qgis/Gilas.gpl](../../qgis/Gilas.gpl) for swatches, see the
 [QGIS guide](../../qgis/README.md). HEC-RAS users can import
-[hecras/Rang-Gilâs.xml](../../hecras/Rang-Gilâs.xml), see the
+[hecras/Rang-Gilas.xml](../../hecras/Rang-Gilas.xml), see the
 [HEC-RAS guide](../../hecras/README.md). GeoLibre users can copy colors from
 [geolibre/Rang.txt](../../geolibre/Rang.txt), with steps for raster and vector
 layers in the [GeoLibre guide](../../geolibre/README.md).

@@ -7,6 +7,9 @@
 *.toml text eol=lf
 *.xml text eol=lf
 *.gpl text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.cff text eol=lf
 *.png binary
 *.jpg binary
 *.tif binary

@@ -65,7 +65,7 @@ Manager import file.
 Install both packages in a notebook:
 
 ```python
-%pip install -q geolibre "rang @ git+https://github.com/mohsennasab/Rang.git#subdirectory=python"
+%pip install -q geolibre rang-palettes
 ```
 
 Rang colors can be passed directly to GeoLibre legends and colorbars:

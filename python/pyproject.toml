@@ -1,22 +1,52 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "rang-palettes"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Color palettes from Persian art for plots and maps"
 readme = "README.md"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE", "LICENSE-CC0.txt"]
 requires-python = ">=3.9"
 authors = [{ name = "Mohsen Tahmasebi Nasab" }]
-keywords = ["color", "palette", "colormap", "persian art", "visualization"]
+maintainers = [{ name = "Mohsen Tahmasebi Nasab" }]
+keywords = [
+    "color",
+    "palette",
+    "colormap",
+    "matplotlib",
+    "persian art",
+    "visualization",
+    "cartography",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Multimedia :: Graphics",
+]
 
 [project.urls]
 Homepage = "https://github.com/mohsennasab/Rang"
+Source = "https://github.com/mohsennasab/Rang"
+Documentation = "https://github.com/mohsennasab/Rang#readme"
+Issues = "https://github.com/mohsennasab/Rang/issues"
 
 [project.optional-dependencies]
 plots = ["matplotlib>=3.7"]
+
+[tool.setuptools.dynamic]
+version = { attr = "rang.__version__" }
 
 [tool.setuptools.packages.find]
 include = ["rang*"]
