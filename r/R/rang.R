@@ -21,9 +21,11 @@
 #' rang("Kashan", 4)
 #' rang("Kashan", 100, type = "continuous")
 #'
-#' # with ggplot2
-#' # scale_fill_manual(values = rang("Kashan", 3))
-#' # scale_fill_gradientn(colors = rang("Kashan", 100, type = "continuous"))
+#' # with ggplot2, use the scales rather than building the colors by hand
+#' # scale_fill_rang_d("Kashan")
+#' # scale_fill_rang_c("Termeh")
+#' @seealso \code{\link{scale_fill_rang_d}} and \code{\link{scale_fill_rang_c}}
+#'   for the ggplot2 scales.
 #' @export
 rang <- function(name, n, type = c("discrete", "continuous"),
                  direction = 1, override_order = FALSE) {

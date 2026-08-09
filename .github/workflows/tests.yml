@@ -1,0 +1,100 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  python:
+    name: python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install the build and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r tools/requirements.txt
+          pip install pytest
+
+      - name: Run the test suite
+        run: python -m pytest tests/ -v
+
+      - name: Check that the package installs on its own
+        run: |
+          pip install ./python
+          python -c "import rang; print(rang.__version__, len(rang.list_palettes()))"
+
+  generated-files:
+    name: generated files are current
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install the build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r tools/requirements.txt
+
+      - name: Rebuild the generated files
+        run: python tools/build.py --all --skip-images
+
+      - name: Fail if a generated file was edited by hand
+        run: |
+          git diff --exit-code -- \
+            python/rang/_palettes.py \
+            r/R/palettes_data.R \
+            qgis/Rang.xml \
+            qgis/*.gpl \
+            hecras/*.xml \
+            geolibre/Rang.json \
+            geolibre/Rang.txt
+        # Images and the .stylx are left out because their encoders are not
+        # byte reproducible across library versions. The text outputs are.
+
+  r:
+    name: R package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          working-directory: r
+          extra-packages: |
+            any::rcmdcheck
+            any::ggplot2
+
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          working-directory: r
+          args: 'c("--no-manual")'
+          error-on: '"warning"'
+        env:
+          # The clock check needs a network call that is not always available.
+          _R_CHECK_SYSTEM_CLOCK_: 0
+        # --as-cran is left off on purpose. Its incoming feasibility check
+        # reports the package name Rang as conflicting with the unrelated rang
+        # package already on CRAN, which is a submission question rather than
+        # anything wrong with the code. Add --as-cran back if Rang is ever
+        # submitted to CRAN under a different name.

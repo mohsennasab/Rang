@@ -79,15 +79,32 @@ Python
 
 ```python
 import rang
-rang.rang("Nasir", 5)
-rang.cmap("Nasir")
+
+rang.rang("Nasir", 5)              # five well separated colors
+rang.cmap("Nasir")                 # smooth matplotlib colormap
+rang.cmap("Nasir", 6)              # six fixed steps for classified data
+
+rang.register()                     # then use it anywhere by name
+data.plot(cmap="rang:Nasir")
 ```
 
 R
 
 ```r
 library(Rang)
-rang("Nasir", 5)
+library(ggplot2)
+
+rang("Nasir", 5)                   # five well separated colors
+
+# categories
+ggplot(df, aes(group, value, fill = group)) +
+  geom_col() +
+  scale_fill_rang_d("Nasir")
+
+# a numeric variable
+ggplot(df, aes(x, y, color = value)) +
+  geom_point() +
+  scale_color_rang_c("Nasir")
 ```
 
 ArcGIS Pro users get every palette by importing

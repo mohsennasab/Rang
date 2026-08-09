@@ -139,13 +139,13 @@ Shahnameh comes from the wedding of Siyavush and Farangis. Deep violet and pavil
 
 ***
 
-### Gilâs
+### Gilas
 
-![Gilâs, the artwork and its palette](docs/gilas/card.png)
+![Gilas, the artwork and its palette](docs/gilas/card.png)
 
 Taste of Cherry promotional poster, 1997. Wikipedia. Promotional poster for Taste of Cherry. [Reference](https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg) Persian: گیلاس. Say it gee-LAAS, Persian for cherry.
 
-Gilâs takes its five colors from the promotional poster for Abbas Kiarostami's Taste of Cherry. Charcoal and muted blue hold the film's stillness, while mauve, dusty coral, and mustard yellow carry the poster's face, tree, and sunlit field. I kept the set small to match the film's spare visual language.
+Gilas takes its five colors from the promotional poster for Abbas Kiarostami's Taste of Cherry. Charcoal and muted blue hold the film's stillness, while mauve, dusty coral, and mustard yellow carry the poster's face, tree, and sunlit field. I kept the set small to match the film's spare visual language.
 
 `#58463f #598fb6 #964765 #b8715b #d8c723`
 
@@ -183,8 +183,8 @@ stress lands on the last syllable.
 | Mina      | مینا    | mee-NAH                               | enamel, the material used in minakari               |
 | Rostan    | رستن    | rohs-TAN                              | to grow, from the painting's Persian title          |
 | Shahnameh | شاهنامه | shah-nah-MEH                          | Book of Kings, the wedding of Siyavush and Farangis |
-| Gilâs     | گیلاس     | gee-LAAS                            | cherry, the fruit                                   |
-| Iwan      | ایوان     | ee-VAHN                             | a vaulted hall open on one side                     |
+| Gilas     | گیلاس   | gee-LAAS                              | cherry, the fruit                                   |
+| Iwan      | ایوان   | ee-VAHN                               | a vaulted hall open on one side                     |
 
 Each palette page repeats the pronunciation beside its name.
 
@@ -193,10 +193,21 @@ Each palette page repeats the pronunciation beside its name.
 ### Python
 
 ```
-pip install "git+https://github.com/mohsennasab/Rang.git#subdirectory=python"
+pip install rang
 ```
 
-No required dependencies. `rang.cmap()` needs matplotlib.
+The package itself has no required dependencies. The matplotlib helpers
+(`cmap`, `register` and `set_palette`) need matplotlib, which comes with:
+
+```
+pip install "rang[plots]"
+```
+
+To install the unreleased version straight from this repository instead:
+
+```
+pip install "git+https://github.com/mohsennasab/Rang.git#subdirectory=python"
+```
 
 ### R
 
@@ -204,6 +215,9 @@ No required dependencies. `rang.cmap()` needs matplotlib.
 install.packages("remotes")
 remotes::install_github("mohsennasab/Rang", subdir = "r")
 ```
+
+The ggplot2 scales need ggplot2 3.5.0 or newer. Everything else works
+without it.
 
 ### ArcGIS Pro, QGIS, GeoLibre and HEC-RAS
 
@@ -229,14 +243,30 @@ import rang
 rang.list_palettes()                     # available names
 rang.rang("Golestan")                    # the full ramp
 rang.rang("Golestan", 4)                 # four well separated colors
-rang.rang("Kashan", 100, "continuous")   # smooth ramp for gridded data
+rang.rang("Termeh", 100, "continuous")   # smooth ramp for gridded data
 
 # matplotlib
 import matplotlib.pyplot as plt
-plt.imshow(data, cmap=rang.cmap("Kashan"))
+plt.imshow(data, cmap=rang.cmap("Termeh"))       # smooth
+plt.imshow(data, cmap=rang.cmap("Termeh", 6))    # six fixed steps
+
+# categorical plots pick up the palette on their own
+rang.set_palette("Golestan")
 
 # where the colors came from
 rang.source("Golestan")
+```
+
+Calling `rang.register()` once adds every palette to matplotlib under a
+`rang:` name. After that any library that takes a colormap name can use
+Rang, including xarray, geopandas, rioxarray and seaborn, without knowing
+anything about Rang.
+
+```python
+rang.register()
+
+raster.plot(cmap="rang:Termeh")          # xarray
+gdf.plot(column="depth", cmap="rang:Iwan_r")     # geopandas, reversed
 ```
 
 ### R
@@ -247,17 +277,29 @@ library(Rang)
 names(rang_palettes)                     # available names
 rang("Golestan")                         # the full ramp, prints as a swatch
 rang("Golestan", 4)                      # four well separated colors
-rang("Kashan", 100, type = "continuous") # smooth ramp
+rang("Termeh", 100, type = "continuous") # smooth ramp
+```
 
-# ggplot2
+With ggplot2 there is a scale for each case, so the colors do not have to be
+built by hand.
+
+```r
+library(ggplot2)
+
+# a categorical variable
 ggplot(iris, aes(Species, Petal.Length, fill = Species)) +
   geom_violin() +
-  scale_fill_manual(values = rang("Golestan", 3))
+  scale_fill_rang_d("Golestan")
 
+# a numeric variable
 ggplot(faithfuld, aes(waiting, eruptions, fill = density)) +
   geom_raster() +
-  scale_fill_gradientn(colors = rang("Kashan", 100, type = "continuous"))
+  scale_fill_rang_c("Termeh")
 ```
+
+Every scale comes in four spellings, `scale_fill_*` and `scale_color_*` with
+a `scale_colour_*` alias, and `_d` for categories against `_c` for numbers.
+Pass `direction = -1` to any of them to run the palette the other way.
 
 ### ArcGIS Pro
 
@@ -400,7 +442,7 @@ The Rostan palette comes from Iran Darroudi's 1972 painting
 low-resolution reference image is all rights reserved and is included only
 to identify and discuss the source work.
 
-The Gilâs palette comes from the promotional poster for Abbas Kiarostami's
+The Gilas palette comes from the promotional poster for Abbas Kiarostami's
 1997 film *Taste of Cherry*. The
 [Wikipedia file page](https://en.wikipedia.org/wiki/File:Tasteofcherryposter.jpg)
 identifies the poster as copyrighted and non-free. The 220-pixel reference is
