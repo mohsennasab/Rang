@@ -193,18 +193,17 @@ Each palette page repeats the pronunciation beside its name.
 ### Python
 
 ```
-pip install rang-palettes
+pip install rang
 ```
 
 The package itself has no required dependencies. The matplotlib helpers
 (`cmap`, `register` and `set_palette`) need matplotlib, which comes with:
 
 ```
-pip install "rang-palettes[plots]"
+pip install "rang[plots]"
 ```
 
-Import it as `rang`. To install the unreleased version straight from this
-repository instead:
+To install the unreleased version straight from this repository instead:
 
 ```
 pip install "git+https://github.com/mohsennasab/Rang.git#subdirectory=python"

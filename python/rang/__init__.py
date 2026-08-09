@@ -112,7 +112,7 @@ def cmap(name, n=None, kind="continuous", direction=1):
         stored pick order, which is meant for categories.
     direction : 1 for the stored order, -1 to reverse
 
-    Needs matplotlib, which installs with `pip install rang-palettes[plots]`.
+    Needs matplotlib, which installs with `pip install rang[plots]`.
     """
     _check_direction(direction)
     from matplotlib.colors import LinearSegmentedColormap, ListedColormap

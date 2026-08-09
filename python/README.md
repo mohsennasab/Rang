@@ -5,17 +5,15 @@ project, which also packages the palettes for R, ArcGIS Pro, QGIS, GeoLibre
 and HEC-RAS.
 
 ```
-pip install rang-palettes
+pip install rang
 ```
 
 The package has no required dependencies. The matplotlib helpers need
 matplotlib, which you can pull in at the same time:
 
 ```
-pip install "rang-palettes[plots]"
+pip install "rang[plots]"
 ```
-
-The distribution is named `rang-palettes` and imports as `rang`.
 
 ## Colors
 
