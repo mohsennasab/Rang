@@ -1,9 +1,18 @@
 # Rang | رنگ <img align="right" src="logo/rang_pixel_medallion_logo.png" width="200">
 
-Rang is a collection of color palettes drawn from the visual traditions of
-Persian art and culture. Carpets, miniature paintings, tilework, manuscripts,
-ceramics, and architecture become practical color schemes for maps, figures,
-and creative work.
+Rang is a collection of color palettes drawn from Persian, Iranian, and
+Persianate art and culture. Carpets, miniature paintings, tilework,
+manuscripts, ceramics, and architecture become practical color schemes for
+maps, figures, and creative work.
+
+> [!NOTE]
+> **Persian, Iranian, and Persianate**
+>
+> Rang draws from Persian, Iranian, and Persianate art and culture. Here,
+> *Persian* refers to the Persian language and the traditions shaped through
+> it. *Iranian* refers more broadly to the many cultures of Iran. The terms
+> overlap, but they are not interchangeable. Read [a note on language and
+> scope](docs/language-and-scope.md).
 
 The name Rang (Persian: رنگ) means "color" in Persian. I created this
 collection to carry the character of these artworks into data visualization,
@@ -357,13 +366,13 @@ The fetch scripts live in [tools/](tools/README.md).
 
 ## Contributing
 
-New palettes are welcome. The bar is that the source is Persian art with a
-photograph you have the rights to share, the colors verifiably come from that
-photograph, and the palette page is produced by the standard tooling so it
-matches the rest of the collection. [CONTRIBUTING.md](CONTRIBUTING.md) walks
-through the whole process, from picking an artwork to opening a pull request,
-including the sample code for extracting colors from a photo and adjusting any
-color that does not sit right.
+New palettes are welcome. The source can come from Persian, Iranian, or
+Persianate art and culture. You need a photograph you have the rights to share,
+colors that verifiably come from that photograph, and a palette page produced
+by the standard tooling so it matches the rest of the collection.
+[CONTRIBUTING.md](CONTRIBUTING.md) walks through the whole process, from
+picking an artwork to opening a pull request, including the sample code for
+extracting colors from a photo and adjusting any color that does not sit right.
 
 The two [palette-making notebooks](tools/README.md) run in Google Colab and
 make every input and decision easy to find. Notebook 1 takes an uploaded
