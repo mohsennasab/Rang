@@ -24,9 +24,12 @@ remain available for contributors who prefer a terminal.
 
 ## What makes a good source
 
-- Persian art in a broad sense. Carpets, miniatures, tilework, manuscripts,
-  ceramics, metalwork, and architecture. Works from the wider Persianate world
-  fit when the visual tradition is Persian.
+- Artwork from Persian, Iranian, or Persianate art and culture. Carpets,
+  miniatures, tilework, manuscripts, ceramics, metalwork, and architecture all
+  fit. Describe the source using the most specific cultural, regional,
+  linguistic, or community attribution that its record supports. See
+  [Persian, Iranian, and
+  Persianate](docs/language-and-scope.md).
 - A photograph you have the rights to share. Two paths work. Use a museum
   image whose object page states a suitable reuse license, or your own photo of
   tilework, a building or an object. New contributed photographs must use CC
