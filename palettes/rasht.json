@@ -1,0 +1,60 @@
+{
+  "name": "Rasht",
+  "persian": "رشت",
+  "pronunciation": "rasht",
+  "position": 11,
+  "about": "Rasht draws nine colors from Nasim Bahari's illustration of Municipality Square on a spring afternoon. Deep violet and two blues lead into neighboring red and orange roof colors, two greens from the palms, and the lavender paving and pale architectural details.",
+  "story": [
+    "Bahari's illustration looks across Rasht's Municipality Square toward its clock-fronted building. People walk, cycle, and pause among the trees and fountain. Layers of red and blue roofs frame the square. The artist described it as an afternoon on a spring day in Rasht."
+  ],
+  "colors": [
+    "#5e3c87",
+    "#4a657f",
+    "#4470d3",
+    "#d03232",
+    "#d96e4c",
+    "#3f887f",
+    "#55a67e",
+    "#ac98ba",
+    "#cfc4d8"
+  ],
+  "notes": [
+    "deep violet in the building outlines and small shadowed details",
+    "slate blue in the roof and architectural shadows",
+    "clear blue roofs and the central fountain",
+    "red roofs around Municipality Square",
+    "warm orange roof details, trunks, and clothing",
+    "deep green of the palms and planted edges",
+    "lighter green in the palms and planted edges",
+    "lavender of the broad square pavement",
+    "pale lilac in walls and roof details"
+  ],
+  "order": [
+    4,
+    7,
+    1,
+    8,
+    2,
+    9,
+    5,
+    6,
+    3
+  ],
+  "colorblind": true,
+  "source": {
+    "title": "Rasht Municipality Square, a spring afternoon",
+    "citation": "Nasim Bahari, illustration of Rasht Municipality Square, posted 2023.",
+    "artist": "Nasim Bahari",
+    "date": "2023 (posted)",
+    "geography": "Rasht, Gilan, Iran",
+    "medium": "Illustration",
+    "site": "Nasim Bahari on X",
+    "reference_label": "Artist's original post",
+    "url": "https://x.com/BahariiNasim/status/1652295181847212032",
+    "image": "sources/rasht/artwork.jpg",
+    "credit": "Illustration © Nasim Bahari",
+    "public_domain": false,
+    "rights": "Copyright Nasim Bahari, all rights reserved. The source image and derived previews are included for this Rang contribution with permission obtained by the palette creator from the artist. No general license to reuse the artwork is granted here",
+    "preserve_aspect": true
+  }
+}

@@ -1,0 +1,360 @@
+{
+  "schema_version": 1,
+  "palette": "Rasht",
+  "creator": "Mohsen Tahmasebi Nasab, PhD",
+  "website": "https://hydromohsen.com",
+  "license_holder": "Mohsen Tahmasebi Nasab",
+  "source": {
+    "image": "sources/rasht/artwork.jpg",
+    "sha256": "749a272d11c4f8690666aaa3c9fa14fe2b54c2027901c3ac4d145f4a1b2bc484",
+    "oriented_width": 1920,
+    "oriented_height": 1920,
+    "color_handling": "EXIF orientation followed by RGB conversion",
+    "reference": "https://x.com/BahariiNasim/status/1652295181847212032",
+    "original_filename": "Fu4hsbiXsAEIc-S (1).jpg"
+  },
+  "regions": [
+    {
+      "id": "region-01",
+      "label": "Entire illustration",
+      "box": [
+        0,
+        0,
+        1920,
+        1920
+      ],
+      "normalized": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "k": 16,
+      "note": "The complete Rasht scene, including its white space, violet outlines, roofs, trees, water, and people"
+    }
+  ],
+  "extraction": {
+    "color_space": "CIELAB",
+    "white_point": "D65",
+    "algorithm": "sklearn.cluster.KMeans",
+    "random_state": 0,
+    "n_init": 20,
+    "algorithm_mode": "lloyd",
+    "maximum_region_size": 400
+  },
+  "environment": {
+    "python": "3.12.9",
+    "numpy": "2.3.2",
+    "pillow": "11.3.0",
+    "scikit_learn": "1.8.0"
+  },
+  "accepted_candidates": [
+    {
+      "lab": [
+        99.3969,
+        0.1892,
+        -0.1844
+      ],
+      "hex": "#fdfdfe",
+      "share": 31.0969,
+      "id": "region-01:c01",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        65.6307,
+        13.8149,
+        -14.8575
+      ],
+      "hex": "#ac98ba",
+      "share": 15.3581,
+      "id": "region-01:c02",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        57.0494,
+        18.9406,
+        -20.5908
+      ],
+      "hex": "#997fad",
+      "share": 8.9906,
+      "id": "region-01:c03",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        80.7054,
+        7.5354,
+        -8.5067
+      ],
+      "hex": "#cfc4d8",
+      "share": 7.3544,
+      "id": "region-01:c04",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        46.2396,
+        23.4381,
+        -27.1313
+      ],
+      "hex": "#7e619b",
+      "share": 6.2038,
+      "id": "region-01:c05",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        51.9433,
+        -24.879,
+        -2.521
+      ],
+      "hex": "#3f887f",
+      "share": 4.9037,
+      "id": "region-01:c06",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        46.8279,
+        60.4461,
+        38.424
+      ],
+      "hex": "#d03232",
+      "share": 4.0088,
+      "id": "region-01:c07",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        41.5325,
+        -2.4598,
+        -17.8476
+      ],
+      "hex": "#4a657f",
+      "share": 3.2012,
+      "id": "region-01:c08",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        48.9349,
+        17.3231,
+        -55.5331
+      ],
+      "hex": "#4470d3",
+      "share": 3.1506,
+      "id": "region-01:c09",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        40.336,
+        38.8717,
+        -2.1879
+      ],
+      "hex": "#974364",
+      "share": 2.9225,
+      "id": "region-01:c10",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        43.0434,
+        47.3182,
+        15.2198
+      ],
+      "hex": "#af3e4f",
+      "share": 2.8269,
+      "id": "region-01:c11",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        73.2849,
+        27.9432,
+        -17.9005
+      ],
+      "hex": "#d8a3d5",
+      "share": 2.385,
+      "id": "region-01:c12",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        32.4944,
+        31.3463,
+        -36.8434
+      ],
+      "hex": "#5e3c87",
+      "share": 2.2919,
+      "id": "region-01:c13",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        56.2375,
+        -34.3109,
+        13.2239
+      ],
+      "hex": "#45966f",
+      "share": 2.2575,
+      "id": "region-01:c14",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        63.3251,
+        39.2828,
+        37.7253
+      ],
+      "hex": "#e87b58",
+      "share": 2.0769,
+      "id": "region-01:c15",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    },
+    {
+      "lab": [
+        70.3361,
+        4.6744,
+        -36.7386
+      ],
+      "hex": "#89adee",
+      "share": 0.9713,
+      "id": "region-01:c16",
+      "region": "region-01",
+      "region_label": "Entire illustration"
+    }
+  ],
+  "curation": {
+    "colors": [
+      {
+        "id": "p01",
+        "from": "region-01:c13",
+        "source_hex": "#5e3c87",
+        "current": "#5e3c87",
+        "note": "deep violet in the building outlines and small shadowed details"
+      },
+      {
+        "id": "p02",
+        "from": "region-01:c08",
+        "source_hex": "#4a657f",
+        "current": "#4a657f",
+        "note": "slate blue in the roof and architectural shadows"
+      },
+      {
+        "id": "p03",
+        "from": "region-01:c09",
+        "source_hex": "#4470d3",
+        "current": "#4470d3",
+        "note": "clear blue roofs and the central fountain"
+      },
+      {
+        "id": "p04",
+        "from": "region-01:c07",
+        "source_hex": "#d03232",
+        "current": "#d03232",
+        "note": "red roofs around Municipality Square"
+      },
+      {
+        "id": "p05",
+        "from": "region-01:c15",
+        "source_hex": "#e87b58",
+        "current": "#d96e4c",
+        "note": "warm orange roof details, trunks, and clothing"
+      },
+      {
+        "id": "p06",
+        "from": "region-01:c06",
+        "source_hex": "#3f887f",
+        "current": "#3f887f",
+        "note": "deep green of the palms and planted edges"
+      },
+      {
+        "id": "p07",
+        "from": "region-01:c14",
+        "source_hex": "#45966f",
+        "current": "#55a67e",
+        "note": "lighter green in the palms and planted edges"
+      },
+      {
+        "id": "p08",
+        "from": "region-01:c02",
+        "source_hex": "#ac98ba",
+        "current": "#ac98ba",
+        "note": "lavender of the broad square pavement"
+      },
+      {
+        "id": "p09",
+        "from": "region-01:c04",
+        "source_hex": "#cfc4d8",
+        "current": "#cfc4d8",
+        "note": "pale lilac in walls and roof details"
+      }
+    ],
+    "operations": [
+      {
+        "id": "a001",
+        "op": "adjust_lch",
+        "target": "p05",
+        "before": "#e87b58",
+        "after": "#d96e4c",
+        "reason": "darkened the orange slightly so the adjacent red and orange roofs form a smoother rise in lightness",
+        "L": -5.0,
+        "C": 0.0,
+        "H": 0.0
+      },
+      {
+        "id": "a002",
+        "op": "adjust_lch",
+        "target": "p07",
+        "before": "#45966f",
+        "after": "#55a67e",
+        "reason": "lightened the second palm green to distinguish it from the darker green while staying close to the artwork",
+        "L": 6.0,
+        "C": 0.0,
+        "H": 0.0
+      }
+    ],
+    "final_order": [
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p08",
+      "p09"
+    ]
+  },
+  "expected": {
+    "colors": [
+      "#5e3c87",
+      "#4a657f",
+      "#4470d3",
+      "#d03232",
+      "#d96e4c",
+      "#3f887f",
+      "#55a67e",
+      "#ac98ba",
+      "#cfc4d8"
+    ]
+  }
+}

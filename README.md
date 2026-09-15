@@ -174,6 +174,20 @@ Iwan moves from sunlit yellow into a long run of blues drawn from the tiled entr
 
 [Sample plots and full details](docs/iwan/README.md)
 
+***
+
+### Rasht
+
+![Rasht, the artwork and its palette](docs/rasht/card.png)
+
+Rasht Municipality Square, a spring afternoon, 2023 (posted). Nasim Bahari on X. Illustration © Nasim Bahari. [Reference](https://x.com/BahariiNasim/status/1652295181847212032) Persian: رشت. Say it rasht.
+
+Rasht draws nine colors from Nasim Bahari's illustration of Municipality Square on a spring afternoon. Deep violet and two blues lead into neighboring red and orange roof colors, two greens from the palms, and the lavender paving and pale architectural details.
+
+`#5e3c87 #4a657f #4470d3 #d03232 #d96e4c #3f887f #55a67e #ac98ba #cfc4d8`
+
+[Sample plots and full details](docs/rasht/README.md)
+
 <!-- gallery:end -->
 
 ## Saying the names

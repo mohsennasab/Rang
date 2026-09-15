@@ -67,5 +67,11 @@ rang_palettes <- list(
     order = c(1, 5, 3, 7, 4, 9, 6, 8, 2),
     colorblind = FALSE,
     source = "Entrance iwan of the Shah Mosque, 2020, Wikimedia Commons, https://commons.wikimedia.org/wiki/File:Shah_mosque_of_isfahan.jpg"
+  ),
+  Rasht = list(
+    colors = c("#5e3c87", "#4a657f", "#4470d3", "#d03232", "#d96e4c", "#3f887f", "#55a67e", "#ac98ba", "#cfc4d8"),
+    order = c(4, 7, 1, 8, 2, 9, 5, 6, 3),
+    colorblind = TRUE,
+    source = "Rasht Municipality Square, a spring afternoon, 2023 (posted), Nasim Bahari on X, https://x.com/BahariiNasim/status/1652295181847212032"
   )
 )
