@@ -9,7 +9,7 @@ import operator
 
 from ._palettes import PALETTES
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __all__ = ["rang", "cmap", "list_palettes", "source", "colorblind_friendly",
            "register", "registered_name", "set_palette", "PALETTES"]
 

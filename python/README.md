@@ -25,6 +25,7 @@ rang.rang("Kashan")                       # all nine colors, ramp order
 rang.rang("Kashan", 4)                    # four well separated colors
 rang.rang("Kashan", 30, "continuous")     # interpolated ramp
 rang.source("Kashan")                     # the artwork behind the palette
+rang.rang("Rasht")                        # nine colors from Municipality Square
 ```
 
 Discrete requests use the stored separation order. Continuous requests
@@ -60,6 +61,11 @@ light, which is what depth, elevation and rainfall maps need. Kashan,
 Golestan and Mina move from a warm side through a light center to a cool
 side. Nasir, Shahnameh and Gilas jump around in brightness, so they suit
 categories rather than measured quantities.
+
+Rasht groups two blues, adjacent red and orange, and two greens in a ramp
+that runs broadly from dark violet to pale lilac. It suits categories and
+classified maps. Inspect a continuous map before using the full ramp for a
+measured quantity.
 
 Each palette page in the repository shows sample plots and the color vision
 checks.

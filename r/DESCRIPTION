@@ -1,7 +1,7 @@
 Package: Rang
 Type: Package
 Title: Color Palettes from Persian Art
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: person("Mohsen", "Tahmasebi Nasab",
     email = "mohsen.tahmasebi.n@gmail.com", role = c("aut", "cre"))
 Description: Color palettes drawn from Persian art and documented source
