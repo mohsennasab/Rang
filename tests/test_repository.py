@@ -47,7 +47,8 @@ class PaletteTests(unittest.TestCase):
     def test_schema_order_and_flag(self):
         self.assertEqual([p["name"] for p in self.palettes],
                          ["Kashan", "Golestan", "Termeh", "Khatam", "Nasir",
-                          "Mina", "Rostan", "Shahnameh", "Gilas", "Iwan"])
+                          "Mina", "Rostan", "Shahnameh", "Gilas", "Iwan",
+                          "Rasht"])
         for palette in self.palettes:
             colors = palette["colors"]
             self.assertEqual(palette["order"], colorlib.greedy_order(colors))
@@ -66,8 +67,26 @@ class PaletteTests(unittest.TestCase):
             "Shahnameh": "شاهنامه",
             "Gilas": "گیلاس",
             "Iwan": "ایوان",
+            "Rasht": "رشت",
         }
         self.assertEqual({p["name"]: p["persian"] for p in self.palettes}, expected)
+
+    def test_rasht_uses_the_entire_image_as_one_region(self):
+        recipe = json.loads((ROOT / "recipes" / "rasht.json").read_text(encoding="utf-8"))
+        width = recipe["source"]["oriented_width"]
+        height = recipe["source"]["oriented_height"]
+        self.assertEqual(len(recipe["regions"]), 1)
+        self.assertEqual(recipe["regions"][0]["box"], [0, 0, width, height])
+
+    def test_rasht_groups_warm_and_green_colors_in_the_ramp(self):
+        palette = colorlib.load_palette("Rasht")
+        colors = palette["colors"]
+        self.assertEqual(colors.index("#d96e4c"), colors.index("#d03232") + 1)
+        self.assertEqual(colors.index("#55a67e"), colors.index("#3f887f") + 1)
+        lightness = [colorlib.rgb_to_lab(colorlib.hex_to_rgb(color))[0]
+                     for color in colors]
+        self.assertEqual(lightness[0], min(lightness))
+        self.assertEqual(lightness[-1], max(lightness))
 
     def test_palette_names_stay_ascii(self):
         # Names become dictionary keys in Python, list names in R and file

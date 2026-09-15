@@ -124,6 +124,19 @@ dedication, and no permission to reuse it is granted here. The Gilas gallery
 card, artwork preview and extraction-region image contain resized versions of
 the same poster and carry the same restriction.
 
+## Nasim Bahari's Rasht illustration
+
+`sources/rasht/artwork.jpg` is the 1920 by 1920 source copy of Nasim Bahari's
+[illustration of Rasht Municipality Square](https://x.com/BahariiNasim/status/1652295181847212032),
+posted in 2023. Mohsen Tahmasebi Nasab obtained the image from the artist with
+permission for this Rang contribution. The Rasht gallery card, artwork preview,
+and extraction-region image contain resized versions of the artwork.
+
+The artwork remains copyright Nasim Bahari, all rights reserved. It is not
+covered by Rang's MIT License or CC0 palette dedication. Its inclusion here
+does not grant a general license to copy or reuse the artwork or its derived
+images. Credit: Illustration by Nasim Bahari.
+
 ## NOAA AORC precipitation
 
 `data/aorc_precip.png` and `data/aorc_precip.json` contain a reduced and
