@@ -208,6 +208,7 @@ stress lands on the last syllable.
 | Shahnameh | شاهنامه | shah-nah-MEH                          | Book of Kings, the wedding of Siyavush and Farangis |
 | Gilas     | گیلاس   | gee-LAAS                              | cherry, the fruit                                   |
 | Iwan      | ایوان   | ee-VAHN                               | a vaulted hall open on one side                     |
+| Rasht     | رشت     | rasht, short a as in rash             | city and Municipality Square in Gilan               |
 
 Each palette page repeats the pronunciation beside its name.
 
@@ -217,6 +218,15 @@ Each palette page repeats the pronunciation beside its name.
 
 ```
 pip install rang
+```
+
+Rasht is included from version 0.3.0. After that release is published, update
+an existing installation and check that the palette is available:
+
+```
+pip install --upgrade "rang>=0.3.0"
+python -m pip show rang
+python -c "print(__import__('rang').rang('Rasht'))"
 ```
 
 The package itself has no required dependencies. The matplotlib helpers
