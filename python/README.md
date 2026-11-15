@@ -26,6 +26,7 @@ rang.rang("Kashan", 4)                    # four well separated colors
 rang.rang("Kashan", 30, "continuous")     # interpolated ramp
 rang.source("Kashan")                     # the artwork behind the palette
 rang.rang("Rasht")                        # nine colors from Municipality Square
+rang.rang("Confusion", 4)                 # four colors from Negar Ghorbani's portrait
 ```
 
 Discrete requests use the stored separation order. Continuous requests

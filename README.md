@@ -236,13 +236,13 @@ Each palette page repeats the pronunciation beside its name.
 pip install rang
 ```
 
-Rasht is included from version 0.3.0. After that release is published, update
-an existing installation and check that the palette is available:
+Confusion is included from version 0.4.0. After that release is published,
+update an existing installation and check that the palette is available:
 
 ```
-pip install --upgrade "rang>=0.3.0"
+pip install --upgrade "rang>=0.4.0"
 python -m pip show rang
-python -c "print(__import__('rang').rang('Rasht'))"
+python -c "print(__import__('rang').rang('Confusion'))"
 ```
 
 The package itself has no required dependencies. The matplotlib helpers
