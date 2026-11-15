@@ -70,6 +70,12 @@ contribution. The artwork remains copyright Nasim Bahari, all rights reserved,
 and is not covered by the MIT License or CC0 dedication. See
 [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) for the source record.
 
+The Confusion source image reproduces Negar Ghorbani's digital portrait of the
+same name. It is included with permission obtained from the artist for this
+Rang contribution. The artwork remains copyright Negar Ghorbani, all rights
+reserved, and is not covered by the MIT License or CC0 dedication. See
+[`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) for the source record.
+
 The Iwan source and context photographs come from Wikimedia Commons and are
 licensed under CC BY-SA 4.0. Their authors, source pages and reuse terms are
 identified in [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md).

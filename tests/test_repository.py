@@ -39,6 +39,11 @@ def repository_files(pattern):
         yield path
 
 
+# Palettes whose pick order was set by hand instead of by greedy_order. Every
+# other palette must store the computed order.
+HAND_ORDERED = {"Confusion"}
+
+
 class PaletteTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -48,10 +53,14 @@ class PaletteTests(unittest.TestCase):
         self.assertEqual([p["name"] for p in self.palettes],
                          ["Kashan", "Golestan", "Termeh", "Khatam", "Nasir",
                           "Mina", "Rostan", "Shahnameh", "Gilas", "Iwan",
-                          "Rasht"])
+                          "Rasht", "Confusion"])
         for palette in self.palettes:
             colors = palette["colors"]
-            self.assertEqual(palette["order"], colorlib.greedy_order(colors))
+            if palette["name"] in HAND_ORDERED:
+                self.assertEqual(sorted(palette["order"]),
+                                 list(range(1, len(colors) + 1)))
+            else:
+                self.assertEqual(palette["order"], colorlib.greedy_order(colors))
             self.assertEqual(palette["colorblind"],
                              colorlib.worst_case(colors) >= colorlib.COLORBLIND_THRESHOLD)
 
@@ -68,6 +77,7 @@ class PaletteTests(unittest.TestCase):
             "Gilas": "گیلاس",
             "Iwan": "ایوان",
             "Rasht": "رشت",
+            "Confusion": "سردرگمی",
         }
         self.assertEqual({p["name"]: p["persian"] for p in self.palettes}, expected)
 
@@ -87,6 +97,13 @@ class PaletteTests(unittest.TestCase):
                      for color in colors]
         self.assertEqual(lightness[0], min(lightness))
         self.assertEqual(lightness[-1], max(lightness))
+
+    def test_confusion_keeps_the_pale_ground_out_of_small_sets(self):
+        # Greedy picks the pale peach first, which nearly vanishes on a white
+        # page, so the hand order leaves it for the full set.
+        palette = colorlib.load_palette("Confusion")
+        peach = palette["colors"].index("#ffdfc7")
+        self.assertEqual(palette["order"][peach], len(palette["colors"]))
 
     def test_palette_names_stay_ascii(self):
         # Names become dictionary keys in Python, list names in R and file

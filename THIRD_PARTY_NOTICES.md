@@ -137,6 +137,20 @@ covered by Rang's MIT License or CC0 palette dedication. Its inclusion here
 does not grant a general license to copy or reuse the artwork or its derived
 images. Credit: Illustration by Nasim Bahari.
 
+## Negar Ghorbani's Confusion
+
+`sources/confusion/artwork.jpg` is a 1643 by 2000 sRGB copy of Negar Ghorbani's
+digital portrait
+[Confusion](https://objkt.com/tokens/KT1NPL9BJ8YKg1Qumy9gHFrjUE1hWAx9fQ2h/14),
+minted in December 2023. Mohsen Tahmasebi Nasab obtained permission from the
+artist for this Rang contribution. The Confusion gallery card, artwork preview,
+and extraction-region image contain resized versions of the artwork.
+
+The artwork remains copyright Negar Ghorbani, all rights reserved. It is not
+covered by Rang's MIT License or CC0 palette dedication. Its inclusion here
+does not grant a general license to copy or reuse the artwork or its derived
+images. Credit: Artwork by Negar Ghorbani.
+
 ## NOAA AORC precipitation
 
 `data/aorc_precip.png` and `data/aorc_precip.json` contain a reduced and
@@ -149,6 +163,20 @@ Sources:
 
 - [NOAA AORC on the Registry of Open Data on AWS](https://registry.opendata.aws/noaa-nws-aorc/)
 - [National Weather Service disclaimer](https://www.weather.gov/disclaimer/)
+
+## NOAA nClimDiv and U.S. Census boundaries
+
+`data/county_precip.png` and `data/climate_samples.json` contain reduced values
+derived from the NOAA nClimDiv county, state, regional and national series,
+with county and state outlines from the U.S. Census Bureau 2023 cartographic
+boundary files. NOAA and Census Bureau information is in the United States
+public domain unless otherwise noted. The data must not be presented as an
+official or endorsed product of either agency.
+
+Sources:
+
+- [NOAA nClimDiv](https://www.ncei.noaa.gov/pub/data/cirs/climdiv/)
+- [U.S. Census cartographic boundary files](https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html)
 
 ## USGS water data
 

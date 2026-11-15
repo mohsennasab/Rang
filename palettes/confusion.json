@@ -1,0 +1,58 @@
+{
+  "name": "Confusion",
+  "persian": "\u0633\u0631\u062f\u0631\u06af\u0645\u06cc",
+  "pronunciation": "kun-FYOO-zhun, sardargomi in Persian",
+  "about": "Confusion draws eight colors from Negar Ghorbani's 2023 digital portrait of the same name. Aubergine, rust, ochre, and dusty pink rise on one side toward the pale peach ground, and sage, teal, and ink fall away on the other. That shape suits data that departs from a normal value, such as precipitation or temperature anomalies.",
+  "story": [
+    "Ghorbani's portrait breaks one head into flat planes of color, with several faces and eyes sharing it and a fine scribbled line running over the whole figure. It was minted on the Tezos blockchain in December 2023 as part of her collection Behind the scenes. Her note with the work reads \"I try to stay in a constant state of confusion just because of the expression it leaves on my face.\""
+  ],
+  "samples": "climate",
+  "colors": [
+    "#6b2654",
+    "#c24902",
+    "#c1851c",
+    "#e39a84",
+    "#ffdfc7",
+    "#7ca698",
+    "#3d6968",
+    "#120d1f"
+  ],
+  "notes": [
+    "aubergine plum across the crown, jaw, and collar",
+    "burnt rust around the eyes and along the jawline",
+    "ochre planes on the cheek and across the brow",
+    "dusty pink of the lower face and the shoulder edge",
+    "pale peach ground behind the figure",
+    "sage green of the jacket and the head panels",
+    "deep teal in the shadowed head panels and lapel",
+    "ink black of the outlines and the column of the neck"
+  ],
+  "order": [
+    4,
+    2,
+    3,
+    7,
+    8,
+    5,
+    1,
+    6
+  ],
+  "colorblind": true,
+  "source": {
+    "title": "Confusion",
+    "citation": "Negar Ghorbani, Confusion, digital painting, minted December 2023.",
+    "artist": "Negar Ghorbani",
+    "date": "2023",
+    "geography": "Digital work, published on the Tezos blockchain",
+    "medium": "Digital painting",
+    "site": "Behind the scenes collection on objkt",
+    "reference_label": "Token page on objkt",
+    "url": "https://objkt.com/tokens/KT1NPL9BJ8YKg1Qumy9gHFrjUE1hWAx9fQ2h/14",
+    "image": "sources/confusion/artwork.jpg",
+    "credit": "Artwork \u00a9 Negar Ghorbani",
+    "public_domain": false,
+    "rights": "Copyright Negar Ghorbani, all rights reserved. The source image and derived previews are included for this Rang contribution with permission obtained by the palette creator from the artist. No general license to reuse the artwork is granted here",
+    "preserve_aspect": true
+  },
+  "position": 12
+}

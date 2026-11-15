@@ -17,7 +17,7 @@ Reads palettes/*.json, the single source of truth, and regenerates
   docs/<name>/card.png           artwork beside the strip, for the gallery
   docs/<name>/preview.png        artwork plus vision simulations
   docs/<name>/regions.png        saved extraction regions on the source photo
-  docs/<name>/samples.png        the six standard sample plots
+  docs/<name>/samples.png        the sample plots
   docs/<name>/README.md          the palette page
   README.md                      the gallery section between the markers
 
@@ -360,6 +360,13 @@ def write_docs_page(pal):
             "profile for the creeks at Ithaca, New York. The second follows Fall\n"
             "Creek, with stream widths drawn from NHDPlusV2 order in USGS Fabric.\n"
             "The watershed interior has no fill.\n"
+            f"Run `python tools/make_samples.py {palette_slug(name)}` to remake them.")
+    elif pal.get("samples") == "climate":
+        samples_note = (
+            "All four panels use NOAA nClimDiv data, with U.S. Census boundaries for the\n"
+            "map. Normal is the 1991 to 2020 mean. The continuous panels stretch each side\n"
+            "of the lightest color so that zero lands on it. Connecticut uses its statewide\n"
+            "value because its 2023 planning regions do not match the county records.\n"
             f"Run `python tools/make_samples.py {palette_slug(name)}` to remake them.")
     else:
         samples_note = (

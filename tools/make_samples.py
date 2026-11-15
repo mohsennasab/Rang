@@ -1,6 +1,6 @@
 """Render the sample plot page for a palette.
 
-Draws the same six panels for every palette so readers can compare them on a
+Draws the same six panels for most palettes so readers can compare them on a
 level field: violin plot, grouped bars, labeled scatter, stacked area, a real
 daily rainfall field from NOAA AORC on the continuous ramp, and a CONUS
 elevation map. Writes docs/<name>/samples.png.
@@ -9,6 +9,10 @@ The rainfall and elevation panels use the small real grids committed in
 data/, built by fetch_aorc_precip.py and fetch_conus_dem.py. Pass --dem to
 swap your own single band GeoTIFF into the elevation panel (needs rasterio).
 Missing grids fall back to synthetic fields so the script always runs.
+
+Palettes can swap the page through "samples" in their json. "water" draws a
+flood profile and a stream network, and "climate" draws departures from normal
+with the data built by fetch_climate_samples.py.
 
   python tools/make_samples.py kashan
   python tools/make_samples.py kashan --dem C:/data/my_dem.tif
@@ -20,11 +24,13 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.colors import LinearSegmentedColormap, ListedColormap
 from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
 from PIL import Image
 
-from colorlib import REPO_ROOT, discrete_subset, load_palette, palette_slug
+from colorlib import (REPO_ROOT, discrete_subset, hex_to_rgb, interpolate,
+                      load_palette, palette_slug, rgb_to_lab)
 
 SEED = 42
 
@@ -295,6 +301,126 @@ def water_page(pal):
     return fig
 
 
+# --------------------------------------------- departure palettes, four panels
+# Palettes with "samples": "climate" in their json suit data with a meaningful
+# normal value, so their page shows real NOAA departures from normal instead of
+# the six generic panels.
+
+def centered_cmap(pal):
+    """The continuous ramp with the lightest color moved to the midpoint."""
+    colors = pal["colors"]
+    middle = int(np.argmax([rgb_to_lab(hex_to_rgb(c))[0] for c in colors]))
+    stops = list(np.linspace(0, 0.5, middle + 1))
+    stops += list(np.linspace(0.5, 1, len(colors) - middle))[1:]
+    return LinearSegmentedColormap.from_list(
+        pal["name"], list(zip([float(s) for s in stops], colors)))
+
+
+def load_climate():
+    png = REPO_ROOT / "data" / "county_precip.png"
+    meta = REPO_ROOT / "data" / "climate_samples.json"
+    if not (png.exists() and meta.exists()):
+        raise SystemExit("climate data is missing, run tools/fetch_climate_samples.py")
+    return np.asarray(Image.open(png)), json.loads(meta.read_text(encoding="utf-8"))
+
+
+def panel_county_map(ax, pal, classes, info):
+    labels = info["classes"]["labels"]
+    colors = interpolate(pal["colors"], len(labels))
+    ax.imshow(np.ma.masked_equal(classes, 0) - 1, cmap=ListedColormap(colors),
+              vmin=-0.5, vmax=len(labels) - 0.5, interpolation="nearest")
+    for line in info["states"]:
+        xy = np.asarray(line)
+        ax.plot(xy[:, 0], xy[:, 1], color="#26212b", linewidth=0.35, alpha=0.55)
+    ax.set_axis_off()
+    ax.set_anchor("W")
+    ax.legend(handles=[Patch(facecolor=c, edgecolor="#bdb7bc", linewidth=0.3, label=l)
+                       for c, l in zip(colors, labels)],
+              title="Percent of 1991 to 2020 normal", loc="upper left",
+              bbox_to_anchor=(0, -0.01), ncol=4, frameon=False, fontsize=8.5,
+              title_fontsize=8.5, columnspacing=1.2, handlelength=1.3)
+    ax.set_title(f'Percent of normal precipitation by county, {info["year"]}', loc="left")
+
+
+def panel_temperature(ax, fig, pal, info):
+    block = info["temperature"]
+    extent = (block["first_year"] - 0.5, block["last_year"] + 0.5, 11.5, -0.5)
+    # warm colors for warm departures, so the ramp runs backward here
+    im = ax.imshow(np.array(block["departure_f"], float).T, aspect="auto",
+                   cmap=centered_cmap(pal).reversed(), vmin=-7, vmax=7,
+                   interpolation="nearest", extent=extent)
+    ax.set_yticks(range(12), list("JFMAMJJASOND"))
+    ax.set_xticks(range(1900, block["last_year"] + 1, 25))
+    ax.tick_params(length=0)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    bar = fig.colorbar(im, ax=ax, orientation="horizontal", fraction=0.05,
+                       pad=0.08, aspect=45)
+    bar.set_label("Departure from the 1991 to 2020 monthly mean, deg F", fontsize=8.5)
+    bar.outline.set_visible(False)
+    ax.set_title(f'CONUS monthly temperature departure, {block["first_year"]} '
+                 f'to {block["last_year"]}', loc="left")
+
+
+def panel_class_share(ax, pal, info):
+    block = info["class_share"]
+    years = block["years"]
+    colors = interpolate(pal["colors"], len(block["percent"]))
+    bottom = np.zeros(len(years))
+    for color, row in zip(colors, block["percent"]):
+        ax.bar(years, row, bottom=bottom, width=0.86, color=color,
+               edgecolor="white", linewidth=0.5)
+        bottom += np.asarray(row)
+    ax.set_xlim(years[0] - 0.7, years[-1] + 0.7)
+    ax.set_ylim(0, 100)
+    ax.set_ylabel("Share of counties, percent")
+    ax.set_xticks(range(years[0], years[-1] + 1, 4))
+    ax.spines[["top", "right", "left"]].set_visible(False)
+    ax.tick_params(length=0)
+    ax.set_title(f"Counties by precipitation class, {years[0]} to {years[-1]}, "
+                 "classes as in the map above", loc="left")
+
+
+def panel_correlation(ax, fig, pal, info):
+    names = info["correlation"]["regions"]
+    r = np.array(info["correlation"]["r"], float)
+    cmap = centered_cmap(pal)
+    limit = 0.6
+    im = ax.imshow(np.ma.array(r, mask=np.triu(np.ones_like(r, bool))), cmap=cmap,
+                   vmin=-limit, vmax=limit, aspect="auto")
+    last = len(names) - 1
+    ax.set_xticks(range(last), names[:-1], rotation=35, ha="right", fontsize=8.5)
+    ax.set_yticks(range(1, last + 1), names[1:], fontsize=8.5)
+    ax.set_xlim(-0.5, last - 0.5)
+    ax.set_ylim(last + 0.5, 0.5)
+    ax.tick_params(length=0)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    for i in range(1, last + 1):
+        for j in range(i):
+            red, green, blue, _ = cmap((r[i, j] + limit) / (2 * limit))
+            dark = 0.2126 * red + 0.7152 * green + 0.0722 * blue < 0.45
+            ax.text(j, i, f"{r[i, j]:+.2f}", ha="center", va="center", fontsize=8.5,
+                    color="white" if dark else "#26212b")
+    bar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.02)
+    bar.outline.set_visible(False)
+    bar.set_label("Correlation", fontsize=8.5)
+    ax.set_title("Monthly precipitation correlation between NOAA regions", loc="left")
+
+
+def climate_page(pal):
+    classes, info = load_climate()
+    fig = plt.figure(figsize=(16, 11.6), dpi=140)
+    fig.patch.set_facecolor("white")
+    grid = fig.add_gridspec(2, 2, width_ratios=[1.12, 1], hspace=0.3, wspace=0.17,
+                            left=0.05, right=0.95, top=0.955, bottom=0.075)
+    panel_county_map(fig.add_subplot(grid[0, 0]), pal, classes, info)
+    panel_temperature(fig.add_subplot(grid[0, 1]), fig, pal, info)
+    panel_class_share(fig.add_subplot(grid[1, 0]), pal, info)
+    panel_correlation(fig.add_subplot(grid[1, 1]), fig, pal, info)
+    return fig
+
+
 # ------------------------------------------------------------------- assemble
 
 def standard_page(pal, rng, dem_path):
@@ -322,6 +448,8 @@ def main(name, dem_path=None):
 
     if pal.get("samples") == "water":
         fig = water_page(pal)
+    elif pal.get("samples") == "climate":
+        fig = climate_page(pal)
     else:
         fig = standard_page(pal, rng, dem_path)
 

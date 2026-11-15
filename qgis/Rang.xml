@@ -156,5 +156,19 @@
       <prop k="rampType" v="gradient"/>
       <prop k="stops" v="0.111111;74,101,127,255:0.222222;68,112,211,255:0.333333;208,50,50,255:0.444444;217,110,76,255:0.555556;63,136,127,255:0.666667;85,166,126,255:0.777778;172,152,186,255:0.888889;207,196,216,255"/>
     </colorramp>
+    <colorramp type="gradient" name="Confusion" tags="Rang">
+      <prop k="color1" v="107,38,84,255"/>
+      <prop k="color2" v="18,13,31,255"/>
+      <prop k="discrete" v="0"/>
+      <prop k="rampType" v="gradient"/>
+      <prop k="stops" v="0.142857;194,73,2,255:0.285714;193,133,28,255:0.428571;227,154,132,255:0.571429;255,223,199,255:0.714286;124,166,152,255:0.857143;61,105,104,255"/>
+    </colorramp>
+    <colorramp type="gradient" name="Confusion discrete" tags="Rang">
+      <prop k="color1" v="107,38,84,255"/>
+      <prop k="color2" v="18,13,31,255"/>
+      <prop k="discrete" v="1"/>
+      <prop k="rampType" v="gradient"/>
+      <prop k="stops" v="0.125;194,73,2,255:0.25;193,133,28,255:0.375;227,154,132,255:0.5;255,223,199,255:0.625;124,166,152,255:0.75;61,105,104,255:0.875;18,13,31,255"/>
+    </colorramp>
   </colorramps>
 </qgis_style>

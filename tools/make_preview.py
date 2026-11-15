@@ -76,7 +76,8 @@ def caption_lines(pal, font=None, max_w=580):
     if src.get("accession"):
         line2 += f', accession {src["accession"]}'
     line3 = src.get("museum") or src.get("site") or ""
-    work = f'{pal["name"]}, {src["title"]}, {src["date"]}'
+    title = pal["name"] if pal["name"] == src["title"] else f'{pal["name"]}, {src["title"]}'
+    work = f'{title}, {src["date"]}'
     if src.get("dimensions"):
         work += f', {src["dimensions"]}'
     lines = [work, line2, line3]

@@ -188,12 +188,27 @@ Rasht draws nine colors from Nasim Bahari's illustration of Municipality Square 
 
 [Sample plots and full details](docs/rasht/README.md)
 
+***
+
+### Confusion
+
+![Confusion, the artwork and its palette](docs/confusion/card.png)
+
+Confusion, 2023. Behind the scenes collection on objkt. Artwork © Negar Ghorbani. [Reference](https://objkt.com/tokens/KT1NPL9BJ8YKg1Qumy9gHFrjUE1hWAx9fQ2h/14) Persian: سردرگمی. Say it sar-dar-go-MEE in Persian.
+
+Confusion draws eight colors from Negar Ghorbani's 2023 digital portrait of the same name. Aubergine, rust, ochre, and dusty pink rise on one side toward the pale peach ground, and sage, teal, and ink fall away on the other. That shape suits data that departs from a normal value, such as precipitation or temperature anomalies.
+
+`#6b2654 #c24902 #c1851c #e39a84 #ffdfc7 #7ca698 #3d6968 #120d1f`
+
+[Sample plots and full details](docs/confusion/README.md)
+
 <!-- gallery:end -->
 
 ## Saying the names
 
-The names are Persian, and they are easy once you see them spelled out. The
-stress lands on the last syllable.
+Most names are Persian, and they are easy once you see them spelled out. In
+those the stress lands on the last syllable. Confusion keeps the English title
+of the artwork it comes from, with the Persian word beside it.
 
 | name      | Persian | say it                                | meaning                                             |
 | --------- | ------- | ------------------------------------- | --------------------------------------------------- |
@@ -209,6 +224,7 @@ stress lands on the last syllable.
 | Gilas     | گیلاس   | gee-LAAS                              | cherry, the fruit                                   |
 | Iwan      | ایوان   | ee-VAHN                               | a vaulted hall open on one side                     |
 | Rasht     | رشت     | rasht, short a as in rash             | city and Municipality Square in Gilan               |
+| Confusion | سردرگمی | sar-dar-go-MEE  | the title of Negar Ghorbani's portrait              |
 
 Each palette page repeats the pronunciation beside its name.
 
@@ -488,6 +504,11 @@ is by Farzan95, 2020. The
 is by Diego Delso, 2016. Both are licensed under
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
+The Confusion palette comes from Negar Ghorbani's 2023 digital portrait
+[Confusion](https://objkt.com/tokens/KT1NPL9BJ8YKg1Qumy9gHFrjUE1hWAx9fQ2h/14).
+The artwork is copyright Negar Ghorbani, all rights reserved, and is included
+with the artist's permission for this project.
+
 The sample plots use public data: rainfall from the
 [NOAA Analysis of Record for Calibration](https://registry.opendata.aws/noaa-nws-aorc/),
 elevation from the AWS Open Data
@@ -497,6 +518,9 @@ GMTED2010 and ETOPO1, water surface elevation from the
 and stream networks from the
 [USGS Network Linked Data Index](https://api.water.usgs.gov/nldi/), with
 NHDPlusV2 stream order from [USGS Fabric](https://api.water.usgs.gov/docs/fabric-pygeoapi/).
+The Confusion page uses temperature and precipitation departures from
+[NOAA nClimDiv](https://www.ncei.noaa.gov/pub/data/cirs/climdiv/), mapped on
+[U.S. Census cartographic boundaries](https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html).
 Detailed source status, requested credits, and data notices are recorded in
 [the third-party notices](THIRD_PARTY_NOTICES.md).
 

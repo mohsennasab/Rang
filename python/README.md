@@ -62,6 +62,12 @@ Golestan and Mina move from a warm side through a light center to a cool
 side. Nasir, Shahnameh and Gilas jump around in brightness, so they suit
 categories rather than measured quantities.
 
+Confusion puts its lightest color in the middle, with warm colors on one side
+and cool ones on the other. It suits data measured against a normal value,
+such as precipitation or temperature anomalies. Its pick order keeps the pale
+middle color out of small discrete sets, since it nearly disappears on a white
+page.
+
 Rasht groups two blues, adjacent red and orange, and two greens in a ramp
 that runs broadly from dark violet to pale lilac. It suits categories and
 classified maps. Inspect a continuous map before using the full ramp for a
