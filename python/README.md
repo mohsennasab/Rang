@@ -26,6 +26,7 @@ rang.rang("Kashan", 4)                    # four well separated colors
 rang.rang("Kashan", 30, "continuous")     # interpolated ramp
 rang.source("Kashan")                     # the artwork behind the palette
 rang.rang("Rasht")                        # nine colors from Municipality Square
+rang.rang("Confusion", 4)                 # four colors from Negar Ghorbani's portrait
 ```
 
 Discrete requests use the stored separation order. Continuous requests
@@ -61,6 +62,12 @@ light, which is what depth, elevation and rainfall maps need. Kashan,
 Golestan and Mina move from a warm side through a light center to a cool
 side. Nasir, Shahnameh and Gilas jump around in brightness, so they suit
 categories rather than measured quantities.
+
+Confusion puts its lightest color in the middle, with warm colors on one side
+and cool ones on the other. It suits data measured against a normal value,
+such as precipitation or temperature anomalies. Its pick order keeps the pale
+middle color out of small discrete sets, since it nearly disappears on a white
+page.
 
 Rasht groups two blues, adjacent red and orange, and two greens in a ramp
 that runs broadly from dark violet to pale lilac. It suits categories and

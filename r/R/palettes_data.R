@@ -73,5 +73,11 @@ rang_palettes <- list(
     order = c(4, 7, 1, 8, 2, 9, 5, 6, 3),
     colorblind = TRUE,
     source = "Rasht Municipality Square, a spring afternoon, 2023 (posted), Nasim Bahari on X, https://x.com/BahariiNasim/status/1652295181847212032"
+  ),
+  Confusion = list(
+    colors = c("#6b2654", "#c24902", "#c1851c", "#e39a84", "#ffdfc7", "#7ca698", "#3d6968", "#120d1f"),
+    order = c(4, 2, 3, 7, 8, 5, 1, 6),
+    colorblind = TRUE,
+    source = "Confusion, 2023, Behind the scenes collection on objkt, https://objkt.com/tokens/KT1NPL9BJ8YKg1Qumy9gHFrjUE1hWAx9fQ2h/14"
   )
 )

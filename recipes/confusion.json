@@ -1,0 +1,449 @@
+{
+  "schema_version": 1,
+  "palette": "Confusion",
+  "creator": "Mohsen Tahmasebi Nasab, PhD",
+  "website": "https://hydromohsen.com",
+  "license_holder": "Mohsen Tahmasebi Nasab",
+  "source": {
+    "image": "sources/confusion/artwork.jpg",
+    "sha256": "cc201f65d56a2ec210b4ffee85bd294c29976130ce567c84e1550f8fc5282635",
+    "oriented_width": 1643,
+    "oriented_height": 2000,
+    "color_handling": "Display P3 converted to sRGB when this copy was saved, then EXIF orientation followed by RGB conversion",
+    "reference": "https://objkt.com/tokens/KT1NPL9BJ8YKg1Qumy9gHFrjUE1hWAx9fQ2h/14",
+    "original_filename": "Confusion-Negar Ghorbani.jpg"
+  },
+  "regions": [
+    {
+      "id": "region-01",
+      "label": "Entire artwork",
+      "box": [
+        0,
+        0,
+        1643,
+        2000
+      ],
+      "normalized": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "k": 20,
+      "note": "The complete portrait and its peach ground"
+    }
+  ],
+  "extraction": {
+    "color_space": "CIELAB",
+    "white_point": "D65",
+    "algorithm": "sklearn.cluster.KMeans",
+    "random_state": 0,
+    "n_init": 20,
+    "algorithm_mode": "lloyd",
+    "maximum_region_size": 400
+  },
+  "environment": {
+    "python": "3.12.9",
+    "numpy": "2.3.2",
+    "pillow": "11.3.0",
+    "scikit_learn": "1.8.0"
+  },
+  "accepted_candidates": [
+    {
+      "lab": [
+        90.7741,
+        7.3848,
+        15.4448
+      ],
+      "hex": "#fedfc8",
+      "share": 33.8442,
+      "id": "region-01:c01",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        6.8294,
+        6.4658,
+        -7.2179
+      ],
+      "hex": "#19121f",
+      "share": 8.0038,
+      "id": "region-01:c02",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        83.8618,
+        10.6305,
+        23.4407
+      ],
+      "hex": "#f5c9a6",
+      "share": 6.3116,
+      "id": "region-01:c03",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        37.0867,
+        -11.7461,
+        -2.6368
+      ],
+      "hex": "#3e5d5b",
+      "share": 5.595,
+      "id": "region-01:c04",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        62.1742,
+        -16.5542,
+        5.0712
+      ],
+      "hex": "#799e8d",
+      "share": 4.5228,
+      "id": "region-01:c05",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        22.4625,
+        5.0661,
+        -7.095
+      ],
+      "hex": "#383440",
+      "share": 4.253,
+      "id": "region-01:c06",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        24.2201,
+        30.3376,
+        -9.5053
+      ],
+      "hex": "#5e2548",
+      "share": 4.0137,
+      "id": "region-01:c07",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        58.3098,
+        14.4165,
+        57.7896
+      ],
+      "hex": "#bb811d",
+      "share": 4.0091,
+      "id": "region-01:c08",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        82.4123,
+        6.6166,
+        15.0225
+      ],
+      "hex": "#e5c8b1",
+      "share": 3.6801,
+      "id": "region-01:c09",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        70.5033,
+        9.1338,
+        19.4754
+      ],
+      "hex": "#caa68a",
+      "share": 3.5646,
+      "id": "region-01:c10",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        13.0041,
+        9.1095,
+        1.802
+      ],
+      "hex": "#2e1d1f",
+      "share": 3.054,
+      "id": "region-01:c11",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        51.1542,
+        -11.8836,
+        4.8275
+      ],
+      "hex": "#678071",
+      "share": 2.8609,
+      "id": "region-01:c12",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        67.1564,
+        23.082,
+        21.7485
+      ],
+      "hex": "#d7937e",
+      "share": 2.5327,
+      "id": "region-01:c13",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        48.829,
+        11.8381,
+        46.6673
+      ],
+      "hex": "#9a6b20",
+      "share": 2.5061,
+      "id": "region-01:c14",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        15.9339,
+        20.7883,
+        17.4099
+      ],
+      "hex": "#471a0f",
+      "share": 2.4954,
+      "id": "region-01:c15",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        45.1565,
+        43.435,
+        53.4844
+      ],
+      "hex": "#b84708",
+      "share": 2.4324,
+      "id": "region-01:c16",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        54.1667,
+        11.6551,
+        15.2555
+      ],
+      "hex": "#9e7a68",
+      "share": 2.0973,
+      "id": "region-01:c17",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        36.4117,
+        33.4134,
+        40.6426
+      ],
+      "hex": "#903c12",
+      "share": 1.734,
+      "id": "region-01:c18",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        33.7781,
+        8.7294,
+        7.6069
+      ],
+      "hex": "#614a44",
+      "share": 1.4195,
+      "id": "region-01:c19",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    },
+    {
+      "lab": [
+        34.395,
+        10.2829,
+        29.4591
+      ],
+      "hex": "#6c4a21",
+      "share": 1.0699,
+      "id": "region-01:c20",
+      "region": "region-01",
+      "region_label": "Entire artwork"
+    }
+  ],
+  "curation": {
+    "colors": [
+      {
+        "id": "p01",
+        "from": "region-01:c07",
+        "source_hex": "#5e2548",
+        "current": "#6b2654",
+        "note": "aubergine plum across the crown, jaw, and collar"
+      },
+      {
+        "id": "p02",
+        "from": "region-01:c16",
+        "source_hex": "#b84708",
+        "current": "#c24902",
+        "note": "burnt rust around the eyes and along the jawline"
+      },
+      {
+        "id": "p03",
+        "from": "region-01:c08",
+        "source_hex": "#bb811d",
+        "current": "#c1851c",
+        "note": "ochre planes on the cheek and across the brow"
+      },
+      {
+        "id": "p04",
+        "from": "region-01:c13",
+        "source_hex": "#d7937e",
+        "current": "#e39a84",
+        "note": "dusty pink of the lower face and the shoulder edge"
+      },
+      {
+        "id": "p05",
+        "from": "region-01:c01",
+        "source_hex": "#fedfc8",
+        "current": "#ffdfc7",
+        "note": "pale peach ground behind the figure"
+      },
+      {
+        "id": "p06",
+        "from": "region-01:c05",
+        "source_hex": "#799e8d",
+        "current": "#7ca698",
+        "note": "sage green of the jacket and the head panels"
+      },
+      {
+        "id": "p07",
+        "from": "region-01:c04",
+        "source_hex": "#3e5d5b",
+        "current": "#3d6968",
+        "note": "deep teal in the shadowed head panels and lapel"
+      },
+      {
+        "id": "p08",
+        "from": "region-01:c02",
+        "source_hex": "#19121f",
+        "current": "#120d1f",
+        "note": "ink black of the outlines and the column of the neck"
+      }
+    ],
+    "operations": [
+      {
+        "id": "a001",
+        "op": "replace",
+        "target": "p01",
+        "before": "#5e2548",
+        "after": "#6b2654",
+        "reason": "flat aubergine fill measured from the unscribbled paint, the 400 pixel cluster blends in dark line work",
+        "hex": "#6b2654"
+      },
+      {
+        "id": "a002",
+        "op": "replace",
+        "target": "p02",
+        "before": "#b84708",
+        "after": "#c24902",
+        "reason": "flat rust fill measured from the unscribbled paint, the 400 pixel cluster blends in dark line work",
+        "hex": "#c24902"
+      },
+      {
+        "id": "a003",
+        "op": "replace",
+        "target": "p03",
+        "before": "#bb811d",
+        "after": "#c1851c",
+        "reason": "flat ochre fill measured from the unscribbled paint",
+        "hex": "#c1851c"
+      },
+      {
+        "id": "a004",
+        "op": "replace",
+        "target": "p04",
+        "before": "#d7937e",
+        "after": "#e39a84",
+        "reason": "flat pink fill, moved 0.2 CIEDE2000 to keep pink and sage apart under protanopia",
+        "hex": "#e39a84"
+      },
+      {
+        "id": "a005",
+        "op": "replace",
+        "target": "p05",
+        "before": "#fedfc8",
+        "after": "#ffdfc7",
+        "reason": "flat ground color with the scribble lines excluded",
+        "hex": "#ffdfc7"
+      },
+      {
+        "id": "a006",
+        "op": "replace",
+        "target": "p06",
+        "before": "#799e8d",
+        "after": "#7ca698",
+        "reason": "flat sage fill, moved 1.7 CIEDE2000 to keep pink and sage apart under protanopia",
+        "hex": "#7ca698"
+      },
+      {
+        "id": "a007",
+        "op": "replace",
+        "target": "p07",
+        "before": "#3e5d5b",
+        "after": "#3d6968",
+        "reason": "flat teal fill measured from the unscribbled paint",
+        "hex": "#3d6968"
+      },
+      {
+        "id": "a008",
+        "op": "replace",
+        "target": "p08",
+        "before": "#19121f",
+        "after": "#120d1f",
+        "reason": "flat ink measured away from antialiased edges",
+        "hex": "#120d1f"
+      }
+    ],
+    "final_order": [
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p08"
+    ]
+  },
+  "expected": {
+    "colors": [
+      "#6b2654",
+      "#c24902",
+      "#c1851c",
+      "#e39a84",
+      "#ffdfc7",
+      "#7ca698",
+      "#3d6968",
+      "#120d1f"
+    ]
+  }
+}

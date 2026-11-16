@@ -109,7 +109,10 @@ def render_palette(slug, output=None):
                     for position in (1, 3, 5))
         x0, y0, x1, y1 = region["box"]
         box = tuple(round(value * scale) for value in (x0, y0, x1, y1))
-        drawing.rectangle(box, fill=rgb + (35,), outline=rgb + (255,),
+        # a box around the whole image must not tint the artwork itself
+        whole_image = (x0, y0, x1, y1) == (0, 0, original.width, original.height)
+        drawing.rectangle(box, fill=None if whole_image else rgb + (35,),
+                          outline=rgb + (255,),
                           width=line_width)
         text = f'{index + 1:02d}  {region["label"]}  k={region["k"]}'
         label_x = min(max(8, box[0] + 10), max(8, shown.width - 540))
@@ -157,7 +160,8 @@ def render_palette(slug, output=None):
         output = REPO_ROOT / "docs" / slug / "regions.png"
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    save_documentation_png(canvas, output)
+    # full color, so the artwork here matches the source photo
+    canvas.save(output, optimize=True)
     print(f"wrote {output}")
     return output
 

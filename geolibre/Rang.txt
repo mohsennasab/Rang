@@ -239,3 +239,24 @@ Rasht
   categorical 7: #5e3c87, #4a657f, #4470d3, #d96e4c, #55a67e, #ac98ba, #cfc4d8
   categorical 8: #5e3c87, #4a657f, #4470d3, #d03232, #d96e4c, #55a67e, #ac98ba, #cfc4d8
   categorical 9: #5e3c87, #4a657f, #4470d3, #d03232, #d96e4c, #3f887f, #55a67e, #ac98ba, #cfc4d8
+
+Confusion
+  raster anchors: #6b2654, #c24902, #c1851c, #e39a84, #ffdfc7, #7ca698, #3d6968, #120d1f
+  graduated 2: #6b2654, #120d1f
+  graduated 3: #6b2654, #f1bca6, #120d1f
+  graduated 4: #6b2654, #cc8c3f, #a8b9a8, #120d1f
+  graduated 5: #6b2654, #c17616, #f1bca6, #6c978c, #120d1f
+  graduated 6: #6b2654, #c2610c, #dc966f, #e5d4be, #56817b, #120d1f
+  graduated 7: #6b2654, #c25306, #cc8c3f, #f1bca6, #a8b9a8, #487370, #120d1f
+  graduated 8: #6b2654, #c24902, #c1851c, #e39a84, #ffdfc7, #7ca698, #3d6968, #120d1f
+  graduated 9: #6b2654, #b7450c, #c17616, #d6925d, #f1bca6, #cecab5, #6c978c, #385e5f, #120d1f
+  graduated 10: #6b2654, #af4114, #c16a10, #cc8c3f, #e6a28b, #fcd7c0, #a8b9a8, #608b83, #335558, #120d1f
+  graduated 11: #6b2654, #a83e1b, #c2610c, #c48726, #dc966f, #f1bca6, #e5d4be, #89ac9d, #56817b, #304d52, #120d1f
+  graduated 12: #6b2654, #a23c20, #c25909, #c1801a, #d49055, #e8a790, #fad2bb, #c3c5b2, #76a094, #4e7a75, #2d484d, #120d1f
+  categorical 2: #c24902, #3d6968
+  categorical 3: #c24902, #c1851c, #3d6968
+  categorical 4: #6b2654, #c24902, #c1851c, #3d6968
+  categorical 5: #6b2654, #c24902, #c1851c, #7ca698, #3d6968
+  categorical 6: #6b2654, #c24902, #c1851c, #7ca698, #3d6968, #120d1f
+  categorical 7: #6b2654, #c24902, #c1851c, #e39a84, #7ca698, #3d6968, #120d1f
+  categorical 8: #6b2654, #c24902, #c1851c, #e39a84, #ffdfc7, #7ca698, #3d6968, #120d1f

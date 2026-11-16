@@ -264,7 +264,7 @@ requirements below. Resolve every required field before merge.
 | `order` | no | pick order for discrete use, computed by the build if absent |
 | `colorblind` | no | project CVD separation flag, set by the build when absent |
 | `about` | no | one short paragraph on what the palette was made for, shown in the gallery and on its page |
-| `samples` | no | leave out for the standard six panels, or "water" for the water surface elevation and stream network page |
+| `samples` | no | leave out for the standard six panels, "water" for the water surface elevation and stream network page, or "climate" for the departures from normal page |
 | `craft` | no | a paragraph or two on how the art form is made and its history, claims you can back up, shown on the palette page |
 | `story` | no | a short account of the scene or source text, shown on the palette page |
 | `source.title` | yes | object or work title |
