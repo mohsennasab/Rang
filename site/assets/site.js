@@ -250,13 +250,13 @@
       : viewW - 14 - Math.random() * Math.min(54, viewW * 0.14);
   }
 
-  function spawnDrop(x, y, color, radius) {
+  function spawnDrop(x, y, color, radius, initialVy) {
     if (!ctx || !paintEnabled) return;
     drops.push({
       x: Math.max(10, Math.min(viewW - 10, x)),
-      y: y,
+      y: Math.max(6, Math.min(viewH - 18, y)),
       vx: (Math.random() - 0.5) * 0.55,
-      vy: 1.8 + Math.random() * 1.8,
+      vy: typeof initialVy === "number" ? initialVy : (1.8 + Math.random() * 1.8),
       r: radius || (4.4 + Math.random() * 2.4),
       color: color
     });
@@ -299,7 +299,7 @@
       life: 9.5,
       growDur: 0.28
     });
-    if (pools.length > 20) {
+    if (pools.length > 30) {
       pools.shift();
     }
   }
@@ -312,7 +312,7 @@
   }
 
   function drawTeardrop(drop) {
-    var stretch = Math.min(2.35, 1.18 + drop.vy * 0.07);
+    var stretch = Math.min(2.35, 1.15 + Math.max(0, drop.vy) * 0.07);
     var r = drop.r;
     var tipY = -r * stretch * 1.65;
     ctx.save();
@@ -430,30 +430,44 @@
   }
 
   function splashPalette(colors, originEl) {
-    if (!ctx) return;
+    if (!ctx || !colors.length) return;
     if (!paintEnabled) {
       paintEnabled = true;
       updatePaintButton();
+      scheduleAmbient();
     }
-    var rect = originEl ? originEl.getBoundingClientRect() : null;
-    var cols = colors.slice(0, 12);
-    for (var i = 0; i < cols.length; i++) {
+    var chips = originEl
+      ? Array.prototype.slice.call(originEl.querySelectorAll(".hex-chip"))
+      : [];
+    for (var i = 0; i < colors.length; i++) {
       (function (idx, col) {
         setTimeout(function () {
           var startX;
           var startY;
-          if (rect) {
-            var span = Math.max(40, Math.min(rect.width, 460));
-            var frac = cols.length > 1 ? idx / (cols.length - 1) : 0.5;
-            startX = rect.left + frac * span + (Math.random() - 0.5) * 14;
-            startY = Math.max(10, rect.top + rect.height * 0.5);
+          var chip = chips[idx];
+          if (chip) {
+            var cRect = chip.getBoundingClientRect();
+            startX = cRect.left + cRect.width * 0.5;
+            startY = cRect.bottom - 2;
+            chip.classList.add("is-dripping");
+            setTimeout(function () {
+              chip.classList.remove("is-dripping");
+            }, 260);
+          } else if (originEl) {
+            var rect = originEl.getBoundingClientRect();
+            var span = Math.max(40, rect.width - 28);
+            var frac = colors.length > 1 ? idx / (colors.length - 1) : 0.5;
+            startX = rect.left + 14 + frac * span;
+            startY = rect.top + rect.height * 0.5;
           } else {
             startX = pickMarginX();
             startY = 8;
           }
-          spawnDrop(startX, startY, col, 4.8 + Math.random() * 1.8);
-        }, idx * 55);
-      })(i, cols[i]);
+          var clampedY = Math.max(6, Math.min(viewH - 18, startY));
+          var hopVy = clampedY > viewH - 100 ? -3.8 : undefined;
+          spawnDrop(startX, clampedY, col, 4.9 + Math.random() * 1.4, hopVy);
+        }, idx * 70);
+      })(i, colors[i]);
     }
   }
 
@@ -563,7 +577,14 @@
       if (paintEnabled) {
         if (copyBtn.classList.contains("hex-chip")) {
           var cRect = copyBtn.getBoundingClientRect();
-          spawnDrop(cRect.left + cRect.width * 0.5, cRect.top + cRect.height * 0.5, val, 5.4);
+          var chipY = Math.max(6, Math.min(viewH - 18, cRect.bottom - 2));
+          spawnDrop(
+            cRect.left + cRect.width * 0.5,
+            chipY,
+            val,
+            5.4,
+            chipY > viewH - 100 ? -3.8 : undefined
+          );
         } else if (copyBtn.classList.contains("copy-all-btn")) {
           splashPalette(val.split(/\s+/).filter(Boolean), copyBtn.closest(".hex-bar") || copyBtn);
         }

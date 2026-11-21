@@ -864,6 +864,11 @@ a.plate-frame:hover {
   transform: translateY(1px);
 }
 
+.hex-chip.is-dripping {
+  transform: translateY(2px);
+  border-color: var(--accent-lapis);
+}
+
 .hex-chip[data-copied="true"] {
   border-color: var(--accent-lapis);
   background: color-mix(in srgb, var(--accent-lapis) 12%, var(--bg-elev));
