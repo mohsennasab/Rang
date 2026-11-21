@@ -214,6 +214,21 @@ class SiteTests(unittest.TestCase):
         stripped = re.sub(r"<[^>]+>", "", highlighted)
         self.assertEqual(stripped, sample)
 
+    def test_modern_fonts_and_paint_canvas_markup(self) -> None:
+        raw_index = (self.out / "index.html").read_text(encoding="utf-8")
+        self.assertIn("Bricolage+Grotesque", raw_index)
+        self.assertIn("Plus+Jakarta+Sans", raw_index)
+        self.assertNotIn("Cormorant+Garamond", raw_index)
+        self.assertIn('id="paint-canvas"', raw_index)
+        self.assertIn("data-paint-toggle", raw_index)
+        self.assertIn("data-splash-color", raw_index)
+        self.assertIn("data-splash-palette", raw_index)
+        self.assertIn("plate-color-bar", raw_index)
+
+        raw_kashan = (self.out / "palettes" / "kashan" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('data-palette-colors="#7f3020,', raw_kashan)
+        self.assertIn('id="paint-canvas"', raw_kashan)
+
 
 if __name__ == "__main__":
     unittest.main()

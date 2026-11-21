@@ -712,10 +712,14 @@ def render_shell(
     repo_url: str,
     main_html: str,
     include_lightbox: bool = False,
+    body_colors: Optional[List[str]] = None,
 ) -> str:
     ribbon = "".join(
-        f'<span style="background:{c}"></span>' for c in RIBBON_COLORS
+        f'<button type="button" class="ribbon-swatch" style="background:{c}" '
+        f'data-splash-color="{c}" aria-label="Drop {c} paint"></button>'
+        for c in RIBBON_COLORS
     )
+    palette_attr = html.escape(",".join(body_colors or list(RIBBON_COLORS)), quote=True)
     home_href = root_prefix or "./"
     nav_items = [
         ("Palettes", f"{root_prefix}#palettes", False),
@@ -759,12 +763,12 @@ def render_shell(
   <link rel="icon" type="image/png" href="{root_prefix}assets/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Vazirmatn:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Vazirmatn:wght@400;500;600&display=swap">
   <script>try{{if(localStorage.getItem("rang-theme")==="dark")document.documentElement.dataset.theme="dark";}}catch(e){{}}</script>
   <link rel="stylesheet" href="{root_prefix}assets/style.css">
 </head>
-<body>
-  <div class="pigment-ribbon" aria-hidden="true">{ribbon}</div>
+<body data-palette-colors="{palette_attr}">
+  <div class="pigment-ribbon" role="group" aria-label="Rang pigment drop bar">{ribbon}</div>
   <header class="site-header">
     <div class="header-inner">
       <a class="brand" href="{html.escape(home_href, quote=True)}">
@@ -776,6 +780,10 @@ def render_shell(
         <nav class="site-nav" id="site-nav" data-nav-menu aria-label="Primary navigation">
           {nav_links_html}
         </nav>
+        <button type="button" class="icon-btn" data-paint-toggle aria-pressed="true" aria-label="Toggle paint drop animation">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5C6.3 4.1 3.5 7.3 3.5 10a4.5 4.5 0 0 0 9 0c0-2.7-2.8-5.9-4.5-8.5z"/></svg>
+          <span class="paint-label">Paint</span>
+        </button>
         <button type="button" class="icon-btn" data-theme-toggle aria-pressed="false" aria-label="Toggle color theme">
           <svg data-icon-moon viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13.5 9.8A5.5 5.5 0 0 1 6.2 2.5a5.5 5.5 0 1 0 7.3 7.3z"/></svg>
           <svg data-icon-sun viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="display:none"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1"/></svg>
@@ -809,6 +817,7 @@ def render_shell(
   </footer>
   <div id="copy-announcer" class="sr-only" aria-live="polite"></div>
   {lightbox_html}
+  <canvas id="paint-canvas" class="paint-canvas" aria-hidden="true"></canvas>
   <script src="{root_prefix}assets/site.js" defer></script>
 </body>
 </html>
@@ -862,10 +871,18 @@ def render_hex_chips(colors: List[str], include_copy_all: bool = True) -> str:
         )
     if include_copy_all:
         joined = html.escape(" ".join(colors))
+        csv = html.escape(",".join(colors))
         chips.append(
             f'<button type="button" class="copy-all-btn" data-copy="{joined}" '
             f'title="Copy all hex colors">'
             f'<span data-copy-label>Copy all</span></button>'
+        )
+        chips.append(
+            f'<button type="button" class="splash-btn" data-splash-palette="{csv}" '
+            f'title="Drop this palette\'s colors">'
+            f'<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">'
+            f'<path d="M8 1.5C6.3 4.1 3.5 7.3 3.5 10a4.5 4.5 0 0 0 9 0c0-2.7-2.8-5.9-4.5-8.5z"/></svg>'
+            f'<span>Splash</span></button>'
         )
     return '<div class="hex-bar">' + "".join(chips) + "</div>"
 
@@ -1103,7 +1120,13 @@ def build_index(
                     if persian
                     else ""
                 )
-                plates.append(f"""<article class="palette-plate" id="palette-{slug}">
+                plate_colors = entry["hex_colors"] or pal.get("colors", [])
+                plate_colors_attr = html.escape(",".join(plate_colors), quote=True)
+                plate_bar = "".join(
+                    f'<span style="background:{html.escape(c)}"></span>' for c in plate_colors
+                )
+                plates.append(f"""<article class="palette-plate" id="palette-{slug}" data-colors="{plate_colors_attr}">
+  <div class="plate-color-bar" aria-hidden="true">{plate_bar}</div>
   <div class="plate-head">
     <div class="plate-title-group">
       <span class="plate-num">{idx:02d}</span>
@@ -1116,7 +1139,7 @@ def build_index(
   </a>
   <div class="plate-body">
     {''.join(prose_html_parts)}
-    {render_hex_chips(entry["hex_colors"] or pal.get("colors", []))}
+    {render_hex_chips(plate_colors)}
   </div>
   <div class="plate-footer">
     <a class="plate-detail-link" href="{html.escape(detail_href, quote=True)}">
@@ -1420,6 +1443,7 @@ def build_palette_page(
         repo_url=repo_url,
         main_html=main_html,
         include_lightbox=True,
+        body_colors=pal["colors"],
     )
 
 
