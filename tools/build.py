@@ -19,7 +19,7 @@ Reads palettes/*.json, the single source of truth, and regenerates
   docs/<name>/regions.png        saved extraction regions on the source photo
   docs/<name>/samples.png        the sample plots
   docs/<name>/README.md          the palette page
-  README.md                      the gallery section between the markers
+  README-GITHUB.md               the gallery section between the markers
 
 Contributors run one command after adding or editing a palette file
 
@@ -497,10 +497,10 @@ def gallery_entry(pal):
 
 
 def update_readme(pals):
-    readme = REPO_ROOT / "README.md"
+    readme = REPO_ROOT / "README-GITHUB.md"
     text = readme.read_text(encoding="utf-8")
     if GALLERY_START not in text or GALLERY_END not in text:
-        raise SystemExit("README.md is missing the gallery markers")
+        raise SystemExit("README-GITHUB.md is missing the gallery markers")
     block = GALLERY_START + "\n\n" + "\n***\n\n".join(gallery_entry(p) for p in pals) + "\n" + GALLERY_END
     text = re.sub(re.escape(GALLERY_START) + r".*?" + re.escape(GALLERY_END),
                   block, text, flags=re.S)

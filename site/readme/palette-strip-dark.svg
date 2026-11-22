@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 224" width="920" height="224" role="img" aria-label="All 12 Rang color palettes">
+  <rect x="0.5" y="0.5" width="919" height="223" rx="16" fill="#161f2e" stroke="#2c3b54"/>
+  
+  <g transform="translate(18.0, 16.0)">
+    <rect x="0" y="0" width="212.0" height="56.0" rx="10" fill="#1c273a" stroke="#2c3b54"/>
+    <text x="11" y="20" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#eef2fb">Kashan</text>
+    <text x="201.0" y="20" text-anchor="end" font-family="Tahoma, 'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#95a4bf">کاشان</text>
+    <clipPath id="pstrip-0"><rect x="10" y="30" width="192.0" height="15" rx="4"/></clipPath>
+    <g clip-path="url(#pstrip-0)"><rect x="10.00" y="30" width="21.73" height="15" fill="#7f3020"/><rect x="31.33" y="30" width="21.73" height="15" fill="#ab4a47"/><rect x="52.67" y="30" width="21.73" height="15" fill="#c07049"/><rect x="74.00" y="30" width="21.73" height="15" fill="#c59b46"/><rect x="95.33" y="30" width="21.73" height="15" fill="#ccac7e"/><rect x="116.67" y="30" width="21.73" height="15" fill="#e2cfb1"/><rect x="138.00" y="30" width="21.73" height="15" fill="#8a9463"/><rect x="159.33" y="30" width="21.73" height="15" fill="#345f72"/><rect x="180.67" y="30" width="21.73" height="15" fill="#1a3b45"/></g>
+  </g>
+  <g transform="translate(242.0, 16.0)">
+    <rect x="0" y="0" width="212.0" height="56.0" rx="10" fill="#1c273a" stroke="#2c3b54"/>
+    <text x="11" y="20" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#eef2fb">Golestan</text>
+    <text x="201.0" y="20" text-anchor="end" font-family="Tahoma, 'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#95a4bf">گلستان</text>
+    <clipPath id="pstrip-1"><rect x="10" y="30" width="192.0" height="15" rx="4"/></clipPath>
+    <g clip-path="url(#pstrip-1)"><rect x="10.00" y="30" width="21.73" height="15" fill="#432f2c"/><rect x="31.33" y="30" width="21.73" height="15" fill="#ae6259"/><rect x="52.67" y="30" width="21.73" height="15" fill="#b57f86"/><rect x="74.00" y="30" width="21.73" height="15" fill="#b5b5ac"/><rect x="95.33" y="30" width="21.73" height="15" fill="#cbb11c"/><rect x="116.67" y="30" width="21.73" height="15" fill="#9a9a68"/><rect x="138.00" y="30" width="21.73" height="15" fill="#45939c"/><rect x="159.33" y="30" width="21.73" height="15" fill="#577ab1"/><rect x="180.67" y="30" width="21.73" height="15" fill="#333a80"/></g>
+  </g>
+  <g transform="translate(466.0, 16.0)">
+    <rect x="0" y="0" width="212.0" height="56.0" rx="10" fill="#1c273a" stroke="#2c3b54"/>
+    <text x="11" y="20" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#eef2fb">Termeh</text>
+    <text x="201.0" y="20" text-anchor="end" font-family="Tahoma, 'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#95a4bf">ترمه</text>
+    <clipPath id="pstrip-2"><rect x="10" y="30" width="192.0" height="15" rx="4"/></clipPath>
+    <g clip-path="url(#pstrip-2)"><rect x="10.00" y="30" width="27.83" height="15" fill="#e5f0ee"/><rect x="37.43" y="30" width="27.83" height="15" fill="#c8dfe3"/><rect x="64.86" y="30" width="27.83" height="15" fill="#a9ccd7"/><rect x="92.29" y="30" width="27.83" height="15" fill="#7fb5c1"/><rect x="119.71" y="30" width="27.83" height="15" fill="#5d95a8"/><rect x="147.14" y="30" width="27.83" height="15" fill="#3e738e"/><rect x="174.57" y="30" width="27.83" height="15" fill="#274e68"/></g>
+  </g>
+  <g transform="translate(690.0, 16.0)">
+    <rect x="0" y="0" width="212.0" height="56.0" rx="10" fill="#1c273a" stroke="#2c3b54"/>
+    <text x="11" y="20" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#eef2fb">Khatam</text>
+    <text x="201.0" y="20" text-anchor="end" font-family="Tahoma, 'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#95a4bf">خاتم</text>
+    <clipPath id="pstrip-3"><rect x="10" y="30" width="192.0" height="15" rx="4"/></clipPath>
+    <g clip-path="url(#pstrip-3)"><rect x="10.00" y="30" width="21.73" height="15" fill="#1c110b"/><rect x="31.33" y="30" width="21.73" height="15" fill="#542020"/><rect x="52.67" y="30" width="21.73" height="15" fill="#8d310e"/><rect x="74.00" y="30" width="21.73" height="15" fill="#bf480d"/><rect x="95.33" y="30" width="21.73" height="15" fill="#b27a3c"/><rect x="116.67" y="30" width="21.73" height="15" fill="#c58c51"/><rect x="138.00" y="30" width="21.73" height="15" fill="#d9a545"/><rect x="159.33" y="30" width="21.73" height="15" fill="#dbba94"/><rect x="180.67" y="30" width="21.73" height="15" fill="#e5c870"/></g>
+  </g>
+  <g transform="translate(18.0, 84.0)">
+    <rect x="0" y="0" width="212.0" height="56.0" rx="10" fill="#1c273a" stroke="#2c3b54"/>
+    <text x="11" y="20" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#eef2fb">Nasir</text>
+    <text x="201.0" y="20" text-anchor="end" font-family="Tahoma, 'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#95a4bf">نصیر</text>
+    <clipPath id="pstrip-4"><rect x="10" y="30" width="192.0" height="15" rx="4"/></clipPath>
+    <g clip-path="url(#pstrip-4)"><rect x="10.00" y="30" width="21.73" height="15" fill="#261410"/><rect x="31.33" y="30" width="21.73" height="15" fill="#3b1261"/><rect x="52.67" y="30" width="21.73" height="15" fill="#4027e1"/><rect x="74.00" y="30" width="21.73" height="15" fill="#518ffd"/><rect x="95.33" y="30" width="21.73" height="15" fill="#74ecf9"/><rect x="116.67" y="30" width="21.73" height="15" fill="#50a877"/><rect x="138.00" y="30" width="21.73" height="15" fill="#6dd96f"/><rect x="159.33" y="30" width="21.73" height="15" fill="#ebc05c"/><rect x="180.67" y="30" width="21.73" height="15" fill="#f04a23"/></g>
+  </g>
+  <g transform="translate(242.0, 84.0)">
+    <rect x="0" y="0" width="212.0" height="56.0" rx="10" fill="#1c273a" stroke="#2c3b54"/>
+    <text x="11" y="20" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#eef2fb">Mina</text>
+    <text x="201.0" y="20" text-anchor="end" font-family="Tahoma, 'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#95a4bf">مینا</text>
+    <clipPath id="pstrip-5"><rect x="10" y="30" width="192.0" height="15" rx="4"/></clipPath>
+    <g clip-path="url(#pstrip-5)"><rect x="10.00" y="30" width="21.73" height="15" fill="#581c1d"/><rect x="31.33" y="30" width="21.73" height="15" fill="#984946"/><rect x="52.67" y="30" width="21.73" height="15" fill="#c19498"/><rect x="74.00" y="30" width="21.73" height="15" fill="#e7f2f6"/><rect x="95.33" y="30" width="21.73" height="15" fill="#9ecaee"/><rect x="116.67" y="30" width="21.73" height="15" fill="#56adee"/><rect x="138.00" y="30" width="21.73" height="15" fill="#4090a2"/><rect x="159.33" y="30" width="21.73" height="15" fill="#193caa"/><rect x="180.67" y="30" width="21.73" height="15" fill="#07187b"/></g>
+  </g>
+  <g transform="translate(466.0, 84.0)">
+    <rect x="0" y="0" width="212.0" height="56.0" rx="10" fill="#1c273a" stroke="#2c3b54"/>
+    <text x="11" y="20" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#eef2fb">Rostan</text>
+    <text x="201.0" y="20" text-anchor="end" font-family="Tahoma, 'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#95a4bf">رستن</text>
+    <clipPath id="pstrip-6"><rect x="10" y="30" width="192.0" height="15" rx="4"/></clipPath>
+    <g clip-path="url(#pstrip-6)"><rect x="10.00" y="30" width="21.73" height="15" fill="#4b241e"/><rect x="31.33" y="30" width="21.73" height="15" fill="#603d34"/><rect x="52.67" y="30" width="21.73" height="15" fill="#883c3e"/><rect x="74.00" y="30" width="21.73" height="15" fill="#aa3a41"/><rect x="95.33" y="30" width="21.73" height="15" fill="#d63d3b"/><rect x="116.67" y="30" width="21.73" height="15" fill="#d26c55"/><rect x="138.00" y="30" width="21.73" height="15" fill="#d98665"/><rect x="159.33" y="30" width="21.73" height="15" fill="#c0947d"/><rect x="180.67" y="30" width="21.73" height="15" fill="#d2b6a1"/></g>
+  </g>
+  <g transform="translate(690.0, 84.0)">
+    <rect x="0" y="0" width="212.0" height="56.0" rx="10" fill="#1c273a" stroke="#2c3b54"/>
+    <text x="11" y="20" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#eef2fb">Shahnameh</text>
+    <text x="201.0" y="20" text-anchor="end" font-family="Tahoma, 'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#95a4bf">شاهنامه</text>
+    <clipPath id="pstrip-7"><rect x="10" y="30" width="192.0" height="15" rx="4"/></clipPath>
+    <g clip-path="url(#pstrip-7)"><rect x="10.00" y="30" width="21.73" height="15" fill="#41356f"/><rect x="31.33" y="30" width="21.73" height="15" fill="#4b3d97"/><rect x="52.67" y="30" width="21.73" height="15" fill="#798cb8"/><rect x="74.00" y="30" width="21.73" height="15" fill="#6d866a"/><rect x="95.33" y="30" width="21.73" height="15" fill="#596956"/><rect x="116.67" y="30" width="21.73" height="15" fill="#d4b96b"/><rect x="138.00" y="30" width="21.73" height="15" fill="#d5c9b7"/><rect x="159.33" y="30" width="21.73" height="15" fill="#b0472c"/><rect x="180.67" y="30" width="21.73" height="15" fill="#a6373e"/></g>
+  </g>
+  <g transform="translate(18.0, 152.0)">
+    <rect x="0" y="0" width="212.0" height="56.0" rx="10" fill="#1c273a" stroke="#2c3b54"/>
+    <text x="11" y="20" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#eef2fb">Gilas</text>
+    <text x="201.0" y="20" text-anchor="end" font-family="Tahoma, 'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#95a4bf">گیلاس</text>
+    <clipPath id="pstrip-8"><rect x="10" y="30" width="192.0" height="15" rx="4"/></clipPath>
+    <g clip-path="url(#pstrip-8)"><rect x="10.00" y="30" width="38.80" height="15" fill="#58463f"/><rect x="48.40" y="30" width="38.80" height="15" fill="#598fb6"/><rect x="86.80" y="30" width="38.80" height="15" fill="#964765"/><rect x="125.20" y="30" width="38.80" height="15" fill="#b8715b"/><rect x="163.60" y="30" width="38.80" height="15" fill="#d8c723"/></g>
+  </g>
+  <g transform="translate(242.0, 152.0)">
+    <rect x="0" y="0" width="212.0" height="56.0" rx="10" fill="#1c273a" stroke="#2c3b54"/>
+    <text x="11" y="20" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#eef2fb">Iwan</text>
+    <text x="201.0" y="20" text-anchor="end" font-family="Tahoma, 'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#95a4bf">ایوان</text>
+    <clipPath id="pstrip-9"><rect x="10" y="30" width="192.0" height="15" rx="4"/></clipPath>
+    <g clip-path="url(#pstrip-9)"><rect x="10.00" y="30" width="21.73" height="15" fill="#efbf15"/><rect x="31.33" y="30" width="21.73" height="15" fill="#b99241"/><rect x="52.67" y="30" width="21.73" height="15" fill="#6897b7"/><rect x="74.00" y="30" width="21.73" height="15" fill="#2e89ab"/><rect x="95.33" y="30" width="21.73" height="15" fill="#3263ac"/><rect x="116.67" y="30" width="21.73" height="15" fill="#0e37ae"/><rect x="138.00" y="30" width="21.73" height="15" fill="#0412cc"/><rect x="159.33" y="30" width="21.73" height="15" fill="#150c7d"/><rect x="180.67" y="30" width="21.73" height="15" fill="#06055a"/></g>
+  </g>
+  <g transform="translate(466.0, 152.0)">
+    <rect x="0" y="0" width="212.0" height="56.0" rx="10" fill="#1c273a" stroke="#2c3b54"/>
+    <text x="11" y="20" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#eef2fb">Rasht</text>
+    <text x="201.0" y="20" text-anchor="end" font-family="Tahoma, 'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#95a4bf">رشت</text>
+    <clipPath id="pstrip-10"><rect x="10" y="30" width="192.0" height="15" rx="4"/></clipPath>
+    <g clip-path="url(#pstrip-10)"><rect x="10.00" y="30" width="21.73" height="15" fill="#5e3c87"/><rect x="31.33" y="30" width="21.73" height="15" fill="#4a657f"/><rect x="52.67" y="30" width="21.73" height="15" fill="#4470d3"/><rect x="74.00" y="30" width="21.73" height="15" fill="#d03232"/><rect x="95.33" y="30" width="21.73" height="15" fill="#d96e4c"/><rect x="116.67" y="30" width="21.73" height="15" fill="#3f887f"/><rect x="138.00" y="30" width="21.73" height="15" fill="#55a67e"/><rect x="159.33" y="30" width="21.73" height="15" fill="#ac98ba"/><rect x="180.67" y="30" width="21.73" height="15" fill="#cfc4d8"/></g>
+  </g>
+  <g transform="translate(690.0, 152.0)">
+    <rect x="0" y="0" width="212.0" height="56.0" rx="10" fill="#1c273a" stroke="#2c3b54"/>
+    <text x="11" y="20" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#eef2fb">Confusion</text>
+    <text x="201.0" y="20" text-anchor="end" font-family="Tahoma, 'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#95a4bf">سردرگمی</text>
+    <clipPath id="pstrip-11"><rect x="10" y="30" width="192.0" height="15" rx="4"/></clipPath>
+    <g clip-path="url(#pstrip-11)"><rect x="10.00" y="30" width="24.40" height="15" fill="#6b2654"/><rect x="34.00" y="30" width="24.40" height="15" fill="#c24902"/><rect x="58.00" y="30" width="24.40" height="15" fill="#c1851c"/><rect x="82.00" y="30" width="24.40" height="15" fill="#e39a84"/><rect x="106.00" y="30" width="24.40" height="15" fill="#ffdfc7"/><rect x="130.00" y="30" width="24.40" height="15" fill="#7ca698"/><rect x="154.00" y="30" width="24.40" height="15" fill="#3d6968"/><rect x="178.00" y="30" width="24.40" height="15" fill="#120d1f"/></g>
+  </g>
+</svg>
