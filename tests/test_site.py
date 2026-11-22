@@ -12,6 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 import build_site
+import make_readme_graphics
 
 
 class PageInspector(HTMLParser):
@@ -228,6 +229,41 @@ class SiteTests(unittest.TestCase):
         raw_kashan = (self.out / "palettes" / "kashan" / "index.html").read_text(encoding="utf-8")
         self.assertIn('data-palette-colors="#7f3020,', raw_kashan)
         self.assertIn('id="paint-canvas"', raw_kashan)
+
+    def test_readme_chooser_links_and_assets(self) -> None:
+        readme_text = (ROOT / "README.md").read_text(encoding="utf-8")
+        traditional_text = (ROOT / "README-GITHUB.md").read_text(encoding="utf-8")
+
+        self.assertIn("https://hydromohsen.com/Rang/", readme_text)
+        self.assertIn("https://hydromohsen.com/blog/the-story-behind-rang/", readme_text)
+        self.assertIn("README-GITHUB.md", readme_text)
+        self.assertIn("<!-- gallery:start -->", traditional_text)
+        self.assertIn("<!-- gallery:end -->", traditional_text)
+
+        svg_refs = set(re.findall(r"site/readme/[a-z0-9-]+\.svg", readme_text))
+        self.assertEqual(len(svg_refs), 10)
+        for rel in svg_refs:
+            self.assertTrue((ROOT / rel).is_file(), f"Missing {rel}")
+
+        for pal in self.palettes:
+            thumb_path = ROOT / "site" / "readme" / "thumbs" / f"{pal['slug']}.jpg"
+            self.assertTrue(thumb_path.is_file(), f"Missing thumbnail {thumb_path}")
+
+        for theme in ("light", "dark"):
+            strip_svg = (ROOT / "site" / "readme" / f"palette-strip-{theme}.svg").read_text(encoding="utf-8")
+            self.assertEqual(strip_svg.count("<image "), len(self.palettes))
+            self.assertIn("data:image/jpeg;base64,", strip_svg)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            generated = make_readme_graphics.generate_readme_graphics(pathlib.Path(tmp))
+            self.assertEqual(len(generated), 10)
+            for gen_path in generated:
+                committed = ROOT / "site" / "readme" / gen_path.name
+                self.assertEqual(
+                    gen_path.read_text(encoding="utf-8"),
+                    committed.read_text(encoding="utf-8"),
+                    f"Committed SVG differs from generator: {committed}",
+                )
 
 
 if __name__ == "__main__":

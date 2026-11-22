@@ -1,6 +1,6 @@
 """Build the static website for Rang from the repository documentation.
 
-Reads README.md, palettes/*.json, docs/language-and-scope.md, docs/*/README.md,
+Reads README-GITHUB.md, palettes/*.json, docs/language-and-scope.md, docs/*/README.md,
 the generated palette figures under docs/<name>/, context photographs under
 sources/<name>/, and the medallion logo under logo/ to produce a self-contained
 static site under build/site (or a custom --output path).
@@ -161,7 +161,7 @@ def rewrite_href(
     if m:
         return f"{root_prefix}palettes/{m.group(1)}/{suffix}", False
 
-    if norm in ("", "README.md"):
+    if norm in ("", "README.md", "README-GITHUB.md"):
         return f"{root_prefix}{suffix}" or "./", False
 
     target_fs = REPO_ROOT / norm
@@ -1523,7 +1523,7 @@ def build_site(output_dir: pathlib.Path, repo_url: str = DEFAULT_REPO_URL) -> di
                 shutil.copy2(ctx_path, src_assets / ctx_path.name)
 
     # Render landing page
-    readme_text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_text = (REPO_ROOT / "README-GITHUB.md").read_text(encoding="utf-8")
     (output_dir / "index.html").write_text(
         build_index(readme_text, palettes, repo_url),
         encoding="utf-8",

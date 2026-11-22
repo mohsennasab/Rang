@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 236" width="448" height="236" role="img" aria-label="Interactive Website card">
+  <rect x="0.5" y="0.5" width="447" height="235" rx="16" fill="#161f2e" stroke="#2c3b54"/>
+  <defs><clipPath id="cw-clip"><rect x="0.5" y="0.5" width="447" height="235" rx="16"/></clipPath></defs>
+<g clip-path="url(#cw-clip)"><rect x="0.00" y="0" width="56.50" height="6" fill="#3b1261"/><rect x="56.00" y="0" width="56.50" height="6" fill="#4027e1"/><rect x="112.00" y="0" width="56.50" height="6" fill="#518ffd"/><rect x="168.00" y="0" width="56.50" height="6" fill="#74ecf9"/><rect x="224.00" y="0" width="56.50" height="6" fill="#50a877"/><rect x="280.00" y="0" width="56.50" height="6" fill="#6dd96f"/><rect x="336.00" y="0" width="56.50" height="6" fill="#ebc05c"/><rect x="392.00" y="0" width="56.50" height="6" fill="#f04a23"/></g>
+  <rect x="24" y="24" width="124" height="24" rx="12" fill="#1b2d4a"/>
+  <text x="86" y="40" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="700" fill="#8fb4ff" letter-spacing="0.6">INTERACTIVE SITE</text>
+  
+  <g transform="translate(306, 22)">
+    <rect x="0" y="0" width="118" height="62" rx="8" fill="#101826" stroke="#2c3b54"/>
+    <rect x="0" y="0" width="118" height="14" rx="8" fill="#1b2d4a"/>
+    <circle cx="10" cy="7" r="2.2" fill="#e05336"/>
+    <circle cx="18" cy="7" r="2.2" fill="#efbf15"/>
+    <circle cx="26" cy="7" r="2.2" fill="#50a877"/>
+    <rect x="9" y="21" width="100" height="8" rx="3" fill="#4027e1" opacity="0.22"/>
+    <rect x="9" y="21" width="20" height="8" rx="3" fill="#4027e1"/>
+    <rect x="29" y="21" width="20" height="8" fill="#518ffd"/>
+    <rect x="49" y="21" width="20" height="8" fill="#74ecf9"/>
+    <rect x="69" y="21" width="20" height="8" fill="#ebc05c"/>
+    <rect x="89" y="21" width="20" height="8" rx="3" fill="#f04a23"/>
+    <path d="M 28.0,37.8 C 30.1,44.3 31.8,45.8 31.8,47.3 A 3.8,3.8 0 1,1 24.2,47.3 C 24.2,45.8 25.9,44.3 28.0,37.8 Z" fill="#518ffd"/>
+    <path d="M 59.0,39.6 C 61.3,47.1 63.2,48.8 63.2,50.5 A 4.2,4.2 0 1,1 54.8,50.5 C 54.8,48.8 56.7,47.1 59.0,39.6 Z" fill="#ebc05c"/>
+    <path d="M 90.0,36.8 C 92.1,43.3 93.8,44.8 93.8,46.3 A 3.8,3.8 0 1,1 86.2,46.3 C 86.2,44.8 87.9,43.3 90.0,36.8 Z" fill="#f04a23"/>
+    <path d="M 14,62 C 19,55 28,55 34,58 C 40,53 50,55 56,62 Z" fill="#518ffd"/>
+    <path d="M 48,62 C 55,54 65,54 71,59 C 78,53 90,54 96,62 Z" fill="#ebc05c"/>
+    <path d="M 78,62 C 84,56 95,55 104,62 Z" fill="#f04a23"/>
+  </g>
+  <text x="24" y="108" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="23" font-weight="800" fill="#eef2fb" letter-spacing="-0.4">Interactive Website</text>
+  <text x="24" y="136" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" fill="#b5c1d8">Browse all 12 palettes with click-to-copy hex swatches,</text>
+  <text x="24" y="156" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" fill="#b5c1d8">paint drop splashes, light and dark mode, and full plates.</text>
+  <rect x="24" y="178" width="252" height="36" rx="9" fill="#3b6df0"/>
+  <text x="138" y="201" text-anchor="middle" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#ffffff">Open hydromohsen.com/Rang</text>
+  <path d="M 248,196 h12 m-4,-4 l4,4 l-4,4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
