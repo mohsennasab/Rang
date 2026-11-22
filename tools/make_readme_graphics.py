@@ -1,15 +1,21 @@
 """Generate crisp light and dark SVG visuals for the landing README chooser.
 
-Reads palettes/*.json and the pixel medallion matrix from tools/make_logo.py
-using only the Python standard library, writing deterministic SVGs into
-site/readme/.
+Reads palettes/*.json, the pixel medallion matrix from tools/make_logo.py, and
+pre-generated 4:3 thumbnails under site/readme/thumbs/ using only the Python
+standard library, writing deterministic SVGs into site/readme/.
+
+Pass --update-thumbs (requires Pillow) to regenerate site/readme/thumbs/*.jpg
+from docs/<palette>/card.png.
 
 Usage:
     python tools/make_readme_graphics.py
+    python tools/make_readme_graphics.py --update-thumbs
 """
 from __future__ import annotations
 
+import argparse
 import ast
+import base64
 import html
 import json
 import pathlib
@@ -19,8 +25,10 @@ from typing import Dict, List, Tuple
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 PALETTE_DIR = REPO_ROOT / "palettes"
+DOCS_DIR = REPO_ROOT / "docs"
 MAKE_LOGO_PATH = REPO_ROOT / "tools" / "make_logo.py"
 DEFAULT_OUT_DIR = REPO_ROOT / "site" / "readme"
+THUMBS_DIR = DEFAULT_OUT_DIR / "thumbs"
 
 FONT_SANS = "'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif"
 FONT_MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
@@ -61,7 +69,8 @@ def load_palettes() -> List[dict]:
 
 def load_logo_matrix() -> Tuple[Tuple[str, ...], Dict[str, str]]:
     """Extract GRID and hex PALETTE from tools/make_logo.py without Pillow."""
-    tree = ast.parse(MAKE_LOGO_PATH.read_text(encoding="utf-8"))
+    source_text = MAKE_LOGO_PATH.read_text(encoding="utf-8")
+    tree = ast.parse(source_text)
     grid: Tuple[str, ...] = ()
     colors: Dict[str, str] = {"K": "#000000"}
 
@@ -76,13 +85,45 @@ def load_logo_matrix() -> Tuple[Tuple[str, ...], Dict[str, str]]:
                             if not isinstance(k_node, ast.Constant):
                                 continue
                             key = str(k_node.value)
-                            src = ast.get_source_segment(MAKE_LOGO_PATH.read_text(encoding="utf-8"), v_node) or ""
+                            src = ast.get_source_segment(source_text, v_node) or ""
                             m_hex = re.search(r"#[0-9a-fA-F]{6}", src)
                             if m_hex:
                                 colors[key] = m_hex.group(0)
                             elif key == "K":
                                 colors[key] = "#000000"
     return grid, colors
+
+
+def update_artwork_thumbs(
+    pals: List[dict],
+    thumbs_dir: pathlib.Path = THUMBS_DIR,
+) -> List[pathlib.Path]:
+    """Crop the 4:3 artwork panel from each docs/<slug>/card.png into a 128x96 JPEG."""
+    from PIL import Image
+
+    thumbs_dir = pathlib.Path(thumbs_dir)
+    thumbs_dir.mkdir(parents=True, exist_ok=True)
+    written: List[pathlib.Path] = []
+    for pal in pals:
+        slug = pal["slug"]
+        card_path = DOCS_DIR / slug / "card.png"
+        out_path = thumbs_dir / f"{slug}.jpg"
+        with Image.open(card_path) as im:
+            art = im.convert("RGB").crop((0, 0, 600, 450))
+            thumb = art.resize((128, 96), Image.Resampling.LANCZOS)
+            thumb.save(out_path, format="JPEG", quality=82, optimize=True)
+        written.append(out_path)
+    return written
+
+
+def load_thumb_data_uri(slug: str, thumbs_dir: pathlib.Path) -> str:
+    path = pathlib.Path(thumbs_dir) / f"{slug}.jpg"
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"Missing artwork thumbnail {path}. Run: python tools/make_readme_graphics.py --update-thumbs"
+        )
+    encoded = base64.b64encode(path.read_bytes()).decode("ascii")
+    return f"data:image/jpeg;base64,{encoded}"
 
 
 def render_medallion_svg(
@@ -158,7 +199,6 @@ def build_hero_svg(dark: bool, grid: Tuple[str, ...], logo_colors: Dict[str, str
     bar = top_bar_svg("hero-clip", w, h, 18, 7, HERO_RIBBON)
     medallion = render_medallion_svg(grid, logo_colors, 40, 56, 120)
 
-    # Glossy drops and splash pools on the right edge
     drops_svg = f"""
   <g opacity="0.95">
     <path d="{teardrop_path(758, 66, 8.5, 1.55)}" fill="#e05336"/>
@@ -308,53 +348,117 @@ def build_card_github_svg(dark: bool) -> str:
 """
 
 
-def build_palette_strip_svg(dark: bool, pals: List[dict]) -> str:
-    w, h = 920, 224
+def build_card_story_svg(dark: bool) -> str:
+    w, h = 920, 116
+    bg = "#161f2e" if dark else "#ffffff"
+    border = "#2c3b54" if dark else "#d5e0f2"
+    tile_bg = "#1d273b" if dark else "#faf6ee"
+    ink = "#eef2fb" if dark else "#131c2e"
+    sub = "#b5c1d8" if dark else "#41506b"
+    pill_bg = "#2b241d" if dark else "#fcf2dc"
+    pill_fg = "#f0c869" if dark else "#8a5c0b"
+    cta_bg = "#d46a47" if dark else "#b0472c"
+    cta_fg = "#ffffff"
+
+    bar = top_bar_svg("cs-clip", w, h, 16, 6, ("#41356f", "#4b3d97", "#798cb8", "#6d866a", "#d4b96b", "#b0472c", "#a6373e", "#d63d3b"))
+
+    folio = f"""
+  <g transform="translate(24, 26)">
+    <rect x="0" y="0" width="68" height="68" rx="12" fill="{tile_bg}" stroke="{border}"/>
+    <path d="M 15,22 C 23,19 30,21 34,25 L 34,49 C 29,46 22,45 15,47 Z" fill="#d5c9b7" stroke="#8a795d" stroke-width="1.2"/>
+    <path d="M 53,22 C 45,19 38,21 34,25 L 34,49 C 39,46 46,45 53,47 Z" fill="#e6dcc9" stroke="#8a795d" stroke-width="1.2"/>
+    <rect x="20" y="27" width="9" height="12" rx="1.5" fill="#4b3d97"/>
+    <rect x="22" y="29" width="5" height="8" rx="1" fill="#d4b96b"/>
+    <line x1="39" y1="28" x2="48" y2="27" stroke="#b0472c" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="39" y1="33" x2="48" y2="32" stroke="#6d866a" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="39" y1="38" x2="47" y2="37" stroke="#41356f" stroke-width="1.6" stroke-linecap="round"/>
+  </g>"""
+
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="The Story Behind Rang card">
+  <rect x="0.5" y="0.5" width="{w - 1}" height="{h - 1}" rx="16" fill="{bg}" stroke="{border}"/>
+  {bar}
+  {folio}
+  <rect x="110" y="24" width="84" height="22" rx="11" fill="{pill_bg}"/>
+  <text x="152" y="38.5" text-anchor="middle" font-family="{FONT_MONO}" font-size="10.5" font-weight="700" fill="{pill_fg}" letter-spacing="0.6">THE STORY</text>
+  <text x="110" y="70" font-family="{FONT_SANS}" font-size="22" font-weight="800" fill="{ink}" letter-spacing="-0.35">The Story Behind Rang</text>
+  <text x="110" y="93" font-family="{FONT_SANS}" font-size="13.5" fill="{sub}">Read the story behind these palettes by Mohsen Tahmasebi Nasab, PhD.</text>
+  <rect x="720" y="42" width="174" height="36" rx="9" fill="{cta_bg}"/>
+  <text x="796" y="65" text-anchor="middle" font-family="{FONT_SANS}" font-size="13.5" font-weight="700" fill="{cta_fg}">Read the Story</text>
+  <path d="M 860,60 h12 m-4,-4 l4,4 l-4,4" fill="none" stroke="{cta_fg}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+"""
+
+
+def build_palette_strip_svg(
+    dark: bool,
+    pals: List[dict],
+    thumbs_dir: pathlib.Path,
+) -> str:
+    w, h = 920, 344
     bg = "#161f2e" if dark else "#ffffff"
     border = "#2c3b54" if dark else "#dce5f2"
     tile_bg = "#1c273a" if dark else "#f7f9fd"
+    mat_bg = "#ffffff"
     ink = "#eef2fb" if dark else "#131c2e"
     muted = "#95a4bf" if dark else "#62728b"
 
-    cols = 4
+    cols = 3
     pad_x = 18
-    pad_y = 16
-    gap_x = 12
+    pad_y = 18
+    gap_x = 14
     gap_y = 12
     tile_w = (w - 2 * pad_x - (cols - 1) * gap_x) / cols
-    tile_h = (h - 2 * pad_y - 2 * gap_y) / 3
+    tile_h = (h - 2 * pad_y - 3 * gap_y) / 4
 
+    defs_parts: List[str] = []
     tiles: List[str] = []
+
     for idx, pal in enumerate(pals[:12]):
         col_i = idx % cols
         row_i = idx // cols
         tx = pad_x + col_i * (tile_w + gap_x)
         ty = pad_y + row_i * (tile_h + gap_y)
         colors = pal["colors"]
-        bar_w = tile_w - 20
+
+        thumb_x, thumb_y, thumb_w, thumb_h = 10, 10, 64, 48
+        bar_x, bar_y, bar_w, bar_h = 84, 38, tile_w - 94, 18
         seg_w = bar_w / len(colors)
-        clip_id = f"pstrip-{idx}"
+
+        thumb_clip = f"pthumb-{idx}"
+        strip_clip = f"pstrip-{idx}"
+        defs_parts.append(
+            f'<clipPath id="{thumb_clip}"><rect x="{thumb_x}" y="{thumb_y}" width="{thumb_w}" height="{thumb_h}" rx="6"/></clipPath>'
+            f'<clipPath id="{strip_clip}"><rect x="{bar_x}" y="{bar_y}" width="{bar_w:.1f}" height="{bar_h}" rx="5"/></clipPath>'
+        )
+
+        thumb_uri = load_thumb_data_uri(pal["slug"], thumbs_dir)
         segs = "".join(
-            f'<rect x="{10 + c_idx * seg_w:.2f}" y="30" width="{seg_w + 0.4:.2f}" height="15" fill="{c}"/>'
+            f'<rect x="{bar_x + c_idx * seg_w:.2f}" y="{bar_y}" width="{seg_w + 0.4:.2f}" height="{bar_h}" fill="{c}"/>'
             for c_idx, c in enumerate(colors)
         )
+
         tiles.append(f"""
   <g transform="translate({tx:.1f}, {ty:.1f})">
     <rect x="0" y="0" width="{tile_w:.1f}" height="{tile_h:.1f}" rx="10" fill="{tile_bg}" stroke="{border}"/>
-    <text x="11" y="20" font-family="{FONT_SANS}" font-size="12.5" font-weight="700" fill="{ink}">{html.escape(pal["name"])}</text>
-    <text x="{tile_w - 11:.1f}" y="20" text-anchor="end" font-family="{FONT_FA}" font-size="11.5" fill="{muted}">{html.escape(pal.get("persian", ""))}</text>
-    <clipPath id="{clip_id}"><rect x="10" y="30" width="{bar_w:.1f}" height="15" rx="4"/></clipPath>
-    <g clip-path="url(#{clip_id})">{segs}</g>
+    <rect x="{thumb_x}" y="{thumb_y}" width="{thumb_w}" height="{thumb_h}" rx="6" fill="{mat_bg}" stroke="{border}"/>
+    <image x="{thumb_x}" y="{thumb_y}" width="{thumb_w}" height="{thumb_h}" preserveAspectRatio="xMidYMid meet" clip-path="url(#{thumb_clip})" href="{thumb_uri}" xlink:href="{thumb_uri}"/>
+    <text x="{bar_x}" y="26" font-family="{FONT_SANS}" font-size="13.5" font-weight="700" fill="{ink}">{html.escape(pal["name"])}</text>
+    <text x="{tile_w - 11:.1f}" y="26" text-anchor="end" font-family="{FONT_FA}" font-size="12" fill="{muted}">{html.escape(pal.get("persian", ""))}</text>
+    <g clip-path="url(#{strip_clip})">{segs}</g>
   </g>""")
 
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="All 12 Rang color palettes">
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="All 12 Rang palettes with source artwork thumbnails">
+  <defs>{''.join(defs_parts)}</defs>
   <rect x="0.5" y="0.5" width="{w - 1}" height="{h - 1}" rx="16" fill="{bg}" stroke="{border}"/>
   {''.join(tiles)}
 </svg>
 """
 
 
-def generate_readme_graphics(out_dir: pathlib.Path = DEFAULT_OUT_DIR) -> List[pathlib.Path]:
+def generate_readme_graphics(
+    out_dir: pathlib.Path = DEFAULT_OUT_DIR,
+    thumbs_dir: pathlib.Path = THUMBS_DIR,
+) -> List[pathlib.Path]:
     out_dir = pathlib.Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     pals = load_palettes()
@@ -367,8 +471,10 @@ def generate_readme_graphics(out_dir: pathlib.Path = DEFAULT_OUT_DIR) -> List[pa
         "card-website-dark.svg": build_card_website_svg(True),
         "card-github-light.svg": build_card_github_svg(False),
         "card-github-dark.svg": build_card_github_svg(True),
-        "palette-strip-light.svg": build_palette_strip_svg(False, pals),
-        "palette-strip-dark.svg": build_palette_strip_svg(True, pals),
+        "card-story-light.svg": build_card_story_svg(False),
+        "card-story-dark.svg": build_card_story_svg(True),
+        "palette-strip-light.svg": build_palette_strip_svg(False, pals, thumbs_dir),
+        "palette-strip-dark.svg": build_palette_strip_svg(True, pals, thumbs_dir),
     }
 
     written: List[pathlib.Path] = []
@@ -380,7 +486,18 @@ def generate_readme_graphics(out_dir: pathlib.Path = DEFAULT_OUT_DIR) -> List[pa
 
 
 def main() -> None:
-    written = generate_readme_graphics()
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument(
+        "--update-thumbs",
+        action="store_true",
+        help="Regenerate site/readme/thumbs/*.jpg from docs/*/card.png (requires Pillow)",
+    )
+    args = ap.parse_args()
+    pals = load_palettes()
+    if args.update_thumbs:
+        thumbs = update_artwork_thumbs(pals, THUMBS_DIR)
+        print(f"Wrote {len(thumbs)} thumbnail JPEGs -> {THUMBS_DIR}")
+    written = generate_readme_graphics(DEFAULT_OUT_DIR, THUMBS_DIR)
     print(f"Wrote {len(written)} SVG files -> {DEFAULT_OUT_DIR}")
 
 

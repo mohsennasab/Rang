@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 116" width="920" height="116" role="img" aria-label="The Story Behind Rang card">
+  <rect x="0.5" y="0.5" width="919" height="115" rx="16" fill="#ffffff" stroke="#d5e0f2"/>
+  <defs><clipPath id="cs-clip"><rect x="0.5" y="0.5" width="919" height="115" rx="16"/></clipPath></defs>
+<g clip-path="url(#cs-clip)"><rect x="0.00" y="0" width="115.50" height="6" fill="#41356f"/><rect x="115.00" y="0" width="115.50" height="6" fill="#4b3d97"/><rect x="230.00" y="0" width="115.50" height="6" fill="#798cb8"/><rect x="345.00" y="0" width="115.50" height="6" fill="#6d866a"/><rect x="460.00" y="0" width="115.50" height="6" fill="#d4b96b"/><rect x="575.00" y="0" width="115.50" height="6" fill="#b0472c"/><rect x="690.00" y="0" width="115.50" height="6" fill="#a6373e"/><rect x="805.00" y="0" width="115.50" height="6" fill="#d63d3b"/></g>
+  
+  <g transform="translate(24, 26)">
+    <rect x="0" y="0" width="68" height="68" rx="12" fill="#faf6ee" stroke="#d5e0f2"/>
+    <path d="M 15,22 C 23,19 30,21 34,25 L 34,49 C 29,46 22,45 15,47 Z" fill="#d5c9b7" stroke="#8a795d" stroke-width="1.2"/>
+    <path d="M 53,22 C 45,19 38,21 34,25 L 34,49 C 39,46 46,45 53,47 Z" fill="#e6dcc9" stroke="#8a795d" stroke-width="1.2"/>
+    <rect x="20" y="27" width="9" height="12" rx="1.5" fill="#4b3d97"/>
+    <rect x="22" y="29" width="5" height="8" rx="1" fill="#d4b96b"/>
+    <line x1="39" y1="28" x2="48" y2="27" stroke="#b0472c" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="39" y1="33" x2="48" y2="32" stroke="#6d866a" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="39" y1="38" x2="47" y2="37" stroke="#41356f" stroke-width="1.6" stroke-linecap="round"/>
+  </g>
+  <rect x="110" y="24" width="84" height="22" rx="11" fill="#fcf2dc"/>
+  <text x="152" y="38.5" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="700" fill="#8a5c0b" letter-spacing="0.6">THE STORY</text>
+  <text x="110" y="70" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="800" fill="#131c2e" letter-spacing="-0.35">The Story Behind Rang</text>
+  <text x="110" y="93" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" fill="#41506b">Read the story behind these palettes by Mohsen Tahmasebi Nasab, PhD.</text>
+  <rect x="720" y="42" width="174" height="36" rx="9" fill="#b0472c"/>
+  <text x="796" y="65" text-anchor="middle" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#ffffff">Read the Story</text>
+  <path d="M 860,60 h12 m-4,-4 l4,4 l-4,4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

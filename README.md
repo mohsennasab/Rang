@@ -28,9 +28,21 @@
 </p>
 
 <p align="center">
+  <a href="https://hydromohsen.com/blog/the-story-behind-rang/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="site/readme/card-story-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="site/readme/card-story-light.svg">
+      <img alt="Read The Story Behind Rang" src="site/readme/card-story-light.svg" width="840">
+    </picture>
+  </a>
+</p>
+
+<p align="center">
   <strong><a href="https://hydromohsen.com/Rang/">Open Interactive Website</a></strong>
   ·
   <strong><a href="README-GITHUB.md">Read Traditional GitHub README</a></strong>
+  ·
+  <strong><a href="https://hydromohsen.com/blog/the-story-behind-rang/">The Story Behind Rang</a></strong>
 </p>
 
 <p align="center">
@@ -38,7 +50,7 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="site/readme/palette-strip-dark.svg">
       <source media="(prefers-color-scheme: light)" srcset="site/readme/palette-strip-light.svg">
-      <img alt="All 12 Rang color palettes" src="site/readme/palette-strip-light.svg" width="840">
+      <img alt="All 12 Rang palettes with source artwork thumbnails" src="site/readme/palette-strip-light.svg" width="840">
     </picture>
   </a>
 </p>
@@ -50,6 +62,7 @@
 <p align="center">
   <a href="https://hydromohsen.com/Rang/">Website</a> ·
   <a href="README-GITHUB.md">Traditional README</a> ·
+  <a href="https://hydromohsen.com/blog/the-story-behind-rang/">Story</a> ·
   <a href="docs/language-and-scope.md">Language and Scope</a> ·
   <a href="examples/">Examples</a> ·
   <a href="CONTRIBUTING.md">Contribute</a> ·
